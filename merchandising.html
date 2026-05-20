@@ -8,62 +8,49 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD - PRO MERCHANDISING</title>
+<title>SMART TNA BD - MERCHANDISING ERP</title>
 
 <style>
 
 body{
-
 margin:0;
 padding:0;
 background:#0f172a;
 font-family:Arial;
 color:white;
-
 }
 
 header{
-
 background:#111827;
 padding:18px;
 text-align:center;
 font-size:28px;
 font-weight:bold;
 color:#00ff99;
-
 }
 
 .main{
-
 display:grid;
 grid-template-columns:360px 1fr;
 height:calc(100vh - 70px);
-
 }
 
 .sidebar{
-
 background:#111827;
 padding:15px;
 overflow:auto;
 border-right:2px solid #1e293b;
-
 }
 
 .sidebar h2{
-
 color:#00ff99;
-
 }
 
 .search-box{
-
 margin-bottom:20px;
-
 }
 
 .search-box input{
-
 width:100%;
 padding:12px;
 border:none;
@@ -71,116 +58,88 @@ border-radius:10px;
 background:#1e293b;
 color:white;
 box-sizing:border-box;
-
 }
 
 .order-card{
-
 background:#1e293b;
 padding:15px;
 border-radius:12px;
 margin-bottom:12px;
 cursor:pointer;
 transition:0.3s;
-
 }
 
 .order-card:hover{
-
 background:#334155;
-
 }
 
 .order-card h3{
-
 margin:0;
 color:#00ff99;
-
 }
 
 .order-card p{
-
 margin:6px 0;
 font-size:14px;
-
 }
 
 .content{
-
 padding:20px;
 overflow:auto;
-
 }
 
 .card{
-
 background:#1e293b;
 padding:20px;
 border-radius:15px;
 margin-bottom:20px;
-
 }
 
 h2{
-
 color:#00ff99;
-
 }
 
 .info-grid{
-
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:15px;
 margin-bottom:20px;
-
 }
 
 .info-box{
-
 background:#111827;
 padding:15px;
 border-radius:10px;
-
 }
 
 .info-box span{
-
 display:block;
 color:#94a3b8;
 margin-bottom:5px;
-
 }
 
 table{
-
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:2600px;
-
+min-width:3200px;
 }
 
 table th,
 table td{
-
 border:1px solid #334155;
 padding:12px;
 text-align:center;
-
 }
 
 table th{
-
 background:#111827;
 color:#00ff99;
-
 }
 
 input,
 select,
 textarea{
-
 width:100%;
 padding:10px;
 border:none;
@@ -188,17 +147,13 @@ border-radius:8px;
 background:#0f172a;
 color:white;
 box-sizing:border-box;
-
 }
 
 textarea{
-
 height:90px;
-
 }
 
 button{
-
 background:#00aa66;
 color:white;
 border:none;
@@ -207,13 +162,10 @@ border-radius:10px;
 cursor:pointer;
 font-weight:bold;
 margin-top:15px;
-
 }
 
 button:hover{
-
 background:#008844;
-
 }
 
 </style>
@@ -234,14 +186,14 @@ background:#008844;
 
 <div class="sidebar">
 
-<h2>📦 Order Search</h2>
+<h2>📦 IKL Search</h2>
 
 <div class="search-box">
 
 <input
 type="text"
 id="searchInput"
-placeholder="Search IKL / Order / Merchandiser"
+placeholder="Search IKL Number"
 onkeyup="filterOrders()">
 
 </div>
@@ -261,59 +213,33 @@ onkeyup="filterOrders()">
 <div class="info-grid">
 
 <div class="info-box">
-
 <span>Buyer</span>
-
 <b id="showBuyer">-</b>
-
 </div>
 
 <div class="info-box">
-
 <span>IKL No</span>
-
 <b id="showIKL">-</b>
-
 </div>
 
 <div class="info-box">
-
-<span>Order Number</span>
-
-<b id="showOrder">-</b>
-
-</div>
-
-<div class="info-box">
-
 <span>Style</span>
-
 <b id="showStyle">-</b>
-
 </div>
 
 <div class="info-box">
-
 <span>Merchandiser</span>
-
 <b id="showMerch">-</b>
-
 </div>
 
 <div class="info-box">
-
 <span>Total Qty</span>
-
 <b id="showQty">-</b>
-
 </div>
 
 <div class="info-box">
-
 <span>Shipment Date</span>
-
 <b id="showShip">-</b>
-
 </div>
 
 </div>
@@ -389,7 +315,7 @@ doc
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE
+// FIREBASE CONFIG
 
 const firebaseConfig = {
 
@@ -407,6 +333,8 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
+// INIT
+
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
@@ -417,7 +345,7 @@ let selectedColors = [];
 
 let allOrders = [];
 
-// LOAD ORDER LIST
+// LOAD ORDERS
 
 async function loadOrders(){
 
@@ -451,14 +379,9 @@ orderList.innerHTML += `
 class="order-card"
 data-search="
 ${data.ikl || ""}
-${data.orderNo || ""}
-${data.merchandiser || ""}
 ">
 
 <h3>${data.ikl || ""}</h3>
-
-<p>Order:
-${data.orderNo || ""}</p>
 
 <p>Buyer:
 ${data.buyer || ""}</p>
@@ -484,7 +407,7 @@ Open
 
 }
 
-// FILTER SEARCH
+// SEARCH IKL
 
 window.filterOrders = function(){
 
@@ -535,9 +458,6 @@ document.getElementById("showBuyer")
 
 document.getElementById("showIKL")
 .innerText = data.ikl || "-";
-
-document.getElementById("showOrder")
-.innerText = data.orderNo || "-";
 
 document.getElementById("showStyle")
 .innerText = data.style || "-";
@@ -821,7 +741,7 @@ alert("Merchandising Updated!");
 
 }
 
-// LOAD
+// LOAD PAGE
 
 loadOrders();
 
