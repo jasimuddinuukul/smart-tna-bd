@@ -1,446 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
+<script type="module">
 
-<head>
+// Firebase Import
+import { initializeApp }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-<title>Smart TNA BD - Order Entry</title>
+import {
 
-<!-- Font Awesome -->
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-body{
-
-    margin:0;
-    padding:0;
-
-    background:#0f172a;
-
-    font-family:Arial;
-
-    color:white;
-}
-
-header{
-
-    background:#111827;
-
-    padding:20px;
-
-    text-align:center;
-
-    font-size:30px;
-
-    font-weight:bold;
-
-    color:#00ff99;
-
-    box-shadow:0 2px 10px rgba(0,0,0,0.5);
-}
-
-.container{
-
-    max-width:1100px;
-
-    margin:auto;
-
-    padding:25px;
-}
-
-.card{
-
-    background:#1e293b;
-
-    padding:25px;
-
-    border-radius:20px;
-
-    margin-bottom:25px;
-
-    box-shadow:0 0 15px rgba(0,0,0,0.4);
-}
-
-h2{
-
-    margin-top:0;
-
-    color:#00ff99;
-}
-
-.form-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-    gap:20px;
-}
-
-.input-box label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    color:#cbd5e1;
-}
-
-.input-box input,
-.input-box select{
-
-    width:100%;
-
-    padding:14px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#0f172a;
-
-    color:white;
-
-    font-size:15px;
-
-    outline:none;
-
-    box-sizing:border-box;
-}
-
-.input-box input:focus,
-.input-box select:focus{
-
-    border:1px solid #00ff99;
-}
-
-button{
-
-    background:#00aa66;
-
-    color:white;
-
-    border:none;
-
-    padding:15px 25px;
-
-    border-radius:12px;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-    margin-top:20px;
-
-    font-weight:bold;
-}
-
-button:hover{
-
-    background:#008844;
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    margin-top:20px;
-
-    min-width:1200px;
-}
-
-table th,
-table td{
-
-    border:1px solid #334155;
-
-    padding:12px;
-
-    text-align:center;
-
-    font-size:14px;
-}
-
-table th{
-
-    background:#111827;
-
-    color:#00ff99;
-}
-
-.table-container{
-
-    overflow:auto;
-}
-
-.status-running{
-
-    color:#22c55e;
-
-    font-weight:bold;
-}
-
-.footer{
-
-    text-align:center;
-
-    color:#94a3b8;
-
-    margin-top:30px;
-
-    padding-bottom:20px;
-}
-
-@media(max-width:768px){
-
-    table th,
-    table td{
-
-        font-size:12px;
-
-        padding:8px;
-    }
+getFirestore,
+collection,
+addDoc,
+getDocs
 
 }
 
-</style>
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-</head>
+// Firebase Config
+const firebaseConfig = {
 
-<body>
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
 
-<header>
+authDomain: "smart-tna-bd.firebaseapp.com",
 
-📦 SMART TNA BD - ORDER ENTRY
+projectId: "smart-tna-bd",
 
-</header>
+storageBucket: "smart-tna-bd.firebasestorage.app",
 
-<div class="container">
+messagingSenderId: "372049573207",
 
-<!-- Order Form -->
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
-<div class="card">
+};
 
-<h2>🧵 Create New Order</h2>
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-<div class="form-grid">
+const db = getFirestore(app);
 
-<div class="input-box">
+// SAVE ORDER
+window.addOrder = async function(){
 
-<label>Buyer Name</label>
+let buyer =
+document.getElementById("buyer").value;
 
-<input type="text"
-id="buyer"
-placeholder="Enter buyer name">
+let ikl =
+document.getElementById("ikl").value;
 
-</div>
+let style =
+document.getElementById("style").value;
 
-<div class="input-box">
+let qty =
+document.getElementById("qty").value;
 
-<label>IKL No</label>
+let fabric =
+document.getElementById("fabric").value;
 
-<input type="text"
-id="ikl"
-placeholder="Enter IKL number">
+let shipdate =
+document.getElementById("shipdate").value;
 
-</div>
+let status =
+document.getElementById("status").value;
 
-<div class="input-box">
+if(buyer === "" || ikl === ""){
 
-<label>Style</label>
+alert("Please fill required fields");
 
-<input type="text"
-id="style"
-placeholder="Enter style">
+return;
 
-</div>
+}
 
-<div class="input-box">
+try{
 
-<label>Order Quantity</label>
+await addDoc(
 
-<input type="number"
-id="qty"
-placeholder="Enter quantity">
+collection(db, "orders"),
 
-</div>
+{
 
-<div class="input-box">
+buyer,
+ikl,
+style,
+qty,
+fabric,
+shipdate,
+status
 
-<label>Fabric Type</label>
+}
 
-<input type="text"
-id="fabric"
-placeholder="Fabric type">
+);
 
-</div>
+alert("Order Saved Successfully!");
 
-<div class="input-box">
+loadOrders();
 
-<label>Shipment Date</label>
+}
 
-<input type="date"
-id="shipdate">
+catch(error){
 
-</div>
+alert("Error: " + error);
 
-<div class="input-box">
+}
 
-<label>Production Status</label>
+};
 
-<select id="status">
+// LOAD ORDERS
+async function loadOrders(){
 
-<option>Running</option>
+const querySnapshot =
 
-<option>Pending</option>
+await getDocs(collection(db, "orders"));
 
-<option>Delay</option>
+let table =
 
-<option>Complete</option>
+document.getElementById("orderTable");
 
-</select>
-
-</div>
-
-</div>
-
-<button onclick="addOrder()">
-
-<i class="fa-solid fa-plus"></i>
-
-Save Order
-
-</button>
-
-</div>
-
-<!-- Order Table -->
-
-<div class="card">
-
-<h2>📋 Order List</h2>
-
-<div class="table-container">
-
-<table id="orderTable">
+// remove old rows
+table.innerHTML = `
 
 <tr>
 
 <th>Buyer</th>
-
 <th>IKL No</th>
-
 <th>Style</th>
-
 <th>Order Qty</th>
-
 <th>Fabric</th>
-
 <th>Shipment Date</th>
-
 <th>Status</th>
 
 </tr>
 
-</table>
+`;
 
-</div>
+querySnapshot.forEach((doc) => {
 
-</div>
+let data = doc.data();
 
-<div class="footer">
+table.innerHTML += `
 
-Made for Bangladesh Garments Industry 🇧🇩
+<tr>
 
-</div>
+<td>${data.buyer}</td>
 
-</div>
+<td>${data.ikl}</td>
 
-<script>
+<td>${data.style}</td>
 
-function addOrder(){
+<td>${data.qty}</td>
 
-    let buyer =
-        document.getElementById("buyer").value;
+<td>${data.fabric}</td>
 
-    let ikl =
-        document.getElementById("ikl").value;
+<td>${data.shipdate}</td>
 
-    let style =
-        document.getElementById("style").value;
+<td>${data.status}</td>
 
-    let qty =
-        document.getElementById("qty").value;
+</tr>
 
-    let fabric =
-        document.getElementById("fabric").value;
+`;
 
-    let shipdate =
-        document.getElementById("shipdate").value;
-
-    let status =
-        document.getElementById("status").value;
-
-    if(
-        buyer === "" ||
-        ikl === "" ||
-        style === ""
-    ){
-
-        alert("Please fill required fields");
-
-        return;
-    }
-
-    let table =
-        document.getElementById("orderTable");
-
-    let row =
-        table.insertRow(-1);
-
-    row.innerHTML =
-
-    "<td>" + buyer + "</td>" +
-
-    "<td>" + ikl + "</td>" +
-
-    "<td>" + style + "</td>" +
-
-    "<td>" + qty + "</td>" +
-
-    "<td>" + fabric + "</td>" +
-
-    "<td>" + shipdate + "</td>" +
-
-    "<td class='status-running'>" +
-    status +
-    "</td>";
-
-    // Clear Inputs
-
-    document.getElementById("buyer").value = "";
-
-    document.getElementById("ikl").value = "";
-
-    document.getElementById("style").value = "";
-
-    document.getElementById("qty").value = "";
-
-    document.getElementById("fabric").value = "";
-
-    document.getElementById("shipdate").value = "";
-
-    alert("Order Added Successfully!");
+});
 
 }
 
-</script>
+// Load data on page start
+loadOrders();
 
-</body>
-</html>
+</script>
