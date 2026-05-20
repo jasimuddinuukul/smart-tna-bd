@@ -4,7 +4,8 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Smart TNA BD - Order Entry</title>
 
@@ -36,7 +37,7 @@ color:#00ff99;
 
 .container{
 
-max-width:1200px;
+max-width:1700px;
 margin:auto;
 padding:20px;
 
@@ -48,7 +49,6 @@ background:#1e293b;
 padding:20px;
 border-radius:15px;
 margin-bottom:20px;
-overflow:auto;
 
 }
 
@@ -74,8 +74,7 @@ color:#cbd5e1;
 
 }
 
-.input-box input,
-.input-box select{
+.input-box input{
 
 width:100%;
 padding:14px;
@@ -94,9 +93,10 @@ button{
 background:#00aa66;
 color:white;
 border:none;
-padding:12px 18px;
+padding:14px 20px;
 border-radius:10px;
 cursor:pointer;
+font-size:16px;
 font-weight:bold;
 margin-top:10px;
 
@@ -108,15 +108,30 @@ background:#008844;
 
 }
 
-.delete-btn{
+.color-section{
 
-background:red;
+margin-top:25px;
+padding:20px;
+background:#111827;
+border-radius:12px;
 
 }
 
-.delete-btn:hover{
+.color-row{
 
-background:darkred;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:15px;
+margin-bottom:15px;
+
+}
+
+.total-box{
+
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+color:#00ff99;
 
 }
 
@@ -125,7 +140,7 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:1200px;
+min-width:1800px;
 
 }
 
@@ -167,7 +182,7 @@ color:#94a3b8;
 
 <header>
 
-🧵 SMART TNA BD - ORDER ENTRY SYSTEM
+📦 SMART TNA BD - ORDER ENTRY SYSTEM
 
 </header>
 
@@ -175,61 +190,102 @@ color:#94a3b8;
 
 <div class="card">
 
-<h2>📦 Create New Order</h2>
+<h2>🧵 Create New Order</h2>
 
 <div class="form-grid">
 
 <div class="input-box">
+
 <label>Buyer Name</label>
-<input type="text" id="buyer" placeholder="Buyer Name">
+
+<input
+type="text"
+id="buyer"
+placeholder="Buyer Name">
+
 </div>
 
 <div class="input-box">
+
 <label>IKL No</label>
-<input type="text" id="ikl" placeholder="IKL Number">
+
+<input
+type="text"
+id="ikl"
+placeholder="IKL Number">
+
 </div>
 
 <div class="input-box">
+
 <label>Style</label>
-<input type="text" id="style" placeholder="Style">
+
+<input
+type="text"
+id="style"
+placeholder="Style">
+
 </div>
 
 <div class="input-box">
-<label>Order Quantity</label>
-<input type="number" id="qty" placeholder="Order Qty">
-</div>
 
-<div class="input-box">
-<label>Fabric Type</label>
-<input type="text" id="fabric" placeholder="Fabric Type">
-</div>
-
-<div class="input-box">
 <label>Shipment Date</label>
-<input type="date" id="shipdate">
-</div>
 
-<div class="input-box">
-<label>Status</label>
-
-<select id="status">
-
-<option>Running</option>
-<option>Pending</option>
-<option>Delay</option>
-<option>Complete</option>
-
-</select>
+<input
+type="date"
+id="shipdate">
 
 </div>
 
 </div>
 
-<button onclick="addOrder()">
+<div class="color-section">
 
-<i class="fa-solid fa-plus"></i>
+<h3>🎨 Color Wise Quantity Entry</h3>
 
-Save Order
+<div id="colorContainer">
+
+<div class="color-row">
+
+<input
+type="text"
+placeholder="Color Name"
+class="colorName">
+
+<input
+type="number"
+placeholder="Quantity"
+class="colorQty"
+oninput="calculateTotal()">
+
+</div>
+
+</div>
+
+<button onclick="addColorRow()">
+
+➕ Add More Color
+
+</button>
+
+<div class="total-box">
+
+Total Quantity:
+<span id="totalQty">
+
+0
+
+</span>
+
+PCS
+
+</div>
+
+</div>
+
+<button onclick="saveOrder()">
+
+💾 Save Order
 
 </button>
 
@@ -237,7 +293,7 @@ Save Order
 
 <div class="card">
 
-<h2>📋 Order List</h2>
+<h2>📋 Live Order List</h2>
 
 <div class="table-container">
 
@@ -248,11 +304,9 @@ Save Order
 <th>Buyer</th>
 <th>IKL No</th>
 <th>Style</th>
-<th>Order Qty</th>
-<th>Fabric</th>
-<th>Shipment Date</th>
-<th>Status</th>
-<th>Action</th>
+<th>Shipment</th>
+<th>Color Breakdown</th>
+<th>Total Qty</th>
 
 </tr>
 
@@ -272,8 +326,6 @@ Made for Bangladesh Garments Industry 🇧🇩
 
 <script type="module">
 
-// Firebase Import
-
 import { initializeApp }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -283,9 +335,7 @@ import {
 getFirestore,
 collection,
 addDoc,
-getDocs,
-deleteDoc,
-doc
+getDocs
 
 }
 
@@ -315,9 +365,59 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-// ADD ORDER
+// ADD COLOR ROW
 
-window.addOrder = async function(){
+window.addColorRow = function(){
+
+let container =
+
+document.getElementById("colorContainer");
+
+container.innerHTML += `
+
+<div class="color-row">
+
+<input
+type="text"
+placeholder="Color Name"
+class="colorName">
+
+<input
+type="number"
+placeholder="Quantity"
+class="colorQty"
+oninput="calculateTotal()">
+
+</div>
+
+`;
+
+}
+
+// CALCULATE TOTAL
+
+window.calculateTotal = function(){
+
+let qtyInputs =
+
+document.querySelectorAll(".colorQty");
+
+let total = 0;
+
+qtyInputs.forEach(input=>{
+
+total += Number(input.value || 0);
+
+});
+
+document.getElementById("totalQty")
+.innerText = total;
+
+}
+
+// SAVE ORDER
+
+window.saveOrder = async function(){
 
 let buyer =
 document.getElementById("buyer").value;
@@ -328,27 +428,52 @@ document.getElementById("ikl").value;
 let style =
 document.getElementById("style").value;
 
-let qty =
-document.getElementById("qty").value;
-
-let fabric =
-document.getElementById("fabric").value;
-
 let shipdate =
 document.getElementById("shipdate").value;
 
-let status =
-document.getElementById("status").value;
+let colorNames =
+document.querySelectorAll(".colorName");
 
-if(buyer === "" || ikl === ""){
+let colorQtys =
+document.querySelectorAll(".colorQty");
+
+let colors = [];
+
+let totalQty = 0;
+
+for(let i=0; i<colorNames.length; i++){
+
+let color =
+colorNames[i].value;
+
+let qty =
+Number(colorQtys[i].value);
+
+if(color && qty){
+
+colors.push({
+
+color,
+qty
+
+});
+
+totalQty += qty;
+
+}
+
+}
+
+if(
+buyer === "" ||
+ikl === ""
+){
 
 alert("Please fill required fields");
 
 return;
 
 }
-
-try{
 
 await addDoc(
 
@@ -359,10 +484,9 @@ collection(db, "orders"),
 buyer,
 ikl,
 style,
-qty,
-fabric,
 shipdate,
-status
+colors,
+totalQty
 
 }
 
@@ -373,14 +497,6 @@ alert("Order Saved Successfully!");
 loadOrders();
 
 }
-
-catch(error){
-
-alert("Error: " + error);
-
-}
-
-};
 
 // LOAD ORDERS
 
@@ -401,47 +517,56 @@ table.innerHTML = `
 <th>Buyer</th>
 <th>IKL No</th>
 <th>Style</th>
-<th>Order Qty</th>
-<th>Fabric</th>
-<th>Shipment Date</th>
-<th>Status</th>
-<th>Action</th>
+<th>Shipment</th>
+<th>Color Breakdown</th>
+<th>Total Qty</th>
 
 </tr>
 
 `;
 
-querySnapshot.forEach((docItem) => {
+querySnapshot.forEach((docItem)=>{
 
 let data = docItem.data();
+
+let colorHTML = "";
+
+if(data.colors){
+
+data.colors.forEach(c=>{
+
+colorHTML += `
+
+${c.color}
+=
+${c.qty} PCS
+<br>
+
+`;
+
+});
+
+}
 
 table.innerHTML += `
 
 <tr>
 
-<td>${data.buyer}</td>
+<td>${data.buyer || ""}</td>
 
-<td>${data.ikl}</td>
+<td>${data.ikl || ""}</td>
 
-<td>${data.style}</td>
+<td>${data.style || ""}</td>
 
-<td>${data.qty}</td>
+<td>${data.shipdate || ""}</td>
 
-<td>${data.fabric}</td>
-
-<td>${data.shipdate}</td>
-
-<td>${data.status}</td>
+<td>${colorHTML}</td>
 
 <td>
 
-<button
-class="delete-btn"
-onclick="deleteOrder('${docItem.id}')">
+${data.totalQty || 0}
 
-Delete
-
-</button>
+PCS
 
 </td>
 
@@ -453,31 +578,12 @@ Delete
 
 }
 
-// DELETE ORDER
-
-window.deleteOrder = async function(id){
-
-let confirmDelete =
-
-confirm("Delete this order?");
-
-if(confirmDelete){
-
-await deleteDoc(doc(db, "orders", id));
-
-alert("Order Deleted!");
-
-loadOrders();
-
-}
-
-}
-
-// Load Orders On Start
+// LOAD DATA
 
 loadOrders();
 
 </script>
 
 </body>
+
 </html>
