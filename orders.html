@@ -1,6 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart TNA BD - Order Entry</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+
+margin:0;
+padding:0;
+background:#0f172a;
+font-family:Arial;
+color:white;
+
+}
+
+header{
+
+background:#111827;
+padding:20px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#00ff99;
+
+}
+
+.container{
+
+max-width:1200px;
+margin:auto;
+padding:20px;
+
+}
+
+.card{
+
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+overflow:auto;
+
+}
+
+h2{
+
+color:#00ff99;
+
+}
+
+.form-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+
+}
+
+.input-box label{
+
+display:block;
+margin-bottom:8px;
+color:#cbd5e1;
+
+}
+
+.input-box input,
+.input-box select{
+
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+font-size:15px;
+outline:none;
+box-sizing:border-box;
+
+}
+
+button{
+
+background:#00aa66;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+
+}
+
+button:hover{
+
+background:#008844;
+
+}
+
+.delete-btn{
+
+background:red;
+
+}
+
+.delete-btn:hover{
+
+background:darkred;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+min-width:1200px;
+
+}
+
+table th,
+table td{
+
+border:1px solid #334155;
+padding:12px;
+text-align:center;
+
+}
+
+table th{
+
+background:#111827;
+color:#00ff99;
+
+}
+
+.table-container{
+
+overflow:auto;
+
+}
+
+.footer{
+
+text-align:center;
+margin-top:30px;
+color:#94a3b8;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+🧵 SMART TNA BD - ORDER ENTRY SYSTEM
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>📦 Create New Order</h2>
+
+<div class="form-grid">
+
+<div class="input-box">
+<label>Buyer Name</label>
+<input type="text" id="buyer" placeholder="Buyer Name">
+</div>
+
+<div class="input-box">
+<label>IKL No</label>
+<input type="text" id="ikl" placeholder="IKL Number">
+</div>
+
+<div class="input-box">
+<label>Style</label>
+<input type="text" id="style" placeholder="Style">
+</div>
+
+<div class="input-box">
+<label>Order Quantity</label>
+<input type="number" id="qty" placeholder="Order Qty">
+</div>
+
+<div class="input-box">
+<label>Fabric Type</label>
+<input type="text" id="fabric" placeholder="Fabric Type">
+</div>
+
+<div class="input-box">
+<label>Shipment Date</label>
+<input type="date" id="shipdate">
+</div>
+
+<div class="input-box">
+<label>Status</label>
+
+<select id="status">
+
+<option>Running</option>
+<option>Pending</option>
+<option>Delay</option>
+<option>Complete</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button onclick="addOrder()">
+
+<i class="fa-solid fa-plus"></i>
+
+Save Order
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📋 Order List</h2>
+
+<div class="table-container">
+
+<table id="orderTable">
+
+<tr>
+
+<th>Buyer</th>
+<th>IKL No</th>
+<th>Style</th>
+<th>Order Qty</th>
+<th>Fabric</th>
+<th>Shipment Date</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+Made for Bangladesh Garments Industry 🇧🇩
+
+</div>
+
+</div>
+
 <script type="module">
 
 // Firebase Import
+
 import { initializeApp }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -10,13 +283,16 @@ import {
 getFirestore,
 collection,
 addDoc,
-getDocs
+getDocs,
+deleteDoc,
+doc
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Firebase Config
+
 const firebaseConfig = {
 
 apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
@@ -34,11 +310,13 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
 
 // Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-// SAVE ORDER
+// ADD ORDER
+
 window.addOrder = async function(){
 
 let buyer =
@@ -105,6 +383,7 @@ alert("Error: " + error);
 };
 
 // LOAD ORDERS
+
 async function loadOrders(){
 
 const querySnapshot =
@@ -115,7 +394,6 @@ let table =
 
 document.getElementById("orderTable");
 
-// remove old rows
 table.innerHTML = `
 
 <tr>
@@ -127,14 +405,15 @@ table.innerHTML = `
 <th>Fabric</th>
 <th>Shipment Date</th>
 <th>Status</th>
+<th>Action</th>
 
 </tr>
 
 `;
 
-querySnapshot.forEach((doc) => {
+querySnapshot.forEach((docItem) => {
 
-let data = doc.data();
+let data = docItem.data();
 
 table.innerHTML += `
 
@@ -154,6 +433,18 @@ table.innerHTML += `
 
 <td>${data.status}</td>
 
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteOrder('${docItem.id}')">
+
+Delete
+
+</button>
+
+</td>
+
 </tr>
 
 `;
@@ -162,7 +453,31 @@ table.innerHTML += `
 
 }
 
-// Load data on page start
+// DELETE ORDER
+
+window.deleteOrder = async function(id){
+
+let confirmDelete =
+
+confirm("Delete this order?");
+
+if(confirmDelete){
+
+await deleteDoc(doc(db, "orders", id));
+
+alert("Order Deleted!");
+
+loadOrders();
+
+}
+
+}
+
+// Load Orders On Start
+
 loadOrders();
 
 </script>
+
+</body>
+</html>
