@@ -36,7 +36,7 @@ color:#00ff99;
 .main{
 
 display:grid;
-grid-template-columns:350px 1fr;
+grid-template-columns:360px 1fr;
 height:calc(100vh - 70px);
 
 }
@@ -53,6 +53,24 @@ border-right:2px solid #1e293b;
 .sidebar h2{
 
 color:#00ff99;
+
+}
+
+.search-box{
+
+margin-bottom:20px;
+
+}
+
+.search-box input{
+
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+box-sizing:border-box;
 
 }
 
@@ -82,7 +100,7 @@ color:#00ff99;
 
 .order-card p{
 
-margin:5px 0;
+margin:6px 0;
 font-size:14px;
 
 }
@@ -139,6 +157,7 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
+min-width:2600px;
 
 }
 
@@ -174,7 +193,7 @@ box-sizing:border-box;
 
 textarea{
 
-height:70px;
+height:90px;
 
 }
 
@@ -205,7 +224,7 @@ background:#008844;
 
 <header>
 
-🧵 SMART TNA BD - PRO MERCHANDISING PANEL
+🧵 SMART TNA BD - MERCHANDISING ERP
 
 </header>
 
@@ -215,7 +234,17 @@ background:#008844;
 
 <div class="sidebar">
 
-<h2>📦 Order List</h2>
+<h2>📦 Order Search</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search IKL / Order / Merchandiser"
+onkeyup="filterOrders()">
+
+</div>
 
 <div id="orderList"></div>
 
@@ -227,7 +256,7 @@ background:#008844;
 
 <div class="card">
 
-<h2>📋 Selected Order Details</h2>
+<h2>📋 Selected Order Info</h2>
 
 <div class="info-grid">
 
@@ -244,6 +273,14 @@ background:#008844;
 <span>IKL No</span>
 
 <b id="showIKL">-</b>
+
+</div>
+
+<div class="info-box">
+
+<span>Order Number</span>
+
+<b id="showOrder">-</b>
 
 </div>
 
@@ -292,27 +329,35 @@ background:#008844;
 <tr>
 
 <th>Color</th>
+
 <th>Order Qty</th>
 
-<th>Labdip Approval</th>
+<th>Labdip Date</th>
+<th>Labdip Status</th>
 
-<th>Strike Off Approval</th>
+<th>Strike Off Date</th>
+<th>Strike Off Status</th>
 
-<th>Trims Approval</th>
+<th>Trims Approval Date</th>
+<th>Trims Status</th>
 
-<th>Sewing Acc In-house</th>
+<th>Sewing Acc Date</th>
+<th>Sewing Acc Status</th>
 
-<th>Finishing Acc In-house</th>
-
-<th>Status</th>
+<th>Finishing Acc Date</th>
+<th>Finishing Acc Status</th>
 
 </tr>
 
 </table>
 
+<br>
+
+<label>Delay Note</label>
+
 <textarea
 id="delayNote"
-placeholder="Delay Note"></textarea>
+placeholder="Write delay reason"></textarea>
 
 <button onclick="saveUpdates()">
 
@@ -344,7 +389,7 @@ doc
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE CONFIG
+// FIREBASE
 
 const firebaseConfig = {
 
@@ -370,6 +415,8 @@ let selectedDocId = null;
 
 let selectedColors = [];
 
+let allOrders = [];
+
 // LOAD ORDER LIST
 
 async function loadOrders(){
@@ -384,17 +431,34 @@ document.getElementById("orderList");
 
 orderList.innerHTML = "";
 
+allOrders = [];
+
 querySnapshot.forEach((docItem)=>{
 
 let data = docItem.data();
+
+allOrders.push({
+
+id:docItem.id,
+
+...data
+
+});
 
 orderList.innerHTML += `
 
 <div
 class="order-card"
-onclick="selectOrder('${docItem.id}')">
+data-search="
+${data.ikl || ""}
+${data.orderNo || ""}
+${data.merchandiser || ""}
+">
 
 <h3>${data.ikl || ""}</h3>
+
+<p>Order:
+${data.orderNo || ""}</p>
 
 <p>Buyer:
 ${data.buyer || ""}</p>
@@ -405,6 +469,13 @@ ${data.style || ""}</p>
 <p>Merch:
 ${data.merchandiser || ""}</p>
 
+<button
+onclick="selectOrder('${docItem.id}')">
+
+Open
+
+</button>
+
 </div>
 
 `;
@@ -413,27 +484,60 @@ ${data.merchandiser || ""}</p>
 
 }
 
+// FILTER SEARCH
+
+window.filterOrders = function(){
+
+let input =
+
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let cards =
+
+document.querySelectorAll(".order-card");
+
+cards.forEach(card=>{
+
+let text =
+card.dataset.search.toLowerCase();
+
+if(text.includes(input)){
+
+card.style.display = "block";
+
+}
+
+else{
+
+card.style.display = "none";
+
+}
+
+});
+
+}
+
 // SELECT ORDER
 
-window.selectOrder = async function(id){
+window.selectOrder = function(id){
 
 selectedDocId = id;
 
-const querySnapshot =
+let data =
 
-await getDocs(collection(db, "orders"));
+allOrders.find(o=>o.id === id);
 
-querySnapshot.forEach((docItem)=>{
-
-if(docItem.id === id){
-
-let data = docItem.data();
+if(!data) return;
 
 document.getElementById("showBuyer")
 .innerText = data.buyer || "-";
 
 document.getElementById("showIKL")
 .innerText = data.ikl || "-";
+
+document.getElementById("showOrder")
+.innerText = data.orderNo || "-";
 
 document.getElementById("showStyle")
 .innerText = data.style || "-";
@@ -454,10 +558,6 @@ loadColorTable(selectedColors);
 
 }
 
-});
-
-}
-
 // LOAD COLOR TABLE
 
 function loadColorTable(colors){
@@ -471,19 +571,23 @@ table.innerHTML = `
 <tr>
 
 <th>Color</th>
+
 <th>Order Qty</th>
 
-<th>Labdip Approval</th>
+<th>Labdip Date</th>
+<th>Labdip Status</th>
 
-<th>Strike Off Approval</th>
+<th>Strike Off Date</th>
+<th>Strike Off Status</th>
 
-<th>Trims Approval</th>
+<th>Trims Approval Date</th>
+<th>Trims Status</th>
 
-<th>Sewing Acc In-house</th>
+<th>Sewing Acc Date</th>
+<th>Sewing Acc Status</th>
 
-<th>Finishing Acc In-house</th>
-
-<th>Status</th>
+<th>Finishing Acc Date</th>
+<th>Finishing Acc Status</th>
 
 </tr>
 
@@ -513,7 +617,24 @@ PCS
 
 <input
 type="date"
-id="labdip_${index}">
+id="labdip_${index}"
+value="${c.labdip || ""}">
+
+</td>
+
+<td>
+
+<select id="labdipstatus_${index}">
+
+<option ${c.labdipStatus==="Pending"?"selected":""}>Pending</option>
+
+<option ${c.labdipStatus==="Running"?"selected":""}>Running</option>
+
+<option ${c.labdipStatus==="Delay"?"selected":""}>Delay</option>
+
+<option ${c.labdipStatus==="Complete"?"selected":""}>Complete</option>
+
+</select>
 
 </td>
 
@@ -521,7 +642,24 @@ id="labdip_${index}">
 
 <input
 type="date"
-id="strike_${index}">
+id="strike_${index}"
+value="${c.strike || ""}">
+
+</td>
+
+<td>
+
+<select id="strikestatus_${index}">
+
+<option ${c.strikeStatus==="Pending"?"selected":""}>Pending</option>
+
+<option ${c.strikeStatus==="Running"?"selected":""}>Running</option>
+
+<option ${c.strikeStatus==="Delay"?"selected":""}>Delay</option>
+
+<option ${c.strikeStatus==="Complete"?"selected":""}>Complete</option>
+
+</select>
 
 </td>
 
@@ -529,7 +667,24 @@ id="strike_${index}">
 
 <input
 type="date"
-id="trims_${index}">
+id="trims_${index}"
+value="${c.trims || ""}">
+
+</td>
+
+<td>
+
+<select id="trimsstatus_${index}">
+
+<option ${c.trimsStatus==="Pending"?"selected":""}>Pending</option>
+
+<option ${c.trimsStatus==="Running"?"selected":""}>Running</option>
+
+<option ${c.trimsStatus==="Delay"?"selected":""}>Delay</option>
+
+<option ${c.trimsStatus==="Complete"?"selected":""}>Complete</option>
+
+</select>
 
 </td>
 
@@ -537,7 +692,24 @@ id="trims_${index}">
 
 <input
 type="date"
-id="sewingacc_${index}">
+id="sewingacc_${index}"
+value="${c.sewingacc || ""}">
+
+</td>
+
+<td>
+
+<select id="sewingstatus_${index}">
+
+<option ${c.sewingStatus==="Pending"?"selected":""}>Pending</option>
+
+<option ${c.sewingStatus==="Running"?"selected":""}>Running</option>
+
+<option ${c.sewingStatus==="Delay"?"selected":""}>Delay</option>
+
+<option ${c.sewingStatus==="Complete"?"selected":""}>Complete</option>
+
+</select>
 
 </td>
 
@@ -545,18 +717,22 @@ id="sewingacc_${index}">
 
 <input
 type="date"
-id="finishacc_${index}">
+id="finishacc_${index}"
+value="${c.finishacc || ""}">
 
 </td>
 
 <td>
 
-<select id="status_${index}">
+<select id="finishstatus_${index}">
 
-<option>Pending</option>
-<option>Running</option>
-<option>Delay</option>
-<option>Complete</option>
+<option ${c.finishStatus==="Pending"?"selected":""}>Pending</option>
+
+<option ${c.finishStatus==="Running"?"selected":""}>Running</option>
+
+<option ${c.finishStatus==="Delay"?"selected":""}>Delay</option>
+
+<option ${c.finishStatus==="Complete"?"selected":""}>Complete</option>
 
 </select>
 
@@ -593,20 +769,32 @@ updatedColors.push({
 labdip:
 document.getElementById(`labdip_${index}`).value,
 
+labdipStatus:
+document.getElementById(`labdipstatus_${index}`).value,
+
 strike:
 document.getElementById(`strike_${index}`).value,
+
+strikeStatus:
+document.getElementById(`strikestatus_${index}`).value,
 
 trims:
 document.getElementById(`trims_${index}`).value,
 
+trimsStatus:
+document.getElementById(`trimsstatus_${index}`).value,
+
 sewingacc:
 document.getElementById(`sewingacc_${index}`).value,
+
+sewingStatus:
+document.getElementById(`sewingstatus_${index}`).value,
 
 finishacc:
 document.getElementById(`finishacc_${index}`).value,
 
-status:
-document.getElementById(`status_${index}`).value
+finishStatus:
+document.getElementById(`finishstatus_${index}`).value
 
 });
 
