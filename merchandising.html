@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD - Merchandising</title>
+<title>SMART TNA BD - PRO MERCHANDISING</title>
 
 <style>
 
@@ -25,19 +25,72 @@ color:white;
 header{
 
 background:#111827;
-padding:20px;
+padding:18px;
 text-align:center;
-font-size:30px;
+font-size:28px;
 font-weight:bold;
 color:#00ff99;
 
 }
 
-.container{
+.main{
 
-max-width:1900px;
-margin:auto;
+display:grid;
+grid-template-columns:350px 1fr;
+height:calc(100vh - 70px);
+
+}
+
+.sidebar{
+
+background:#111827;
+padding:15px;
+overflow:auto;
+border-right:2px solid #1e293b;
+
+}
+
+.sidebar h2{
+
+color:#00ff99;
+
+}
+
+.order-card{
+
+background:#1e293b;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.order-card:hover{
+
+background:#334155;
+
+}
+
+.order-card h3{
+
+margin:0;
+color:#00ff99;
+
+}
+
+.order-card p{
+
+margin:5px 0;
+font-size:14px;
+
+}
+
+.content{
+
 padding:20px;
+overflow:auto;
 
 }
 
@@ -56,57 +109,28 @@ color:#00ff99;
 
 }
 
-.form-grid{
+.info-grid{
 
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
 
 }
 
-.input-box label{
+.info-box{
+
+background:#111827;
+padding:15px;
+border-radius:10px;
+
+}
+
+.info-box span{
 
 display:block;
-margin-bottom:8px;
-
-}
-
-.input-box input,
-.input-box select,
-textarea{
-
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-background:#0f172a;
-color:white;
-box-sizing:border-box;
-
-}
-
-textarea{
-
-height:100px;
-
-}
-
-button{
-
-background:#00aa66;
-color:white;
-border:none;
-padding:14px 20px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-margin-top:15px;
-
-}
-
-button:hover{
-
-background:#008844;
+color:#94a3b8;
+margin-bottom:5px;
 
 }
 
@@ -115,7 +139,6 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:2600px;
 
 }
 
@@ -135,37 +158,42 @@ color:#00ff99;
 
 }
 
-.table-container{
+input,
+select,
+textarea{
 
-overflow:auto;
-
-}
-
-.pending{
-
-color:#facc15;
-font-weight:bold;
-
-}
-
-.running{
-
-color:#22c55e;
-font-weight:bold;
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#0f172a;
+color:white;
+box-sizing:border-box;
 
 }
 
-.delay{
+textarea{
 
-color:#ef4444;
-font-weight:bold;
+height:70px;
 
 }
 
-.complete{
+button{
 
-color:#06b6d4;
+background:#00aa66;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
 font-weight:bold;
+margin-top:15px;
+
+}
+
+button:hover{
+
+background:#008844;
 
 }
 
@@ -177,154 +205,120 @@ font-weight:bold;
 
 <header>
 
-🧵 SMART TNA BD - MERCHANDISING
+🧵 SMART TNA BD - PRO MERCHANDISING PANEL
 
 </header>
 
-<div class="container">
+<div class="main">
+
+<!-- LEFT SIDE -->
+
+<div class="sidebar">
+
+<h2>📦 Order List</h2>
+
+<div id="orderList"></div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="content">
 
 <div class="card">
 
-<h2>📦 Merchandising Update Panel</h2>
+<h2>📋 Selected Order Details</h2>
 
-<div class="form-grid">
+<div class="info-grid">
 
-<div class="input-box">
+<div class="info-box">
 
-<label>IKL No</label>
+<span>Buyer</span>
 
-<input
-type="text"
-id="ikl"
-placeholder="IKL Number">
+<b id="showBuyer">-</b>
 
 </div>
 
-<div class="input-box">
+<div class="info-box">
 
-<label>Final Order Sheet Receive Target Date</label>
+<span>IKL No</span>
 
-<input
-type="date"
-id="finalOrderDate">
+<b id="showIKL">-</b>
 
 </div>
 
-<div class="input-box">
+<div class="info-box">
 
-<label>Labdip Approval Date</label>
+<span>Style</span>
 
-<input
-type="date"
-id="labdipDate">
+<b id="showStyle">-</b>
 
 </div>
 
-<div class="input-box">
+<div class="info-box">
 
-<label>Print / Embroidery Strike Off Approval Date</label>
+<span>Merchandiser</span>
 
-<input
-type="date"
-id="strikeDate">
+<b id="showMerch">-</b>
 
 </div>
 
-<div class="input-box">
+<div class="info-box">
 
-<label>Trims / Accessories Approval Date</label>
+<span>Total Qty</span>
 
-<input
-type="date"
-id="trimsDate">
+<b id="showQty">-</b>
 
 </div>
 
-<div class="input-box">
+<div class="info-box">
 
-<label>Sewing Accessories In-house Date</label>
+<span>Shipment Date</span>
 
-<input
-type="date"
-id="sewingAccDate">
-
-</div>
-
-<div class="input-box">
-
-<label>Finishing Accessories In-house Date</label>
-
-<input
-type="date"
-id="finishAccDate">
-
-</div>
-
-<div class="input-box">
-
-<label>Status</label>
-
-<select id="status">
-
-<option>Pending</option>
-<option>Running</option>
-<option>Delay</option>
-<option>Complete</option>
-
-</select>
+<b id="showShip">-</b>
 
 </div>
 
 </div>
-
-<br>
-
-<div class="input-box">
-
-<label>Delay Note</label>
-
-<textarea
-id="delayNote"
-placeholder="Why delay?"></textarea>
-
-</div>
-
-<button onclick="saveMerchandising()">
-
-💾 Save / Update Merchandising
-
-</button>
 
 </div>
 
 <div class="card">
 
-<h2>📋 Merchandising Dashboard</h2>
+<h2>🎨 Color Wise Merchandising Update</h2>
 
-<div class="table-container">
-
-<table id="merchTable">
+<table id="colorTable">
 
 <tr>
 
-<th>Buyer</th>
-<th>IKL</th>
-<th>Style</th>
-<th>Total Qty</th>
+<th>Color</th>
+<th>Order Qty</th>
 
-<th>Final Order Sheet</th>
 <th>Labdip Approval</th>
+
 <th>Strike Off Approval</th>
+
 <th>Trims Approval</th>
+
 <th>Sewing Acc In-house</th>
+
 <th>Finishing Acc In-house</th>
 
 <th>Status</th>
-<th>Delay Note</th>
 
 </tr>
 
 </table>
+
+<textarea
+id="delayNote"
+placeholder="Delay Note"></textarea>
+
+<button onclick="saveUpdates()">
+
+💾 Save Merchandising Update
+
+</button>
 
 </div>
 
@@ -368,90 +362,95 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-// INIT
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-// SAVE / UPDATE
+let selectedDocId = null;
 
-window.saveMerchandising = async function(){
+let selectedColors = [];
 
-let ikl =
-document.getElementById("ikl").value;
+// LOAD ORDER LIST
 
-let finalOrderDate =
-document.getElementById("finalOrderDate").value;
-
-let labdipDate =
-document.getElementById("labdipDate").value;
-
-let strikeDate =
-document.getElementById("strikeDate").value;
-
-let trimsDate =
-document.getElementById("trimsDate").value;
-
-let sewingAccDate =
-document.getElementById("sewingAccDate").value;
-
-let finishAccDate =
-document.getElementById("finishAccDate").value;
-
-let status =
-document.getElementById("status").value;
-
-let delayNote =
-document.getElementById("delayNote").value;
+async function loadOrders(){
 
 const querySnapshot =
 
 await getDocs(collection(db, "orders"));
 
-querySnapshot.forEach(async(docItem)=>{
+let orderList =
+
+document.getElementById("orderList");
+
+orderList.innerHTML = "";
+
+querySnapshot.forEach((docItem)=>{
 
 let data = docItem.data();
 
-if(data.ikl === ikl){
+orderList.innerHTML += `
 
-await updateDoc(
+<div
+class="order-card"
+onclick="selectOrder('${docItem.id}')">
 
-doc(db, "orders", docItem.id),
+<h3>${data.ikl || ""}</h3>
 
-{
+<p>Buyer:
+${data.buyer || ""}</p>
 
-merch_finalOrderDate:
-finalOrderDate,
+<p>Style:
+${data.style || ""}</p>
 
-merch_labdipDate:
-labdipDate,
+<p>Merch:
+${data.merchandiser || ""}</p>
 
-merch_strikeDate:
-strikeDate,
+</div>
 
-merch_trimsDate:
-trimsDate,
+`;
 
-merch_sewingAccDate:
-sewingAccDate,
-
-merch_finishAccDate:
-finishAccDate,
-
-Merchandising:
-status,
-
-merch_delayNote:
-delayNote
+});
 
 }
 
-);
+// SELECT ORDER
 
-alert("Merchandising Updated!");
+window.selectOrder = async function(id){
 
-loadMerchandising();
+selectedDocId = id;
+
+const querySnapshot =
+
+await getDocs(collection(db, "orders"));
+
+querySnapshot.forEach((docItem)=>{
+
+if(docItem.id === id){
+
+let data = docItem.data();
+
+document.getElementById("showBuyer")
+.innerText = data.buyer || "-";
+
+document.getElementById("showIKL")
+.innerText = data.ikl || "-";
+
+document.getElementById("showStyle")
+.innerText = data.style || "-";
+
+document.getElementById("showMerch")
+.innerText = data.merchandiser || "-";
+
+document.getElementById("showQty")
+.innerText =
+(data.totalQty || 0) + " PCS";
+
+document.getElementById("showShip")
+.innerText = data.shipdate || "-";
+
+selectedColors = data.colors || [];
+
+loadColorTable(selectedColors);
 
 }
 
@@ -459,58 +458,52 @@ loadMerchandising();
 
 }
 
-// LOAD DATA
+// LOAD COLOR TABLE
 
-async function loadMerchandising(){
-
-const querySnapshot =
-
-await getDocs(collection(db, "orders"));
+function loadColorTable(colors){
 
 let table =
 
-document.getElementById("merchTable");
+document.getElementById("colorTable");
 
 table.innerHTML = `
 
 <tr>
 
-<th>Buyer</th>
-<th>IKL</th>
-<th>Style</th>
-<th>Total Qty</th>
+<th>Color</th>
+<th>Order Qty</th>
 
-<th>Final Order Sheet</th>
 <th>Labdip Approval</th>
+
 <th>Strike Off Approval</th>
+
 <th>Trims Approval</th>
+
 <th>Sewing Acc In-house</th>
+
 <th>Finishing Acc In-house</th>
 
 <th>Status</th>
-<th>Delay Note</th>
 
 </tr>
 
 `;
 
-querySnapshot.forEach((docItem)=>{
-
-let data = docItem.data();
+colors.forEach((c,index)=>{
 
 table.innerHTML += `
 
 <tr>
 
-<td>${data.buyer || ""}</td>
+<td>
 
-<td>${data.ikl || ""}</td>
+${c.color}
 
-<td>${data.style || ""}</td>
+</td>
 
 <td>
 
-${data.totalQty || 0}
+${c.qty}
 
 PCS
 
@@ -518,49 +511,54 @@ PCS
 
 <td>
 
-${data.merch_finalOrderDate || "-"}
+<input
+type="date"
+id="labdip_${index}">
 
 </td>
 
 <td>
 
-${data.merch_labdipDate || "-"}
+<input
+type="date"
+id="strike_${index}">
 
 </td>
 
 <td>
 
-${data.merch_strikeDate || "-"}
+<input
+type="date"
+id="trims_${index}">
 
 </td>
 
 <td>
 
-${data.merch_trimsDate || "-"}
+<input
+type="date"
+id="sewingacc_${index}">
 
 </td>
 
 <td>
 
-${data.merch_sewingAccDate || "-"}
+<input
+type="date"
+id="finishacc_${index}">
 
 </td>
 
 <td>
 
-${data.merch_finishAccDate || "-"}
+<select id="status_${index}">
 
-</td>
+<option>Pending</option>
+<option>Running</option>
+<option>Delay</option>
+<option>Complete</option>
 
-<td class="${getClass(data.Merchandising)}">
-
-${data.Merchandising || "Pending"}
-
-</td>
-
-<td>
-
-${data.merch_delayNote || "-"}
+</select>
 
 </td>
 
@@ -572,39 +570,72 @@ ${data.merch_delayNote || "-"}
 
 }
 
-// STATUS COLOR
+// SAVE UPDATE
 
-function getClass(status){
+window.saveUpdates = async function(){
 
-if(status === "Running"){
+if(!selectedDocId){
 
-return "running";
+alert("Select Order First");
 
-}
-
-else if(status === "Delay"){
-
-return "delay";
+return;
 
 }
 
-else if(status === "Complete"){
+let updatedColors = [];
 
-return "complete";
+selectedColors.forEach((c,index)=>{
+
+updatedColors.push({
+
+...c,
+
+labdip:
+document.getElementById(`labdip_${index}`).value,
+
+strike:
+document.getElementById(`strike_${index}`).value,
+
+trims:
+document.getElementById(`trims_${index}`).value,
+
+sewingacc:
+document.getElementById(`sewingacc_${index}`).value,
+
+finishacc:
+document.getElementById(`finishacc_${index}`).value,
+
+status:
+document.getElementById(`status_${index}`).value
+
+});
+
+});
+
+await updateDoc(
+
+doc(db, "orders", selectedDocId),
+
+{
+
+colors: updatedColors,
+
+merchDelayNote:
+document.getElementById("delayNote").value,
+
+Merchandising:"Running"
 
 }
 
-else{
+);
 
-return "pending";
-
-}
+alert("Merchandising Updated!");
 
 }
 
 // LOAD
 
-loadMerchandising();
+loadOrders();
 
 </script>
 
