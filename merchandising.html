@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>SMART TNA BD - Merchandising</title>
+
+<style>
+
+body{
+
+margin:0;
+padding:0;
+background:#0f172a;
+font-family:Arial;
+color:white;
+
+}
+
+header{
+
+background:#111827;
+padding:20px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#00ff99;
+
+}
+
+.container{
+
+max-width:1900px;
+margin:auto;
+padding:20px;
+
+}
+
+.card{
+
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+
+}
+
+h2{
+
+color:#00ff99;
+
+}
+
+.form-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+
+}
+
+.input-box label{
+
+display:block;
+margin-bottom:8px;
+
+}
+
+.input-box input,
+.input-box select,
+textarea{
+
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+box-sizing:border-box;
+
+}
+
+textarea{
+
+height:100px;
+
+}
+
+button{
+
+background:#00aa66;
+color:white;
+border:none;
+padding:14px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+button:hover{
+
+background:#008844;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+min-width:2600px;
+
+}
+
+table th,
+table td{
+
+border:1px solid #334155;
+padding:12px;
+text-align:center;
+
+}
+
+table th{
+
+background:#111827;
+color:#00ff99;
+
+}
+
+.table-container{
+
+overflow:auto;
+
+}
+
+.pending{
+
+color:#facc15;
+font-weight:bold;
+
+}
+
+.running{
+
+color:#22c55e;
+font-weight:bold;
+
+}
+
+.delay{
+
+color:#ef4444;
+font-weight:bold;
+
+}
+
+.complete{
+
+color:#06b6d4;
+font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+🧵 SMART TNA BD - MERCHANDISING
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>📦 Merchandising Update Panel</h2>
+
+<div class="form-grid">
+
+<div class="input-box">
+
+<label>IKL No</label>
+
+<input
+type="text"
+id="ikl"
+placeholder="IKL Number">
+
+</div>
+
+<div class="input-box">
+
+<label>Final Order Sheet Receive Target Date</label>
+
+<input
+type="date"
+id="finalOrderDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Labdip Approval Date</label>
+
+<input
+type="date"
+id="labdipDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Print / Embroidery Strike Off Approval Date</label>
+
+<input
+type="date"
+id="strikeDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Trims / Accessories Approval Date</label>
+
+<input
+type="date"
+id="trimsDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Sewing Accessories In-house Date</label>
+
+<input
+type="date"
+id="sewingAccDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Finishing Accessories In-house Date</label>
+
+<input
+type="date"
+id="finishAccDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Status</label>
+
+<select id="status">
+
+<option>Pending</option>
+<option>Running</option>
+<option>Delay</option>
+<option>Complete</option>
+
+</select>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="input-box">
+
+<label>Delay Note</label>
+
+<textarea
+id="delayNote"
+placeholder="Why delay?"></textarea>
+
+</div>
+
+<button onclick="saveMerchandising()">
+
+💾 Save / Update Merchandising
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📋 Merchandising Dashboard</h2>
+
+<div class="table-container">
+
+<table id="merchTable">
+
+<tr>
+
+<th>Buyer</th>
+<th>IKL</th>
+<th>Style</th>
+<th>Total Qty</th>
+
+<th>Final Order Sheet</th>
+<th>Labdip Approval</th>
+<th>Strike Off Approval</th>
+<th>Trims Approval</th>
+<th>Sewing Acc In-house</th>
+<th>Finishing Acc In-house</th>
+
+<th>Status</th>
+<th>Delay Note</th>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs,
+updateDoc,
+doc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// FIREBASE CONFIG
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+authDomain: "smart-tna-bd.firebaseapp.com",
+
+projectId: "smart-tna-bd",
+
+storageBucket: "smart-tna-bd.firebasestorage.app",
+
+messagingSenderId: "372049573207",
+
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+};
+
+// INIT
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+// SAVE / UPDATE
+
+window.saveMerchandising = async function(){
+
+let ikl =
+document.getElementById("ikl").value;
+
+let finalOrderDate =
+document.getElementById("finalOrderDate").value;
+
+let labdipDate =
+document.getElementById("labdipDate").value;
+
+let strikeDate =
+document.getElementById("strikeDate").value;
+
+let trimsDate =
+document.getElementById("trimsDate").value;
+
+let sewingAccDate =
+document.getElementById("sewingAccDate").value;
+
+let finishAccDate =
+document.getElementById("finishAccDate").value;
+
+let status =
+document.getElementById("status").value;
+
+let delayNote =
+document.getElementById("delayNote").value;
+
+const querySnapshot =
+
+await getDocs(collection(db, "orders"));
+
+querySnapshot.forEach(async(docItem)=>{
+
+let data = docItem.data();
+
+if(data.ikl === ikl){
+
+await updateDoc(
+
+doc(db, "orders", docItem.id),
+
+{
+
+merch_finalOrderDate:
+finalOrderDate,
+
+merch_labdipDate:
+labdipDate,
+
+merch_strikeDate:
+strikeDate,
+
+merch_trimsDate:
+trimsDate,
+
+merch_sewingAccDate:
+sewingAccDate,
+
+merch_finishAccDate:
+finishAccDate,
+
+Merchandising:
+status,
+
+merch_delayNote:
+delayNote
+
+}
+
+);
+
+alert("Merchandising Updated!");
+
+loadMerchandising();
+
+}
+
+});
+
+}
+
+// LOAD DATA
+
+async function loadMerchandising(){
+
+const querySnapshot =
+
+await getDocs(collection(db, "orders"));
+
+let table =
+
+document.getElementById("merchTable");
+
+table.innerHTML = `
+
+<tr>
+
+<th>Buyer</th>
+<th>IKL</th>
+<th>Style</th>
+<th>Total Qty</th>
+
+<th>Final Order Sheet</th>
+<th>Labdip Approval</th>
+<th>Strike Off Approval</th>
+<th>Trims Approval</th>
+<th>Sewing Acc In-house</th>
+<th>Finishing Acc In-house</th>
+
+<th>Status</th>
+<th>Delay Note</th>
+
+</tr>
+
+`;
+
+querySnapshot.forEach((docItem)=>{
+
+let data = docItem.data();
+
+table.innerHTML += `
+
+<tr>
+
+<td>${data.buyer || ""}</td>
+
+<td>${data.ikl || ""}</td>
+
+<td>${data.style || ""}</td>
+
+<td>
+
+${data.totalQty || 0}
+
+PCS
+
+</td>
+
+<td>
+
+${data.merch_finalOrderDate || "-"}
+
+</td>
+
+<td>
+
+${data.merch_labdipDate || "-"}
+
+</td>
+
+<td>
+
+${data.merch_strikeDate || "-"}
+
+</td>
+
+<td>
+
+${data.merch_trimsDate || "-"}
+
+</td>
+
+<td>
+
+${data.merch_sewingAccDate || "-"}
+
+</td>
+
+<td>
+
+${data.merch_finishAccDate || "-"}
+
+</td>
+
+<td class="${getClass(data.Merchandising)}">
+
+${data.Merchandising || "Pending"}
+
+</td>
+
+<td>
+
+${data.merch_delayNote || "-"}
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+// STATUS COLOR
+
+function getClass(status){
+
+if(status === "Running"){
+
+return "running";
+
+}
+
+else if(status === "Delay"){
+
+return "delay";
+
+}
+
+else if(status === "Complete"){
+
+return "complete";
+
+}
+
+else{
+
+return "pending";
+
+}
+
+}
+
+// LOAD
+
+loadMerchandising();
+
+</script>
+
+</body>
+
+</html>
