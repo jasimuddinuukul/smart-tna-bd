@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Smart TNA BD - Department Update</title>
+<title>Smart TNA BD - Professional Department Update</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -37,7 +37,7 @@ color:#00ff99;
 
 .container{
 
-max-width:1400px;
+max-width:1800px;
 margin:auto;
 padding:20px;
 
@@ -92,30 +92,19 @@ box-sizing:border-box;
 
 button{
 
-background:#00aa66;
+background:#2563eb;
 color:white;
 border:none;
-padding:12px 18px;
+padding:14px 20px;
 border-radius:10px;
 cursor:pointer;
+font-size:16px;
 font-weight:bold;
 margin-top:10px;
 
 }
 
 button:hover{
-
-background:#008844;
-
-}
-
-.update-btn{
-
-background:#2563eb;
-
-}
-
-.update-btn:hover{
 
 background:#1d4ed8;
 
@@ -126,7 +115,7 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:1800px;
+min-width:2600px;
 
 }
 
@@ -196,7 +185,7 @@ color:#94a3b8;
 
 <header>
 
-🧵 SMART TNA BD - DEPARTMENT UPDATE SYSTEM
+🧵 SMART TNA BD - PROFESSIONAL TNA SYSTEM
 
 </header>
 
@@ -204,7 +193,7 @@ color:#94a3b8;
 
 <div class="card">
 
-<h2>📦 Update Department Status</h2>
+<h2>📦 Department Update Panel</h2>
 
 <div class="form-grid">
 
@@ -226,27 +215,16 @@ placeholder="Enter IKL Number">
 <select id="department">
 
 <option>Merchandising</option>
-
 <option>Knitting</option>
-
 <option>Dyeing</option>
-
 <option>Sample</option>
-
 <option>Lab</option>
-
 <option>ACC / Store</option>
-
 <option>Cutting</option>
-
 <option>Print</option>
-
 <option>Embroidery</option>
-
 <option>Sewing</option>
-
 <option>Finishing</option>
-
 <option>Shipment</option>
 
 </select>
@@ -260,22 +238,38 @@ placeholder="Enter IKL Number">
 <select id="status">
 
 <option>Running</option>
-
 <option>Pending</option>
-
 <option>Delay</option>
-
 <option>Complete</option>
 
 </select>
 
 </div>
 
+<div class="input-box">
+
+<label>Target Date</label>
+
+<input
+type="date"
+id="targetDate">
+
 </div>
 
-<button
-class="update-btn"
-onclick="updateDepartment()">
+<div class="input-box">
+
+<label>Delay Note</label>
+
+<input
+type="text"
+id="delayNote"
+placeholder="Why delay?">
+
+</div>
+
+</div>
+
+<button onclick="updateDepartment()">
 
 <i class="fa-solid fa-pen"></i>
 
@@ -287,7 +281,7 @@ Update Department
 
 <div class="card">
 
-<h2>📋 Live Department Tracking</h2>
+<h2>📋 Professional Live TNA Dashboard</h2>
 
 <div class="table-container">
 
@@ -311,6 +305,10 @@ Update Department
 <th>Sewing</th>
 <th>Finishing</th>
 <th>Shipment</th>
+
+<th>Target Date</th>
+<th>Delay Days</th>
+<th>Delay Note</th>
 
 </tr>
 
@@ -385,6 +383,12 @@ document.getElementById("department").value;
 let status =
 document.getElementById("status").value;
 
+let targetDate =
+document.getElementById("targetDate").value;
+
+let delayNote =
+document.getElementById("delayNote").value;
+
 const querySnapshot =
 await getDocs(collection(db, "orders"));
 
@@ -400,13 +404,19 @@ doc(db, "orders", docItem.id),
 
 {
 
-[department]: status
+[department]: status,
+
+[department + "_Target"]:
+targetDate,
+
+[department + "_DelayNote"]:
+delayNote
 
 }
 
 );
 
-alert("Department Updated!");
+alert("Department Updated Successfully!");
 
 loadOrders();
 
@@ -421,11 +431,9 @@ loadOrders();
 async function loadOrders(){
 
 const querySnapshot =
-
 await getDocs(collection(db, "orders"));
 
 let table =
-
 document.getElementById("deptTable");
 
 table.innerHTML = `
@@ -448,6 +456,10 @@ table.innerHTML = `
 <th>Sewing</th>
 <th>Finishing</th>
 <th>Shipment</th>
+
+<th>Target Date</th>
+<th>Delay Days</th>
+<th>Delay Note</th>
 
 </tr>
 
@@ -515,6 +527,18 @@ ${data.Finishing || "Pending"}
 ${data.Shipment || "Pending"}
 </td>
 
+<td>
+${getLatestTarget(data)}
+</td>
+
+<td>
+${calculateDelay(getLatestTarget(data))}
+</td>
+
+<td>
+${getLatestDelayNote(data)}
+</td>
+
 </tr>
 
 `;
@@ -553,7 +577,72 @@ return "pending";
 
 }
 
-// LOAD ON START
+// GET TARGET DATE
+
+function getLatestTarget(data){
+
+let targetKey =
+Object.keys(data).find(k =>
+k.includes("_Target"));
+
+return data[targetKey] || "-";
+
+}
+
+// GET DELAY NOTE
+
+function getLatestDelayNote(data){
+
+let noteKey =
+Object.keys(data).find(k =>
+k.includes("_DelayNote"));
+
+return data[noteKey] || "-";
+
+}
+
+// CALCULATE DELAY
+
+function calculateDelay(targetDate){
+
+if(
+targetDate === "-" ||
+!targetDate
+){
+
+return "0";
+
+}
+
+let today =
+new Date();
+
+let target =
+new Date(targetDate);
+
+let diff =
+today - target;
+
+let days =
+Math.floor(
+diff / (1000 * 60 * 60 * 24)
+);
+
+if(days > 0){
+
+return days + " Days";
+
+}
+
+else{
+
+return "0";
+
+}
+
+}
+
+// LOAD DATA
 
 loadOrders();
 
