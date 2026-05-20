@@ -4,164 +4,136 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Smart TNA BD - Order Entry</title>
+<title>SMART TNA BD - ORDER ENTRY</title>
 
 <style>
 
 body{
-
 margin:0;
 padding:0;
 background:#0f172a;
 font-family:Arial;
 color:white;
-
 }
 
 header{
-
 background:#111827;
-padding:20px;
+padding:18px;
 text-align:center;
 font-size:30px;
 font-weight:bold;
 color:#00ff99;
-
 }
 
 .container{
-
-max-width:1700px;
-margin:auto;
 padding:20px;
-
+max-width:1900px;
+margin:auto;
 }
 
 .card{
-
 background:#1e293b;
 padding:20px;
 border-radius:15px;
 margin-bottom:20px;
+}
 
+h2{
+color:#00ff99;
+margin-top:0;
 }
 
 .form-grid{
-
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
-
 }
 
-.input-box label{
-
-display:block;
-margin-bottom:8px;
-
-}
-
-.input-box input{
-
+input,
+textarea,
+button{
 width:100%;
-padding:14px;
+padding:12px;
 border:none;
 border-radius:10px;
+box-sizing:border-box;
+}
+
+input,
+textarea{
 background:#0f172a;
 color:white;
-box-sizing:border-box;
+}
 
+textarea{
+height:80px;
 }
 
 button{
-
 background:#00aa66;
 color:white;
-border:none;
-padding:12px 18px;
-border-radius:10px;
-cursor:pointer;
 font-weight:bold;
-margin-top:10px;
-
+cursor:pointer;
 }
 
 button:hover{
-
 background:#008844;
-
-}
-
-.delete-btn{
-
-background:#dc2626;
-
-}
-
-.delete-btn:hover{
-
-background:#b91c1c;
-
-}
-
-.color-section{
-
-margin-top:20px;
-padding:20px;
-background:#111827;
-border-radius:12px;
-
 }
 
 .color-row{
-
 display:grid;
-grid-template-columns:2fr 1fr;
-gap:15px;
-margin-bottom:15px;
-
-}
-
-.total-box{
-
-margin-top:20px;
-font-size:22px;
-font-weight:bold;
-color:#00ff99;
-
+grid-template-columns:2fr 2fr 1fr;
+gap:10px;
+margin-bottom:10px;
 }
 
 table{
-
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-
+min-width:1800px;
 }
 
 table th,
 table td{
-
 border:1px solid #334155;
 padding:12px;
 text-align:center;
-
 }
 
 table th{
-
 background:#111827;
 color:#00ff99;
+}
 
+.search-box{
+margin-bottom:20px;
+}
+
+.search-box input{
+background:#111827;
+}
+
+.action-btn{
+padding:8px 12px;
+margin:2px;
+width:auto;
+}
+
+.delete-btn{
+background:#dc2626;
+}
+
+.edit-btn{
+background:#2563eb;
 }
 
 .table-container{
-
 overflow:auto;
-
 }
 
 </style>
@@ -178,85 +150,104 @@ overflow:auto;
 
 <div class="container">
 
+<!-- ORDER FORM -->
+
 <div class="card">
 
-<h2>🧵 Create New Order</h2>
+<h2>➕ New Order Entry</h2>
 
 <div class="form-grid">
 
-<div class="input-box">
+<div>
 
-<label>Buyer Name</label>
-
-<input type="text" id="buyer">
-
-</div>
-
-<div class="input-box">
-
-<label>IKL No</label>
-
-<input type="text" id="ikl">
-
-</div>
-
-<div class="input-box">
-
-<label>Style</label>
-
-<input type="text" id="style">
-
-</div>
-
-<div class="input-box">
-
-<label>Shipment Date</label>
-
-<input type="date" id="shipdate">
-
-</div>
-
-</div>
-
-<div class="color-section">
-
-<h3>🎨 Color Wise Quantity</h3>
-
-<div id="colorContainer">
-
-<div class="color-row">
+<label>Buyer</label>
 
 <input
 type="text"
-placeholder="Color Name"
-class="colorName">
+id="buyer"
+placeholder="Buyer Name">
+
+</div>
+
+<div>
+
+<label>IKL No</label>
+
+<input
+type="text"
+id="ikl"
+placeholder="IKL Number">
+
+</div>
+
+<div>
+
+<label>Style</label>
+
+<input
+type="text"
+id="style"
+placeholder="Style Number">
+
+</div>
+
+<div>
+
+<label>Order Date</label>
+
+<input
+type="date"
+id="orderDate">
+
+</div>
+
+<div>
+
+<label>Shipment Date</label>
+
+<input
+type="date"
+id="shipdate">
+
+</div>
+
+<div>
+
+<label>Lead Time</label>
 
 <input
 type="number"
-placeholder="Quantity"
-class="colorQty"
-oninput="calculateTotal()">
+id="leadtime"
+placeholder="Lead Time Days">
+
+</div>
+
+<div>
+
+<label>Merchandiser</label>
+
+<input
+type="text"
+id="merchandiser"
+placeholder="Merchandiser Name">
 
 </div>
 
 </div>
+
+<br>
+
+<h2>🎨 Color Breakdown</h2>
+
+<div id="colorContainer"></div>
 
 <button onclick="addColorRow()">
 
-➕ Add More Color
+➕ Add Color
 
 </button>
 
-<div class="total-box">
-
-Total Quantity:
-<span id="totalQty">0</span>
-
-PCS
-
-</div>
-
-</div>
+<br><br>
 
 <button onclick="saveOrder()">
 
@@ -266,9 +257,29 @@ PCS
 
 </div>
 
+<!-- SEARCH -->
+
 <div class="card">
 
-<h2>📋 Live Orders</h2>
+<h2>🔍 Search Orders</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search IKL / Style / Merchandiser"
+onkeyup="filterOrders()">
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="card">
+
+<h2>📋 Order List</h2>
 
 <div class="table-container">
 
@@ -277,11 +288,23 @@ PCS
 <tr>
 
 <th>Buyer</th>
+
 <th>IKL No</th>
+
 <th>Style</th>
-<th>Shipment</th>
+
+<th>Order Date</th>
+
+<th>Shipment Date</th>
+
+<th>Lead Time</th>
+
+<th>Merchandiser</th>
+
 <th>Color Breakdown</th>
+
 <th>Total Qty</th>
+
 <th>Action</th>
 
 </tr>
@@ -307,13 +330,14 @@ collection,
 addDoc,
 getDocs,
 deleteDoc,
-doc
+doc,
+updateDoc
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE CONFIG
+// FIREBASE
 
 const firebaseConfig = {
 
@@ -331,61 +355,48 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-// INIT
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+let editId = null;
 
 // ADD COLOR ROW
 
 window.addColorRow = function(){
 
-let container =
+let div = document.createElement("div");
 
-document.getElementById("colorContainer");
+div.className = "color-row";
 
-container.innerHTML += `
-
-<div class="color-row">
+div.innerHTML = `
 
 <input
 type="text"
-placeholder="Color Name"
-class="colorName">
+class="color"
+placeholder="Color Name">
 
 <input
 type="number"
-placeholder="Quantity"
-class="colorQty"
-oninput="calculateTotal()">
+class="qty"
+placeholder="Quantity">
 
-</div>
+<button onclick="this.parentElement.remove()">
+
+❌ Remove
+
+</button>
 
 `;
 
-}
-
-// CALCULATE TOTAL
-
-window.calculateTotal = function(){
-
-let qtyInputs =
-
-document.querySelectorAll(".colorQty");
-
-let total = 0;
-
-qtyInputs.forEach(input=>{
-
-total += Number(input.value || 0);
-
-});
-
-document.getElementById("totalQty")
-.innerText = total;
+document.getElementById("colorContainer")
+.appendChild(div);
 
 }
+
+// DEFAULT ROW
+
+addColorRow();
 
 // SAVE ORDER
 
@@ -400,26 +411,30 @@ document.getElementById("ikl").value;
 let style =
 document.getElementById("style").value;
 
+let orderDate =
+document.getElementById("orderDate").value;
+
 let shipdate =
 document.getElementById("shipdate").value;
 
-let colorNames =
-document.querySelectorAll(".colorName");
+let leadtime =
+document.getElementById("leadtime").value;
 
-let colorQtys =
-document.querySelectorAll(".colorQty");
+let merchandiser =
+document.getElementById("merchandiser").value;
 
 let colors = [];
 
 let totalQty = 0;
 
-for(let i=0; i<colorNames.length; i++){
+document.querySelectorAll(".color-row")
+.forEach(row=>{
 
 let color =
-colorNames[i].value;
+row.querySelector(".color").value;
 
 let qty =
-Number(colorQtys[i].value);
+Number(row.querySelector(".qty").value);
 
 if(color && qty){
 
@@ -434,40 +449,87 @@ totalQty += qty;
 
 }
 
-}
+});
 
-await addDoc(
-
-collection(db, "orders"),
-
-{
+let orderData = {
 
 buyer,
 ikl,
 style,
+orderDate,
 shipdate,
+leadtime,
+merchandiser,
 colors,
 totalQty,
 
 Merchandising:"Pending",
 Knitting:"Pending",
 Dyeing:"Pending",
-Sample:"Pending",
-Lab:"Pending",
 Cutting:"Pending",
-Print:"Pending",
-Embroidery:"Pending",
 Sewing:"Pending",
-Finishing:"Pending",
-Shipment:"Pending"
+Finishing:"Pending"
+
+};
+
+if(editId){
+
+await updateDoc(
+
+doc(db,"orders",editId),
+
+orderData
+
+);
+
+alert("Order Updated!");
+
+editId = null;
 
 }
+
+else{
+
+await addDoc(
+
+collection(db,"orders"),
+
+orderData
 
 );
 
 alert("Order Saved!");
 
+}
+
+clearForm();
+
 loadOrders();
+
+}
+
+// CLEAR FORM
+
+function clearForm(){
+
+document.getElementById("buyer").value = "";
+
+document.getElementById("ikl").value = "";
+
+document.getElementById("style").value = "";
+
+document.getElementById("orderDate").value = "";
+
+document.getElementById("shipdate").value = "";
+
+document.getElementById("leadtime").value = "";
+
+document.getElementById("merchandiser").value = "";
+
+document.getElementById("colorContainer")
+.innerHTML = "";
+
+addColorRow();
 
 }
 
@@ -477,7 +539,7 @@ async function loadOrders(){
 
 const querySnapshot =
 
-await getDocs(collection(db, "orders"));
+await getDocs(collection(db,"orders"));
 
 let table =
 
@@ -488,11 +550,23 @@ table.innerHTML = `
 <tr>
 
 <th>Buyer</th>
+
 <th>IKL No</th>
+
 <th>Style</th>
-<th>Shipment</th>
+
+<th>Order Date</th>
+
+<th>Shipment Date</th>
+
+<th>Lead Time</th>
+
+<th>Merchandiser</th>
+
 <th>Color Breakdown</th>
+
 <th>Total Qty</th>
+
 <th>Action</th>
 
 </tr>
@@ -503,16 +577,14 @@ querySnapshot.forEach((docItem)=>{
 
 let data = docItem.data();
 
-let colorHTML = "";
+let colorHtml = "";
 
-if(data.colors){
+(data.colors || []).forEach(c=>{
 
-data.colors.forEach(c=>{
-
-colorHTML += `
+colorHtml += `
 
 ${c.color}
-=
+-
 ${c.qty} PCS
 <br>
 
@@ -520,11 +592,14 @@ ${c.qty} PCS
 
 });
 
-}
-
 table.innerHTML += `
 
-<tr>
+<tr
+data-search="
+${data.ikl || ""}
+${data.style || ""}
+${data.merchandiser || ""}
+">
 
 <td>${data.buyer || ""}</td>
 
@@ -532,22 +607,30 @@ table.innerHTML += `
 
 <td>${data.style || ""}</td>
 
+<td>${data.orderDate || ""}</td>
+
 <td>${data.shipdate || ""}</td>
 
-<td>${colorHTML}</td>
+<td>${data.leadtime || ""} Days</td>
 
-<td>
+<td>${data.merchandiser || ""}</td>
 
-${data.totalQty || 0}
+<td>${colorHtml}</td>
 
-PCS
-
-</td>
+<td>${data.totalQty || 0} PCS</td>
 
 <td>
 
 <button
-class="delete-btn"
+class="action-btn edit-btn"
+onclick="editOrder('${docItem.id}')">
+
+Edit
+
+</button>
+
+<button
+class="action-btn delete-btn"
 onclick="deleteOrder('${docItem.id}')">
 
 Delete
@@ -564,7 +647,43 @@ Delete
 
 }
 
-// DELETE ORDER
+// SEARCH
+
+window.filterOrders = function(){
+
+let input =
+
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+
+document.querySelectorAll("#orderTable tr");
+
+rows.forEach((row,index)=>{
+
+if(index === 0) return;
+
+let text =
+row.dataset.search.toLowerCase();
+
+if(text.includes(input)){
+
+row.style.display = "";
+
+}
+
+else{
+
+row.style.display = "none";
+
+}
+
+});
+
+}
+
+// DELETE
 
 window.deleteOrder = async function(id){
 
@@ -574,11 +693,7 @@ confirm("Delete this order?");
 
 if(confirmDelete){
 
-await deleteDoc(
-
-doc(db, "orders", id)
-
-);
+await deleteDoc(doc(db,"orders",id));
 
 alert("Order Deleted!");
 
@@ -588,7 +703,91 @@ loadOrders();
 
 }
 
-// LOAD
+// EDIT
+
+window.editOrder = async function(id){
+
+const querySnapshot =
+
+await getDocs(collection(db,"orders"));
+
+querySnapshot.forEach((docItem)=>{
+
+if(docItem.id === id){
+
+editId = id;
+
+let data = docItem.data();
+
+document.getElementById("buyer").value =
+data.buyer || "";
+
+document.getElementById("ikl").value =
+data.ikl || "";
+
+document.getElementById("style").value =
+data.style || "";
+
+document.getElementById("orderDate").value =
+data.orderDate || "";
+
+document.getElementById("shipdate").value =
+data.shipdate || "";
+
+document.getElementById("leadtime").value =
+data.leadtime || "";
+
+document.getElementById("merchandiser").value =
+data.merchandiser || "";
+
+document.getElementById("colorContainer")
+.innerHTML = "";
+
+(data.colors || []).forEach(c=>{
+
+let div = document.createElement("div");
+
+div.className = "color-row";
+
+div.innerHTML = `
+
+<input
+type="text"
+class="color"
+value="${c.color}">
+
+<input
+type="number"
+class="qty"
+value="${c.qty}">
+
+<button onclick="this.parentElement.remove()">
+
+❌ Remove
+
+</button>
+
+`;
+
+document.getElementById("colorContainer")
+.appendChild(div);
+
+});
+
+window.scrollTo({
+
+top:0,
+behavior:"smooth"
+
+});
+
+}
+
+});
+
+}
+
+// LOAD PAGE
 
 loadOrders();
 
