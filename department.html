@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Smart TNA BD - Department Update</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+body{
+
+margin:0;
+padding:0;
+background:#0f172a;
+font-family:Arial;
+color:white;
+
+}
+
+header{
+
+background:#111827;
+padding:20px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#00ff99;
+
+}
+
+.container{
+
+max-width:1400px;
+margin:auto;
+padding:20px;
+
+}
+
+.card{
+
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+overflow:auto;
+
+}
+
+h2{
+
+color:#00ff99;
+
+}
+
+.form-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+
+}
+
+.input-box label{
+
+display:block;
+margin-bottom:8px;
+color:#cbd5e1;
+
+}
+
+.input-box input,
+.input-box select{
+
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+font-size:15px;
+outline:none;
+box-sizing:border-box;
+
+}
+
+button{
+
+background:#00aa66;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+
+}
+
+button:hover{
+
+background:#008844;
+
+}
+
+.update-btn{
+
+background:#2563eb;
+
+}
+
+.update-btn:hover{
+
+background:#1d4ed8;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+min-width:1800px;
+
+}
+
+table th,
+table td{
+
+border:1px solid #334155;
+padding:12px;
+text-align:center;
+
+}
+
+table th{
+
+background:#111827;
+color:#00ff99;
+
+}
+
+.table-container{
+
+overflow:auto;
+
+}
+
+.running{
+
+color:#22c55e;
+font-weight:bold;
+
+}
+
+.pending{
+
+color:#facc15;
+font-weight:bold;
+
+}
+
+.delay{
+
+color:#ef4444;
+font-weight:bold;
+
+}
+
+.complete{
+
+color:#06b6d4;
+font-weight:bold;
+
+}
+
+.footer{
+
+text-align:center;
+margin-top:30px;
+color:#94a3b8;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+🧵 SMART TNA BD - DEPARTMENT UPDATE SYSTEM
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>📦 Update Department Status</h2>
+
+<div class="form-grid">
+
+<div class="input-box">
+
+<label>IKL No</label>
+
+<input
+type="text"
+id="ikl"
+placeholder="Enter IKL Number">
+
+</div>
+
+<div class="input-box">
+
+<label>Department</label>
+
+<select id="department">
+
+<option>Merchandising</option>
+
+<option>Knitting</option>
+
+<option>Dyeing</option>
+
+<option>Sample</option>
+
+<option>Lab</option>
+
+<option>ACC / Store</option>
+
+<option>Cutting</option>
+
+<option>Print</option>
+
+<option>Embroidery</option>
+
+<option>Sewing</option>
+
+<option>Finishing</option>
+
+<option>Shipment</option>
+
+</select>
+
+</div>
+
+<div class="input-box">
+
+<label>Status</label>
+
+<select id="status">
+
+<option>Running</option>
+
+<option>Pending</option>
+
+<option>Delay</option>
+
+<option>Complete</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button
+class="update-btn"
+onclick="updateDepartment()">
+
+<i class="fa-solid fa-pen"></i>
+
+Update Department
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📋 Live Department Tracking</h2>
+
+<div class="table-container">
+
+<table id="deptTable">
+
+<tr>
+
+<th>Buyer</th>
+<th>IKL No</th>
+<th>Style</th>
+
+<th>Merchandising</th>
+<th>Knitting</th>
+<th>Dyeing</th>
+<th>Sample</th>
+<th>Lab</th>
+<th>ACC / Store</th>
+<th>Cutting</th>
+<th>Print</th>
+<th>Embroidery</th>
+<th>Sewing</th>
+<th>Finishing</th>
+<th>Shipment</th>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+Made for Bangladesh Garments Industry 🇧🇩
+
+</div>
+
+</div>
+
+<script type="module">
+
+// Firebase Import
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+
+getFirestore,
+collection,
+getDocs,
+updateDoc,
+doc
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Firebase Config
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+authDomain: "smart-tna-bd.firebaseapp.com",
+
+projectId: "smart-tna-bd",
+
+storageBucket: "smart-tna-bd.firebasestorage.app",
+
+messagingSenderId: "372049573207",
+
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+};
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+// UPDATE DEPARTMENT
+
+window.updateDepartment = async function(){
+
+let ikl =
+document.getElementById("ikl").value;
+
+let department =
+document.getElementById("department").value;
+
+let status =
+document.getElementById("status").value;
+
+const querySnapshot =
+await getDocs(collection(db, "orders"));
+
+querySnapshot.forEach(async(docItem)=>{
+
+let data = docItem.data();
+
+if(data.ikl === ikl){
+
+await updateDoc(
+
+doc(db, "orders", docItem.id),
+
+{
+
+[department]: status
+
+}
+
+);
+
+alert("Department Updated!");
+
+loadOrders();
+
+}
+
+});
+
+}
+
+// LOAD TABLE
+
+async function loadOrders(){
+
+const querySnapshot =
+
+await getDocs(collection(db, "orders"));
+
+let table =
+
+document.getElementById("deptTable");
+
+table.innerHTML = `
+
+<tr>
+
+<th>Buyer</th>
+<th>IKL No</th>
+<th>Style</th>
+
+<th>Merchandising</th>
+<th>Knitting</th>
+<th>Dyeing</th>
+<th>Sample</th>
+<th>Lab</th>
+<th>ACC / Store</th>
+<th>Cutting</th>
+<th>Print</th>
+<th>Embroidery</th>
+<th>Sewing</th>
+<th>Finishing</th>
+<th>Shipment</th>
+
+</tr>
+
+`;
+
+querySnapshot.forEach((docItem)=>{
+
+let data = docItem.data();
+
+table.innerHTML += `
+
+<tr>
+
+<td>${data.buyer || ""}</td>
+
+<td>${data.ikl || ""}</td>
+
+<td>${data.style || ""}</td>
+
+<td class="${getClass(data.Merchandising)}">
+${data.Merchandising || "Pending"}
+</td>
+
+<td class="${getClass(data.Knitting)}">
+${data.Knitting || "Pending"}
+</td>
+
+<td class="${getClass(data.Dyeing)}">
+${data.Dyeing || "Pending"}
+</td>
+
+<td class="${getClass(data.Sample)}">
+${data.Sample || "Pending"}
+</td>
+
+<td class="${getClass(data.Lab)}">
+${data.Lab || "Pending"}
+</td>
+
+<td class="${getClass(data["ACC / Store"])}">
+${data["ACC / Store"] || "Pending"}
+</td>
+
+<td class="${getClass(data.Cutting)}">
+${data.Cutting || "Pending"}
+</td>
+
+<td class="${getClass(data.Print)}">
+${data.Print || "Pending"}
+</td>
+
+<td class="${getClass(data.Embroidery)}">
+${data.Embroidery || "Pending"}
+</td>
+
+<td class="${getClass(data.Sewing)}">
+${data.Sewing || "Pending"}
+</td>
+
+<td class="${getClass(data.Finishing)}">
+${data.Finishing || "Pending"}
+</td>
+
+<td class="${getClass(data.Shipment)}">
+${data.Shipment || "Pending"}
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+// STATUS COLOR
+
+function getClass(status){
+
+if(status === "Running"){
+
+return "running";
+
+}
+
+else if(status === "Delay"){
+
+return "delay";
+
+}
+
+else if(status === "Complete"){
+
+return "complete";
+
+}
+
+else{
+
+return "pending";
+
+}
+
+}
+
+// LOAD ON START
+
+loadOrders();
+
+</script>
+
+</body>
+
+</html>
