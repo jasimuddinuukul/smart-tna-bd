@@ -8,111 +8,143 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Smart TNA BD Dashboard</title>
+<title>SMART TNA BD - DASHBOARD</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
 body{
-
 margin:0;
 padding:0;
 background:#0f172a;
 font-family:Arial;
 color:white;
-
 }
 
 header{
-
 background:#111827;
 padding:20px;
 text-align:center;
-font-size:30px;
-font-weight:bold;
-color:#00ff99;
+border-bottom:3px solid #00ff99;
+}
 
+.bismillah{
+font-size:28px;
+color:#00ff99;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.company{
+font-size:34px;
+font-weight:bold;
+}
+
+.logo-box{
+width:120px;
+height:120px;
+border:2px dashed #00ff99;
+margin:20px auto;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:15px;
+color:#00ff99;
+font-size:18px;
 }
 
 .container{
-
 padding:20px;
-
 }
 
 .card{
-
 background:#1e293b;
 padding:20px;
 border-radius:15px;
-overflow:auto;
-
+margin-bottom:20px;
 }
 
 h2{
-
+margin-top:0;
 color:#00ff99;
+}
 
+.search-box{
+margin-bottom:20px;
+}
+
+.search-box input{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#111827;
+color:white;
+font-size:16px;
+box-sizing:border-box;
+}
+
+.table-container{
+overflow:auto;
 }
 
 table{
-
 width:100%;
 border-collapse:collapse;
-margin-top:20px;
-min-width:2600px;
-
+min-width:3200px;
 }
 
 table th,
 table td{
-
 border:1px solid #334155;
 padding:12px;
 text-align:center;
-
 }
 
 table th{
-
 background:#111827;
 color:#00ff99;
-
-}
-
-.running{
-
-color:#22c55e;
-font-weight:bold;
-
+position:sticky;
+top:0;
 }
 
 .pending{
-
-color:#facc15;
+background:#facc15;
+color:black;
 font-weight:bold;
+border-radius:5px;
+padding:5px 10px;
+}
 
+.running{
+background:#22c55e;
+color:white;
+font-weight:bold;
+border-radius:5px;
+padding:5px 10px;
 }
 
 .delay{
-
-color:#ef4444;
+background:#ef4444;
+color:white;
 font-weight:bold;
-
+border-radius:5px;
+padding:5px 10px;
 }
 
 .complete{
-
-color:#06b6d4;
+background:#06b6d4;
+color:white;
 font-weight:bold;
-
+border-radius:5px;
+padding:5px 10px;
 }
 
-.footer{
-
-text-align:center;
-margin-top:30px;
-color:#94a3b8;
-
+.chart-box{
+background:#111827;
+padding:20px;
+border-radius:15px;
 }
 
 </style>
@@ -123,36 +155,108 @@ color:#94a3b8;
 
 <header>
 
-🧵 SMART TNA BD - LIVE DASHBOARD
+<div class="bismillah">
+
+﷽ بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+
+</div>
+
+<div class="logo-box">
+
+LOGO
+
+</div>
+
+<div class="company">
+
+INNOVATIVE KNITEX LTD
+
+</div>
 
 </header>
 
 <div class="container">
 
+<!-- SEARCH -->
+
 <div class="card">
 
-<h2>📦 Professional Garments TNA Dashboard</h2>
+<h2>🔍 Search Dashboard</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search Buyer / IKL / Style / Merchandiser"
+onkeyup="filterTable()">
+
+</div>
+
+</div>
+
+<!-- GRAPH -->
+
+<div class="card">
+
+<h2>📊 Total Order Status Graph</h2>
+
+<div class="chart-box">
+
+<canvas id="statusChart"></canvas>
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="card">
+
+<h2>📋 Production Dashboard</h2>
+
+<div class="table-container">
 
 <table id="dashboardTable">
 
 <tr>
 
 <th>Buyer</th>
+
 <th>IKL No</th>
-<th>Style</th>
+
+<th>Style No</th>
+
 <th>Total Qty</th>
+
+<th>Order Date</th>
+
 <th>Shipment Date</th>
 
+<th>Lead Time</th>
+
+<th>Merchandiser</th>
+
 <th>Merchandising</th>
+
 <th>Knitting</th>
+
 <th>Dyeing</th>
+
 <th>Sample</th>
+
 <th>Lab</th>
+
 <th>Cutting</th>
+
 <th>Print</th>
+
 <th>Embroidery</th>
+
 <th>Sewing</th>
+
 <th>Finishing</th>
+
 <th>Shipment</th>
 
 </tr>
@@ -160,10 +264,6 @@ color:#94a3b8;
 </table>
 
 </div>
-
-<div class="footer">
-
-Made for Bangladesh Garments Industry 🇧🇩
 
 </div>
 
@@ -185,7 +285,7 @@ getDocs
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE CONFIG
+// FIREBASE
 
 const firebaseConfig = {
 
@@ -203,8 +303,6 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-// INIT FIREBASE
-
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
@@ -215,7 +313,7 @@ async function loadDashboard(){
 
 const querySnapshot =
 
-await getDocs(collection(db, "orders"));
+await getDocs(collection(db,"orders"));
 
 let table =
 
@@ -226,34 +324,77 @@ table.innerHTML = `
 <tr>
 
 <th>Buyer</th>
+
 <th>IKL No</th>
-<th>Style</th>
+
+<th>Style No</th>
+
 <th>Total Qty</th>
+
+<th>Order Date</th>
+
 <th>Shipment Date</th>
 
+<th>Lead Time</th>
+
+<th>Merchandiser</th>
+
 <th>Merchandising</th>
+
 <th>Knitting</th>
+
 <th>Dyeing</th>
+
 <th>Sample</th>
+
 <th>Lab</th>
+
 <th>Cutting</th>
+
 <th>Print</th>
+
 <th>Embroidery</th>
+
 <th>Sewing</th>
+
 <th>Finishing</th>
+
 <th>Shipment</th>
 
 </tr>
 
 `;
 
+let pending = 0;
+let running = 0;
+let complete = 0;
+let delay = 0;
+
 querySnapshot.forEach((docItem)=>{
 
 let data = docItem.data();
 
+countStatus(data.Merchandising);
+countStatus(data.Knitting);
+countStatus(data.Dyeing);
+countStatus(data.Sample);
+countStatus(data.Lab);
+countStatus(data.Cutting);
+countStatus(data.Print);
+countStatus(data.Embroidery);
+countStatus(data.Sewing);
+countStatus(data.Finishing);
+countStatus(data.Shipment);
+
 table.innerHTML += `
 
-<tr>
+<tr
+data-search="
+${data.buyer || ""}
+${data.ikl || ""}
+${data.style || ""}
+${data.merchandiser || ""}
+">
 
 <td>${data.buyer || ""}</td>
 
@@ -261,81 +402,37 @@ table.innerHTML += `
 
 <td>${data.style || ""}</td>
 
-<td>
+<td>${data.totalQty || 0} PCS</td>
 
-${data.totalQty || 0}
-
-PCS
-
-</td>
+<td>${data.orderDate || ""}</td>
 
 <td>${data.shipdate || ""}</td>
 
-<td class="${getClass(data.Merchandising)}">
+<td>${data.leadtime || ""} Days</td>
 
-${data.Merchandising || "Pending"}
+<td>${data.merchandiser || ""}</td>
 
-</td>
+<td>${statusBadge(data.Merchandising)}</td>
 
-<td class="${getClass(data.Knitting)}">
+<td>${statusBadge(data.Knitting)}</td>
 
-${data.Knitting || "Pending"}
+<td>${statusBadge(data.Dyeing)}</td>
 
-</td>
+<td>${statusBadge(data.Sample)}</td>
 
-<td class="${getClass(data.Dyeing)}">
+<td>${statusBadge(data.Lab)}</td>
 
-${data.Dyeing || "Pending"}
+<td>${statusBadge(data.Cutting)}</td>
 
-</td>
+<td>${statusBadge(data.Print)}</td>
 
-<td class="${getClass(data.Sample)}">
+<td>${statusBadge(data.Embroidery)}</td>
 
-${data.Sample || "Pending"}
+<td>${statusBadge(data.Sewing)}</td>
 
-</td>
+<td>${statusBadge(data.Finishing)}</td>
 
-<td class="${getClass(data.Lab)}">
-
-${data.Lab || "Pending"}
-
-</td>
-
-<td class="${getClass(data.Cutting)}">
-
-${data.Cutting || "Pending"}
-
-</td>
-
-<td class="${getClass(data.Print)}">
-
-${data.Print || "Pending"}
-
-</td>
-
-<td class="${getClass(data.Embroidery)}">
-
-${data.Embroidery || "Pending"}
-
-</td>
-
-<td class="${getClass(data.Sewing)}">
-
-${data.Sewing || "Pending"}
-
-</td>
-
-<td class="${getClass(data.Finishing)}">
-
-${data.Finishing || "Pending"}
-
-</td>
-
-<td class="${getClass(data.Shipment)}">
-
-${data.Shipment || "Pending"}
-
-</td>
+<td>${statusBadge(data.Shipment)}</td>
 
 </tr>
 
@@ -343,39 +440,154 @@ ${data.Shipment || "Pending"}
 
 });
 
-}
-
-// STATUS COLOR
-
-function getClass(status){
+function countStatus(status){
 
 if(status === "Running"){
 
-return "running";
-
-}
-
-else if(status === "Delay"){
-
-return "delay";
+running++;
 
 }
 
 else if(status === "Complete"){
 
-return "complete";
+complete++;
+
+}
+
+else if(status === "Delay"){
+
+delay++;
 
 }
 
 else{
 
-return "pending";
+pending++;
 
 }
 
 }
 
-// LOAD DATA
+// CHART
+
+new Chart(
+
+document.getElementById("statusChart"),
+
+{
+
+type:"bar",
+
+data:{
+
+labels:[
+
+"Pending",
+"Running",
+"Complete",
+"Delay"
+
+],
+
+datasets:[{
+
+label:"Department Status",
+
+data:[
+
+pending,
+running,
+complete,
+delay
+
+],
+
+backgroundColor:[
+
+"#facc15",
+"#22c55e",
+"#06b6d4",
+"#ef4444"
+
+]
+
+}]
+
+}
+
+}
+
+);
+
+}
+
+// STATUS BADGE
+
+function statusBadge(status){
+
+if(status === "Running"){
+
+return `<span class="running">Running</span>`;
+
+}
+
+else if(status === "Complete"){
+
+return `<span class="complete">Complete</span>`;
+
+}
+
+else if(status === "Delay"){
+
+return `<span class="delay">Delay</span>`;
+
+}
+
+else{
+
+return `<span class="pending">Pending</span>`;
+
+}
+
+}
+
+// SEARCH
+
+window.filterTable = function(){
+
+let input =
+
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+
+document.querySelectorAll("#dashboardTable tr");
+
+rows.forEach((row,index)=>{
+
+if(index === 0) return;
+
+let text =
+row.dataset.search.toLowerCase();
+
+if(text.includes(input)){
+
+row.style.display = "";
+
+}
+
+else{
+
+row.style.display = "none";
+
+}
+
+});
+
+}
+
+// LOAD
 
 loadDashboard();
 
