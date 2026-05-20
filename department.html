@@ -4,13 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Smart TNA BD - Professional Department Update</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>Smart TNA BD - Department Details</title>
 
 <style>
 
@@ -49,7 +47,6 @@ background:#1e293b;
 padding:20px;
 border-radius:15px;
 margin-bottom:20px;
-overflow:auto;
 
 }
 
@@ -71,12 +68,12 @@ gap:20px;
 
 display:block;
 margin-bottom:8px;
-color:#cbd5e1;
 
 }
 
 .input-box input,
-.input-box select{
+.input-box select,
+textarea{
 
 width:100%;
 padding:14px;
@@ -84,29 +81,32 @@ border:none;
 border-radius:10px;
 background:#0f172a;
 color:white;
-font-size:15px;
-outline:none;
 box-sizing:border-box;
+
+}
+
+textarea{
+
+height:100px;
 
 }
 
 button{
 
-background:#2563eb;
+background:#00aa66;
 color:white;
 border:none;
-padding:14px 20px;
+padding:12px 18px;
 border-radius:10px;
 cursor:pointer;
-font-size:16px;
 font-weight:bold;
-margin-top:10px;
+margin-top:15px;
 
 }
 
 button:hover{
 
-background:#1d4ed8;
+background:#008844;
 
 }
 
@@ -115,7 +115,6 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:2600px;
 
 }
 
@@ -141,42 +140,6 @@ overflow:auto;
 
 }
 
-.running{
-
-color:#22c55e;
-font-weight:bold;
-
-}
-
-.pending{
-
-color:#facc15;
-font-weight:bold;
-
-}
-
-.delay{
-
-color:#ef4444;
-font-weight:bold;
-
-}
-
-.complete{
-
-color:#06b6d4;
-font-weight:bold;
-
-}
-
-.footer{
-
-text-align:center;
-margin-top:30px;
-color:#94a3b8;
-
-}
-
 </style>
 
 </head>
@@ -185,7 +148,7 @@ color:#94a3b8;
 
 <header>
 
-🧵 SMART TNA BD - PROFESSIONAL TNA SYSTEM
+🧵 SMART TNA BD - DEPARTMENT DETAILS
 
 </header>
 
@@ -193,7 +156,7 @@ color:#94a3b8;
 
 <div class="card">
 
-<h2>📦 Department Update Panel</h2>
+<h2>📦 Department Detail Entry</h2>
 
 <div class="form-grid">
 
@@ -201,10 +164,7 @@ color:#94a3b8;
 
 <label>IKL No</label>
 
-<input
-type="text"
-id="ikl"
-placeholder="Enter IKL Number">
+<input type="text" id="ikl">
 
 </div>
 
@@ -215,32 +175,12 @@ placeholder="Enter IKL Number">
 <select id="department">
 
 <option>Merchandising</option>
-<option>Knitting</option>
-<option>Dyeing</option>
-<option>Sample</option>
-<option>Lab</option>
-<option>ACC / Store</option>
-<option>Cutting</option>
-<option>Print</option>
-<option>Embroidery</option>
-<option>Sewing</option>
-<option>Finishing</option>
-<option>Shipment</option>
 
-</select>
+<option>Knitting & Dyeing</option>
 
-</div>
+<option>Cutting & Print</option>
 
-<div class="input-box">
-
-<label>Status</label>
-
-<select id="status">
-
-<option>Running</option>
-<option>Pending</option>
-<option>Delay</option>
-<option>Complete</option>
+<option>Sewing & Finishing</option>
 
 </select>
 
@@ -250,9 +190,36 @@ placeholder="Enter IKL Number">
 
 <label>Target Date</label>
 
-<input
-type="date"
-id="targetDate">
+<input type="date" id="targetDate">
+
+</div>
+
+<div class="input-box">
+
+<label>Status</label>
+
+<select id="status">
+
+<option>Pending</option>
+<option>Running</option>
+<option>Delay</option>
+<option>Complete</option>
+
+</select>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="input-box">
+
+<label>Department Details</label>
+
+<textarea
+id="details"
+placeholder="Write department details..."></textarea>
 
 </div>
 
@@ -260,20 +227,15 @@ id="targetDate">
 
 <label>Delay Note</label>
 
-<input
-type="text"
+<textarea
 id="delayNote"
-placeholder="Why delay?">
+placeholder="Why delay?"></textarea>
 
 </div>
 
-</div>
+<button onclick="saveDepartmentDetails()">
 
-<button onclick="updateDepartment()">
-
-<i class="fa-solid fa-pen"></i>
-
-Update Department
+💾 Save / Update Department
 
 </button>
 
@@ -281,33 +243,20 @@ Update Department
 
 <div class="card">
 
-<h2>📋 Professional Live TNA Dashboard</h2>
+<h2>📋 Department Details Dashboard</h2>
 
 <div class="table-container">
 
-<table id="deptTable">
+<table id="detailsTable">
 
 <tr>
 
 <th>Buyer</th>
-<th>IKL No</th>
-<th>Style</th>
-
-<th>Merchandising</th>
-<th>Knitting</th>
-<th>Dyeing</th>
-<th>Sample</th>
-<th>Lab</th>
-<th>ACC / Store</th>
-<th>Cutting</th>
-<th>Print</th>
-<th>Embroidery</th>
-<th>Sewing</th>
-<th>Finishing</th>
-<th>Shipment</th>
-
+<th>IKL</th>
+<th>Department</th>
 <th>Target Date</th>
-<th>Delay Days</th>
+<th>Status</th>
+<th>Details</th>
 <th>Delay Note</th>
 
 </tr>
@@ -318,17 +267,9 @@ Update Department
 
 </div>
 
-<div class="footer">
-
-Made for Bangladesh Garments Industry 🇧🇩
-
-</div>
-
 </div>
 
 <script type="module">
-
-// Firebase Import
 
 import { initializeApp }
 
@@ -346,7 +287,7 @@ doc
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Firebase Config
+// FIREBASE CONFIG
 
 const firebaseConfig = {
 
@@ -364,15 +305,15 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-// Initialize Firebase
+// INIT
 
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-// UPDATE DEPARTMENT
+// SAVE DETAILS
 
-window.updateDepartment = async function(){
+window.saveDepartmentDetails = async function(){
 
 let ikl =
 document.getElementById("ikl").value;
@@ -380,16 +321,20 @@ document.getElementById("ikl").value;
 let department =
 document.getElementById("department").value;
 
+let targetDate =
+document.getElementById("targetDate").value;
+
 let status =
 document.getElementById("status").value;
 
-let targetDate =
-document.getElementById("targetDate").value;
+let details =
+document.getElementById("details").value;
 
 let delayNote =
 document.getElementById("delayNote").value;
 
 const querySnapshot =
+
 await getDocs(collection(db, "orders"));
 
 querySnapshot.forEach(async(docItem)=>{
@@ -404,21 +349,25 @@ doc(db, "orders", docItem.id),
 
 {
 
-[department]: status,
-
 [department + "_Target"]:
 targetDate,
 
-[department + "_DelayNote"]:
+[department + "_Status"]:
+status,
+
+[department + "_Details"]:
+details,
+
+[department + "_Delay"]:
 delayNote
 
 }
 
 );
 
-alert("Department Updated Successfully!");
+alert("Department Updated!");
 
-loadOrders();
+loadDetails();
 
 }
 
@@ -426,39 +375,28 @@ loadOrders();
 
 }
 
-// LOAD TABLE
+// LOAD DETAILS
 
-async function loadOrders(){
+async function loadDetails(){
 
 const querySnapshot =
+
 await getDocs(collection(db, "orders"));
 
 let table =
-document.getElementById("deptTable");
+
+document.getElementById("detailsTable");
 
 table.innerHTML = `
 
 <tr>
 
 <th>Buyer</th>
-<th>IKL No</th>
-<th>Style</th>
-
-<th>Merchandising</th>
-<th>Knitting</th>
-<th>Dyeing</th>
-<th>Sample</th>
-<th>Lab</th>
-<th>ACC / Store</th>
-<th>Cutting</th>
-<th>Print</th>
-<th>Embroidery</th>
-<th>Sewing</th>
-<th>Finishing</th>
-<th>Shipment</th>
-
+<th>IKL</th>
+<th>Department</th>
 <th>Target Date</th>
-<th>Delay Days</th>
+<th>Status</th>
+<th>Details</th>
 <th>Delay Note</th>
 
 </tr>
@@ -469,6 +407,22 @@ querySnapshot.forEach((docItem)=>{
 
 let data = docItem.data();
 
+let departments = [
+
+"Merchandising",
+
+"Knitting & Dyeing",
+
+"Cutting & Print",
+
+"Sewing & Finishing"
+
+];
+
+departments.forEach(dep=>{
+
+if(data[dep + "_Status"]){
+
 table.innerHTML += `
 
 <tr>
@@ -477,174 +431,47 @@ table.innerHTML += `
 
 <td>${data.ikl || ""}</td>
 
-<td>${data.style || ""}</td>
+<td>${dep}</td>
 
-<td class="${getClass(data.Merchandising)}">
-${data.Merchandising || "Pending"}
-</td>
+<td>
 
-<td class="${getClass(data.Knitting)}">
-${data.Knitting || "Pending"}
-</td>
+${data[dep + "_Target"] || "-"}
 
-<td class="${getClass(data.Dyeing)}">
-${data.Dyeing || "Pending"}
-</td>
-
-<td class="${getClass(data.Sample)}">
-${data.Sample || "Pending"}
-</td>
-
-<td class="${getClass(data.Lab)}">
-${data.Lab || "Pending"}
-</td>
-
-<td class="${getClass(data["ACC / Store"])}">
-${data["ACC / Store"] || "Pending"}
-</td>
-
-<td class="${getClass(data.Cutting)}">
-${data.Cutting || "Pending"}
-</td>
-
-<td class="${getClass(data.Print)}">
-${data.Print || "Pending"}
-</td>
-
-<td class="${getClass(data.Embroidery)}">
-${data.Embroidery || "Pending"}
-</td>
-
-<td class="${getClass(data.Sewing)}">
-${data.Sewing || "Pending"}
-</td>
-
-<td class="${getClass(data.Finishing)}">
-${data.Finishing || "Pending"}
-</td>
-
-<td class="${getClass(data.Shipment)}">
-${data.Shipment || "Pending"}
 </td>
 
 <td>
-${getLatestTarget(data)}
+
+${data[dep + "_Status"] || "-"}
+
 </td>
 
 <td>
-${calculateDelay(getLatestTarget(data))}
+
+${data[dep + "_Details"] || "-"}
+
 </td>
 
 <td>
-${getLatestDelayNote(data)}
+
+${data[dep + "_Delay"] || "-"}
+
 </td>
 
 </tr>
 
 `;
 
+}
+
+});
+
 });
 
 }
 
-// STATUS COLOR
+// LOAD
 
-function getClass(status){
-
-if(status === "Running"){
-
-return "running";
-
-}
-
-else if(status === "Delay"){
-
-return "delay";
-
-}
-
-else if(status === "Complete"){
-
-return "complete";
-
-}
-
-else{
-
-return "pending";
-
-}
-
-}
-
-// GET TARGET DATE
-
-function getLatestTarget(data){
-
-let targetKey =
-Object.keys(data).find(k =>
-k.includes("_Target"));
-
-return data[targetKey] || "-";
-
-}
-
-// GET DELAY NOTE
-
-function getLatestDelayNote(data){
-
-let noteKey =
-Object.keys(data).find(k =>
-k.includes("_DelayNote"));
-
-return data[noteKey] || "-";
-
-}
-
-// CALCULATE DELAY
-
-function calculateDelay(targetDate){
-
-if(
-targetDate === "-" ||
-!targetDate
-){
-
-return "0";
-
-}
-
-let today =
-new Date();
-
-let target =
-new Date(targetDate);
-
-let diff =
-today - target;
-
-let days =
-Math.floor(
-diff / (1000 * 60 * 60 * 24)
-);
-
-if(days > 0){
-
-return days + " Days";
-
-}
-
-else{
-
-return "0";
-
-}
-
-}
-
-// LOAD DATA
-
-loadOrders();
+loadDetails();
 
 </script>
 
