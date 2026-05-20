@@ -9,9 +9,6 @@ content="width=device-width, initial-scale=1.0">
 
 <title>Smart TNA BD - Order Entry</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <style>
 
 body{
@@ -52,12 +49,6 @@ margin-bottom:20px;
 
 }
 
-h2{
-
-color:#00ff99;
-
-}
-
 .form-grid{
 
 display:grid;
@@ -70,7 +61,6 @@ gap:20px;
 
 display:block;
 margin-bottom:8px;
-color:#cbd5e1;
 
 }
 
@@ -82,8 +72,6 @@ border:none;
 border-radius:10px;
 background:#0f172a;
 color:white;
-font-size:15px;
-outline:none;
 box-sizing:border-box;
 
 }
@@ -93,10 +81,9 @@ button{
 background:#00aa66;
 color:white;
 border:none;
-padding:14px 20px;
+padding:12px 18px;
 border-radius:10px;
 cursor:pointer;
-font-size:16px;
 font-weight:bold;
 margin-top:10px;
 
@@ -108,9 +95,21 @@ background:#008844;
 
 }
 
+.delete-btn{
+
+background:#dc2626;
+
+}
+
+.delete-btn:hover{
+
+background:#b91c1c;
+
+}
+
 .color-section{
 
-margin-top:25px;
+margin-top:20px;
 padding:20px;
 background:#111827;
 border-radius:12px;
@@ -140,7 +139,6 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:1800px;
 
 }
 
@@ -163,14 +161,6 @@ color:#00ff99;
 .table-container{
 
 overflow:auto;
-
-}
-
-.footer{
-
-text-align:center;
-margin-top:30px;
-color:#94a3b8;
 
 }
 
@@ -198,10 +188,7 @@ color:#94a3b8;
 
 <label>Buyer Name</label>
 
-<input
-type="text"
-id="buyer"
-placeholder="Buyer Name">
+<input type="text" id="buyer">
 
 </div>
 
@@ -209,10 +196,7 @@ placeholder="Buyer Name">
 
 <label>IKL No</label>
 
-<input
-type="text"
-id="ikl"
-placeholder="IKL Number">
+<input type="text" id="ikl">
 
 </div>
 
@@ -220,10 +204,7 @@ placeholder="IKL Number">
 
 <label>Style</label>
 
-<input
-type="text"
-id="style"
-placeholder="Style">
+<input type="text" id="style">
 
 </div>
 
@@ -231,9 +212,7 @@ placeholder="Style">
 
 <label>Shipment Date</label>
 
-<input
-type="date"
-id="shipdate">
+<input type="date" id="shipdate">
 
 </div>
 
@@ -241,7 +220,7 @@ id="shipdate">
 
 <div class="color-section">
 
-<h3>🎨 Color Wise Quantity Entry</h3>
+<h3>🎨 Color Wise Quantity</h3>
 
 <div id="colorContainer">
 
@@ -271,11 +250,7 @@ oninput="calculateTotal()">
 <div class="total-box">
 
 Total Quantity:
-<span id="totalQty">
-
-0
-
-</span>
+<span id="totalQty">0</span>
 
 PCS
 
@@ -293,7 +268,7 @@ PCS
 
 <div class="card">
 
-<h2>📋 Live Order List</h2>
+<h2>📋 Live Orders</h2>
 
 <div class="table-container">
 
@@ -307,18 +282,13 @@ PCS
 <th>Shipment</th>
 <th>Color Breakdown</th>
 <th>Total Qty</th>
+<th>Action</th>
 
 </tr>
 
 </table>
 
 </div>
-
-</div>
-
-<div class="footer">
-
-Made for Bangladesh Garments Industry 🇧🇩
 
 </div>
 
@@ -335,13 +305,15 @@ import {
 getFirestore,
 collection,
 addDoc,
-getDocs
+getDocs,
+deleteDoc,
+doc
 
 }
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Firebase Config
+// FIREBASE CONFIG
 
 const firebaseConfig = {
 
@@ -359,7 +331,7 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-// Initialize Firebase
+// INIT
 
 const app = initializeApp(firebaseConfig);
 
@@ -464,17 +436,6 @@ totalQty += qty;
 
 }
 
-if(
-buyer === "" ||
-ikl === ""
-){
-
-alert("Please fill required fields");
-
-return;
-
-}
-
 await addDoc(
 
 collection(db, "orders"),
@@ -486,13 +447,25 @@ ikl,
 style,
 shipdate,
 colors,
-totalQty
+totalQty,
+
+Merchandising:"Pending",
+Knitting:"Pending",
+Dyeing:"Pending",
+Sample:"Pending",
+Lab:"Pending",
+Cutting:"Pending",
+Print:"Pending",
+Embroidery:"Pending",
+Sewing:"Pending",
+Finishing:"Pending",
+Shipment:"Pending"
 
 }
 
 );
 
-alert("Order Saved Successfully!");
+alert("Order Saved!");
 
 loadOrders();
 
@@ -520,6 +493,7 @@ table.innerHTML = `
 <th>Shipment</th>
 <th>Color Breakdown</th>
 <th>Total Qty</th>
+<th>Action</th>
 
 </tr>
 
@@ -570,6 +544,18 @@ PCS
 
 </td>
 
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteOrder('${docItem.id}')">
+
+Delete
+
+</button>
+
+</td>
+
 </tr>
 
 `;
@@ -578,7 +564,31 @@ PCS
 
 }
 
-// LOAD DATA
+// DELETE ORDER
+
+window.deleteOrder = async function(id){
+
+let confirmDelete =
+
+confirm("Delete this order?");
+
+if(confirmDelete){
+
+await deleteDoc(
+
+doc(db, "orders", id)
+
+);
+
+alert("Order Deleted!");
+
+loadOrders();
+
+}
+
+}
+
+// LOAD
 
 loadOrders();
 
