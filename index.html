@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
@@ -58,7 +59,7 @@ table{
 width:100%;
 border-collapse:collapse;
 margin-top:20px;
-min-width:2200px;
+min-width:2600px;
 
 }
 
@@ -106,6 +107,14 @@ font-weight:bold;
 
 }
 
+.footer{
+
+text-align:center;
+margin-top:30px;
+color:#94a3b8;
+
+}
+
 </style>
 
 </head>
@@ -122,7 +131,7 @@ font-weight:bold;
 
 <div class="card">
 
-<h2>📦 Live TNA Tracking Dashboard</h2>
+<h2>📦 Professional Garments TNA Dashboard</h2>
 
 <table id="dashboardTable">
 
@@ -131,14 +140,14 @@ font-weight:bold;
 <th>Buyer</th>
 <th>IKL No</th>
 <th>Style</th>
-<th>Qty</th>
+<th>Total Qty</th>
+<th>Shipment Date</th>
 
 <th>Merchandising</th>
 <th>Knitting</th>
 <th>Dyeing</th>
 <th>Sample</th>
 <th>Lab</th>
-<th>ACC / Store</th>
 <th>Cutting</th>
 <th>Print</th>
 <th>Embroidery</th>
@@ -149,6 +158,12 @@ font-weight:bold;
 </tr>
 
 </table>
+
+</div>
+
+<div class="footer">
+
+Made for Bangladesh Garments Industry 🇧🇩
 
 </div>
 
@@ -170,7 +185,7 @@ getDocs
 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Firebase Config
+// FIREBASE CONFIG
 
 const firebaseConfig = {
 
@@ -188,7 +203,7 @@ appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-// Initialize Firebase
+// INIT FIREBASE
 
 const app = initializeApp(firebaseConfig);
 
@@ -213,14 +228,14 @@ table.innerHTML = `
 <th>Buyer</th>
 <th>IKL No</th>
 <th>Style</th>
-<th>Qty</th>
+<th>Total Qty</th>
+<th>Shipment Date</th>
 
 <th>Merchandising</th>
 <th>Knitting</th>
 <th>Dyeing</th>
 <th>Sample</th>
 <th>Lab</th>
-<th>ACC / Store</th>
 <th>Cutting</th>
 <th>Print</th>
 <th>Embroidery</th>
@@ -246,54 +261,80 @@ table.innerHTML += `
 
 <td>${data.style || ""}</td>
 
-<td>${data.qty || ""}</td>
+<td>
+
+${data.totalQty || 0}
+
+PCS
+
+</td>
+
+<td>${data.shipdate || ""}</td>
 
 <td class="${getClass(data.Merchandising)}">
+
 ${data.Merchandising || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Knitting)}">
+
 ${data.Knitting || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Dyeing)}">
+
 ${data.Dyeing || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Sample)}">
+
 ${data.Sample || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Lab)}">
-${data.Lab || "Pending"}
-</td>
 
-<td class="${getClass(data["ACC / Store"])}">
-${data["ACC / Store"] || "Pending"}
+${data.Lab || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Cutting)}">
+
 ${data.Cutting || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Print)}">
+
 ${data.Print || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Embroidery)}">
+
 ${data.Embroidery || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Sewing)}">
+
 ${data.Sewing || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Finishing)}">
+
 ${data.Finishing || "Pending"}
+
 </td>
 
 <td class="${getClass(data.Shipment)}">
+
 ${data.Shipment || "Pending"}
+
 </td>
 
 </tr>
@@ -303,6 +344,8 @@ ${data.Shipment || "Pending"}
 });
 
 }
+
+// STATUS COLOR
 
 function getClass(status){
 
@@ -331,6 +374,8 @@ return "pending";
 }
 
 }
+
+// LOAD DATA
 
 loadDashboard();
 
