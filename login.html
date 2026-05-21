@@ -1,332 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INNOVATIVE KNITEX LTD - Login</title>
 
-<title>Smart TNA BD - Login</title>
-
-<!-- Icons -->
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 
-body{
-
+*{
     margin:0;
     padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
+body{
     background:#0f172a;
-
-    font-family:Arial;
-
-    color:white;
-
+    min-height:100vh;
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
-    height:100vh;
+    padding:20px;
 }
 
 .login-box{
-
-    width:380px;
-
+    width:450px;
     background:#1e293b;
-
-    padding:35px;
-
     border-radius:20px;
-
-    box-shadow:0 0 20px rgba(0,0,0,0.5);
+    padding:30px;
+    box-shadow:0 0 30px rgba(0,0,0,.4);
 }
 
-.logo{
-
+.company-header{
     text-align:center;
-
     margin-bottom:25px;
 }
 
-.logo h1{
+.bismillah{
+    font-size:30px;
+    color:#22c55e;
+    margin-bottom:10px;
+}
 
-    margin:0;
+.company-logo{
+    max-width:280px;
+    max-height:100px;
+    object-fit:contain;
+    margin-bottom:10px;
+}
 
+.company-header h1{
     color:#00ff99;
-
-    font-size:32px;
+    font-size:28px;
+    margin-bottom:5px;
 }
 
-.logo p{
-
+.company-header p{
     color:#cbd5e1;
-
-    margin-top:10px;
 }
 
-.input-box{
-
-    margin-bottom:20px;
+.input-group{
+    margin-bottom:18px;
 }
 
-.input-box label{
-
+.input-group label{
     display:block;
-
+    color:#e2e8f0;
     margin-bottom:8px;
-
-    color:#cbd5e1;
 }
 
-.input-box input,
-.input-box select{
-
+.input-group input{
     width:100%;
-
     padding:14px;
-
     border:none;
-
     border-radius:10px;
-
     background:#0f172a;
-
     color:white;
-
-    font-size:15px;
-
-    outline:none;
-
-    box-sizing:border-box;
 }
 
-.input-box input:focus,
-.input-box select:focus{
-
-    border:1px solid #00ff99;
+.input-group input:focus{
+    outline:2px solid #00ff99;
 }
 
 .login-btn{
-
     width:100%;
-
     padding:15px;
-
     border:none;
-
-    border-radius:12px;
-
-    background:#00aa66;
-
+    border-radius:10px;
+    background:#16a34a;
     color:white;
-
     font-size:18px;
-
-    cursor:pointer;
-
     font-weight:bold;
-
-    margin-top:10px;
+    cursor:pointer;
 }
 
 .login-btn:hover{
-
-    background:#008844;
+    background:#15803d;
 }
 
-.demo{
-
-    margin-top:25px;
-
-    background:#0f172a;
-
-    padding:15px;
-
-    border-radius:10px;
-
-    font-size:14px;
-
-    color:#cbd5e1;
+.status{
+    text-align:center;
+    margin-top:15px;
+    color:#facc15;
 }
 
 .footer{
-
     text-align:center;
-
     margin-top:20px;
-
     color:#94a3b8;
-
     font-size:13px;
 }
 
-.icon{
-
-    margin-right:8px;
-
-    color:#00ff99;
-}
-
-@media(max-width:500px){
-
-    .login-box{
-
-        width:90%;
-    }
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="login-box">
 
-<div class="logo">
+<div class="company-header">
 
-<h1>🧵 SMART TNA BD</h1>
+<div class="bismillah">
+﷽
+</div>
 
-<p>Garments ERP & Production System</p>
+<img src="logo.png" alt="Logo" class="company-logo">
+
+<h1>INNOVATIVE KNITEX LTD</h1>
+
+<p>Smart TNA ERP & Production Management System</p>
 
 </div>
 
-<form>
-
-<div class="input-box">
-
-<label>
-<i class="fa-solid fa-building icon"></i>
-Department
-</label>
-
-<select>
-
-<option>Merchandising</option>
-
-<option>Knitting</option>
-
-<option>Dyeing</option>
-
-<option>Sample</option>
-
-<option>Lab</option>
-
-<option>ACC / Store</option>
-
-<option>Cutting</option>
-
-<option>Print</option>
-
-<option>Embroidery</option>
-
-<option>Sewing</option>
-
-<option>Finishing</option>
-
-<option>Commercial / Shipment</option>
-
-<option>Admin</option>
-
-</select>
-
+<div class="input-group">
+<label><i class="fa-solid fa-envelope"></i> Email</label>
+<input type="email" id="email" placeholder="Enter Email">
 </div>
 
-<div class="input-box">
-
-<label>
-<i class="fa-solid fa-user icon"></i>
-Username
-</label>
-
-<input
-type="text"
-placeholder="Enter username">
-
+<div class="input-group">
+<label><i class="fa-solid fa-lock"></i> Password</label>
+<input type="password" id="password" placeholder="Enter Password">
 </div>
 
-<div class="input-box">
-
-<label>
-<i class="fa-solid fa-lock icon"></i>
-Password
-</label>
-
-<input
-type="password"
-placeholder="Enter password">
-
-</div>
-
-<button
-type="button"
-class="login-btn"
-onclick="login()">
-
+<button class="login-btn" onclick="loginUser()">
 <i class="fa-solid fa-right-to-bracket"></i>
-
 Login
-
 </button>
 
-</form>
-
-<div class="demo">
-
-<b>Demo Login:</b><br><br>
-
-Username:
-admin<br>
-
-Password:
-1234
-
-</div>
+<div class="status" id="status"></div>
 
 <div class="footer">
-
-Made for Bangladesh Garments Industry 🇧🇩
-
+© INNOVATIVE KNITEX LTD
 </div>
 
 </div>
 
-<script>
+<script type="module">
 
-function login(){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    let username =
-        document.querySelector(
-            'input[type=\"text\"]'
-        ).value;
+import {
+getAuth,
+signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    let password =
-        document.querySelector(
-            'input[type=\"password\"]'
-        ).value;
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    if(username === "admin"
-       && password === "1234"){
+const firebaseConfig = {
+    /* PASTE YOUR FIREBASE CONFIG HERE */
+};
 
-        alert("Login Successful!");
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-        window.location.href =
-            "index.html";
+window.loginUser = async function(){
 
-    }
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-    else{
+document.getElementById("status").innerHTML =
+"Checking User...";
 
-        alert("Wrong Username or Password");
+try{
 
-    }
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const usersSnapshot =
+await getDocs(collection(db,"users"));
+
+let role = "";
+
+usersSnapshot.forEach(doc=>{
+
+const data = doc.data();
+
+if(data.email === email){
+
+role = data.role;
+
+}
+
+});
+
+if(role==="Admin"){
+
+window.location.href="dashboard.html";
+
+}
+
+else if(role==="Management"){
+
+window.location.href="dashboard.html";
+
+}
+
+else if(role==="Merchandising"){
+
+window.location.href="merchandising.html";
+
+}
+
+else if(role==="Knitting" || role==="Dyeing"){
+
+window.location.href="knitting-dyeing.html";
+
+}
+
+else if(role==="Laboratory"){
+
+window.location.href="laboratory.html";
+
+}
+
+else if(role==="Sample"){
+
+window.location.href="sample.html";
+
+}
+
+else if(
+role==="Cutting" ||
+role==="Print" ||
+role==="Embroidery"
+){
+
+window.location.href="cutting-print.html";
+
+}
+
+else if(
+role==="Sewing" ||
+role==="Finishing"
+){
+
+window.location.href="sewing-finishing.html";
+
+}
+
+else{
+
+alert("Role Not Assigned");
+
+}
+
+}
+catch(error){
+
+document.getElementById("status").innerHTML =
+error.message;
+
+}
 
 }
 
