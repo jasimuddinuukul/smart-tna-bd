@@ -1,14 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INNOVATIVE KNITEX LTD - Login</title>
+<body>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<div class="login-box">
 
-<style>
+    <div class="company-header">
 
+        <div class="bismillah">
+            ﷽
+        </div>
+
+        <img src="logo.png" alt="Company Logo" class="company-logo">
+
+        <h1>INNOVATIVE KNITEX LTD</h1>
+
+        <p>Smart TNA ERP & Production Management System</p>
+
+    </div>
+
+    <!-- Login Form Here -->
+
+</div>
+
+</body>
 *{
     margin:0;
     padding:0;
@@ -112,181 +124,38 @@ body{
     color:#94a3b8;
     font-size:13px;
 }
-
-</style>
-</head>
-
-<body>
-
-<div class="login-box">
-
-<div class="company-header">
-
-<div class="bismillah">
-﷽
-</div>
-
-<img src="logo.png" alt="Logo" class="company-logo">
-
-<h1>INNOVATIVE KNITEX LTD</h1>
-
-<p>Smart TNA ERP & Production Management System</p>
-
-</div>
-
-<div class="input-group">
-<label><i class="fa-solid fa-envelope"></i> Email</label>
-<input type="email" id="email" placeholder="Enter Email">
-</div>
-
-<div class="input-group">
-<label><i class="fa-solid fa-lock"></i> Password</label>
-<input type="password" id="password" placeholder="Enter Password">
-</div>
-
-<button class="login-btn" onclick="loginUser()">
-<i class="fa-solid fa-right-to-bracket"></i>
-Login
-</button>
-
-<div class="status" id="status"></div>
-
-<div class="footer">
-© INNOVATIVE KNITEX LTD
-</div>
-
-</div>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getAuth,
-signInWithEmailAndPassword
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-getFirestore,
-collection,
-getDocs
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-    /* PASTE YOUR FIREBASE CONFIG HERE */
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-window.loginUser = async function(){
-
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-document.getElementById("status").innerHTML =
-"Checking User...";
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-email,
-password
-);
-
-const usersSnapshot =
-await getDocs(collection(db,"users"));
-
-let role = "";
-
-usersSnapshot.forEach(doc=>{
-
-const data = doc.data();
-
-if(data.email === email){
-
-role = data.role;
-
+.company-header{
+    text-align:center;
+    padding:15px;
+    margin-bottom:20px;
 }
 
-});
-
-if(role==="Admin"){
-
-window.location.href="dashboard.html";
-
+.bismillah{
+    font-size:30px;
+    font-weight:bold;
+    color:#16a34a;
+    margin-bottom:10px;
 }
 
-else if(role==="Management"){
-
-window.location.href="dashboard.html";
-
+.company-logo{
+    max-width:350px;
+    max-height:120px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 10px auto;
 }
 
-else if(role==="Merchandising"){
-
-window.location.href="merchandising.html";
-
+.company-header h1{
+    margin:5px 0;
+    color:#00ff99;
+    font-size:28px;
+    font-weight:bold;
 }
 
-else if(role==="Knitting" || role==="Dyeing"){
-
-window.location.href="knitting-dyeing.html";
-
+.company-header p{
+    color:#cbd5e1;
+    font-size:14px;
 }
 
-else if(role==="Laboratory"){
-
-window.location.href="laboratory.html";
-
-}
-
-else if(role==="Sample"){
-
-window.location.href="sample.html";
-
-}
-
-else if(
-role==="Cutting" ||
-role==="Print" ||
-role==="Embroidery"
-){
-
-window.location.href="cutting-print.html";
-
-}
-
-else if(
-role==="Sewing" ||
-role==="Finishing"
-){
-
-window.location.href="sewing-finishing.html";
-
-}
-
-else{
-
-alert("Role Not Assigned");
-
-}
-
-}
-catch(error){
-
-document.getElementById("status").innerHTML =
-error.message;
-
-}
-
-}
-
-</script>
-
-</body>
-</html>
