@@ -203,44 +203,66 @@ body{
 
     </div>
 
-   <button
-    class="login-btn">
-
+ <button class="login-btn" onclick="loginUser()">
     Login
+</button>
 
     </div>
 
     <div class="footer">
 
-        © INNOVATIVE KNITEX LTD
+© INNOVATIVE KNITEX LTD
 
     </div>
 
 </div>
 
-<script>
+<script type="module">
 
-function togglePassword(){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const password =
-        document.getElementById("password");
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+};
 
-    if(password.type === "password"){
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-        password.type = "text";
+window.loginUser = async function(){
 
-    }else{
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-        password.type = "password";
+    try {
+
+        await signInWithEmailAndPassword(auth, email, password);
+
+        alert("Login Successful");
+
+        window.location.href = "dashboard.html";
+
+    } catch(error){
+
+        alert(error.message);
 
     }
 
 }
 
-function loginDemo(){
+window.togglePassword = function(){
 
-    alert("Login UI Ready");
+    const password = document.getElementById("password");
 
+    password.type =
+        password.type === "password"
+        ? "text"
+        : "password";
 }
 
 </script>
