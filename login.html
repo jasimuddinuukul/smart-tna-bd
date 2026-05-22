@@ -1,281 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>INNOVATIVE KNITEX LTD - Login</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-body{
-    background:#0f172a;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
-
-.login-box{
-    width:450px;
-    max-width:100%;
-    background:#1e293b;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 0 30px rgba(0,0,0,.4);
-}
-
-.company-header{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.bismillah{
-    font-size:30px;
-    font-weight:bold;
-    color:#16a34a;
-    margin-bottom:10px;
-}
-
-.company-logo{
-    max-width:320px;
-    max-height:120px;
-    width:auto;
-    height:auto;
-    object-fit:contain;
-    display:block;
-    margin:0 auto 10px auto;
-}
-
-.company-header h1{
-    color:#00ff99;
-    font-size:28px;
-    margin-bottom:5px;
-}
-
-.company-header p{
-    color:#cbd5e1;
-    font-size:14px;
-}
-
-.input-group{
-    margin-bottom:18px;
-}
-
-.input-group label{
-    display:block;
-    color:#e2e8f0;
-    margin-bottom:8px;
-}
-
-.input-group input{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#0f172a;
-    color:white;
-    font-size:15px;
-}
-
-.input-group input:focus{
-    outline:2px solid #00ff99;
-}
-
-.password-box{
-    position:relative;
-}
-
-.password-box input{
-    padding-right:50px;
-}
-
-.toggle-password{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%);
-    cursor:pointer;
-    font-size:20px;
-}
-
-.login-btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#16a34a;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.login-btn:hover{
-    background:#15803d;
-}
-
-.footer{
-    text-align:center;
-    margin-top:20px;
-    color:#94a3b8;
-    font-size:13px;
-}
-
-@media(max-width:500px){
-
-    .login-box{
-        padding:20px;
-    }
-
-    .company-header h1{
-        font-size:22px;
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="login-box">
-
-    <div class="company-header">
-
-        <div class="bismillah">
-            ﷽
-        </div>
-
-        <img src="logo.png" alt="Company Logo" class="company-logo">
-
-        <h1>INNOVATIVE KNITEX LTD</h1>
-
-        <p>Smart TNA ERP & Production Management System</p>
-
-    </div>
-
-    <div class="input-group">
-
-        <label>Email</label>
-
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter Email">
-
-    </div>
-
-    <div class="input-group">
-
-        <label>Password</label>
-
-        <div class="password-box">
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter Password">
-
-            <span
-                class="toggle-password"
-                onclick="togglePassword()">
-
-                👁️
-
-            </span>
-
-        </div>
-
-    </div>
-<button class="login-btn"
-        onclick="loginUser()">
-    Login
-</button>
-    <div class="footer">
-
-        © INNOVATIVE KNITEX LTD
-
-    </div>
-
-</div>
-<script>
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-    getAuth,
-    signInWithEmailAndPassword
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-
-    apiKey: "YOUR_REAL_API_KEY",
-
-    authDomain: "smart-tna-bd.firebaseapp.com",
-
-    projectId: "smart-tna-bd",
-
-    storageBucket: "smart-tna-bd.firebasestorage.app",
-
-    messagingSenderId: "372049573207",
-
-    appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
+  apiKey: "PASTE_YOUR_REAL_API_KEY_HERE",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 
 window.loginUser = async function(){
 
-    const email =
-        document.getElementById("email").value;
-
-    const password =
-        document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     try{
 
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
+        await signInWithEmailAndPassword(auth,email,password);
 
         alert("Login Successful");
 
-        window.location.href =
-            "dashboard.html";
+        window.location.href="dashboard.html";
 
-    }
-
-    catch(error){
+    }catch(error){
 
         alert(error.message);
 
     }
-
 }
 
 window.togglePassword = function(){
 
-    let password =
-        document.getElementById("password");
+    const password = document.getElementById("password");
 
     if(password.type==="password"){
 
@@ -286,27 +48,6 @@ window.togglePassword = function(){
         password.type="password";
 
     }
-
 }
 
 </script>
-function togglePassword(){
-
-    let password =
-        document.getElementById("password");
-
-    if(password.type === "password"){
-
-        password.type = "text";
-
-    }else{
-
-        password.type = "password";
-
-    }
-
-}
-
-</script>
-</body>
-</html>
