@@ -210,13 +210,86 @@ body{
 
 </div>
 <script>
+<script type="module">
 
-function loginUser(){
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    alert("Login Button Working");
+import {
+    getAuth,
+    signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+    apiKey: "YOUR_REAL_API_KEY",
+
+    authDomain: "smart-tna-bd.firebaseapp.com",
+
+    projectId: "smart-tna-bd",
+
+    storageBucket: "smart-tna-bd.firebasestorage.app",
+
+    messagingSenderId: "372049573207",
+
+    appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+window.loginUser = async function(){
+
+    const email =
+        document.getElementById("email").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        alert("Login Successful");
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
 
 }
 
+window.togglePassword = function(){
+
+    let password =
+        document.getElementById("password");
+
+    if(password.type==="password"){
+
+        password.type="text";
+
+    }else{
+
+        password.type="password";
+
+    }
+
+}
+
+</script>
 function togglePassword(){
 
     let password =
