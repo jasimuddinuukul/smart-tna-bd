@@ -218,8 +218,8 @@ id="shipdate">
 <input
 type="number"
 id="leadtime"
-placeholder="Lead Time Days">
-
+placeholder="Auto Lead Time"
+readonly>
 </div>
 
 <div>
@@ -393,7 +393,46 @@ document.getElementById("colorContainer")
 .appendChild(div);
 
 }
+// AUTO LEAD TIME
 
+document.getElementById("orderDate")
+.addEventListener("change", calculateLeadTime);
+
+document.getElementById("shipdate")
+.addEventListener("change", calculateLeadTime);
+
+function calculateLeadTime(){
+
+    let orderDate =
+    document.getElementById("orderDate").value;
+
+    let shipdate =
+    document.getElementById("shipdate").value;
+
+    if(orderDate && shipdate){
+
+        let start =
+        new Date(orderDate);
+
+        let end =
+        new Date(shipdate);
+
+        let diffTime =
+        end - start;
+
+        let diffDays =
+        Math.ceil(
+            diffTime /
+            (1000 * 60 * 60 * 24)
+        );
+
+        document.getElementById("leadtime").value =
+        diffDays;
+
+    }
+
+}
+  
 // DEFAULT ROW
 
 addColorRow();
