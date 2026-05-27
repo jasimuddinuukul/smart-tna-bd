@@ -300,7 +300,7 @@ placeholder="Search Employee ID / Name / Email">
 
 </div>
 <script type="module">
-
+let editId = null;
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -308,8 +308,12 @@ import {
 getFirestore,
 collection,
 addDoc,
-getDocs
+getDocs,
+deleteDoc,
+updateDoc,
+doc
 }
+
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -360,17 +364,60 @@ let role =
 document.getElementById("role").value;
 
 let active =
-document.getElementById("active").value === "true";
+document.getElementById("active").value==="true";
 
 let today =
 new Date().toISOString().split("T")[0];
 
-if(
-!employeeId ||
-!name ||
-!email
-){
+if(!employeeId || !name || !email){
 
+alert("Please Fill All Required Fields");
+
+return;
+
+}
+
+const userData = {
+
+employeeId,
+name,
+email,
+defaultPassword,
+department,
+role,
+active,
+createdAt:today
+
+};
+
+if(editId){
+
+await updateDoc(
+doc(db,"users",editId),
+userData
+);
+
+alert("User Updated");
+
+editId = null;
+
+}
+else{
+
+await addDoc(
+collection(db,"users"),
+userData
+);
+
+alert("User Saved");
+
+}
+
+clearForm();
+
+loadUsers();
+
+}
 alert("Please Fill All Required Fields");
 
 return;
