@@ -1,59 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART TNA BD - ADMIN PANEL V1</title>
+
+<title>SMART TNA BD - ADMIN PANEL</title>
+
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#0f172a;color:#fff}
-header{background:#111827;padding:20px;text-align:center;color:#00ff99;font-size:28px;font-weight:bold}
-.container{max-width:1400px;margin:auto;padding:20px}
-.card{background:#1e293b;padding:20px;border-radius:12px;margin-bottom:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select,button{width:100%;padding:12px;border:none;border-radius:8px;box-sizing:border-box}
-input,select{background:#0f172a;color:#fff}
-button{background:#16a34a;color:#fff;font-weight:bold;cursor:pointer}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #334155;padding:10px;text-align:center}
-th{background:#111827;color:#00ff99}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#111827;
+padding:20px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#00ff99;
+}
+
+.container{
+max-width:1800px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+h2{
+color:#00ff99;
+margin-bottom:15px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+input,
+select,
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+}
+
+input,
+select{
+background:#0f172a;
+color:white;
+}
+
+button{
+background:#16a34a;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#15803d;
+}
+
+.search-box{
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+table th,
+table td{
+border:1px solid #334155;
+padding:12px;
+text-align:center;
+}
+
+table th{
+background:#111827;
+color:#00ff99;
+}
+
+.status-active{
+color:#22c55e;
+font-weight:bold;
+}
+
+.status-inactive{
+color:#ef4444;
+font-weight:bold;
+}
+
+.table-container{
+overflow:auto;
+}
+
 </style>
+
 </head>
+
 <body>
-<header>SMART TNA BD ERP - ADMIN PANEL V1</header>
+
+<header>
+
+SMART TNA BD ERP
+ADMIN PANEL V1
+
+</header>
+
 <div class="container">
+
+<!-- CREATE USER -->
+
 <div class="card">
+
 <h2>Create User</h2>
-<div class="grid">
-<input id="employeeId" placeholder="Employee ID">
-<input id="name" placeholder="Name">
-<input id="email" placeholder="Email">
-<input id="defaultPassword" value="12345678" placeholder="Default Password">
+
+<div class="form-grid">
+
+<div>
+<label>Employee ID</label>
+<input
+type="text"
+id="employeeId"
+placeholder="ADMIN-001">
+</div>
+
+<div>
+<label>Name</label>
+<input
+type="text"
+id="name"
+placeholder="ERP Admin">
+</div>
+
+<div>
+<label>Email</label>
+<input
+type="email"
+id="email"
+placeholder="user@smarttnabd.com">
+</div>
+
+<div>
+<label>Default Password</label>
+<input
+type="text"
+id="defaultPassword"
+value="12345678">
+</div>
+
+<div>
+<label>Department</label>
+
 <select id="department">
-<option>Admin</option><option>Management</option><option>Merchandising</option>
-<option>Sample</option><option>Laboratory</option><option>Knitting & Dyeing</option>
-<option>Cutting</option><option>Print & Embroidery</option>
-<option>Sewing</option><option>Finishing</option>
+
+<option>Admin</option>
+
+<option>Management</option>
+
+<option>Merchandising</option>
+
+<option>Sample</option>
+
+<option>Laboratory</option>
+
+<option>Knitting & Dyeing</option>
+
+<option>Cutting</option>
+
+<option>Print & Embroidery</option>
+
+<option>Sewing</option>
+
+<option>Finishing</option>
+
 </select>
-<select id="role"><option>Admin</option><option>User</option><option>Viewer</option></select>
-<select id="active"><option value="true">Active</option><option value="false">Inactive</option></select>
-</div>
-<br><button>Save User</button>
+
 </div>
 
+<div>
+<label>Role</label>
+
+<select id="role">
+
+<option>Admin</option>
+
+<option>User</option>
+
+<option>Viewer</option>
+
+</select>
+
+</div>
+
+<div>
+<label>Status</label>
+
+<select id="active">
+
+<option value="true">
+Active
+</option>
+
+<option value="false">
+Inactive
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<br>
+
+<button id="saveUserBtn">
+
+💾 Save User
+
+</button>
+
+</div>
+
+<!-- SEARCH -->
+
 <div class="card">
+
 <h2>Search User</h2>
-<input placeholder="Search Employee ID / Name / Email">
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search Employee ID / Name / Email">
+
 </div>
 
+</div>
+
+<!-- USER LIST -->
+
 <div class="card">
+
 <h2>User List</h2>
-<table>
+
+<div class="table-container">
+
+<table id="userTable">
+
 <tr>
-<th>Employee ID</th><th>Name</th><th>Email</th><th>Department</th>
-<th>Role</th><th>Status</th><th>Created At</th><th>Action</th>
+
+<th>Employee ID</th>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Department</th>
+
+<th>Role</th>
+
+<th>Status</th>
+
+<th>Created At</th>
+
+<th>Action</th>
+
 </tr>
+
 </table>
+
 </div>
+
 </div>
+
+</div>
+
 </body>
 </html>
