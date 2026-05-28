@@ -1,58 +1,286 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- DASHBOARD TOP SUMMARY -->
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master Dashboard</title>
+<div class="dashboard-grid">
 
-<style>
+<div class="summary-card">
+<h3>Total Orders</h3>
+<h1 id="totalOrders">0</h1>
+</div>
 
-body{
-    background:#0f172a;
-    color:white;
-    font-family:Arial;
-    margin:0;
-    padding:30px;
-}
+<div class="summary-card">
+<h3>Total Qty</h3>
+<h1 id="totalQty">0 PCS</h1>
+</div>
 
-.card{
-    background:#1e293b;
-    padding:20px;
-    border-radius:15px;
-    margin:10px;
-}
+<div class="summary-card">
+<h3>Running Orders</h3>
+<h1 id="runningOrders">0</h1>
+</div>
 
-h1{
-    color:#00ff99;
-}
+<div class="summary-card">
+<h3>Completed Orders</h3>
+<h1 id="completedOrders">0</h1>
+</div>
 
-</style>
+<div class="summary-card">
+<h3>Delayed Orders</h3>
+<h1 id="delayedOrders">0</h1>
+</div>
 
-</head>
+<div class="summary-card">
+<h3>Shipment This Month</h3>
+<h1 id="shipmentMonth">0 PCS</h1>
+</div>
 
-<body>
+<div class="summary-card">
+<h3>Next Month Booking</h3>
+<h1 id="nextMonthBooking">0 PCS</h1>
+</div>
 
-<h1>﷽</h1>
+<div class="summary-card">
+<h3>Average Lead Time</h3>
+<h1 id="avgLeadTime">0 Days</h1>
+</div>
 
-<h2>INNOVATIVE KNITEX LTD</h2>
+</div>
+
+<!-- IKL WISE SUMMARY -->
 
 <div class="card">
-    Total Orders : 0
+
+<h2>📦 IKL Wise Summary</h2>
+
+<table>
+
+<tr>
+
+<th>IKL No</th>
+<th>Total Style</th>
+<th>Total Qty</th>
+<th>Shipment Date</th>
+<th>Status</th>
+
+</tr>
+
+<tbody id="iklSummaryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- MONTHLY PROGRESS -->
+
+<div class="dashboard-grid">
+
+<div class="card">
+
+<h2>📅 Current Month Progress</h2>
+
+<div class="progress-box">
+
+<p>Total Orders</p>
+<h1 id="monthOrders">0</h1>
+
+<p>Shipment Qty</p>
+<h1 id="monthShipment">0 PCS</h1>
+
+<p>Production Qty</p>
+<h1 id="monthProduction">0 PCS</h1>
+
+<p>Pending Qty</p>
+<h1 id="monthPending">0 PCS</h1>
+
+</div>
+
 </div>
 
 <div class="card">
-    Total Quantity : 0
+
+<h2>📅 Next Month Planning</h2>
+
+<div class="progress-box">
+
+<p>Upcoming Orders</p>
+<h1 id="upcomingOrders">0</h1>
+
+<p>Factory Load</p>
+<h1 id="factoryLoad">0%</h1>
+
+<p>Shipment Booking</p>
+<h1 id="shipmentBooking">0 PCS</h1>
+
 </div>
+
+</div>
+
+</div>
+
+<!-- MERCHANDISER PERFORMANCE -->
 
 <div class="card">
-    Running Orders : 0
+
+<h2>👨‍💼 Merchandiser Performance</h2>
+
+<table>
+
+<tr>
+
+<th>Merchandiser</th>
+<th>Total Orders</th>
+<th>Total Qty</th>
+<th>Running</th>
+<th>Delayed</th>
+<th>Completion %</th>
+
+</tr>
+
+<tbody id="merchTable">
+
+</tbody>
+
+</table>
+
 </div>
+
+<!-- DEPARTMENT PROGRESS -->
 
 <div class="card">
-    Delayed Orders : 0
+
+<h2>🏭 Department Progress</h2>
+
+<div class="dashboard-grid">
+
+<div class="dept-card">Merchandising</div>
+<div class="dept-card">Knitting</div>
+<div class="dept-card">Dyeing</div>
+<div class="dept-card">Sample</div>
+<div class="dept-card">Laboratory</div>
+<div class="dept-card">Cutting</div>
+<div class="dept-card">Print</div>
+<div class="dept-card">Embroidery</div>
+<div class="dept-card">Sewing</div>
+<div class="dept-card">Finishing</div>
+<div class="dept-card">Shipment</div>
+
 </div>
 
-</body>
+</div>
 
-</html>
+<!-- DAILY PRODUCTION -->
+
+<div class="card">
+
+<h2>🎯 Daily Production</h2>
+
+<table>
+
+<tr>
+
+<th>Department</th>
+<th>Target</th>
+<th>Actual</th>
+<th>Balance</th>
+<th>Efficiency</th>
+
+</tr>
+
+<tr>
+<td>Knitting</td>
+<td>20,000 KG</td>
+<td>18,500 KG</td>
+<td>1,500 KG</td>
+<td>92%</td>
+</tr>
+
+<tr>
+<td>Dyeing</td>
+<td>18,000 KG</td>
+<td>17,200 KG</td>
+<td>800 KG</td>
+<td>95%</td>
+</tr>
+
+<tr>
+<td>Cutting</td>
+<td>25,000 PCS</td>
+<td>24,300 PCS</td>
+<td>700 PCS</td>
+<td>97%</td>
+</tr>
+
+<tr>
+<td>Print</td>
+<td>15,000 PCS</td>
+<td>14,000 PCS</td>
+<td>1,000 PCS</td>
+<td>93%</td>
+</tr>
+
+<tr>
+<td>Embroidery</td>
+<td>12,000 PCS</td>
+<td>11,500 PCS</td>
+<td>500 PCS</td>
+<td>96%</td>
+</tr>
+
+<tr>
+<td>Sewing</td>
+<td>30,000 PCS</td>
+<td>28,000 PCS</td>
+<td>2,000 PCS</td>
+<td>93%</td>
+</tr>
+
+<tr>
+<td>Finishing</td>
+<td>27,000 PCS</td>
+<td>25,500 PCS</td>
+<td>1,500 PCS</td>
+<td>94%</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- DELAY ALERT -->
+
+<div class="card">
+
+<h2>🚨 Delay Alert</h2>
+
+<table>
+
+<tr>
+
+<th>IKL No</th>
+<th>Style</th>
+<th>Department</th>
+<th>Issue</th>
+<th>Delay Days</th>
+
+</tr>
+
+<tbody id="delayTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="card">
+
+<h2>🔍 Smart Search</h2>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search IKL / Style / Buyer / Merchandiser">
+
+</div>
