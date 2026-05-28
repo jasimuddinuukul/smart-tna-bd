@@ -417,7 +417,19 @@ alert("User Saved");
 
 clearForm();
 
-loadUsers();
+loadUsers(<button
+onclick="editUser('${docItem.id}')">
+
+Edit
+
+</button>
+
+<button
+onclick="deleteUser('${docItem.id}')">
+
+Delete
+
+</button>);
 
 }  
 // CLEAR FORM
