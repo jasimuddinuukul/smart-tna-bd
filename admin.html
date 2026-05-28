@@ -400,7 +400,71 @@ alert("User Updated");
 editId = null;
 
 }
+window.editUser =
+async function(id){
 
+const querySnapshot =
+
+await getDocs(
+collection(db,"users")
+);
+
+querySnapshot.forEach((docItem)=>{
+
+if(docItem.id===id){
+
+editId=id;
+
+let data=
+docItem.data();
+
+document
+.getElementById("employeeId")
+.value=
+data.employeeId || "";
+
+document
+.getElementById("name")
+.value=
+data.name || "";
+
+document
+.getElementById("email")
+.value=
+data.email || "";
+
+document
+.getElementById("defaultPassword")
+.value=
+data.defaultPassword || "";
+
+document
+.getElementById("department")
+.value=
+data.department || "";
+
+document
+.getElementById("role")
+.value=
+data.role || "";
+
+document
+.getElementById("active")
+.value=
+String(data.active);
+
+window.scrollTo({
+
+top:0,
+behavior:"smooth"
+
+});
+
+}
+
+});
+
+}
 else{
 
 await addDoc(
@@ -532,7 +596,28 @@ Delete
 }
 
 loadUsers();
+window.deleteUser =
+async function(id){
 
+let confirmDelete =
+
+confirm(
+"Delete User?"
+);
+
+if(!confirmDelete) return;
+
+await deleteDoc(
+
+doc(db,"users",id)
+
+);
+
+alert("User Deleted");
+
+loadUsers();
+
+}
 </script>
 </body>
 </html>
