@@ -315,7 +315,7 @@ doc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
-let editId = null;
+  let editId = null;
   
 apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
 
@@ -338,9 +338,6 @@ const db = getFirestore(app);
 
 // SAVE USER
 
-document
-.getElementById("saveUserBtn")
-.addEventListener("click", saveUser);
 async function saveUser(){
 
 let employeeId =
@@ -422,8 +419,7 @@ clearForm();
 
 loadUsers();
 
-}
-  
+}  
 // CLEAR FORM
 
 function clearForm(){
