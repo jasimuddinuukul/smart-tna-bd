@@ -1,3 +1,111 @@
+ html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SMART TNA BD ERP - DASHBOARD V2</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+h1,h2,h3{
+margin-bottom:10px;
+}
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:20px;
+}
+
+.summary-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.summary-card h3{
+color:#94a3b8;
+margin-bottom:10px;
+}
+
+.summary-card h1{
+color:#00ff99;
+font-size:32px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+overflow:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+table th,
+table td{
+border:1px solid #334155;
+padding:12px;
+text-align:center;
+}
+
+table th{
+background:#111827;
+color:#00ff99;
+}
+
+.dept-card{
+background:#0f172a;
+padding:20px;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+}
+
+.progress-box{
+padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
 <!-- DASHBOARD TOP SUMMARY -->
 
 <div class="dashboard-grid">
@@ -44,7 +152,7 @@
 
 </div>
 
-<!-- IKL WISE SUMMARY -->
+<!-- IKL SUMMARY -->
 
 <div class="card">
 
@@ -70,54 +178,7 @@
 
 </div>
 
-<!-- MONTHLY PROGRESS -->
-
-<div class="dashboard-grid">
-
-<div class="card">
-
-<h2>📅 Current Month Progress</h2>
-
-<div class="progress-box">
-
-<p>Total Orders</p>
-<h1 id="monthOrders">0</h1>
-
-<p>Shipment Qty</p>
-<h1 id="monthShipment">0 PCS</h1>
-
-<p>Production Qty</p>
-<h1 id="monthProduction">0 PCS</h1>
-
-<p>Pending Qty</p>
-<h1 id="monthPending">0 PCS</h1>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>📅 Next Month Planning</h2>
-
-<div class="progress-box">
-
-<p>Upcoming Orders</p>
-<h1 id="upcomingOrders">0</h1>
-
-<p>Factory Load</p>
-<h1 id="factoryLoad">0%</h1>
-
-<p>Shipment Booking</p>
-<h1 id="shipmentBooking">0 PCS</h1>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- MERCHANDISER PERFORMANCE -->
+<!-- MERCH PERFORMANCE -->
 
 <div class="card">
 
@@ -131,7 +192,6 @@
 <th>Total Orders</th>
 <th>Total Qty</th>
 <th>Running</th>
-<th>Delayed</th>
 <th>Completion %</th>
 
 </tr>
@@ -141,30 +201,6 @@
 </tbody>
 
 </table>
-
-</div>
-
-<!-- DEPARTMENT PROGRESS -->
-
-<div class="card">
-
-<h2>🏭 Department Progress</h2>
-
-<div class="dashboard-grid">
-
-<div class="dept-card">Merchandising</div>
-<div class="dept-card">Knitting</div>
-<div class="dept-card">Dyeing</div>
-<div class="dept-card">Sample</div>
-<div class="dept-card">Laboratory</div>
-<div class="dept-card">Cutting</div>
-<div class="dept-card">Print</div>
-<div class="dept-card">Embroidery</div>
-<div class="dept-card">Sewing</div>
-<div class="dept-card">Finishing</div>
-<div class="dept-card">Shipment</div>
-
-</div>
 
 </div>
 
@@ -211,22 +247,6 @@
 </tr>
 
 <tr>
-<td>Print</td>
-<td>15,000 PCS</td>
-<td>14,000 PCS</td>
-<td>1,000 PCS</td>
-<td>93%</td>
-</tr>
-
-<tr>
-<td>Embroidery</td>
-<td>12,000 PCS</td>
-<td>11,500 PCS</td>
-<td>500 PCS</td>
-<td>96%</td>
-</tr>
-
-<tr>
 <td>Sewing</td>
 <td>30,000 PCS</td>
 <td>28,000 PCS</td>
@@ -246,32 +266,6 @@
 
 </div>
 
-<!-- DELAY ALERT -->
-
-<div class="card">
-
-<h2>🚨 Delay Alert</h2>
-
-<table>
-
-<tr>
-
-<th>IKL No</th>
-<th>Style</th>
-<th>Department</th>
-<th>Issue</th>
-<th>Delay Days</th>
-
-</tr>
-
-<tbody id="delayTable">
-
-</tbody>
-
-</table>
-
-</div>
-
 <!-- SEARCH -->
 
 <div class="card">
@@ -281,14 +275,9 @@
 <input
 type="text"
 id="searchInput"
-placeholder="Search IKL / Style / Buyer / Merchandiser">
+placeholder="Search IKL / Style / Buyer">
 
 </div>
-
-html
-<body>
-
-YOUR DASHBOARD HTML HERE
 
 <script type="module">
 
@@ -304,17 +293,17 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "YOUR_API_KEY",
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
 
-authDomain: "YOUR_AUTH_DOMAIN",
+authDomain: "smart-tna-bd.firebaseapp.com",
 
-projectId: "YOUR_PROJECT_ID",
+projectId: "smart-tna-bd",
 
-storageBucket: "YOUR_BUCKET",
+storageBucket: "smart-tna-bd.firebasestorage.app",
 
-messagingSenderId: "YOUR_SENDER_ID",
+messagingSenderId: "372049573207",
 
-appId: "YOUR_APP_ID"
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
@@ -331,6 +320,18 @@ let totalOrders = 0;
 
 let totalQty = 0;
 
+let runningOrders = 0;
+
+let completedOrders = 0;
+
+let delayedOrders = 0;
+
+let totalLeadTime = 0;
+
+let iklMap = {};
+
+let merchMap = {};
+
 querySnapshot.forEach((doc)=>{
 
 let data = doc.data();
@@ -339,13 +340,174 @@ totalOrders++;
 
 totalQty += Number(data.totalQty || 0);
 
+totalLeadTime += Number(data.leadTime || 0);
+
+if(data.shipmentStatus==="Completed"){
+
+completedOrders++;
+
+}
+else{
+
+runningOrders++;
+
+}
+
+let today = new Date();
+
+let shipmentDate =
+new Date(data.shipmentDate);
+
+if(
+shipmentDate < today &&
+data.shipmentStatus!=="Completed"
+){
+
+delayedOrders++;
+
+}
+
+if(!iklMap[data.ikl]){
+
+iklMap[data.ikl] = {
+
+styles:0,
+qty:0,
+shipment:data.shipmentDate || "",
+status:data.shipmentStatus || "Running"
+
+};
+
+}
+
+iklMap[data.ikl].styles++;
+
+iklMap[data.ikl].qty +=
+Number(data.totalQty || 0);
+
+if(!merchMap[data.merchandiser]){
+
+merchMap[data.merchandiser] = {
+
+orders:0,
+qty:0,
+running:0
+
+};
+
+}
+
+merchMap[data.merchandiser].orders++;
+
+merchMap[data.merchandiser].qty +=
+Number(data.totalQty || 0);
+
+if(data.shipmentStatus!=="Completed"){
+
+merchMap[data.merchandiser].running++;
+
+}
+
 });
 
 document.getElementById("totalOrders")
 .innerText = totalOrders;
 
 document.getElementById("totalQty")
-.innerText = totalQty + " PCS";
+.innerText =
+totalQty.toLocaleString() + " PCS";
+
+document.getElementById("runningOrders")
+.innerText = runningOrders;
+
+document.getElementById("completedOrders")
+.innerText = completedOrders;
+
+document.getElementById("delayedOrders")
+.innerText = delayedOrders;
+
+document.getElementById("avgLeadTime")
+.innerText =
+
+Math.round(
+totalLeadTime / totalOrders || 0
+)
+
++ " Days";
+
+let iklTable =
+document.getElementById("iklSummaryTable");
+
+iklTable.innerHTML = "";
+
+for(let ikl in iklMap){
+
+iklTable.innerHTML += `
+
+<tr>
+
+<td>${ikl}</td>
+
+<td>${iklMap[ikl].styles}</td>
+
+<td>
+${iklMap[ikl].qty.toLocaleString()} PCS
+</td>
+
+<td>${iklMap[ikl].shipment}</td>
+
+<td>${iklMap[ikl].status}</td>
+
+</tr>
+
+`;
+
+}
+
+let merchTable =
+document.getElementById("merchTable");
+
+merchTable.innerHTML = "";
+
+for(let merch in merchMap){
+
+let completion =
+
+Math.round(
+
+(
+(merchMap[merch].orders -
+merchMap[merch].running)
+
+/
+
+merchMap[merch].orders
+
+) * 100
+
+);
+
+merchTable.innerHTML += `
+
+<tr>
+
+<td>${merch}</td>
+
+<td>${merchMap[merch].orders}</td>
+
+<td>
+${merchMap[merch].qty.toLocaleString()} PCS
+</td>
+
+<td>${merchMap[merch].running}</td>
+
+<td>${completion}%</td>
+
+</tr>
+
+`;
+
+}
 
 }
 
@@ -354,6 +516,5 @@ loadDashboard();
 </script>
 
 </body>
-
 </html>
 
