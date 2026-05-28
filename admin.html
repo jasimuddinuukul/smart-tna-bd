@@ -507,16 +507,19 @@ ${data.active
 
 <td>
 
-Edit |
+<button
+onclick="editUser('${docItem.id}')">
+
+Edit
+
+</button>
+
+<button
+onclick="deleteUser('${docItem.id}')">
+
 Delete
 
-</td>
-
-</tr>
-
-`;
-
-});
+</button>
 
 }
 
