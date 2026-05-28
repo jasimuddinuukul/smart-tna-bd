@@ -1,0 +1,333 @@
+<!-- ===================================================== -->
+<!-- DELETE THIS OLD SECTION -->
+<!-- ===================================================== -->
+
+<div class="progress-section">
+
+<div class="progress-card">
+
+<h2>📈 Yearly Progress</h2>
+
+<div class="circle">
+
+72%
+
+</div>
+
+<h3>Factory Completion</h3>
+
+</div>
+
+<div class="progress-card">
+
+<h2>📅 Monthly Running Status</h2>
+
+<div class="month-box green">
+January - Completed
+</div>
+
+<div class="month-box green">
+February - Completed
+</div>
+
+<div class="month-box orange">
+March - Running
+</div>
+
+<div class="month-box orange">
+April - Running
+</div>
+
+<div class="month-box gray">
+May - Pending
+</div>
+
+<div class="month-box gray">
+June - Pending
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- DELETE OLD CSS -->
+<!-- ===================================================== -->
+
+<style>
+
+/* DELETE OLD */
+
+.progress-section{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:20px;
+}
+
+.progress-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.circle{
+width:140px;
+height:140px;
+border-radius:50%;
+border:12px solid #00ff99;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+font-weight:bold;
+margin:20px auto;
+color:#00ff99;
+}
+
+.month-box{
+padding:10px;
+margin:5px 0;
+border-radius:10px;
+font-weight:bold;
+}
+
+.green{
+background:#16a34a;
+}
+
+.orange{
+background:#f59e0b;
+}
+
+.gray{
+background:#64748b;
+}
+
+.red{
+background:#dc2626;
+}
+
+/* ===================================================== */
+/* NEW TOP ORDER PROGRESS */
+/* ===================================================== */
+
+.top-progress-grid{
+display:grid;
+grid-template-columns:380px 1fr;
+gap:20px;
+margin-bottom:20px;
+}
+
+.order-progress-card{
+background:#1e293b;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.progress-circle{
+width:240px;
+height:240px;
+border-radius:50%;
+border:20px solid #00ff99;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:55px;
+font-weight:bold;
+
+margin:25px auto;
+
+color:#00ff99;
+
+box-shadow:
+0 0 20px #00ff99,
+0 0 40px #00ff99;
+}
+
+.order-progress-card h2{
+color:#00ff99;
+margin-bottom:10px;
+}
+
+.order-progress-card h3{
+margin-bottom:15px;
+}
+
+.order-progress-card p{
+margin-top:10px;
+font-size:18px;
+}
+
+.month-progress-card{
+background:#1e293b;
+padding:25px;
+border-radius:20px;
+}
+
+.month-progress-card h2{
+margin-bottom:20px;
+color:#00ff99;
+}
+
+.month-progress{
+padding:18px;
+border-radius:15px;
+margin-bottom:15px;
+font-size:20px;
+font-weight:bold;
+}
+
+.green{
+background:#16a34a;
+}
+
+.orange{
+background:#f59e0b;
+}
+
+.gray{
+background:#64748b;
+}
+
+.red{
+background:#dc2626;
+}
+
+@media(max-width:900px){
+
+.top-progress-grid{
+grid-template-columns:1fr;
+}
+
+.progress-circle{
+width:180px;
+height:180px;
+font-size:42px;
+}
+
+}
+
+</style>
+
+<!-- ===================================================== -->
+<!-- PASTE THIS BELOW HEADER -->
+<!-- PASTE ABOVE TOP SUMMARY -->
+<!-- ===================================================== -->
+
+<div class="top-progress-grid">
+
+<!-- LEFT SIDE -->
+
+<div class="order-progress-card">
+
+<h2>
+
+📦 Total Order Progress
+
+</h2>
+
+<div class="progress-circle" id="factoryProgress">
+
+0%
+
+</div>
+
+<h3>
+
+Running Factory Progress
+
+</h3>
+
+<p>
+
+Completed Orders :
+<b id="progressCompleted">
+
+0
+
+</b>
+
+</p>
+
+<p>
+
+Running Orders :
+<b id="progressRunning">
+
+0
+
+</b>
+
+</p>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="month-progress-card">
+
+<h2>
+
+📅 Current & Upcoming Month Progress
+
+</h2>
+
+<div class="month-progress green">
+
+THIS MONTH → COMPLETED 72%
+
+</div>
+
+<div class="month-progress orange">
+
+NEXT MONTH → RUNNING 48%
+
+</div>
+
+<div class="month-progress gray">
+
+NEXT +1 MONTH → PLANNING 25%
+
+</div>
+
+<div class="month-progress red">
+
+NEXT +2 MONTH → LOAD RISK
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================================== -->
+<!-- PASTE THIS INSIDE loadDashboard() -->
+<!-- PASTE BELOW delayedOrders -->
+<!-- ===================================================== -->
+
+<script>
+
+// FACTORY PROGRESS %
+
+let progressPercent = Math.round(
+
+(completedOrders / totalOrders) * 100 || 0
+
+);
+
+document.getElementById("factoryProgress")
+.innerText = progressPercent + "%";
+
+document.getElementById("progressCompleted")
+.innerText = completedOrders;
+
+document.getElementById("progressRunning")
+.innerText = runningOrders;
+
+</script>
