@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD ERP - DASHBOARD V2</title>
+<title>SMART TNA BD ERP DASHBOARD V3</title>
 
 <style>
 
@@ -24,14 +24,52 @@ color:white;
 padding:20px;
 }
 
-h1,h2,h3{
+.header{
+background:#111827;
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.bismillah{
+font-size:35px;
+color:#00ff99;
 margin-bottom:10px;
+}
+
+.company{
+font-size:34px;
+font-weight:bold;
+color:white;
+margin-bottom:10px;
+}
+
+.erp{
+font-size:24px;
+color:#00ff99;
+font-weight:bold;
+}
+
+.logo{
+width:100px;
+height:100px;
+border-radius:50%;
+background:#1e293b;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:15px auto;
+font-size:20px;
+font-weight:bold;
+color:#00ff99;
+border:3px solid #00ff99;
 }
 
 .dashboard-grid{
 display:grid;
 grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
+repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 margin-bottom:20px;
 }
@@ -44,13 +82,14 @@ text-align:center;
 }
 
 .summary-card h3{
-color:#94a3b8;
+font-size:18px;
 margin-bottom:10px;
+color:#cbd5e1;
 }
 
 .summary-card h1{
-color:#00ff99;
 font-size:32px;
+color:#00ff99;
 }
 
 .card{
@@ -61,10 +100,14 @@ margin-bottom:20px;
 overflow:auto;
 }
 
+.card h2{
+margin-bottom:15px;
+color:#00ff99;
+}
+
 table{
 width:100%;
 border-collapse:collapse;
-margin-top:10px;
 }
 
 table th,
@@ -72,19 +115,14 @@ table td{
 border:1px solid #334155;
 padding:12px;
 text-align:center;
+font-size:14px;
 }
 
 table th{
 background:#111827;
 color:#00ff99;
-}
-
-.dept-card{
-background:#0f172a;
-padding:20px;
-border-radius:10px;
-text-align:center;
-font-weight:bold;
+position:sticky;
+top:0;
 }
 
 input{
@@ -96,8 +134,84 @@ background:#0f172a;
 color:white;
 }
 
-.progress-box{
+.status-completed{
+background:#16a34a;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.status-running{
+background:#f59e0b;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.status-pending{
+background:#64748b;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.status-delayed{
+background:#dc2626;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.progress-section{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:20px;
+}
+
+.progress-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.circle{
+width:140px;
+height:140px;
+border-radius:50%;
+border:12px solid #00ff99;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+font-weight:bold;
+margin:20px auto;
+color:#00ff99;
+}
+
+.month-box{
 padding:10px;
+margin:5px 0;
+border-radius:10px;
+font-weight:bold;
+}
+
+.green{
+background:#16a34a;
+}
+
+.orange{
+background:#f59e0b;
+}
+
+.gray{
+background:#64748b;
+}
+
+.red{
+background:#dc2626;
 }
 
 </style>
@@ -106,7 +220,37 @@ padding:10px;
 
 <body>
 
-<!-- DASHBOARD TOP SUMMARY -->
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="bismillah">
+
+﷽ بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+
+</div>
+
+<div class="logo">
+
+LOGO
+
+</div>
+
+<div class="company">
+
+INNOVATIVE KNITEX LTD
+
+</div>
+
+<div class="erp">
+
+SMART TNA BD ERP
+
+</div>
+
+</div>
+
+<!-- TOP SUMMARY -->
 
 <div class="dashboard-grid">
 
@@ -152,55 +296,16 @@ padding:10px;
 
 </div>
 
-<!-- IKL SUMMARY -->
+<!-- SMART SEARCH -->
 
 <div class="card">
 
-<h2>📦 IKL Wise Summary</h2>
+<h2>🔍 Smart Search</h2>
 
-<table>
-
-<tr>
-
-<th>IKL No</th>
-<th>Total Style</th>
-<th>Total Qty</th>
-<th>Shipment Date</th>
-<th>Status</th>
-
-</tr>
-
-<tbody id="iklSummaryTable">
-
-</tbody>
-
-</table>
-
-</div>
-
-<!-- MERCH PERFORMANCE -->
-
-<div class="card">
-
-<h2>👨‍💼 Merchandiser Performance</h2>
-
-<table>
-
-<tr>
-
-<th>Merchandiser</th>
-<th>Total Orders</th>
-<th>Total Qty</th>
-<th>Running</th>
-<th>Completion %</th>
-
-</tr>
-
-<tbody id="merchTable">
-
-</tbody>
-
-</table>
+<input
+type="text"
+id="searchInput"
+placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
@@ -247,6 +352,14 @@ padding:10px;
 </tr>
 
 <tr>
+<td>Print & Emb</td>
+<td>15,000 PCS</td>
+<td>14,000 PCS</td>
+<td>1,000 PCS</td>
+<td>93%</td>
+</tr>
+
+<tr>
 <td>Sewing</td>
 <td>30,000 PCS</td>
 <td>28,000 PCS</td>
@@ -266,16 +379,116 @@ padding:10px;
 
 </div>
 
-<!-- SEARCH -->
+<!-- MERCH PERFORMANCE -->
 
 <div class="card">
 
-<h2>🔍 Smart Search</h2>
+<h2>👨‍💼 Merchandiser Performance</h2>
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search IKL / Style / Buyer">
+<table>
+
+<tr>
+
+<th>Merchandiser</th>
+<th>Total Orders</th>
+<th>Total Qty</th>
+<th>Running</th>
+<th>Completion %</th>
+
+</tr>
+
+<tbody id="merchTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- IKL PROGRESS -->
+
+<div class="card">
+
+<h2>📦 IKL Wise Progress Tracker</h2>
+
+<table id="progressTable">
+
+<tr>
+
+<th>Buyer</th>
+<th>IKL No</th>
+<th>Style No</th>
+<th>Total Qty</th>
+<th>Order Date</th>
+<th>Shipment Date</th>
+<th>Lead Time</th>
+<th>Merchandiser</th>
+
+<th>Merchandising</th>
+<th>Knitting</th>
+<th>Dyeing</th>
+<th>Sample</th>
+<th>Laboratory</th>
+<th>Cutting</th>
+<th>Print & Embroidery</th>
+<th>Sewing</th>
+<th>Washing</th>
+<th>Finishing</th>
+<th>Shipment</th>
+
+</tr>
+
+</table>
+
+</div>
+
+<!-- YEARLY PROGRESS -->
+
+<div class="progress-section">
+
+<div class="progress-card">
+
+<h2>📈 Yearly Progress</h2>
+
+<div class="circle">
+
+72%
+
+</div>
+
+<h3>Factory Completion</h3>
+
+</div>
+
+<div class="progress-card">
+
+<h2>📅 Monthly Running Status</h2>
+
+<div class="month-box green">
+January - Completed
+</div>
+
+<div class="month-box green">
+February - Completed
+</div>
+
+<div class="month-box orange">
+March - Running
+</div>
+
+<div class="month-box orange">
+April - Running
+</div>
+
+<div class="month-box gray">
+May - Pending
+</div>
+
+<div class="month-box gray">
+June - Pending
+</div>
+
+</div>
 
 </div>
 
@@ -317,20 +530,16 @@ const querySnapshot =
 await getDocs(collection(db,"orders"));
 
 let totalOrders = 0;
-
 let totalQty = 0;
-
 let runningOrders = 0;
-
 let completedOrders = 0;
-
 let delayedOrders = 0;
-
 let totalLeadTime = 0;
 
-let iklMap = {};
-
 let merchMap = {};
+
+let progressTable =
+document.getElementById("progressTable");
 
 querySnapshot.forEach((doc)=>{
 
@@ -367,24 +576,6 @@ delayedOrders++;
 
 }
 
-if(!iklMap[data.ikl]){
-
-iklMap[data.ikl] = {
-
-styles:0,
-qty:0,
-shipment:data.shipmentDate || "",
-status:data.shipmentStatus || "Running"
-
-};
-
-}
-
-iklMap[data.ikl].styles++;
-
-iklMap[data.ikl].qty +=
-Number(data.totalQty || 0);
-
 if(!merchMap[data.merchandiser]){
 
 merchMap[data.merchandiser] = {
@@ -407,6 +598,45 @@ if(data.shipmentStatus!=="Completed"){
 merchMap[data.merchandiser].running++;
 
 }
+
+progressTable.innerHTML += `
+
+<tr>
+
+<td>${data.buyer || ""}</td>
+<td>${data.ikl || ""}</td>
+<td>${data.style || ""}</td>
+<td>${data.totalQty || ""}</td>
+<td>${data.orderDate || ""}</td>
+<td>${data.shipmentDate || ""}</td>
+<td>${data.leadTime || ""}</td>
+<td>${data.merchandiser || ""}</td>
+
+<td><span class="status-completed">${data.merchandisingStatus || "Pending"}</span></td>
+
+<td><span class="status-running">${data.knittingStatus || "Pending"}</span></td>
+
+<td><span class="status-running">${data.dyeingStatus || "Pending"}</span></td>
+
+<td><span class="status-completed">${data.sampleStatus || "Pending"}</span></td>
+
+<td><span class="status-completed">${data.laboratoryStatus || "Pending"}</span></td>
+
+<td><span class="status-running">${data.cuttingStatus || "Pending"}</span></td>
+
+<td><span class="status-pending">${data.printEmbStatus || "Pending"}</span></td>
+
+<td><span class="status-pending">${data.sewingStatus || "Pending"}</span></td>
+
+<td><span class="status-pending">${data.washingStatus || "Pending"}</span></td>
+
+<td><span class="status-pending">${data.finishingStatus || "Pending"}</span></td>
+
+<td><span class="status-pending">${data.shipmentStatus || "Pending"}</span></td>
+
+</tr>
+
+`;
 
 });
 
@@ -435,39 +665,8 @@ totalLeadTime / totalOrders || 0
 
 + " Days";
 
-let iklTable =
-document.getElementById("iklSummaryTable");
-
-iklTable.innerHTML = "";
-
-for(let ikl in iklMap){
-
-iklTable.innerHTML += `
-
-<tr>
-
-<td>${ikl}</td>
-
-<td>${iklMap[ikl].styles}</td>
-
-<td>
-${iklMap[ikl].qty.toLocaleString()} PCS
-</td>
-
-<td>${iklMap[ikl].shipment}</td>
-
-<td>${iklMap[ikl].status}</td>
-
-</tr>
-
-`;
-
-}
-
 let merchTable =
 document.getElementById("merchTable");
-
-merchTable.innerHTML = "";
 
 for(let merch in merchMap){
 
@@ -495,9 +694,7 @@ merchTable.innerHTML += `
 
 <td>${merchMap[merch].orders}</td>
 
-<td>
-${merchMap[merch].qty.toLocaleString()} PCS
-</td>
+<td>${merchMap[merch].qty}</td>
 
 <td>${merchMap[merch].running}</td>
 
@@ -517,4 +714,4 @@ loadDashboard();
 
 </body>
 </html>
-
+```
