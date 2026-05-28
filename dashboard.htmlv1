@@ -1,6 +1,3 @@
-<!-- ===================================================== -->
-<!-- DELETE THIS OLD SECTION -->
-<!-- ===================================================== -->
 
 <div class="progress-section">
 
@@ -49,10 +46,6 @@ June - Pending
 </div>
 
 </div>
-
-<!-- ===================================================== -->
-<!-- DELETE OLD CSS -->
-<!-- ===================================================== -->
 
 <style>
 
@@ -110,9 +103,7 @@ background:#64748b;
 background:#dc2626;
 }
 
-/* ===================================================== */
 /* NEW TOP ORDER PROGRESS */
-/* ===================================================== */
 
 .top-progress-grid{
 display:grid;
@@ -215,10 +206,8 @@ font-size:42px;
 
 </style>
 
-<!-- ===================================================== -->
 <!-- PASTE THIS BELOW HEADER -->
 <!-- PASTE ABOVE TOP SUMMARY -->
-<!-- ===================================================== -->
 
 <div class="top-progress-grid">
 
@@ -306,10 +295,15 @@ NEXT +2 MONTH → LOAD RISK
 
 </div>
 
-<!-- ===================================================== -->
-<!-- PASTE THIS INSIDE loadDashboard() -->
+<!-- PASTE THIS INSIDE loadDashboard(.progress-section
+.progress-card
+.circle
+.month-box
+.green
+.orange
+.gray
+.red) -->
 <!-- PASTE BELOW delayedOrders -->
-<!-- ===================================================== -->
 
 <script>
 
