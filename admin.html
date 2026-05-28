@@ -3,621 +3,640 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD - ADMIN PANEL</title>
+  <title>SMART TNA BD - Admin Panel</title>
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#0f172a;
-color:white;
-}
-
-header{
-background:#111827;
-padding:20px;
-text-align:center;
-font-size:30px;
-font-weight:bold;
-color:#00ff99;
-}
-
-.container{
-max-width:1800px;
-margin:auto;
-padding:20px;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-}
-
-h2{
-color:#00ff99;
-margin-bottom:15px;
-}
-
-.form-grid{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-}
-
-input,
-select,
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-}
-
-input,
-select{
-background:#0f172a;
-color:white;
-}
-
-button{
-background:#16a34a;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-background:#15803d;
-}
-
-.search-box{
-margin-bottom:20px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-}
-
-table th,
-table td{
-border:1px solid #334155;
-padding:12px;
-text-align:center;
-}
-
-table th{
-background:#111827;
-color:#00ff99;
-}
-
-.status-active{
-color:#22c55e;
-font-weight:bold;
-}
-
-.status-inactive{
-color:#ef4444;
-font-weight:bold;
-}
-
-.table-container{
-overflow:auto;
-}
-
-</style>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
 
 </head>
 
-<body>
+<body class="bg-light">
 
-<header>
+<div class="container py-4">
 
-SMART TNA BD ERP
-ADMIN PANEL V1
+  <!-- HEADER -->
 
-</header>
+  <div class="card shadow">
 
-<div class="container">
+    <div class="card-header bg-dark text-white">
 
-<!-- CREATE USER -->
+      <h3>Admin User Management</h3>
 
-<div class="card">
+    </div>
 
-<h2>Create User</h2>
+    <div class="card-body">
 
-<div class="form-grid">
+      <form id="userForm">
 
-<div>
-<label>Employee ID</label>
-<input
-type="text"
-id="employeeId"
-placeholder="ADMIN-001">
+        <div class="row g-3">
+
+          <!-- EMPLOYEE ID -->
+
+          <div class="col-md-3">
+
+            <label class="form-label">
+              Employee ID
+            </label>
+
+            <input
+              type="text"
+              id="employeeId"
+              class="form-control"
+              required
+            >
+
+          </div>
+
+
+          <!-- NAME -->
+
+          <div class="col-md-3">
+
+            <label class="form-label">
+              Name
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              required
+            >
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="col-md-3">
+
+            <label class="form-label">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              required
+            >
+
+          </div>
+
+
+          <!-- PASSWORD -->
+
+          <div class="col-md-3">
+
+            <label class="form-label">
+              Default Password
+            </label>
+
+            <input
+              type="text"
+              id="defaultPassword"
+              class="form-control"
+              required
+            >
+
+          </div>
+
+
+          <!-- DEPARTMENT -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Department
+            </label>
+
+            <select
+              id="department"
+              class="form-select"
+            >
+
+              <option>Admin</option>
+              <option>Management</option>
+              <option>Merchandising</option>
+              <option>Sample</option>
+              <option>Laboratory</option>
+              <option>Knitting & Dyeing</option>
+              <option>Cutting</option>
+              <option>Print & Embroidery</option>
+              <option>Sewing</option>
+              <option>Finishing</option>
+
+            </select>
+
+          </div>
+
+
+          <!-- ROLE -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Role
+            </label>
+
+            <select
+              id="role"
+              class="form-select"
+            >
+
+              <option>Admin</option>
+              <option>User</option>
+              <option>Viewer</option>
+
+            </select>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Status
+            </label>
+
+            <select
+              id="active"
+              class="form-select"
+            >
+
+              <option value="true">
+                Active
+              </option>
+
+              <option value="false">
+                Inactive
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <div class="mt-4">
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+
+            Save User
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- SEARCH -->
+
+  <div class="card mt-4 shadow">
+
+    <div class="card-body">
+
+      <input
+        type="text"
+        id="searchInput"
+        class="form-control"
+        placeholder="Search User..."
+      >
+
+    </div>
+
+  </div>
+
+
+
+  <!-- USER TABLE -->
+
+  <div class="card mt-4 shadow">
+
+    <div class="card-header bg-primary text-white">
+
+      <h4>User List</h4>
+
+    </div>
+
+    <div class="card-body table-responsive">
+
+      <table class="table table-bordered table-hover">
+
+        <thead>
+
+          <tr>
+
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="userTableBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
 </div>
 
-<div>
-<label>Name</label>
-<input
-type="text"
-id="name"
-placeholder="ERP Admin">
-</div>
 
-<div>
-<label>Email</label>
-<input
-type="email"
-id="email"
-placeholder="user@smarttnabd.com">
-</div>
 
-<div>
-<label>Default Password</label>
-<input
-type="text"
-id="defaultPassword"
-value="12345678">
-</div>
+<!-- JAVASCRIPT -->
 
-<div>
-<label>Department</label>
-
-<select id="department">
-
-<option>Admin</option>
-
-<option>Management</option>
-
-<option>Merchandising</option>
-
-<option>Sample</option>
-
-<option>Laboratory</option>
-
-<option>Knitting & Dyeing</option>
-
-<option>Cutting</option>
-
-<option>Print & Embroidery</option>
-
-<option>Sewing</option>
-
-<option>Finishing</option>
-
-</select>
-
-</div>
-
-<div>
-<label>Role</label>
-
-<select id="role">
-
-<option>Admin</option>
-
-<option>User</option>
-
-<option>Viewer</option>
-
-</select>
-
-</div>
-
-<div>
-<label>Status</label>
-
-<select id="active">
-
-<option value="true">
-Active
-</option>
-
-<option value="false">
-Inactive
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-<br>
-
-<button id="saveUserBtn">
-
-💾 Save User
-
-</button>
-
-</div>
-
-<!-- SEARCH -->
-
-<div class="card">
-
-<h2>Search User</h2>
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search Employee ID / Name / Email">
-
-</div>
-
-</div>
-
-<!-- USER LIST -->
-
-<div class="card">
-
-<h2>User List</h2>
-
-<div class="table-container">
-
-<table id="userTable">
-
-<tr>
-
-<th>Employee ID</th>
-
-<th>Name</th>
-
-<th>Email</th>
-
-<th>Department</th>
-
-<th>Role</th>
-
-<th>Status</th>
-
-<th>Created At</th>
-
-<th>Action</th>
-
-</tr>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
 <script type="module">
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-updateDoc,
-doc
+  getAuth,
+  createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  setDoc,
+  doc,
+  deleteDoc,
+  updateDoc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+// FIREBASE CONFIG
+
 const firebaseConfig = {
-  let editId = null;
-  
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
 
-authDomain: "smart-tna-bd.firebaseapp.com",
+  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
 
-projectId: "smart-tna-bd",
+  authDomain: "smart-tna-bd.firebaseapp.com",
 
-storageBucket: "smart-tna-bd.firebasestorage.app",
+  projectId: "smart-tna-bd",
 
-messagingSenderId: "372049573207",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
 
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+  messagingSenderId: "372049573207",
+
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
-const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+// INITIALIZE
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+
+// VARIABLES
+
+const userForm =
+  document.getElementById('userForm');
+
+const userTableBody =
+  document.getElementById('userTableBody');
+
+const searchInput =
+  document.getElementById('searchInput');
+
+let editId = null;
+
 
 
 // SAVE USER
 
-async function saveUser(){
+userForm.addEventListener('submit', async (e) => {
 
-let employeeId =
-document.getElementById("employeeId").value;
+  e.preventDefault();
 
-let name =
-document.getElementById("name").value;
+  const employeeId =
+    document.getElementById('employeeId').value;
 
-let email =
-document.getElementById("email").value;
+  const name =
+    document.getElementById('name').value;
 
-let defaultPassword =
-document.getElementById("defaultPassword").value;
+  const email =
+    document.getElementById('email').value;
 
-let department =
-document.getElementById("department").value;
+  const defaultPassword =
+    document.getElementById('defaultPassword').value;
 
-let role =
-document.getElementById("role").value;
+  const department =
+    document.getElementById('department').value;
 
-let active =
-document.getElementById("active").value==="true";
+  const role =
+    document.getElementById('role').value;
 
-let today =
-new Date().toISOString().split("T")[0];
+  const active =
+    document.getElementById('active').value === 'true';
 
-if(!employeeId || !name || !email){
 
-alert("Please Fill All Required Fields");
+  try {
 
-return;
+    // UPDATE USER
 
-}
+    if(editId){
 
-const userData = {
+      await updateDoc(
+        doc(db, 'users', editId),
+        {
 
-employeeId,
-name,
-email,
-defaultPassword,
-department,
-role,
-active,
-createdAt:today
+          employeeId,
+          name,
+          email,
+          defaultPassword,
+          department,
+          role,
+          active
 
-};
+        }
+      );
 
-if(editId){
+      alert('User Updated');
 
-await updateDoc(
+      editId = null;
 
-doc(db,"users",editId),
+    }
 
-userData
+    // CREATE USER
 
-);
+    else {
 
-alert("User Updated");
+      const userCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          defaultPassword
+        );
 
-editId = null;
+      const uid =
+        userCredential.user.uid;
 
-}
-window.editUser =
-async function(id){
+      await setDoc(
+        doc(db, 'users', uid),
+        {
 
-const querySnapshot =
+          employeeId,
+          name,
+          email,
+          defaultPassword,
+          department,
+          role,
+          active,
+          createdAt: new Date()
 
-await getDocs(
-collection(db,"users")
-);
+        }
+      );
 
-querySnapshot.forEach((docItem)=>{
+      alert('User Created Successfully');
 
-if(docItem.id===id){
+    }
 
-editId=id;
+    userForm.reset();
 
-let data=
-docItem.data();
+    loadUsers();
 
-document
-.getElementById("employeeId")
-.value=
-data.employeeId || "";
+  }
 
-document
-.getElementById("name")
-.value=
-data.name || "";
+  catch(error){
 
-document
-.getElementById("email")
-.value=
-data.email || "";
+    console.error(error);
 
-document
-.getElementById("defaultPassword")
-.value=
-data.defaultPassword || "";
+    alert(error.message);
 
-document
-.getElementById("department")
-.value=
-data.department || "";
-
-document
-.getElementById("role")
-.value=
-data.role || "";
-
-document
-.getElementById("active")
-.value=
-String(data.active);
-
-window.scrollTo({
-
-top:0,
-behavior:"smooth"
+  }
 
 });
 
-}
-
-});
-
-}
-else{
-
-await addDoc(
-
-collection(db,"users"),
-
-userData
-
-);
-
-alert("User Saved");
-
-}
-
-clearForm();
-
-loadUsers(<button
-onclick="editUser('${docItem.id}')">
-
-Edit
-
-</button>
-
-<button
-onclick="deleteUser('${docItem.id}')">
-
-Delete
-
-</button>);
-
-}  
-// CLEAR FORM
-
-function clearForm(){
-
-document.getElementById("employeeId").value="";
-
-document.getElementById("name").value="";
-
-document.getElementById("email").value="";
-
-document.getElementById("defaultPassword").value="12345678";
-
-}
 
 
 // LOAD USERS
 
 async function loadUsers(){
 
-const querySnapshot =
+  userTableBody.innerHTML = '';
 
-await getDocs(
-collection(db,"users")
-);
+  const querySnapshot =
+    await getDocs(
+      collection(db, 'users')
+    );
 
-let table =
+  querySnapshot.forEach((docSnap)=>{
 
-document.getElementById("userTable");
+    const user =
+      docSnap.data();
 
-table.innerHTML = `
+    const row = `
 
-<tr>
+      <tr>
 
-<th>Employee ID</th>
+        <td>${user.employeeId}</td>
 
-<th>Name</th>
+        <td>${user.name}</td>
 
-<th>Email</th>
+        <td>${user.email}</td>
 
-<th>Department</th>
+        <td>${user.department}</td>
 
-<th>Role</th>
+        <td>${user.role}</td>
 
-<th>Status</th>
+        <td>
+          ${user.active ? 'Active' : 'Inactive'}
+        </td>
 
-<th>Created At</th>
+        <td>
 
-<th>Action</th>
+          <button
+            class="btn btn-warning btn-sm"
+            onclick="editUser('${docSnap.id}')"
+          >
 
-</tr>
+            Edit
 
-`;
+          </button>
 
-querySnapshot.forEach((docItem)=>{
+          <button
+            class="btn btn-danger btn-sm"
+            onclick="deleteUser('${docSnap.id}')"
+          >
 
-let data = docItem.data();
+            Delete
 
-table.innerHTML += `
+          </button>
 
-<tr>
+        </td>
 
-<td>${data.employeeId || ""}</td>
+      </tr>
 
-<td>${data.name || ""}</td>
+    `;
 
-<td>${data.email || ""}</td>
+    userTableBody.innerHTML += row;
 
-<td>${data.department || ""}</td>
-
-<td>${data.role || ""}</td>
-
-<td>
-
-${data.active
-? '<span class="status-active">Active</span>'
-: '<span class="status-inactive">Inactive</span>'}
-
-</td>
-
-<td>${data.createdAt || ""}</td>
-
-<td>
-
-<button
-onclick="editUser('${docItem.id}')">
-
-Edit
-
-</button>
-
-<button
-onclick="deleteUser('${docItem.id}')">
-
-Delete
-
-</button>
+  });
 
 }
 
 loadUsers();
+
+
+
+// DELETE USER
+
 window.deleteUser =
 async function(id){
 
-let confirmDelete =
+  const confirmDelete =
+    confirm('Delete User ?');
 
-confirm(
-"Delete User?"
-);
+  if(!confirmDelete) return;
 
-if(!confirmDelete) return;
+  await deleteDoc(
+    doc(db, 'users', id)
+  );
 
-await deleteDoc(
+  alert('User Deleted');
 
-doc(db,"users",id)
-
-);
-
-alert("User Deleted");
-
-loadUsers();
+  loadUsers();
 
 }
+
+
+
+// EDIT USER
+
+window.editUser =
+async function(id){
+
+  editId = id;
+
+  const docRef =
+    doc(db, "users", id);
+
+  const docSnap =
+    await getDoc(docRef);
+
+  if(docSnap.exists()){
+
+    let data =
+      docSnap.data();
+
+    document
+      .getElementById("employeeId")
+      .value =
+      data.employeeId || "";
+
+    document
+      .getElementById("name")
+      .value =
+      data.name || "";
+
+    document
+      .getElementById("email")
+      .value =
+      data.email || "";
+
+    document
+      .getElementById("defaultPassword")
+      .value =
+      data.defaultPassword || "";
+
+    document
+      .getElementById("department")
+      .value =
+      data.department || "";
+
+    document
+      .getElementById("role")
+      .value =
+      data.role || "";
+
+    document
+      .getElementById("active")
+      .value =
+      String(data.active);
+
+    window.scrollTo({
+
+      top:0,
+      behavior:"smooth"
+
+    });
+
+  }
+
+}
+
+
+
+// SEARCH USER
+
+searchInput.addEventListener('keyup', ()=>{
+
+  const filter =
+    searchInput.value.toLowerCase();
+
+  const rows =
+    userTableBody
+    .getElementsByTagName('tr');
+
+  for(let i=0; i<rows.length; i++){
+
+    const text =
+      rows[i]
+      .innerText
+      .toLowerCase();
+
+    rows[i].style.display =
+      text.includes(filter)
+      ? ''
+      : 'none';
+
+  }
+
+});
+
 </script>
+
 </body>
 </html>
