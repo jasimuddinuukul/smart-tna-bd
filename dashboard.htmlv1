@@ -1,3 +1,6 @@
+<!-- ===================================================== -->
+<!-- DELETE THIS OLD SECTION FULL -->
+<!-- ===================================================== -->
 
 <div class="progress-section">
 
@@ -47,9 +50,13 @@ June - Pending
 
 </div>
 
+<!-- ===================================================== -->
+<!-- DELETE THIS OLD CSS FULL -->
+<!-- ===================================================== -->
+
 <style>
 
-/* DELETE OLD */
+/* DELETE THESE OLD CSS */
 
 .progress-section{
 display:grid;
@@ -103,7 +110,9 @@ background:#64748b;
 background:#dc2626;
 }
 
-/* NEW TOP ORDER PROGRESS */
+/* ===================================================== */
+/* NEW TOP ORDER PROGRESS CSS */
+/* ===================================================== */
 
 .top-progress-grid{
 display:grid;
@@ -206,8 +215,11 @@ font-size:42px;
 
 </style>
 
-<!-- PASTE THIS BELOW HEADER -->
+<!-- ===================================================== -->
+<!-- NOW PASTE THIS NEW SECTION -->
+<!-- PASTE BELOW HEADER -->
 <!-- PASTE ABOVE TOP SUMMARY -->
+<!-- ===================================================== -->
 
 <div class="top-progress-grid">
 
@@ -295,15 +307,10 @@ NEXT +2 MONTH → LOAD RISK
 
 </div>
 
-<!-- PASTE THIS INSIDE loadDashboard(.progress-section
-.progress-card
-.circle
-.month-box
-.green
-.orange
-.gray
-.red) -->
+<!-- ===================================================== -->
+<!-- NOW PASTE THIS INSIDE loadDashboard() -->
 <!-- PASTE BELOW delayedOrders -->
+<!-- ===================================================== -->
 
 <script>
 
@@ -325,3 +332,27 @@ document.getElementById("progressRunning")
 .innerText = runningOrders;
 
 </script>
+
+<!-- ===================================================== -->
+<!-- FINAL STRUCTURE -->
+<!-- ===================================================== -->
+
+<!--
+
+HEADER
+↓
+NEW TOP ORDER PROGRESS
+↓
+TOP SUMMARY
+↓
+SMART SEARCH
+↓
+DAILY PRODUCTION
+↓
+MERCH PERFORMANCE
+↓
+IKL TRACKER
+↓
+loadDashboard()
+
+-->
