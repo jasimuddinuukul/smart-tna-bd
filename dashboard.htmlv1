@@ -177,6 +177,7 @@ color:#00ff99;
 
 table{
 width:100%;
+min-width:1400px;
 border-collapse:collapse;
 }
 
@@ -586,6 +587,19 @@ async function loadDashboard(){
 const querySnapshot =
 await getDocs(collection(db,"orders"));
 
+if(querySnapshot.empty){
+
+document.getElementById("progressTable").innerHTML += `
+<tr>
+<td colspan="19">
+No Orders Found
+</td>
+</tr>
+`;
+
+return;
+
+}
 let totalOrders = 0;
 let totalQty = 0;
 let runningOrders = 0;
@@ -635,10 +649,17 @@ currentMonth === 11
 ? currentYear + 1
 : currentYear;
 
-let shipmentDate =
-data.shipmentDate
-? new Date(data.shipmentDate)
-: new Date();
+let shipmentDate;
+
+if(data.shipmentDate){
+  shipmentDate = new Date(data.shipmentDate);
+}else{
+  shipmentDate = new Date();
+}
+
+if(isNaN(shipmentDate.getTime())){
+  shipmentDate = new Date();
+}
 
 if(
 shipmentDate < today &&
