@@ -632,7 +632,8 @@ totalOrders++;
 
 totalQty += Number(data.totalQty || 0);
 
-totalLeadTime += Number(data.leadTime || 0);
+ javascript id="m7z2hu"
+totalLeadTime += parseInt(data.leadTime) || 0;
 
 if(data.shipmentStatus === "Completed"){
 completedOrders++;
