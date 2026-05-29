@@ -1,12 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>SMART TNA BD ERP DASHBOARD V3</title>
 
 <style>
@@ -23,6 +19,8 @@ background:#0f172a;
 color:white;
 padding:20px;
 }
+
+/* HEADER */
 
 .header{
 background:#111827;
@@ -66,6 +64,74 @@ color:#00ff99;
 border:3px solid #00ff99;
 }
 
+/* TOP PROGRESS */
+
+.top-progress-grid{
+display:grid;
+grid-template-columns:380px 1fr;
+gap:20px;
+margin-bottom:20px;
+}
+
+.order-progress-card{
+background:#1e293b;
+padding:25px;
+border-radius:20px;
+text-align:center;
+}
+
+.order-progress-card h2{
+color:#00ff99;
+margin-bottom:10px;
+}
+
+.order-progress-card h3{
+margin-bottom:15px;
+}
+
+.order-progress-card p{
+margin-top:10px;
+font-size:18px;
+}
+
+.progress-circle{
+width:240px;
+height:240px;
+border-radius:50%;
+border:20px solid #00ff99;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:55px;
+font-weight:bold;
+margin:25px auto;
+color:#00ff99;
+box-shadow:
+0 0 20px #00ff99,
+0 0 40px #00ff99;
+}
+
+.month-progress-card{
+background:#1e293b;
+padding:25px;
+border-radius:20px;
+}
+
+.month-progress-card h2{
+margin-bottom:20px;
+color:#00ff99;
+}
+
+.month-progress{
+padding:18px;
+border-radius:15px;
+margin-bottom:15px;
+font-size:20px;
+font-weight:bold;
+}
+
+/* SUMMARY */
+
 .dashboard-grid{
 display:grid;
 grid-template-columns:
@@ -92,6 +158,8 @@ font-size:32px;
 color:#00ff99;
 }
 
+/* CARD */
+
 .card{
 background:#1e293b;
 padding:20px;
@@ -105,8 +173,15 @@ margin-bottom:15px;
 color:#00ff99;
 }
 
+.card{
+overflow-x:auto;
+}
+
+/* TABLE */
+
 table{
 width:100%;
+min-width:1400px;
 border-collapse:collapse;
 }
 
@@ -125,6 +200,8 @@ position:sticky;
 top:0;
 }
 
+/* INPUT */
+
 input{
 width:100%;
 padding:12px;
@@ -133,6 +210,8 @@ border-radius:10px;
 background:#0f172a;
 color:white;
 }
+
+/* STATUS */
 
 .status-completed{
 background:#16a34a;
@@ -162,41 +241,7 @@ border-radius:20px;
 font-size:12px;
 }
 
-.progress-section{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-bottom:20px;
-}
-
-.progress-card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-text-align:center;
-}
-
-.circle{
-width:140px;
-height:140px;
-border-radius:50%;
-border:12px solid #00ff99;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
-margin:20px auto;
-color:#00ff99;
-}
-
-.month-box{
-padding:10px;
-margin:5px 0;
-border-radius:10px;
-font-weight:bold;
-}
+/* COLORS */
 
 .green{
 background:#16a34a;
@@ -214,8 +259,28 @@ background:#64748b;
 background:#dc2626;
 }
 
-</style>
+/* RESPONSIVE */
 
+@media(max-width:768px){
+
+.top-progress-grid{
+grid-template-columns:1fr;
+}
+
+.progress-circle{
+width:180px;
+height:180px;
+font-size:42px;
+}
+
+.month-progress{
+font-size:15px;
+padding:13px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
@@ -225,32 +290,80 @@ background:#dc2626;
 <div class="header">
 
 <div class="bismillah">
-
 ﷽ بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
-
 </div>
 
 <div class="logo">
-
 LOGO
-
 </div>
 
 <div class="company">
-
 INNOVATIVE KNITEX LTD
-
 </div>
 
 <div class="erp">
-
 SMART TNA BD ERP
-
 </div>
 
 </div>
 
-<!-- TOP SUMMARY -->
+<!-- TOP PROGRESS -->
+
+<div class="top-progress-grid">
+
+<div class="order-progress-card">
+
+<h2>
+📦 Total Order Progress
+</h2>
+
+<div class="progress-circle" id="progressCircle">
+0%
+</div>
+
+<h3>
+Running Factory Progress
+</h3>
+
+<p>
+Completed Orders :
+<b id="completedCount">0</b>
+</p>
+
+<p>
+Running Orders :
+<b id="runningCount">0</b>
+</p>
+
+</div>
+
+<div class="month-progress-card">
+
+<h2>
+📅 Current & Upcoming Month Progress
+</h2>
+
+<div class="month-progress green">
+THIS MONTH → COMPLETED 72%
+</div>
+
+<div class="month-progress orange">
+NEXT MONTH → RUNNING 48%
+</div>
+
+<div class="month-progress gray">
+NEXT +1 MONTH → PLANNING 25%
+</div>
+
+<div class="month-progress red">
+NEXT +2 MONTH → LOAD RISK
+</div>
+
+</div>
+
+</div>
+
+<!-- SUMMARY -->
 
 <div class="dashboard-grid">
 
@@ -296,11 +409,13 @@ SMART TNA BD ERP
 
 </div>
 
-<!-- SMART SEARCH -->
+<!-- SEARCH -->
 
 <div class="card">
 
-<h2>🔍 Smart Search</h2>
+<h2>
+🔍 Smart Search
+</h2>
 
 <input
 type="text"
@@ -313,18 +428,18 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 <div class="card">
 
-<h2>🎯 Daily Production</h2>
+<h2>
+🎯 Daily Production
+</h2>
 
-<table>
+<table style="min-width:100%;">
 
 <tr>
-
 <th>Department</th>
 <th>Target</th>
 <th>Actual</th>
 <th>Balance</th>
 <th>Efficiency</th>
-
 </tr>
 
 <tr>
@@ -383,33 +498,33 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 <div class="card">
 
-<h2>👨‍💼 Merchandiser Performance</h2>
+<h2>
+👨‍💼 Merchandiser Performance
+</h2>
 
 <table>
 
 <tr>
-
 <th>Merchandiser</th>
 <th>Total Orders</th>
 <th>Total Qty</th>
 <th>Running</th>
 <th>Completion %</th>
-
 </tr>
 
-<tbody id="merchTable">
-
-</tbody>
+<tbody id="merchTable"></tbody>
 
 </table>
 
 </div>
 
-<!-- IKL PROGRESS -->
+<!-- IKL TRACKER -->
 
 <div class="card">
 
-<h2>📦 IKL Wise Progress Tracker</h2>
+<h2>
+📦 IKL Wise Progress Tracker
+</h2>
 
 <table id="progressTable">
 
@@ -442,55 +557,7 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
-<!-- YEARLY PROGRESS -->
-
-<div class="progress-section">
-
-<div class="progress-card">
-
-<h2>📈 Yearly Progress</h2>
-
-<div class="circle">
-
-72%
-
-</div>
-
-<h3>Factory Completion</h3>
-
-</div>
-
-<div class="progress-card">
-
-<h2>📅 Monthly Running Status</h2>
-
-<div class="month-box green">
-January - Completed
-</div>
-
-<div class="month-box green">
-February - Completed
-</div>
-
-<div class="month-box orange">
-March - Running
-</div>
-
-<div class="month-box orange">
-April - Running
-</div>
-
-<div class="month-box gray">
-May - Pending
-</div>
-
-<div class="month-box gray">
-June - Pending
-</div>
-
-</div>
-
-</div>
+<!-- FIREBASE -->
 
 <script type="module">
 
@@ -529,12 +596,28 @@ async function loadDashboard(){
 const querySnapshot =
 await getDocs(collection(db,"orders"));
 
+if(querySnapshot.empty){
+
+document.getElementById("progressTable").innerHTML += `
+<tr>
+<td colspan="19">
+No Orders Found
+</td>
+</tr>
+`;
+
+return;
+
+}
 let totalOrders = 0;
 let totalQty = 0;
 let runningOrders = 0;
 let completedOrders = 0;
 let delayedOrders = 0;
 let totalLeadTime = 0;
+
+let shipmentMonthQty = 0;
+let nextMonthBookingQty = 0;
 
 let merchMap = {};
 
@@ -551,52 +634,85 @@ totalQty += Number(data.totalQty || 0);
 
 totalLeadTime += Number(data.leadTime || 0);
 
-if(data.shipmentStatus==="Completed"){
-
+if(data.shipmentStatus === "Completed"){
 completedOrders++;
-
-}
-else{
-
+}else{
 runningOrders++;
-
 }
 
 let today = new Date();
 
-let shipmentDate =
-new Date(data.shipmentDate);
+const currentMonth =
+today.getMonth();
+
+const currentYear =
+today.getFullYear();
+
+const nextMonth =
+currentMonth === 11
+? 0
+: currentMonth + 1;
+
+const nextMonthYear =
+currentMonth === 11
+? currentYear + 1
+: currentYear;
+
+let shipmentDate;
+
+if(data.shipmentDate){
+  shipmentDate = new Date(data.shipmentDate);
+}else{
+  shipmentDate = new Date();
+}
+
+if(isNaN(shipmentDate.getTime())){
+  shipmentDate = new Date();
+}
 
 if(
 shipmentDate < today &&
-data.shipmentStatus!=="Completed"
+data.shipmentStatus !== "Completed"
 ){
-
 delayedOrders++;
-
 }
 
-if(!merchMap[data.merchandiser]){
+if(
+shipmentDate.getMonth() === currentMonth &&
+shipmentDate.getFullYear() === currentYear
+){
+shipmentMonthQty +=
+Number(data.totalQty || 0);
+}
 
-merchMap[data.merchandiser] = {
+if(
+shipmentDate.getMonth() === nextMonth &&
+shipmentDate.getFullYear() === nextMonthYear
+){
+nextMonthBookingQty +=
+Number(data.totalQty || 0);
+}
 
+const merchName =
+data.merchandiser || "Unknown";
+
+if(!merchMap[merchName]){
+
+merchMap[merchName] = {
 orders:0,
 qty:0,
 running:0
-
 };
 
 }
 
-merchMap[data.merchandiser].orders++;
+merchMap[merchName].orders++;
 
-merchMap[data.merchandiser].qty +=
+merchMap[merchName].qty +=
 Number(data.totalQty || 0);
 
-if(data.shipmentStatus!=="Completed"){
-
-merchMap[data.merchandiser].running++;
-
+if(data.shipmentStatus !== "Completed"){
+merchMap[merchName].running++;
 }
 
 progressTable.innerHTML += `
@@ -612,33 +728,79 @@ progressTable.innerHTML += `
 <td>${data.leadTime || ""}</td>
 <td>${data.merchandiser || ""}</td>
 
-<td><span class="status-completed">${data.merchandisingStatus || "Pending"}</span></td>
+<td>
+<span class="status-completed">
+${data.merchandisingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-running">${data.knittingStatus || "Pending"}</span></td>
+<td>
+<span class="status-running">
+${data.knittingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-running">${data.dyeingStatus || "Pending"}</span></td>
+<td>
+<span class="status-running">
+${data.dyeingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-completed">${data.sampleStatus || "Pending"}</span></td>
+<td>
+<span class="status-completed">
+${data.sampleStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-completed">${data.laboratoryStatus || "Pending"}</span></td>
+<td>
+<span class="status-completed">
+${data.laboratoryStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-running">${data.cuttingStatus || "Pending"}</span></td>
+<td>
+<span class="status-running">
+${data.cuttingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-pending">${data.printEmbStatus || "Pending"}</span></td>
+<td>
+<span class="status-pending">
+${data.printEmbStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-pending">${data.sewingStatus || "Pending"}</span></td>
+<td>
+<span class="status-pending">
+${data.sewingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-pending">${data.washingStatus || "Pending"}</span></td>
+<td>
+<span class="status-pending">
+${data.washingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-pending">${data.finishingStatus || "Pending"}</span></td>
+<td>
+<span class="status-pending">
+${data.finishingStatus || "Pending"}
+</span>
+</td>
 
-<td><span class="status-pending">${data.shipmentStatus || "Pending"}</span></td>
+<td>
+<span class="status-pending">
+${data.shipmentStatus || "Pending"}
+</span>
+</td>
 
 </tr>
 
 `;
 
 });
+
+/* SUMMARY */
 
 document.getElementById("totalOrders")
 .innerText = totalOrders;
@@ -656,14 +818,41 @@ document.getElementById("completedOrders")
 document.getElementById("delayedOrders")
 .innerText = delayedOrders;
 
+document.getElementById("shipmentMonth")
+.innerText =
+shipmentMonthQty.toLocaleString() + " PCS";
+
+document.getElementById("nextMonthBooking")
+.innerText =
+nextMonthBookingQty.toLocaleString() + " PCS";
+
 document.getElementById("avgLeadTime")
 .innerText =
-
 Math.round(
 totalLeadTime / totalOrders || 0
-)
+) + " Days";
 
-+ " Days";
+/* PROGRESS */
+
+if(totalOrders > 0){
+
+const pct =
+Math.round(
+(completedOrders / totalOrders) * 100
+);
+
+document.getElementById("progressCircle")
+.innerText = pct + "%";
+
+document.getElementById("completedCount")
+.innerText = completedOrders;
+
+document.getElementById("runningCount")
+.innerText = runningOrders;
+
+}
+
+/* MERCH TABLE */
 
 let merchTable =
 document.getElementById("merchTable");
@@ -671,17 +860,15 @@ document.getElementById("merchTable");
 for(let merch in merchMap){
 
 let completion =
-
 Math.round(
 
 (
-(merchMap[merch].orders -
-merchMap[merch].running)
-
+(
+merchMap[merch].orders -
+merchMap[merch].running
+)
 /
-
 merchMap[merch].orders
-
 ) * 100
 
 );
@@ -709,6 +896,33 @@ merchTable.innerHTML += `
 }
 
 loadDashboard();
+
+/* SEARCH */
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+const filter =
+this.value.toLowerCase();
+
+const rows =
+document.querySelectorAll(
+"#progressTable tr:not(:first-child)"
+);
+
+rows.forEach((row)=>{
+
+row.style.display =
+row.innerText
+.toLowerCase()
+.includes(filter)
+? ""
+: "none";
+
+});
+
+});
 
 </script>
 
