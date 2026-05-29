@@ -640,47 +640,13 @@ data.shipmentdate ||
 data.ShipmentDate ||
 "";
 
-if(
-data.orderDate &&
-shipmentDateText &&
-shipmentDateText.includes("/")
-){
+let leadDays = 0;
 
-const orderParts =
-data.orderDate.split("/");
-
-const shipmentParts =
-shipmentDateText.split("/");
-
-if(
-orderParts.length === 3 &&
-shipmentParts.length === 3
-){
-
-const orderDate =
-new Date(
-orderParts[2],
-orderParts[0]-1,
-orderParts[1]
-);
-
-const shipmentDate =
-new Date(
-shipmentParts[2],
-shipmentParts[0]-1,
-shipmentParts[1]
-);
-
-const diffTime =
-shipmentDate - orderDate;
-
-leadDays =
-Math.ceil(
-diffTime /
-(1000 * 60 * 60 * 24)
-);
-
-}
+let shipmentDateText =
+data.shipmentDate ||
+data.shipmentdate ||
+data.ShipmentDate ||
+"";
 
 if(
 data.orderDate &&
@@ -724,7 +690,6 @@ diffTime /
 }
 
 }
-
 totalLeadTime += leadDays;
 
 if(data.shipmentStatus === "Completed"){
