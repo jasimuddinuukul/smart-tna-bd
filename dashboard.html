@@ -645,30 +645,16 @@ data.orderDate &&
 shipmentDateText
 ){
 
-const orderParts =
-data.orderDate.split("/");
-
-const shipmentParts =
-shipmentDateText.split("/");
-
-if(
-orderParts.length === 3 &&
-shipmentParts.length === 3
-){
-
 const orderDate =
-new Date(
-orderParts[2],
-orderParts[0]-1,
-orderParts[1]
-);
+new Date(data.orderDate);
 
 const shipmentDate =
-new Date(
-shipmentParts[2],
-shipmentParts[0]-1,
-shipmentParts[1]
-);
+new Date(shipmentDateText);
+
+if(
+!isNaN(orderDate) &&
+!isNaN(shipmentDate)
+){
 
 const diffTime =
 shipmentDate - orderDate;
@@ -682,7 +668,7 @@ diffTime /
 }
 
 }
-
+ 
 totalLeadTime += leadDays;
 
 if(data.shipmentStatus === "Completed"){
