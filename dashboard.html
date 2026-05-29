@@ -642,11 +642,11 @@ data.ShipmentDate ||
 
 if(
 data.orderDate &&
-data.shipmentDate
-){
+shipmentDateText
+)
 
-const orderParts =
-data.orderDate.split("/");
+const shipmentParts =
+shipmentDateText.split("/");
 
 const shipmentParts =
 data.shipmentDate.split("/");
@@ -776,7 +776,14 @@ progressTable.innerHTML += `
 <td>${data.totalQty || ""}</td>
 <td>${data.orderDate || ""}</td>
 
-<td>${shipmentDateText}</td>
+<td>
+
+${shipmentDateText
+? shipmentDateText
+: "No Date"}
+
+</td>
+
 
 <td>${leadDays} Days</td>
 
