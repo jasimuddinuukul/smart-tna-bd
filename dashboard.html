@@ -757,18 +757,12 @@ progressTable.innerHTML += `
 <tr>
 
 <td>${data.buyer || ""}</td>
+
 <td>${data.ikl || ""}</td>
+
 <td>${data.style || ""}</td>
+
 <td>${data.totalQty || ""}</td>
-<td>${data.orderDate || ""}</td>
-
-<td>
-${shipmentDateText || "No Date"}
-</td>
-
-<td>
-${leadDays} Days
-</td>
 
 <td>${data.orderDate || ""}</td>
 
@@ -783,8 +777,6 @@ ${leadDays} Days
 <td>
 ${data.merchandiser || ""}
 </td>
-
-<td>${data.merchandiser || ""}</td>
 
 <td>
 <span class="status-completed">
@@ -855,9 +847,6 @@ ${data.shipmentStatus || "Pending"}
 </tr>
 
 `;
-
-});
-
 /* SUMMARY */
 
 document.getElementById("totalOrders")
