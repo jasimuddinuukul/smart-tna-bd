@@ -733,8 +733,23 @@ progressTable.innerHTML += `
 <td>${data.style || ""}</td>
 <td>${data.totalQty || ""}</td>
 <td>${data.orderDate || ""}</td>
-<td>${data.shipmentDate || ""}</td>
-<td>${data.leadTime || ""}</td>
+
+<td>
+
+${data.shipmentDate
+? data.shipmentDate
+: "No Date"}
+
+</td>
+
+<td>
+
+${leadDays > 0
+? leadDays + " Days"
+: "0 Days"}
+
+</td>
+
 <td>${data.merchandiser || ""}</td>
 
 <td>
