@@ -632,20 +632,16 @@ totalOrders++;
 
 totalQty += Number(data.totalQty || 0);
 
-let leadDays = 0;
-
 let shipmentDateText =
+data.shipdate ||
 data.shipmentDate ||
 data.shipmentdate ||
 data.ShipmentDate ||
-data["Shipment Date"] ||
-data.shipment ||
 "";
 
-if(
-data.orderDate &&
-shipmentDateText
-){
+let leadDays = 0;
+
+if(data.orderDate && shipmentDateText){
 
 const orderDate =
 new Date(data.orderDate);
@@ -654,8 +650,8 @@ const shipmentDate =
 new Date(shipmentDateText);
 
 if(
-!isNaN(orderDate) &&
-!isNaN(shipmentDate)
+!isNaN(orderDate.getTime()) &&
+!isNaN(shipmentDate.getTime())
 ){
 
 const diffTime =
