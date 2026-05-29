@@ -668,7 +668,7 @@ diffTime /
 }
 
 }
- 
+
 totalLeadTime += leadDays;
 
 if(data.shipmentStatus === "Completed"){
@@ -697,14 +697,14 @@ currentMonth === 11
 
 let shipmentDate;
 
-if(data.shipmentDate){
-  shipmentDate = new Date(data.shipmentDate);
+if(shipmentDateText){
+shipmentDate = new Date(shipmentDateText);
 }else{
-  shipmentDate = new Date();
+shipmentDate = new Date();
 }
 
 if(isNaN(shipmentDate.getTime())){
-  shipmentDate = new Date();
+shipmentDate = new Date();
 }
 
 if(
@@ -847,7 +847,8 @@ ${data.shipmentStatus || "Pending"}
 </tr>
 
 `;
-/* SUMMARY */
+
+}); 
 
 document.getElementById("totalOrders")
 .innerText = totalOrders;
