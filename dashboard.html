@@ -682,13 +682,16 @@ diffTime /
 
 }
 
-}
+if(
+data.orderDate &&
+shipmentDateText
+){
+
+const orderParts =
+data.orderDate.split("/");
 
 const shipmentParts =
 shipmentDateText.split("/");
-
-const shipmentParts =
-data.shipmentDate.split("/");
 
 if(
 orderParts.length === 3 &&
