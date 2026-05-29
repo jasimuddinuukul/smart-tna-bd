@@ -763,13 +763,12 @@ progressTable.innerHTML += `
 <td>${data.orderDate || ""}</td>
 
 <td>
-
-${shipmentDateText
-? shipmentDateText
-: "No Date"}
-
+${shipmentDateText || "No Date"}
 </td>
 
+<td>
+${leadDays} Days
+</td>
 
 <td>${leadDays} Days</td>
 
