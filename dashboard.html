@@ -634,10 +634,49 @@ totalQty += Number(data.totalQty || 0);
 
 let leadDays = 0;
 
-if(data.leadTime){
+let shipmentDateText =
+data.shipmentDate || "";
+
+if(
+data.orderDate &&
+data.shipmentDate
+){
+
+const orderParts =
+data.orderDate.split("/");
+
+const shipmentParts =
+data.shipmentDate.split("/");
+
+if(
+orderParts.length === 3 &&
+shipmentParts.length === 3
+){
+
+const orderDate =
+new Date(
+orderParts[2],
+orderParts[0]-1,
+orderParts[1]
+);
+
+const shipmentDate =
+new Date(
+shipmentParts[2],
+shipmentParts[0]-1,
+shipmentParts[1]
+);
+
+const diffTime =
+shipmentDate - orderDate;
 
 leadDays =
-parseInt(data.leadTime) || 0;
+Math.ceil(
+diffTime /
+(1000 * 60 * 60 * 24)
+);
+
+}
 
 }
 
