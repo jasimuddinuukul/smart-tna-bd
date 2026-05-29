@@ -173,6 +173,10 @@ margin-bottom:15px;
 color:#00ff99;
 }
 
+.card{
+overflow-x:auto;
+}
+
 /* TABLE */
 
 table{
@@ -428,7 +432,7 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 🎯 Daily Production
 </h2>
 
-<table>
+<table style="min-width:100%;">
 
 <tr>
 <th>Department</th>
@@ -569,12 +573,17 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_AUTH_DOMAIN",
-projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_STORAGE_BUCKET",
-messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-appId: "YOUR_APP_ID"
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+authDomain: "smart-tna-bd.firebaseapp.com",
+
+projectId: "smart-tna-bd",
+
+storageBucket: "smart-tna-bd.firebasestorage.app",
+
+messagingSenderId: "372049573207",
+
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
