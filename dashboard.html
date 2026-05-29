@@ -635,7 +635,10 @@ totalQty += Number(data.totalQty || 0);
 let leadDays = 0;
 
 let shipmentDateText =
-data.shipmentDate || "";
+data.shipmentDate ||
+data.shipmentdate ||
+data.ShipmentDate ||
+"";
 
 if(
 data.orderDate &&
