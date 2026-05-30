@@ -634,6 +634,37 @@ window.selectOrder = function(id){
 
 selectedDocId = id;
 
+let data =
+allOrders.find(o => o.id === id);
+
+if(!data) return;
+
+document.getElementById("showBuyer").innerText =
+data.buyer || "-";
+
+document.getElementById("showIKL").innerText =
+data.ikl || "-";
+
+document.getElementById("showStyle").innerText =
+data.style || "-";
+
+document.getElementById("showMerch").innerText =
+data.merchandiser || "-";
+
+document.getElementById("showQty").innerText =
+(data.totalQty || 0) + " PCS";
+
+document.getElementById("showShip").innerText =
+data.shipdate || "-";
+
+/* COLOR DATA LOAD */
+
+selectedColors =
+data.colors || [];
+
+loadColorTable(selectedColors);
+
+}
 const data =
 allOrders.find(
 o => o.id === id
