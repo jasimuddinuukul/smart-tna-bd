@@ -775,10 +775,264 @@ value="${c.finishacc || ""}">
 
 }
 
+import {
+updateDoc,
+doc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+window.saveUpdates = async function(){
+
+if(!selectedDocId){
+
+alert("Select Order First");
+return;
+
+}
+
+try{
+
+const progress =
+calculateProgress();
+
+await updateDoc(
+
+doc(db,"orders",selectedDocId),
+
+{
+
+fabricBookingTarget:
+document.getElementById("fabricBookingTarget").value,
+
+fabricBookingActual:
+document.getElementById("fabricBookingActual").value,
+
+fabricBookingStatus:
+document.getElementById("fabricBookingStatus").value,
+
+
+colorSwatchTarget:
+document.getElementById("colorSwatchTarget").value,
+
+colorSwatchActual:
+document.getElementById("colorSwatchActual").value,
+
+colorSwatchStatus:
+document.getElementById("colorSwatchStatus").value,
+
+
+labDipSubmitTarget:
+document.getElementById("labDipSubmitTarget").value,
+
+labDipSubmitActual:
+document.getElementById("labDipSubmitActual").value,
+
+labDipSubmitStatus:
+document.getElementById("labDipSubmitStatus").value,
+
+
+labDipApprovalTarget:
+document.getElementById("labDipApprovalTarget").value,
+
+labDipApprovalActual:
+document.getElementById("labDipApprovalActual").value,
+
+labDipApprovalStatus:
+document.getElementById("labDipApprovalStatus").value,
+
+
+g2Target:
+document.getElementById("g2Target").value,
+
+g2Actual:
+document.getElementById("g2Actual").value,
+
+g2Status:
+document.getElementById("g2Status").value,
+
+
+strikeSendTarget:
+document.getElementById("strikeSendTarget").value,
+
+strikeSendActual:
+document.getElementById("strikeSendActual").value,
+
+strikeSendStatus:
+document.getElementById("strikeSendStatus").value,
+
+
+strikeApprovalTarget:
+document.getElementById("strikeApprovalTarget").value,
+
+strikeApprovalActual:
+document.getElementById("strikeApprovalActual").value,
+
+strikeApprovalStatus:
+document.getElementById("strikeApprovalStatus").value,
+
+
+trimsTarget:
+document.getElementById("trimsTarget").value,
+
+trimsActual:
+document.getElementById("trimsActual").value,
+
+trimsStatus:
+document.getElementById("trimsStatus").value,
+
+
+sewingTrimsTarget:
+document.getElementById("sewingTrimsTarget").value,
+
+sewingTrimsActual:
+document.getElementById("sewingTrimsActual").value,
+
+sewingTrimsStatus:
+document.getElementById("sewingTrimsStatus").value,
+
+
+ppMeetingTarget:
+document.getElementById("ppMeetingTarget").value,
+
+ppMeetingActual:
+document.getElementById("ppMeetingActual").value,
+
+ppMeetingStatus:
+document.getElementById("ppMeetingStatus").value,
+
+
+packingTrimsTarget:
+document.getElementById("packingTrimsTarget").value,
+
+packingTrimsActual:
+document.getElementById("packingTrimsActual").value,
+
+packingTrimsStatus:
+document.getElementById("packingTrimsStatus").value,
+
+
+merchDelayNote:
+document.getElementById("delayNote").value,
+
+merchProgress: progress,
+
+Merchandising: progress >= 100
+? "Completed"
+: "Running"
+
+}
+
+);
+
+alert("Merchandising Updated Successfully");
+
+}
+catch(error){
+
+console.log(error);
+
+alert("Save Failed");
+
+}
+
+};
+
+
+// ==========================
+// AUTO PROGRESS
+// ==========================
+
+function calculateProgress(){
+
+const stages = [
+
+document.getElementById("fabricBookingStatus").value,
+
+document.getElementById("colorSwatchStatus").value,
+
+document.getElementById("labDipSubmitStatus").value,
+
+document.getElementById("labDipApprovalStatus").value,
+
+document.getElementById("g2Status").value,
+
+document.getElementById("strikeSendStatus").value,
+
+document.getElementById("strikeApprovalStatus").value,
+
+document.getElementById("trimsStatus").value,
+
+document.getElementById("sewingTrimsStatus").value,
+
+document.getElementById("ppMeetingStatus").value,
+
+document.getElementById("packingTrimsStatus").value
+
+];
+
+let complete = 0;
+
+stages.forEach(stage=>{
+
+if(stage==="Complete"){
+
+complete++;
+
+}
+
+});
+
+const progress =
+
+Math.round(
+(complete / stages.length) * 100
+);
+
+document.getElementById("showProgress")
+.innerText =
+progress + "%";
+
+return progress;
+
+}
+
+
+// ==========================
+// AUTO CHANGE PROGRESS
+// ==========================
+
+document.addEventListener(
+
+"change",
+
+function(e){
+
+if(
+e.target.tagName === "SELECT"
+){
+
+calculateProgress();
+
+}
+
+}
+
+);
+
+
+// ==========================
+// SAVE BUTTON
+// ==========================
+
+document
+.getElementById("saveBtn")
+.addEventListener(
+"click",
+saveUpdates
+);
+
 </script>
 
-</body>
-</html>
-</script>
 </body>
 </html>
