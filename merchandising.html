@@ -643,8 +643,142 @@ loadColorTable(selectedColors);
 
 };
 
-loadOrders();/ PART-2 CODE HERE
+loadOrders();
+<script type="module">
 
+loadOrders();
+
+function loadColorTable(colors){
+
+let table =
+document.getElementById("colorTable");
+
+if(!table) return;
+
+table.innerHTML = `
+<tr>
+<th>Color</th>
+<th>Qty</th>
+
+<th>Lab Dip Date</th>
+<th>Lab Dip Status</th>
+
+<th>Strike Off Date</th>
+<th>Strike Off Status</th>
+
+<th>Trims Approval Date</th>
+<th>Trims Status</th>
+
+<th>Sewing Acc Date</th>
+<th>Sewing Acc Status</th>
+
+<th>Finishing Acc Date</th>
+<th>Finishing Acc Status</th>
+</tr>
+`;
+
+colors.forEach((c,index)=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>${c.color || ""}</td>
+
+<td>${c.qty || 0}</td>
+
+<td>
+<input
+type="date"
+id="labdip_${index}"
+value="${c.labdip || ""}">
+</td>
+
+<td>
+<select id="labdipstatus_${index}">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+
+<td>
+<input
+type="date"
+id="strike_${index}"
+value="${c.strike || ""}">
+</td>
+
+<td>
+<select id="strikestatus_${index}">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+
+<td>
+<input
+type="date"
+id="trims_${index}"
+value="${c.trims || ""}">
+</td>
+
+<td>
+<select id="trimsstatus_${index}">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+
+<td>
+<input
+type="date"
+id="sewingacc_${index}"
+value="${c.sewingacc || ""}">
+</td>
+
+<td>
+<select id="sewingstatus_${index}">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+
+<td>
+<input
+type="date"
+id="finishacc_${index}"
+value="${c.finishacc || ""}">
+</td>
+
+<td>
+<select id="finishstatus_${index}">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
 </script>
 </body>
 </html>
