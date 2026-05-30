@@ -3,24 +3,29 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SMART TNA BD - TNA MANAGEMENT</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
 body{
 background:#0f172a;
 color:white;
-font-family:Arial,sans-serif;
 padding:20px;
 }
 
 .header{
-background:#1e293b;
+background:#111827;
 padding:20px;
 border-radius:15px;
 margin-bottom:20px;
@@ -50,7 +55,7 @@ color:white;
 
 table{
 width:100%;
-min-width:4000px;
+min-width:5000px;
 border-collapse:collapse;
 }
 
@@ -67,36 +72,37 @@ td{
 padding:8px;
 border:1px solid #334155;
 text-align:center;
+font-size:13px;
+}
+
+.progress{
+color:#00ff99;
+font-weight:bold;
 }
 
 .status-pending{
 background:#f59e0b;
-padding:5px 10px;
+padding:4px 8px;
 border-radius:20px;
 }
 
 .status-running{
 background:#86efac;
 color:black;
-padding:5px 10px;
+padding:4px 8px;
 border-radius:20px;
 }
 
 .status-complete{
 background:#16a34a;
-padding:5px 10px;
+padding:4px 8px;
 border-radius:20px;
 }
 
 .status-delay{
 background:#dc2626;
-padding:5px 10px;
+padding:4px 8px;
 border-radius:20px;
-}
-
-.progress{
-font-weight:bold;
-color:#00ff99;
 }
 
 </style>
@@ -106,7 +112,9 @@ color:#00ff99;
 <body>
 
 <div class="header">
+
 <h1>📦 SMART TNA BD - TNA MANAGEMENT</h1>
+
 </div>
 
 <div class="card">
@@ -115,13 +123,13 @@ color:#00ff99;
 type="text"
 id="searchInput"
 class="search-box"
-placeholder="Search Buyer / IKL / Style / Merch">
+placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
 <div class="card">
 
-<table id="tnaTable">
+<table>
 
 <thead>
 
@@ -130,8 +138,11 @@ placeholder="Search Buyer / IKL / Style / Merch">
 <th>SL</th>
 
 <th>Buyer</th>
+
 <th>IKL</th>
+
 <th>Style</th>
+
 <th>Qty</th>
 
 <th>Order Confirmation</th>
