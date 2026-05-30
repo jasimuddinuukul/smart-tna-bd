@@ -647,6 +647,9 @@ selectedDocId = id;
 const data =
 allOrders.find(o=>o.id===id);
 
+console.log("Selected Order Data:");
+console.log(data);
+  
 if(!data) return;
 
 document.getElementById("showBuyer").innerText =
