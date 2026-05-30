@@ -1034,25 +1034,17 @@ return progress;
 // ==========================
 // AUTO CHANGE PROGRESS
 // ==========================
+document.addEventListener("click",(e)=>{
 
-document.addEventListener(
+if(e.target.classList.contains("openBtn")){
 
-"change",
-
-function(e){
-
-if(
-e.target.tagName === "SELECT"
-){
-
-calculateProgress();
-
-}
-
-}
-
+selectOrder(
+e.target.dataset.id
 );
 
+}
+
+});
 
 // ==========================
 // SAVE BUTTON
