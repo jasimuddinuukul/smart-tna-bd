@@ -1,24 +1,184 @@
-<!-- TNA MANAGEMENT TABLE -->
+<!DOCTYPE html>
 
-<div class="card">
+<html lang="en">
 
-<h2>📋 TNA Management</h2>
+<head>
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search Buyer / IKL / Style / Merchandiser"
-style="
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SMART TNA BD - TNA MANAGEMENT</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+.header{
+background:#111827;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.header h1{
+color:#00ff99;
+font-size:34px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:#00ff99;
+margin-bottom:15px;
+}
+
+.search-box{
 width:100%;
 padding:12px;
-margin-bottom:15px;
 border:none;
 border-radius:10px;
 background:#0f172a;
 color:white;
-">
+margin-bottom:15px;
+}
 
-<div style="overflow:auto;">
+.table-container{
+overflow:auto;
+}
+
+table{
+width:100%;
+min-width:9000px;
+border-collapse:collapse;
+}
+
+th{
+background:#111827;
+color:#00ff99;
+padding:10px;
+border:1px solid #334155;
+font-size:13px;
+white-space:nowrap;
+position:sticky;
+top:0;
+}
+
+td{
+padding:8px;
+border:1px solid #334155;
+font-size:12px;
+text-align:center;
+white-space:nowrap;
+}
+
+tr:nth-child(even){
+background:#243247;
+}
+
+.status-pending{
+background:#f59e0b;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.status-running{
+background:#22c55e;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.status-completed{
+background:#15803d;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.status-delayed{
+background:#dc2626;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.btn-edit{
+background:#2563eb;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+color:white;
+cursor:pointer;
+}
+
+.btn-delete{
+background:#dc2626;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+color:white;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>
+📋 SMART TNA BD - TNA MANAGEMENT
+</h1>
+
+</div>
+
+<div class="card">
+
+<h2>
+🔍 Search TNA
+</h2>
+
+<input
+type="text"
+id="searchInput"
+class="search-box"
+placeholder="Search Buyer / IKL / Style / Merchandiser">
+
+</div>
+
+<div class="card">
+
+<h2>
+📦 TNA Management Table
+</h2>
+
+<div class="table-container">
 
 <table id="tnaTable">
 
@@ -114,7 +274,7 @@ color:white;
 <th>SI Status</th>
 
 <th>Sewing Start</th>
-<th>SS Status</th>
+<th>SEW Status</th>
 
 <th>Inline Inspection</th>
 <th>II Status</th>
@@ -150,6 +310,14 @@ color:white;
 
 <tbody id="tnaBody">
 
+<tr>
+
+<td colspan="200">
+Loading TNA Data...
+</td>
+
+</tr>
+
 </tbody>
 
 </table>
@@ -157,3 +325,8 @@ color:white;
 </div>
 
 </div>
+
+<script type="module" src="tna-management.js"></script>
+
+</body>
+</html>
