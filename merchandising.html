@@ -37,6 +37,8 @@ grid-template-columns:350px 1fr;
 height:calc(100vh - 70px);
 }
 
+/* LEFT */
+
 .sidebar{
 background:#111827;
 padding:15px;
@@ -65,7 +67,7 @@ padding:15px;
 border-radius:12px;
 margin-bottom:12px;
 cursor:pointer;
-transition:0.3s;
+transition:.3s;
 }
 
 .order-card:hover{
@@ -76,6 +78,8 @@ background:#334155;
 color:#00ff99;
 margin-bottom:8px;
 }
+
+/* RIGHT */
 
 .content{
 padding:20px;
@@ -93,6 +97,8 @@ margin-bottom:20px;
 color:#00ff99;
 margin-bottom:15px;
 }
+
+/* INFO GRID */
 
 .info-grid{
 display:grid;
@@ -112,10 +118,12 @@ color:#94a3b8;
 margin-bottom:5px;
 }
 
+/* TABLE */
+
 table{
 width:100%;
 border-collapse:collapse;
-min-width:1800px;
+min-width:1600px;
 }
 
 table th,
@@ -128,9 +136,9 @@ text-align:center;
 table th{
 background:#111827;
 color:#00ff99;
-position:sticky;
-top:0;
 }
+
+/* FORM */
 
 input,
 select,
@@ -161,7 +169,7 @@ button:hover{
 background:#008844;
 }
 
-/* STATUS COLORS */
+/* STATUS */
 
 .status-pending{
 background:#f59e0b;
@@ -203,7 +211,7 @@ grid-template-columns:1fr;
 
 <div class="main">
 
-<!-- LEFT SIDE -->
+<!-- LEFT -->
 
 <div class="sidebar">
 
@@ -214,19 +222,19 @@ grid-template-columns:1fr;
 <input
 type="text"
 id="searchInput"
-placeholder="Search IKL Number">
+placeholder="Search IKL / Buyer / Style">
 
 </div>
 
 <div id="orderList">
 
-<!-- Firebase Orders Load Here -->
+<!-- Firebase Orders -->
 
 </div>
 
 </div>
 
-<!-- RIGHT SIDE -->
+<!-- RIGHT -->
 
 <div class="content">
 
@@ -269,7 +277,7 @@ placeholder="Search IKL Number">
 </div>
 
 <div class="info-box">
-<span>Merchandising Progress</span>
+<span>Progress</span>
 <b id="showProgress">0%</b>
 </div>
 
@@ -277,7 +285,7 @@ placeholder="Search IKL Number">
 
 </div>
 
-<!-- MERCHANDISING STAGE TABLE -->
+<!-- MERCHANDISING STAGE -->
 
 <div class="card">
 
@@ -285,18 +293,15 @@ placeholder="Search IKL Number">
 
 <div style="overflow:auto;">
 
-<table id="merchTable">
+<table>
 
 <thead>
 
 <tr>
 
 <th>Stage</th>
-
 <th>Target Date</th>
-
 <th>Actual Date</th>
-
 <th>Status</th>
 
 </tr>
@@ -471,7 +476,7 @@ placeholder="Search IKL Number">
 
 <textarea
 id="delayNote"
-placeholder="Write delay reason here..."></textarea>
+placeholder="Write delay reason"></textarea>
 
 <br><br>
 
@@ -485,480 +490,5 @@ placeholder="Write delay reason here..."></textarea>
 
 </div>
 
-<!-- PART 2 FIREBASE + JS WILL COME NEXT -->
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-getDocs
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* FIREBASE */
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-
-authDomain: "smart-tna-bd.firebaseapp.com",
-
-projectId: "smart-tna-bd",
-
-storageBucket: "smart-tna-bd.firebasestorage.app",
-
-messagingSenderId: "372049573207",
-
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
-};
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-/* GLOBAL */
-
-let allOrders = [];
-let selectedDocId = null;
-let selectedColors = [];
-/* LOAD ORDERS */
-
-async function loadOrders(){
-
-const querySnapshot =
-await getDocs(collection(db,"orders"));
-
-const orderList =
-document.getElementById("orderList");
-
-orderList.innerHTML = "";
-
-allOrders = [];
-
-querySnapshot.forEach((docItem)=>{
-
-const data = docItem.data();
-
-allOrders.push({
-
-id: docItem.id,
-...data
-
-});
-
-orderList.innerHTML += `
-
-<div
-class="order-card"
-data-search="
-
-${data.ikl || ""}
-${data.buyer || ""}
-${data.style || ""}
-${data.merchandiser || ""}
-
-">
-
-<h3>
-
-${data.ikl || "NO IKL"}
-
-</h3>
-
-<p>
-Buyer :
-${data.buyer || ""}
-</p>
-
-<p>
-Style :
-${data.style || ""}
-</p>
-
-<p>
-Merch :
-${data.merchandiser || ""}
-</p>
-
-<button
-onclick="selectOrder('${docItem.id}')">
-
-Open
-
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-window.loadOrders = loadOrders;
-
-/* SEARCH */
-
-document
-.getElementById("searchInput")
-.addEventListener("keyup",function(){
-
-const value =
-this.value.toLowerCase();
-
-const cards =
-document.querySelectorAll(".order-card");
-
-cards.forEach(card=>{
-
-const txt =
-card.dataset.search.toLowerCase();
-
-card.style.display =
-
-txt.includes(value)
-? "block"
-: "none";
-
-});
-
-});
-
-/* SELECT ORDER */
-
-window.selectOrder = function(id){
-
-selectedDocId = id;
-
-let data =
-allOrders.find(o => o.id === id);
-
-if(!data) return;
-
-document.getElementById("showBuyer").innerText =
-data.buyer || "-";
-
-document.getElementById("showIKL").innerText =
-data.ikl || "-";
-
-document.getElementById("showStyle").innerText =
-data.style || "-";
-
-document.getElementById("showMerch").innerText =
-data.merchandiser || "-";
-
-document.getElementById("showQty").innerText =
-(data.totalQty || 0) + " PCS";
-
-document.getElementById("showShip").innerText =
-data.shipdate || "-";
-
-/* COLOR DATA LOAD */
-colors: [
-
-{
-color:"RED",
-qty:1500
-},
-
-{
-color:"BLUE",
-qty:2000
-},
-
-{
-color:"BLACK",
-qty:3000
-}
-
-]
-selectedColors =
-data.colors || [];
-
-loadColorTable(selectedColors);
-
-}
-const data =
-allOrders.find(
-o => o.id === id
-);
-
-if(!data) return;
-
-/* INFO */
-
-document.getElementById("showBuyer")
-.innerText =
-data.buyer || "-";
-
-document.getElementById("showIKL")
-.innerText =
-data.ikl || "-";
-
-document.getElementById("showStyle")
-.innerText =
-data.style || "-";
-
-document.getElementById("showMerch")
-.innerText =
-data.merchandiser || "-";
-
-document.getElementById("showQty")
-.innerText =
-(data.totalQty || 0) + " PCS";
-
-/* SHIPMENT DATE */
-
-const shipDate =
-
-data.shipdate ||
-data.shipDate ||
-data.shipmentDate ||
-"-";
-
-document.getElementById("showShip")
-.innerText =
-shipDate;
-
-  <div class="card">
-
-<h2>🎨 Color Wise Merchandising Update</h2>
-
-<div style="overflow:auto;">
-
-<table id="colorTable">
-
-<thead>
-
-<tr>
-
-<th>Color</th>
-
-<th>Qty</th>
-
-<th>Color Swatch</th>
-<th>Status</th>
-
-<th>Lab Dip Submit</th>
-<th>Status</th>
-
-<th>Lab Dip Approval</th>
-<th>Status</th>
-
-<th>Strike Off Send</th>
-<th>Status</th>
-
-<th>Strike Off Approval</th>
-<th>Status</th>
-
-<th>Trims Approval</th>
-<th>Status</th>
-
-<th>Sewing Acc Approval</th>
-<th>Status</th>
-
-<th>Finishing Acc Approval</th>
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-  
-/* LOAD PREVIOUS DATA */
-
-loadMerchandisingData(data);
-
-};
-
-/* LOAD EXISTING MERCH DATA */
-
-function loadMerchandisingData(data){
-
-document.getElementById("fabricBookingTarget").value =
-data.fabricBookingTarget || "";
-
-document.getElementById("fabricBookingActual").value =
-data.fabricBookingActual || "";
-
-document.getElementById("fabricBookingStatus").value =
-data.fabricBookingStatus || "Pending";
-
-
-document.getElementById("colorSwatchTarget").value =
-data.colorSwatchTarget || "";
-
-document.getElementById("colorSwatchActual").value =
-data.colorSwatchActual || "";
-
-document.getElementById("colorSwatchStatus").value =
-data.colorSwatchStatus || "Pending";
-
-
-document.getElementById("labDipSubmitTarget").value =
-data.labDipSubmitTarget || "";
-
-document.getElementById("labDipSubmitActual").value =
-data.labDipSubmitActual || "";
-
-document.getElementById("labDipSubmitStatus").value =
-data.labDipSubmitStatus || "Pending";
-
-
-document.getElementById("labDipApprovalTarget").value =
-data.labDipApprovalTarget || "";
-
-document.getElementById("labDipApprovalActual").value =
-data.labDipApprovalActual || "";
-
-document.getElementById("labDipApprovalStatus").value =
-data.labDipApprovalStatus || "Pending";
-
-
-document.getElementById("g2Target").value =
-data.g2Target || "";
-
-document.getElementById("g2Actual").value =
-data.g2Actual || "";
-
-document.getElementById("g2Status").value =
-data.g2Status || "Pending";
-
-
-document.getElementById("strikeSendTarget").value =
-data.strikeSendTarget || "";
-
-document.getElementById("strikeSendActual").value =
-data.strikeSendActual || "";
-
-document.getElementById("strikeSendStatus").value =
-data.strikeSendStatus || "Pending";
-
-
-document.getElementById("strikeApprovalTarget").value =
-data.strikeApprovalTarget || "";
-
-document.getElementById("strikeApprovalActual").value =
-data.strikeApprovalActual || "";
-
-document.getElementById("strikeApprovalStatus").value =
-data.strikeApprovalStatus || "Pending";
-
-
-document.getElementById("trimsTarget").value =
-data.trimsTarget || "";
-
-document.getElementById("trimsActual").value =
-data.trimsActual || "";
-
-document.getElementById("trimsStatus").value =
-data.trimsStatus || "Pending";
-
-
-document.getElementById("sewingTrimsTarget").value =
-data.sewingTrimsTarget || "";
-
-document.getElementById("sewingTrimsActual").value =
-data.sewingTrimsActual || "";
-
-document.getElementById("sewingTrimsStatus").value =
-data.sewingTrimsStatus || "Pending";
-
-
-document.getElementById("ppMeetingTarget").value =
-data.ppMeetingTarget || "";
-
-document.getElementById("ppMeetingActual").value =
-data.ppMeetingActual || "";
-
-document.getElementById("ppMeetingStatus").value =
-data.ppMeetingStatus || "Pending";
-
-
-document.getElementById("packingTrimsTarget").value =
-data.packingTrimsTarget || "";
-
-document.getElementById("packingTrimsActual").value =
-data.packingTrimsActual || "";
-
-document.getElementById("packingTrimsStatus").value =
-data.packingTrimsStatus || "Pending";
-
-
-document.getElementById("delayNote").value =
-data.merchDelayNote || "";
-
-/* AUTO PROGRESS */
-
-calculateProgress();
-
-}
-
-/* CALCULATE PROGRESS */
-
-function calculateProgress(){
-
-const stages = [
-
-"fabricBookingStatus",
-"colorSwatchStatus",
-"labDipSubmitStatus",
-"labDipApprovalStatus",
-"g2Status",
-"strikeSendStatus",
-"strikeApprovalStatus",
-"trimsStatus",
-"sewingTrimsStatus",
-"ppMeetingStatus",
-"packingTrimsStatus"
-
-];
-
-let complete = 0;
-
-stages.forEach(id=>{
-
-if(
-document.getElementById(id).value
-=== "Complete"
-){
-complete++;
-}
-
-});
-
-const progress =
-Math.round(
-(complete / stages.length) * 100
-);
-
-document.getElementById("showProgress")
-.innerText =
-progress + "%";
-
-}
-
-window.calculateProgress =
-calculateProgress;
-
-/* PAGE LOAD */
-
-loadOrders();
-
-</script>
-  
 </body>
 </html>
