@@ -1,752 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>SMART TNA BD - MERCHANDISING ERP</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART TNA BD - Merchandising ERP V2</title>
 <style>
-
-body{
-margin:0;
-padding:0;
-background:#0f172a;
-font-family:Arial;
-color:white;
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0f172a;color:#fff;padding:20px}
+.header{background:#111827;padding:20px;border-radius:15px;text-align:center;margin-bottom:20px}
+.header h1{color:#00ff99}
+.card{background:#1e293b;padding:20px;border-radius:15px;margin-bottom:20px}
+input,select,button{
+padding:10px;border-radius:8px;border:none
 }
-
-header{
-background:#111827;
-padding:18px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-color:#00ff99;
-}
-
-.main{
-display:grid;
-grid-template-columns:360px 1fr;
-height:calc(100vh - 70px);
-}
-
-.sidebar{
-background:#111827;
-padding:15px;
-overflow:auto;
-border-right:2px solid #1e293b;
-}
-
-.sidebar h2{
-color:#00ff99;
-}
-
-.search-box{
-margin-bottom:20px;
-}
-
-.search-box input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#1e293b;
-color:white;
-box-sizing:border-box;
-}
-
-.order-card{
-background:#1e293b;
-padding:15px;
-border-radius:12px;
-margin-bottom:12px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.order-card:hover{
-background:#334155;
-}
-
-.order-card h3{
-margin:0;
-color:#00ff99;
-}
-
-.order-card p{
-margin:6px 0;
-font-size:14px;
-}
-
-.content{
-padding:20px;
-overflow:auto;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-}
-
-h2{
-color:#00ff99;
-}
-
-.info-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-margin-bottom:20px;
-}
-
-.info-box{
-background:#111827;
-padding:15px;
-border-radius:10px;
-}
-
-.info-box span{
-display:block;
-color:#94a3b8;
-margin-bottom:5px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-min-width:3200px;
-}
-
-table th,
-table td{
-border:1px solid #334155;
-padding:12px;
-text-align:center;
-}
-
-table th{
-background:#111827;
-color:#00ff99;
-}
-
-input,
-select,
-textarea{
-width:100%;
-padding:10px;
-border:none;
-border-radius:8px;
-background:#0f172a;
-color:white;
-box-sizing:border-box;
-}
-
-textarea{
-height:90px;
-}
-
-button{
-background:#00aa66;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-margin-top:15px;
-}
-
-button:hover{
-background:#008844;
-}
-
+input,select{background:#0f172a;color:#fff}
+button{background:#00ff99;color:#000;font-weight:bold;cursor:pointer}
+table{width:100%;border-collapse:collapse;min-width:2200px}
+th,td{border:1px solid #334155;padding:8px;text-align:center}
+th{background:#111827;color:#00ff99}
+.pending{background:#f59e0b;color:#fff}
+.running{background:#84cc16;color:#fff}
+.completed{background:#16a34a;color:#fff}
+.delayed{background:#dc2626;color:#fff}
 </style>
-
 </head>
-
 <body>
 
-<header>
-
-🧵 SMART TNA BD - MERCHANDISING ERP
-
-</header>
-
-<div class="main">
-
-<!-- LEFT SIDE -->
-
-<div class="sidebar">
-
-<h2>📦 IKL Search</h2>
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search IKL Number"
-onkeyup="filterOrders()">
-
-</div>
-
-<div id="orderList"></div>
-
-</div>
-
-<!-- RIGHT SIDE -->
-
-<div class="content">
-
-<div class="card">
-
-<h2>📋 Selected Order Info</h2>
-
-<div class="info-grid">
-
-<div class="info-box">
-<span>Buyer</span>
-<b id="showBuyer">-</b>
-</div>
-
-<div class="info-box">
-<span>IKL No</span>
-<b id="showIKL">-</b>
-</div>
-
-<div class="info-box">
-<span>Style</span>
-<b id="showStyle">-</b>
-</div>
-
-<div class="info-box">
-<span>Merchandiser</span>
-<b id="showMerch">-</b>
-</div>
-
-<div class="info-box">
-<span>Total Qty</span>
-<b id="showQty">-</b>
-</div>
-
-<div class="info-box">
-<span>Shipment Date</span>
-<b id="showShip">-</b>
-</div>
-
-</div>
-
+<div class="header">
+<h1>SMART TNA BD - MERCHANDISING ERP V2</h1>
 </div>
 
 <div class="card">
+<h2>📦 IKL Search</h2><br>
+<input type="text" id="search" placeholder="Search IKL Number">
+</div>
 
-<h2>🎨 Color Wise Merchandising Update</h2>
+<div class="card">
+<h2>📋 Selected Order Info</h2><br>
+<p><b>Buyer:</b> BRANSHES / NOZAKI SAN</p>
+<p><b>IKL:</b> MHJ-146/25</p>
+<p><b>Style:</b> 262170017-2</p>
+<p><b>Merchandiser:</b> MR. TUTUL</p>
+<p><b>Shipment:</b> 2026-06-15</p>
+</div>
 
-<table id="colorTable">
+<div class="card">
+<h2>🎨 Color Wise Merchandising Update</h2><br>
 
+<div style="overflow:auto">
+<table>
+<thead>
 <tr>
-
 <th>Color</th>
+<th>Qty</th>
 
-<th>Order Qty</th>
-
-<th>Labdip Date</th>
-<th>Labdip Status</th>
-
-<th>Strike Off Date</th>
-<th>Strike Off Status</th>
-
-<th>Trims Approval Date</th>
-<th>Trims Status</th>
-
-<th>Sewing Acc Date</th>
-<th>Sewing Acc Status</th>
-
-<th>Finishing Acc Date</th>
-<th>Finishing Acc Status</th>
-
+<th>Color Swatch Date</th><th>Status</th>
+<th>Lab Dip Submit</th><th>Status</th>
+<th>Lab Dip Approval</th><th>Status</th>
+<th>G2 Receive</th><th>Status</th>
+<th>Strike Off Send</th><th>Status</th>
+<th>Strike Off Approval</th><th>Status</th>
+<th>Trims Approval</th><th>Status</th>
+<th>Sewing Trims</th><th>Status</th>
+<th>Packing Trims</th><th>Status</th>
+<th>PP Meeting</th><th>Status</th>
 </tr>
+</thead>
 
+<tbody id="tbody"></tbody>
 </table>
+</div>
 
 <br>
-
-<label>Delay Note</label>
-
-<textarea
-id="delayNote"
-placeholder="Write delay reason"></textarea>
-
-<button onclick="saveUpdates()">
-
-💾 Save Merchandising Update
-
-</button>
-
+<button onclick="addRow()">➕ Add Color Row</button>
+<button>💾 Save Merchandising Update</button>
 </div>
 
-</div>
-
-</div>
-
-<script type="module">
-
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-
-getFirestore,
-collection,
-getDocs,
-updateDoc,
-doc
-
+<script>
+function statusOptions(){
+return `
+<option value="Pending">Pending</option>
+<option value="Running">Running</option>
+<option value="Completed">Completed</option>
+<option value="Delayed">Delayed</option>
+`;
 }
 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+function addRow(){
+const tr=document.createElement("tr");
 
-// FIREBASE CONFIG
+tr.innerHTML=`
+<td><input value="NEW COLOR"></td>
+<td><input value="0 PCS"></td>
 
-const firebaseConfig = {
-
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-
-authDomain: "smart-tna-bd.firebaseapp.com",
-
-projectId: "smart-tna-bd",
-
-storageBucket: "smart-tna-bd.firebasestorage.app",
-
-messagingSenderId: "372049573207",
-
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
-};
-
-// INIT
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-let selectedDocId = null;
-
-let selectedColors = [];
-
-let allOrders = [];
-
-// LOAD ORDERS
-
-async function loadOrders(){
-
-const querySnapshot =
-
-await getDocs(collection(db, "orders"));
-
-let orderList =
-
-document.getElementById("orderList");
-
-orderList.innerHTML = "";
-
-allOrders = [];
-
-querySnapshot.forEach((docItem)=>{
-
-let data = docItem.data();
-
-allOrders.push({
-
-id:docItem.id,
-
-...data
-
-});
-
-orderList.innerHTML += `
-
-<div
-class="order-card"
-data-search="
-${data.ikl || ""}
-">
-
-<h3>${data.ikl || ""}</h3>
-
-<p>Buyer:
-${data.buyer || ""}</p>
-
-<p>Style:
-${data.style || ""}</p>
-
-<p>Merch:
-${data.merchandiser || ""}</p>
-
-<button
-onclick="selectOrder('${docItem.id}')">
-
-Open
-
-</button>
-
-</div>
-
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
+<td><input type="date"></td><td><select>${statusOptions()}</select></td>
 `;
 
-});
-
+document.getElementById("tbody").appendChild(tr);
 }
 
-// SEARCH IKL
-
-window.filterOrders = function(){
-
-let input =
-
-document.getElementById("searchInput")
-.value.toLowerCase();
-
-let cards =
-
-document.querySelectorAll(".order-card");
-
-cards.forEach(card=>{
-
-let text =
-card.dataset.search.toLowerCase();
-
-if(text.includes(input)){
-
-card.style.display = "block";
-
-}
-
-else{
-
-card.style.display = "none";
-
-}
-
-});
-
-}
-
-// SELECT ORDER
-
-window.selectOrder = function(id){
-
-selectedDocId = id;
-
-let data =
-
-allOrders.find(o=>o.id === id);
-
-if(!data) return;
-
-document.getElementById("showBuyer")
-.innerText = data.buyer || "-";
-
-document.getElementById("showIKL")
-.innerText = data.ikl || "-";
-
-document.getElementById("showStyle")
-.innerText = data.style || "-";
-
-document.getElementById("showMerch")
-.innerText = data.merchandiser || "-";
-
-document.getElementById("showQty")
-.innerText =
-(data.totalQty || 0) + " PCS";
-
-document.getElementById("showShip")
-.innerText = data.shipdate || "-";
-
-selectedColors = data.colors || [];
-
-loadColorTable(selectedColors);
-
-}
-
-// LOAD COLOR TABLE
-
-function loadColorTable(colors){
-
-let table =
-
-document.getElementById("colorTable");
-
-table.innerHTML = `
-
-<tr>
-
-<th>Color</th>
-
-<th>Order Qty</th>
-
-<th>Labdip Date</th>
-<th>Labdip Status</th>
-
-<th>Strike Off Date</th>
-<th>Strike Off Status</th>
-
-<th>Trims Approval Date</th>
-<th>Trims Status</th>
-
-<th>Sewing Acc Date</th>
-<th>Sewing Acc Status</th>
-
-<th>Finishing Acc Date</th>
-<th>Finishing Acc Status</th>
-
-</tr>
-
-`;
-
-colors.forEach((c,index)=>{
-
-table.innerHTML += `
-
-<tr>
-
-<td>
-
-${c.color}
-
-</td>
-
-<td>
-
-${c.qty}
-
-PCS
-
-</td>
-
-<td>
-
-<input
-type="date"
-id="labdip_${index}"
-value="${c.labdip || ""}">
-
-</td>
-
-<td>
-
-<select id="labdipstatus_${index}">
-
-<option ${c.labdipStatus==="Pending"?"selected":""}>Pending</option>
-
-<option ${c.labdipStatus==="Running"?"selected":""}>Running</option>
-
-<option ${c.labdipStatus==="Delay"?"selected":""}>Delay</option>
-
-<option ${c.labdipStatus==="Complete"?"selected":""}>Complete</option>
-
-</select>
-
-</td>
-
-<td>
-
-<input
-type="date"
-id="strike_${index}"
-value="${c.strike || ""}">
-
-</td>
-
-<td>
-
-<select id="strikestatus_${index}">
-
-<option ${c.strikeStatus==="Pending"?"selected":""}>Pending</option>
-
-<option ${c.strikeStatus==="Running"?"selected":""}>Running</option>
-
-<option ${c.strikeStatus==="Delay"?"selected":""}>Delay</option>
-
-<option ${c.strikeStatus==="Complete"?"selected":""}>Complete</option>
-
-</select>
-
-</td>
-
-<td>
-
-<input
-type="date"
-id="trims_${index}"
-value="${c.trims || ""}">
-
-</td>
-
-<td>
-
-<select id="trimsstatus_${index}">
-
-<option ${c.trimsStatus==="Pending"?"selected":""}>Pending</option>
-
-<option ${c.trimsStatus==="Running"?"selected":""}>Running</option>
-
-<option ${c.trimsStatus==="Delay"?"selected":""}>Delay</option>
-
-<option ${c.trimsStatus==="Complete"?"selected":""}>Complete</option>
-
-</select>
-
-</td>
-
-<td>
-
-<input
-type="date"
-id="sewingacc_${index}"
-value="${c.sewingacc || ""}">
-
-</td>
-
-<td>
-
-<select id="sewingstatus_${index}">
-
-<option ${c.sewingStatus==="Pending"?"selected":""}>Pending</option>
-
-<option ${c.sewingStatus==="Running"?"selected":""}>Running</option>
-
-<option ${c.sewingStatus==="Delay"?"selected":""}>Delay</option>
-
-<option ${c.sewingStatus==="Complete"?"selected":""}>Complete</option>
-
-</select>
-
-</td>
-
-<td>
-
-<input
-type="date"
-id="finishacc_${index}"
-value="${c.finishacc || ""}">
-
-</td>
-
-<td>
-
-<select id="finishstatus_${index}">
-
-<option ${c.finishStatus==="Pending"?"selected":""}>Pending</option>
-
-<option ${c.finishStatus==="Running"?"selected":""}>Running</option>
-
-<option ${c.finishStatus==="Delay"?"selected":""}>Delay</option>
-
-<option ${c.finishStatus==="Complete"?"selected":""}>Complete</option>
-
-</select>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-// SAVE UPDATE
-
-window.saveUpdates = async function(){
-
-if(!selectedDocId){
-
-alert("Select Order First");
-
-return;
-
-}
-
-let updatedColors = [];
-
-selectedColors.forEach((c,index)=>{
-
-updatedColors.push({
-
-...c,
-
-labdip:
-document.getElementById(`labdip_${index}`).value,
-
-labdipStatus:
-document.getElementById(`labdipstatus_${index}`).value,
-
-strike:
-document.getElementById(`strike_${index}`).value,
-
-strikeStatus:
-document.getElementById(`strikestatus_${index}`).value,
-
-trims:
-document.getElementById(`trims_${index}`).value,
-
-trimsStatus:
-document.getElementById(`trimsstatus_${index}`).value,
-
-sewingacc:
-document.getElementById(`sewingacc_${index}`).value,
-
-sewingStatus:
-document.getElementById(`sewingstatus_${index}`).value,
-
-finishacc:
-document.getElementById(`finishacc_${index}`).value,
-
-finishStatus:
-document.getElementById(`finishstatus_${index}`).value
-
-});
-
-});
-
-await updateDoc(
-
-doc(db, "orders", selectedDocId),
-
-{
-
-colors: updatedColors,
-
-merchDelayNote:
-document.getElementById("delayNote").value,
-
-Merchandising:"Running"
-
-}
-
-);
-
-alert("Merchandising Updated!");
-
-}
-
-// LOAD PAGE
-
-loadOrders();
-
+for(let i=0;i<5;i++){ addRow(); }
 </script>
 
 </body>
-
 </html>
