@@ -1,115 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART TNA BD - Merchandising ERP V2</title>
+
+<title>SMART TNA BD - MERCHANDISING ERP V2</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0f172a;color:#fff;padding:20px}
-.header{background:#111827;padding:20px;border-radius:15px;text-align:center;margin-bottom:20px}
-.header h1{color:#00ff99}
-.card{background:#1e293b;padding:20px;border-radius:15px;margin-bottom:20px}
-input,select,button{
-padding:10px;border-radius:8px;border:none
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
-input,select{background:#0f172a;color:#fff}
-button{background:#00ff99;color:#000;font-weight:bold;cursor:pointer}
-table{width:100%;border-collapse:collapse;min-width:2200px}
-th,td{border:1px solid #334155;padding:8px;text-align:center}
-th{background:#111827;color:#00ff99}
-.pending{background:#f59e0b;color:#fff}
-.running{background:#84cc16;color:#fff}
-.completed{background:#16a34a;color:#fff}
-.delayed{background:#dc2626;color:#fff}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#111827;
+padding:18px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+color:#00ff99;
+}
+
+.main{
+display:grid;
+grid-template-columns:350px 1fr;
+height:calc(100vh - 70px);
+}
+
+.sidebar{
+background:#111827;
+padding:15px;
+overflow:auto;
+border-right:2px solid #1e293b;
+}
+
+.sidebar h2{
+color:#00ff99;
+margin-bottom:15px;
+}
+
+.search-box input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+margin-bottom:15px;
+}
+
+.order-card{
+background:#1e293b;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.order-card:hover{
+background:#334155;
+}
+
+.order-card h3{
+color:#00ff99;
+margin-bottom:8px;
+}
+
+.content{
+padding:20px;
+overflow:auto;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+.card h2{
+color:#00ff99;
+margin-bottom:15px;
+}
+
+.info-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.info-box{
+background:#111827;
+padding:15px;
+border-radius:10px;
+}
+
+.info-box span{
+display:block;
+color:#94a3b8;
+margin-bottom:5px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:1800px;
+}
+
+table th,
+table td{
+border:1px solid #334155;
+padding:10px;
+text-align:center;
+}
+
+table th{
+background:#111827;
+color:#00ff99;
+position:sticky;
+top:0;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#0f172a;
+color:white;
+}
+
+textarea{
+height:120px;
+}
+
+button{
+background:#00aa66;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:#008844;
+}
+
+/* STATUS COLORS */
+
+.status-pending{
+background:#f59e0b;
+color:white;
+}
+
+.status-running{
+background:#84cc16;
+color:white;
+}
+
+.status-complete{
+background:#16a34a;
+color:white;
+}
+
+.status-delay{
+background:#dc2626;
+color:white;
+}
+
+@media(max-width:900px){
+
+.main{
+grid-template-columns:1fr;
+}
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<div class="header">
-<h1>SMART TNA BD - MERCHANDISING ERP V2</h1>
+<header>
+🧵 SMART TNA BD - MERCHANDISING ERP V2
+</header>
+
+<div class="main">
+
+<!-- LEFT SIDE -->
+
+<div class="sidebar">
+
+<h2>📦 IKL Search</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search IKL Number">
+
 </div>
 
-<div class="card">
-<h2>📦 IKL Search</h2><br>
-<input type="text" id="search" placeholder="Search IKL Number">
+<div id="orderList">
+
+<!-- Firebase Orders Load Here -->
+
 </div>
 
-<div class="card">
-<h2>📋 Selected Order Info</h2><br>
-<p><b>Buyer:</b> BRANSHES / NOZAKI SAN</p>
-<p><b>IKL:</b> MHJ-146/25</p>
-<p><b>Style:</b> 262170017-2</p>
-<p><b>Merchandiser:</b> MR. TUTUL</p>
-<p><b>Shipment:</b> 2026-06-15</p>
 </div>
 
-<div class="card">
-<h2>🎨 Color Wise Merchandising Update</h2><br>
+<!-- RIGHT SIDE -->
 
-<div style="overflow:auto">
-<table>
+<div class="content">
+
+<!-- ORDER INFO -->
+
+<div class="card">
+
+<h2>📋 Selected Order Information</h2>
+
+<div class="info-grid">
+
+<div class="info-box">
+<span>Buyer</span>
+<b id="showBuyer">-</b>
+</div>
+
+<div class="info-box">
+<span>IKL No</span>
+<b id="showIKL">-</b>
+</div>
+
+<div class="info-box">
+<span>Style</span>
+<b id="showStyle">-</b>
+</div>
+
+<div class="info-box">
+<span>Merchandiser</span>
+<b id="showMerch">-</b>
+</div>
+
+<div class="info-box">
+<span>Total Qty</span>
+<b id="showQty">-</b>
+</div>
+
+<div class="info-box">
+<span>Shipment Date</span>
+<b id="showShip">-</b>
+</div>
+
+<div class="info-box">
+<span>Merchandising Progress</span>
+<b id="showProgress">0%</b>
+</div>
+
+</div>
+
+</div>
+
+<!-- MERCHANDISING STAGE TABLE -->
+
+<div class="card">
+
+<h2>📋 Merchandising Stage Tracker</h2>
+
+<div style="overflow:auto;">
+
+<table id="merchTable">
+
 <thead>
-<tr>
-<th>Color</th>
-<th>Qty</th>
 
-<th>Color Swatch Date</th><th>Status</th>
-<th>Lab Dip Submit</th><th>Status</th>
-<th>Lab Dip Approval</th><th>Status</th>
-<th>G2 Receive</th><th>Status</th>
-<th>Strike Off Send</th><th>Status</th>
-<th>Strike Off Approval</th><th>Status</th>
-<th>Trims Approval</th><th>Status</th>
-<th>Sewing Trims</th><th>Status</th>
-<th>Packing Trims</th><th>Status</th>
-<th>PP Meeting</th><th>Status</th>
+<tr>
+
+<th>Stage</th>
+
+<th>Target Date</th>
+
+<th>Actual Date</th>
+
+<th>Status</th>
+
 </tr>
+
 </thead>
 
-<tbody id="tbody"></tbody>
+<tbody>
+
+<tr>
+<td>Fabric Booking</td>
+<td><input type="date" id="fabricBookingTarget"></td>
+<td><input type="date" id="fabricBookingActual"></td>
+<td>
+<select id="fabricBookingStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Color Swatch Receive</td>
+<td><input type="date" id="colorSwatchTarget"></td>
+<td><input type="date" id="colorSwatchActual"></td>
+<td>
+<select id="colorSwatchStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Lab Dip Submit</td>
+<td><input type="date" id="labDipSubmitTarget"></td>
+<td><input type="date" id="labDipSubmitActual"></td>
+<td>
+<select id="labDipSubmitStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Lab Dip Approval</td>
+<td><input type="date" id="labDipApprovalTarget"></td>
+<td><input type="date" id="labDipApprovalActual"></td>
+<td>
+<select id="labDipApprovalStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>G2 Receive</td>
+<td><input type="date" id="g2Target"></td>
+<td><input type="date" id="g2Actual"></td>
+<td>
+<select id="g2Status">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Strike Off Send</td>
+<td><input type="date" id="strikeSendTarget"></td>
+<td><input type="date" id="strikeSendActual"></td>
+<td>
+<select id="strikeSendStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Strike Off Approval</td>
+<td><input type="date" id="strikeApprovalTarget"></td>
+<td><input type="date" id="strikeApprovalActual"></td>
+<td>
+<select id="strikeApprovalStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Trims / Accessories Approval</td>
+<td><input type="date" id="trimsTarget"></td>
+<td><input type="date" id="trimsActual"></td>
+<td>
+<select id="trimsStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Sewing Trims Inhouse</td>
+<td><input type="date" id="sewingTrimsTarget"></td>
+<td><input type="date" id="sewingTrimsActual"></td>
+<td>
+<select id="sewingTrimsStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>PP Meeting</td>
+<td><input type="date" id="ppMeetingTarget"></td>
+<td><input type="date" id="ppMeetingActual"></td>
+<td>
+<select id="ppMeetingStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Packing Trims Inhouse</td>
+<td><input type="date" id="packingTrimsTarget"></td>
+<td><input type="date" id="packingTrimsActual"></td>
+<td>
+<select id="packingTrimsStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</td>
+</tr>
+
+</tbody>
+
 </table>
+
 </div>
 
 <br>
-<button onclick="addRow()">➕ Add Color Row</button>
-<button>💾 Save Merchandising Update</button>
+
+<label>Delay Note</label>
+
+<textarea
+id="delayNote"
+placeholder="Write delay reason here..."></textarea>
+
+<br><br>
+
+<button id="saveBtn">
+💾 Save Merchandising Update
+</button>
+
 </div>
 
-<script>
-function statusOptions(){
-return `
-<option value="Pending">Pending</option>
-<option value="Running">Running</option>
-<option value="Completed">Completed</option>
-<option value="Delayed">Delayed</option>
-`;
-}
+</div>
 
-function addRow(){
-const tr=document.createElement("tr");
+</div>
 
-tr.innerHTML=`
-<td><input value="NEW COLOR"></td>
-<td><input value="0 PCS"></td>
-
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-<td><input type="date"></td><td><select>${statusOptions()}</select></td>
-`;
-
-document.getElementById("tbody").appendChild(tr);
-}
-
-for(let i=0;i<5;i++){ addRow(); }
-</script>
+<!-- PART 2 FIREBASE + JS WILL COME NEXT -->
 
 </body>
 </html>
