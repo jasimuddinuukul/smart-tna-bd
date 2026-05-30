@@ -628,7 +628,7 @@ document.getElementById("showMerch").innerText =
 data.merchandiser || "-";
 
 document.getElementById("showQty").innerText =
-(data.totalQty || 0) + " PCS";
+(data.quantity || data.totalQty || 0) + " PCS";
 
 document.getElementById("showShip").innerText =
 data.shipdate ||
