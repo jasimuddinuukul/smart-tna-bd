@@ -1,135 +1,26 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SMART TNA BD - TNA MANAGEMENT</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#0f172a;
-color:white;
-padding:20px;
-}
-
-.header{
-background:#111827;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-text-align:center;
-}
-
-.header h1{
-color:#00ff99;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-overflow:auto;
-}
-
-.search-box{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#0f172a;
-color:white;
-}
-
-table{
-width:100%;
-min-width:5000px;
-border-collapse:collapse;
-}
-
-th{
-background:#111827;
-color:#00ff99;
-padding:10px;
-border:1px solid #334155;
-position:sticky;
-top:0;
-}
-
-td{
-padding:8px;
-border:1px solid #334155;
-text-align:center;
-font-size:13px;
-}
-
-.progress{
-color:#00ff99;
-font-weight:bold;
-}
-
-.status-pending{
-background:#f59e0b;
-padding:4px 8px;
-border-radius:20px;
-}
-
-.status-running{
-background:#86efac;
-color:black;
-padding:4px 8px;
-border-radius:20px;
-}
-
-.status-complete{
-background:#16a34a;
-padding:4px 8px;
-border-radius:20px;
-}
-
-.status-delay{
-background:#dc2626;
-padding:4px 8px;
-border-radius:20px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="header">
-
-<h1>📦 SMART TNA BD - TNA MANAGEMENT</h1>
-
-</div>
+<!-- TNA MANAGEMENT TABLE -->
 
 <div class="card">
+
+<h2>📋 TNA Management</h2>
 
 <input
 type="text"
 id="searchInput"
-class="search-box"
-placeholder="Search Buyer / IKL / Style / Merchandiser">
+placeholder="Search Buyer / IKL / Style / Merchandiser"
+style="
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:10px;
+background:#0f172a;
+color:white;
+">
 
-</div>
+<div style="overflow:auto;">
 
-<div class="card">
-
-<table>
+<table id="tnaTable">
 
 <thead>
 
@@ -138,17 +29,12 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 <th>SL</th>
 
 <th>Buyer</th>
-
 <th>IKL</th>
-
 <th>Style</th>
-
 <th>Qty</th>
 
 <th>Order Confirmation</th>
-
 <th>Shipment Date</th>
-
 <th>Lead Time</th>
 
 <th>Merchandiser</th>
@@ -156,72 +42,107 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 <th>Progress %</th>
 
 <th>Fabric Booking</th>
+<th>FB Status</th>
 
 <th>Yarn Inhouse</th>
+<th>Yarn Status</th>
 
 <th>Color Swatch</th>
+<th>CS Status</th>
 
 <th>Lab Dip Submit</th>
+<th>LDS Status</th>
 
 <th>Lab Dip Approval</th>
+<th>LDA Status</th>
 
 <th>G2 Receive</th>
+<th>G2 Status</th>
 
 <th>Strike Off Send</th>
+<th>SOS Status</th>
 
 <th>Strike Off Approval</th>
+<th>SOA Status</th>
 
 <th>Knitting Start</th>
+<th>KS Status</th>
 
 <th>Knitting Complete</th>
+<th>KC Status</th>
 
 <th>Dyeing Start</th>
+<th>DS Status</th>
 
 <th>Dyeing Complete</th>
+<th>DC Status</th>
 
 <th>Sample Fabric</th>
+<th>SF Status</th>
 
 <th>PP Sample Submit</th>
+<th>PPS Status</th>
 
 <th>Sewing Trims</th>
+<th>ST Status</th>
 
 <th>Fabric Test Start</th>
+<th>FTS Status</th>
 
 <th>Fabric Test Complete</th>
+<th>FTC Status</th>
 
 <th>PP Approval</th>
+<th>PPA Status</th>
 
 <th>Size Set</th>
+<th>SS Status</th>
 
 <th>PP Meeting</th>
+<th>PPM Status</th>
 
 <th>Cutting Start</th>
+<th>CUT Status</th>
 
 <th>Print Start</th>
+<th>PS Status</th>
 
 <th>Print Complete</th>
+<th>PC Status</th>
 
 <th>Sewing Input</th>
+<th>SI Status</th>
 
 <th>Sewing Start</th>
+<th>SS Status</th>
 
 <th>Inline Inspection</th>
+<th>II Status</th>
 
 <th>Packing Trims</th>
+<th>PT Status</th>
 
 <th>Sewing Complete</th>
+<th>SC Status</th>
 
 <th>Finishing Start</th>
+<th>FS Status</th>
 
 <th>Packing Start</th>
+<th>PKS Status</th>
 
 <th>Packing Complete</th>
+<th>PKC Status</th>
 
 <th>Final Inspection</th>
+<th>FI Status</th>
 
 <th>Shipment Approval</th>
+<th>SA Status</th>
 
-<th>Status</th>
+<th>Final Status</th>
+
+<th>Action</th>
 
 </tr>
 
@@ -235,8 +156,4 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
-<script type="module" src="tna-management.js"></script>
-
-</body>
-
-</html>
+</div>
