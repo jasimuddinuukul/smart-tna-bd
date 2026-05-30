@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART TNA BD - TNA MANAGEMENT</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0b1324;
+color:white;
+padding:20px;
+}
+
+.header{
+background:#16233b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.header h1{
+color:#00ff99;
+}
+
+.search{
+margin-bottom:20px;
+}
+
+.search input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#16233b;
+color:white;
+}
+
+.card{
+background:#16233b;
+padding:15px;
+border-radius:15px;
+overflow:auto;
+}
+
+table{
+width:100%;
+min-width:3500px;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #334155;
+padding:8px;
+text-align:center;
+font-size:13px;
+}
+
+th{
+background:#0f172a;
+color:#00ff99;
+position:sticky;
+top:0;
+}
+
+input[type="checkbox"]{
+transform:scale(1.2);
+cursor:pointer;
+}
+
+.progress{
+font-weight:bold;
+color:#00ff99;
+}
+
+.completed{
+background:#16a34a;
+padding:5px 10px;
+border-radius:20px;
+}
+
+.running{
+background:#f59e0b;
+padding:5px 10px;
+border-radius:20px;
+}
+
+.pending{
+background:#64748b;
+padding:5px 10px;
+border-radius:20px;
+}
+
+.delayed{
+background:#dc2626;
+padding:5px 10px;
+border-radius:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>SMART TNA BD - TNA MANAGEMENT</h1>
+</div>
+
+<div class="search">
+<input type="text" id="searchInput"
+placeholder="Search Buyer / IKL / Style / Merchandiser">
+</div>
+
+<div class="card">
+
+<table id="tnaTable">
+
+<thead>
+
+<tr>
+
+<th>SL</th>
+<th>Buyer</th>
+<th>IKL</th>
+<th>Style</th>
+<th>Merch</th>
+<th>Qty</th>
+
+<th>Progress %</th>
+<th>Lead Time</th>
+
+<th>Order Confirmation</th>
+<th>Fabric Booking</th>
+<th>Yarn Inhouse</th>
+<th>Color Swatch</th>
+<th>Lab Dip Submit</th>
+<th>Lab Dip Approval</th>
+<th>G2 Receive</th>
+
+<th>Strike Off Send</th>
+<th>Strike Off Approval</th>
+
+<th>Knitting Start</th>
+<th>Knitting Complete</th>
+
+<th>Dyeing Start</th>
+<th>Dyeing Complete</th>
+
+<th>Sample Fabric</th>
+<th>PP Sample Submit</th>
+
+<th>Sewing Trims</th>
+
+<th>Fabric Test Start</th>
+<th>Fabric Test Complete</th>
+
+<th>PP Approval</th>
+<th>Size Set</th>
+<th>PP Meeting</th>
+
+<th>Cutting Start</th>
+
+<th>Print Start</th>
+<th>Print Complete</th>
+
+<th>Sewing Input</th>
+<th>Sewing Start</th>
+
+<th>Inline Inspection</th>
+
+<th>Packing Trims</th>
+
+<th>Sewing Complete</th>
+
+<th>Finishing Start</th>
+
+<th>Packing Start</th>
+<th>Packing Complete</th>
+
+<th>Final Inspection</th>
+
+<th>Shipment Approval</th>
+
+<th>Shipment Date</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody">
+
+<tr>
+
+<td>1</td>
+<td>MHJ</td>
+<td>146/25</td>
+<td>262170017-2</td>
+<td>MR. TUTUL</td>
+<td>9200</td>
+
+<td class="progress">0%</td>
+<td>46 Days</td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td><input type="checkbox" class="stage"></td>
+
+<td>2026-06-15</td>
+
+<td class="status">
+<span class="pending">Pending</span>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+function updateProgress(){
+
+document.querySelectorAll("#tbody tr")
+.forEach(row=>{
+
+const stages =
+row.querySelectorAll(".stage");
+
+let total =
+stages.length;
+
+let completed = 0;
+
+stages.forEach(box=>{
+
+if(box.checked)
+completed++;
+
+});
+
+let pct =
+Math.round(
+(completed/total)*100
+);
+
+row.querySelector(".progress")
+.innerText = pct + "%";
+
+let statusCell =
+row.querySelector(".status");
+
+if(pct===100){
+
+statusCell.innerHTML =
+'<span class="completed">Completed</span>';
+
+}
+else if(pct>=50){
+
+statusCell.innerHTML =
+'<span class="running">Running</span>';
+
+}
+else{
+
+statusCell.innerHTML =
+'<span class="pending">Pending</span>';
+
+}
+
+});
+
+}
+
+document
+.querySelectorAll(".stage")
+.forEach(box=>{
+
+box.addEventListener(
+"change",
+updateProgress
+);
+
+});
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+let value =
+this.value.toLowerCase();
+
+document
+.querySelectorAll("#tbody tr")
+.forEach(row=>{
+
+row.style.display =
+
+row.innerText
+.toLowerCase()
+.includes(value)
+
+? ""
+
+: "none";
+
+});
+
+});
+
+updateProgress();
+
+</script>
+
+</body>
+</html>
