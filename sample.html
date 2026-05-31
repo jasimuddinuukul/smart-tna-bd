@@ -1,11 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD - SAMPLE DEPARTMENT</title>
+<title>SMART TNA BD - SAMPLE ERP</title>
 
 <style>
 
@@ -25,48 +27,39 @@ header{
 background:#111827;
 padding:15px;
 text-align:center;
-border-bottom:2px solid #00ff99;
 }
 
-header h1{
-color:#00ff99;
-font-size:28px;
-}
-
-header h2{
-margin-top:10px;
+.logo{
 font-size:22px;
-}
-
-.dashboard{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-padding:20px;
-}
-
-.kpi-card{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-text-align:center;
-}
-
-.kpi-card h3{
+font-weight:bold;
 color:#00ff99;
-margin-bottom:10px;
+margin-top:10px;
 }
 
-.kpi-card p{
+.bismillah{
+font-size:20px;
+margin-bottom:8px;
+}
+
+.company{
 font-size:24px;
 font-weight:bold;
+color:#00ff99;
+}
+
+.system{
+font-size:18px;
+color:#cbd5e1;
+margin-top:5px;
 }
 
 .main{
 display:grid;
 grid-template-columns:350px 1fr;
-height:calc(100vh - 260px);
+height:calc(100vh - 130px);
 }
+
+/* LEFT PANEL */
 
 .sidebar{
 background:#111827;
@@ -87,20 +80,28 @@ border:none;
 border-radius:10px;
 background:#1e293b;
 color:white;
-margin-bottom:10px;
+margin-bottom:15px;
 }
 
 .order-card{
 background:#1e293b;
 padding:15px;
-border-radius:10px;
-margin-bottom:10px;
+border-radius:12px;
+margin-bottom:12px;
 cursor:pointer;
+transition:.3s;
 }
 
 .order-card:hover{
 background:#334155;
 }
+
+.order-card h3{
+color:#00ff99;
+margin-bottom:5px;
+}
+
+/* RIGHT PANEL */
 
 .content{
 padding:20px;
@@ -118,6 +119,34 @@ margin-bottom:20px;
 color:#00ff99;
 margin-bottom:15px;
 }
+
+/* KPI */
+
+.kpi-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.kpi-box{
+background:#111827;
+padding:15px;
+border-radius:10px;
+text-align:center;
+}
+
+.kpi-box h3{
+font-size:28px;
+color:#00ff99;
+}
+
+.kpi-box p{
+margin-top:5px;
+color:#94a3b8;
+}
+
+/* ORDER INFO */
 
 .info-grid{
 display:grid;
@@ -137,10 +166,12 @@ color:#94a3b8;
 margin-bottom:5px;
 }
 
+/* TABLE */
+
 table{
 width:100%;
 border-collapse:collapse;
-min-width:1800px;
+min-width:2200px;
 }
 
 table th,
@@ -155,27 +186,25 @@ background:#111827;
 color:#00ff99;
 }
 
+/* FORM */
+
 input,
 select,
 textarea{
 width:100%;
-padding:8px;
-background:#0f172a;
+padding:10px;
 border:none;
 border-radius:8px;
+background:#0f172a;
 color:white;
-}
-
-textarea{
-height:120px;
 }
 
 button{
 background:#00aa66;
 color:white;
 border:none;
-padding:12px 20px;
-border-radius:10px;
+padding:10px 20px;
+border-radius:8px;
 cursor:pointer;
 font-weight:bold;
 }
@@ -183,6 +212,8 @@ font-weight:bold;
 button:hover{
 background:#008844;
 }
+
+/* STATUS */
 
 .pending{
 background:#f59e0b;
@@ -193,12 +224,14 @@ background:#22c55e;
 }
 
 .complete{
-background:#15803d;
+background:#16a34a;
 }
 
 .delay{
 background:#dc2626;
 }
+
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -216,49 +249,19 @@ grid-template-columns:1fr;
 
 <header>
 
-<div>﷽ بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
+<div class="bismillah">
+﷽ بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+</div>
 
-<h1>INNOVATIVE KNITEX LTD</h1>
+<div class="company">
+INNOVATIVE KNITEX LTD
+</div>
 
-<h2>SMART TNA BD ERP - SAMPLE DEPARTMENT</h2>
+<div class="system">
+SMART TNA BD ERP - SAMPLE DEPARTMENT
+</div>
 
 </header>
-
-<!-- DASHBOARD -->
-
-<div class="dashboard">
-
-<div class="kpi-card">
-<h3>Total Sample Orders</h3>
-<p id="totalOrders">0</p>
-</div>
-
-<div class="kpi-card">
-<h3>Total Sample Qty</h3>
-<p id="totalQty">0 PCS</p>
-</div>
-
-<div class="kpi-card">
-<h3>Completed Samples</h3>
-<p id="completedQty">0 PCS</p>
-</div>
-
-<div class="kpi-card">
-<h3>Running Samples</h3>
-<p id="runningQty">0 PCS</p>
-</div>
-
-<div class="kpi-card">
-<h3>This Month Sample Qty</h3>
-<p id="thisMonthQty">0 PCS</p>
-</div>
-
-<div class="kpi-card">
-<h3>Next Month Sample Qty</h3>
-<p id="nextMonthQty">0 PCS</p>
-</div>
-
-</div>
 
 <div class="main">
 
@@ -270,19 +273,16 @@ grid-template-columns:1fr;
 
 <div class="search-box">
 
-<input type="text" id="searchBuyer" placeholder="Search Buyer">
-
-<input type="text" id="searchIKL" placeholder="Search IKL">
-
-<input type="text" id="searchStyle" placeholder="Search Style">
-
-<input type="text" id="searchMerch" placeholder="Search Merchandiser">
+<input
+type="text"
+id="searchInput"
+placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
 <div id="orderList">
 
-<!-- Firebase Orders -->
+<!-- Orders Load Here -->
 
 </div>
 
@@ -291,6 +291,32 @@ grid-template-columns:1fr;
 <!-- RIGHT -->
 
 <div class="content">
+
+<!-- KPI -->
+
+<div class="kpi-grid">
+
+<div class="kpi-box">
+<h3 id="totalOrders">0</h3>
+<p>Total Orders</p>
+</div>
+
+<div class="kpi-box">
+<h3 id="totalQty">0</h3>
+<p>Total Qty</p>
+</div>
+
+<div class="kpi-box">
+<h3 id="totalSampleQty">0</h3>
+<p>Total Sample Qty</p>
+</div>
+
+<div class="kpi-box">
+<h3 id="runningOrders">0</h3>
+<p>Running Orders</p>
+</div>
+
+</div>
 
 <!-- ORDER INFO -->
 
@@ -306,7 +332,7 @@ grid-template-columns:1fr;
 </div>
 
 <div class="info-box">
-<span>IKL</span>
+<span>IKL No</span>
 <b id="showIKL">-</b>
 </div>
 
@@ -321,8 +347,13 @@ grid-template-columns:1fr;
 </div>
 
 <div class="info-box">
-<span>Order Qty</span>
+<span>Total Qty</span>
 <b id="showQty">-</b>
+</div>
+
+<div class="info-box">
+<span>Sample Qty</span>
+<b id="showSampleQty">-</b>
 </div>
 
 <div class="info-box">
@@ -339,21 +370,21 @@ grid-template-columns:1fr;
 
 </div>
 
-<!-- SAMPLE TASK TRACKER -->
+<!-- SAMPLE UPDATE -->
 
 <div class="card">
 
-<h2>🧪 Sample Task Tracker</h2>
+<h2>🧪 Sample Department Update</h2>
 
 <div style="overflow:auto;">
 
-<table id="sampleTaskTable">
+<table>
 
 <thead>
 
 <tr>
 
-<th>Task</th>
+<th>Stage</th>
 
 <th>Target Date</th>
 
@@ -368,29 +399,29 @@ grid-template-columns:1fr;
 <tbody>
 
 <tr>
-<td>Sample Fabric Receive</td>
-<td><input type="date" id="fabricTarget"></td>
-<td><input type="date" id="fabricActual"></td>
+<td>Fabric Receive</td>
+<td><input type="date" id="fabricReceiveTarget"></td>
+<td><input type="date" id="fabricReceiveActual"></td>
 <td>
-<select id="fabricStatus">
-<option>🟠 Pending</option>
-<option>🟢 Running</option>
-<option>✅ Complete</option>
-<option>🔴 Delay</option>
+<select id="fabricReceiveStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
 </select>
 </td>
 </tr>
 
 <tr>
 <td>Development Sample</td>
-<td><input type="date" id="devTarget"></td>
-<td><input type="date" id="devActual"></td>
+<td><input type="date" id="developmentTarget"></td>
+<td><input type="date" id="developmentActual"></td>
 <td>
-<select id="devStatus">
-<option>🟠 Pending</option>
-<option>🟢 Running</option>
-<option>✅ Complete</option>
-<option>🔴 Delay</option>
+<select id="developmentStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
 </select>
 </td>
 </tr>
@@ -401,10 +432,10 @@ grid-template-columns:1fr;
 <td><input type="date" id="fitActual"></td>
 <td>
 <select id="fitStatus">
-<option>🟠 Pending</option>
-<option>🟢 Running</option>
-<option>✅ Complete</option>
-<option>🔴 Delay</option>
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
 </select>
 </td>
 </tr>
@@ -415,24 +446,24 @@ grid-template-columns:1fr;
 <td><input type="date" id="ppActual"></td>
 <td>
 <select id="ppStatus">
-<option>🟠 Pending</option>
-<option>🟢 Running</option>
-<option>✅ Complete</option>
-<option>🔴 Delay</option>
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
 </select>
 </td>
 </tr>
 
 <tr>
-<td>Top Sample</td>
+<td>TOP Sample</td>
 <td><input type="date" id="topTarget"></td>
 <td><input type="date" id="topActual"></td>
 <td>
 <select id="topStatus">
-<option>🟠 Pending</option>
-<option>🟢 Running</option>
-<option>✅ Complete</option>
-<option>🔴 Delay</option>
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
 </select>
 </td>
 </tr>
@@ -443,581 +474,10 @@ grid-template-columns:1fr;
 
 </div>
 
-</div>
-
-<!-- COLOR WISE SAMPLE -->
-
-<div class="card">
-
-<h2>🎨 Color Wise Sample Tracking</h2>
-
-<table id="colorTable">
-
-<thead>
-
-<tr>
-
-<th>Color</th>
-
-<th>Order Qty</th>
-
-<th>Sample Qty</th>
-
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-</tbody>
-
-</table>
-
-</div>
-
-<div class="card">
-
-<h2>📝 Delay Note</h2>
-
-<textarea id="delayNote"></textarea>
-
-<br><br>
+<br>
 
 <button id="saveBtn">
-
 💾 Save Sample Update
-
 </button>
 
 </div>
-
-</div>
-
-</div>
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-getDocs
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* FIREBASE CONFIG */
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-
-authDomain: "smart-tna-bd.firebaseapp.com",
-
-projectId: "smart-tna-bd",
-
-storageBucket: "smart-tna-bd.firebasestorage.app",
-
-messagingSenderId: "372049573207",
-
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let allOrders = [];
-let selectedDocId = null;
-
-/* LOAD ORDERS */
-
-async function loadOrders(){
-
-const querySnapshot =
-await getDocs(collection(db,"orders"));
-
-const orderList =
-document.getElementById("orderList");
-
-orderList.innerHTML = "";
-
-allOrders = [];
-
-querySnapshot.forEach((docItem)=>{
-
-const data = docItem.data();
-
-allOrders.push({
-
-id: docItem.id,
-...data
-
-});
-
-orderList.innerHTML += `
-
-<div
-class="order-card"
-onclick="selectOrder('${docItem.id}')"
-data-buyer="${data.buyer || ''}"
-data-ikl="${data.ikl || ''}"
-data-style="${data.style || ''}"
-data-merch="${data.merchandiser || ''}"
->
-
-<h3>${data.ikl || ''}</h3>
-
-<p>Buyer :
-${data.buyer || ''}</p>
-
-<p>Style :
-${data.style || ''}</p>
-
-<p>Merch :
-${data.merchandiser || ''}</p>
-
-</div>
-
-`;
-
-});
-
-updateDashboard();
-// ==========================
-// COLOR WISE SAMPLE TABLE
-// ==========================
-
-let selectedColors = [];
-
-function loadColorTable(colors){
-
-selectedColors = colors;
-
-const table =
-document.querySelector("#colorTable tbody");
-
-if(!table) return;
-
-table.innerHTML = "";
-
-colors.forEach((c,index)=>{
-
-table.innerHTML += `
-
-<tr>
-
-<td>${c.color || ""}</td>
-
-<td>${c.qty || 0} PCS</td>
-
-<td>
-<input
-type="number"
-id="sampleQty_${index}"
-value="${c.sampleQty || 0}">
-</td>
-
-<td>
-
-<select
-id="sampleStatus_${index}"
-onchange="calculateProgress()">
-
-<option value="Pending"
-${c.sampleStatus==="Pending"?"selected":""}>
-🟠 Pending
-</option>
-
-<option value="Running"
-${c.sampleStatus==="Running"?"selected":""}>
-🟢 Running
-</option>
-
-<option value="Complete"
-${c.sampleStatus==="Complete"?"selected":""}>
-✅ Complete
-</option>
-
-<option value="Delay"
-${c.sampleStatus==="Delay"?"selected":""}>
-🔴 Delay
-</option>
-
-</select>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-
-// ==========================
-// SAMPLE PROGRESS
-// ==========================
-
-window.calculateProgress = function(){
-
-const stages = [
-
-document.getElementById("fabricStatus").value,
-
-document.getElementById("devStatus").value,
-
-document.getElementById("fitStatus").value,
-
-document.getElementById("ppStatus").value,
-
-document.getElementById("topStatus").value
-
-];
-
-let complete = 0;
-
-stages.forEach(stage=>{
-
-if(stage.includes("Complete")){
-
-complete++;
-
-}
-
-});
-
-const progress =
-
-Math.round(
-(complete / stages.length) * 100
-);
-
-document.getElementById("showProgress")
-.innerText =
-progress + "%";
-
-return progress;
-
-};
-
-
-// ==========================
-// AUTO PROGRESS UPDATE
-// ==========================
-
-document.addEventListener(
-
-"change",
-
-function(e){
-
-if(
-e.target.tagName==="SELECT"
-){
-
-calculateProgress();
-
-}
-
-}
-
-);
-
-
-// ==========================
-// SAVE SAMPLE UPDATE
-// ==========================
-
-import {
-updateDoc,
-doc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-window.saveSampleUpdate = async function(){
-
-if(!selectedDocId){
-
-alert("Select Order First");
-return;
-
-}
-
-try{
-
-let updatedColors = [];
-
-selectedColors.forEach((c,index)=>{
-
-updatedColors.push({
-
-...c,
-
-sampleQty:
-
-Number(
-document.getElementById(
-`sampleQty_${index}`
-).value
-),
-
-sampleStatus:
-
-document.getElementById(
-`sampleStatus_${index}`
-).value
-
-});
-
-});
-
-const progress =
-calculateProgress();
-
-await updateDoc(
-
-doc(db,"orders",selectedDocId),
-
-{
-
-// SAMPLE TASK
-
-sampleFabricTarget:
-document.getElementById("fabricTarget").value,
-
-sampleFabricActual:
-document.getElementById("fabricActual").value,
-
-sampleFabricStatus:
-document.getElementById("fabricStatus").value,
-
-
-developmentTarget:
-document.getElementById("devTarget").value,
-
-developmentActual:
-document.getElementById("devActual").value,
-
-developmentStatus:
-document.getElementById("devStatus").value,
-
-
-fitTarget:
-document.getElementById("fitTarget").value,
-
-fitActual:
-document.getElementById("fitActual").value,
-
-fitStatus:
-document.getElementById("fitStatus").value,
-
-
-ppTarget:
-document.getElementById("ppTarget").value,
-
-ppActual:
-document.getElementById("ppActual").value,
-
-ppStatus:
-document.getElementById("ppStatus").value,
-
-
-topTarget:
-document.getElementById("topTarget").value,
-
-topActual:
-document.getElementById("topActual").value,
-
-topStatus:
-document.getElementById("topStatus").value,
-
-
-// COLOR WISE
-
-colors: updatedColors,
-
-// NOTE
-
-sampleDelayNote:
-document.getElementById("delayNote").value,
-
-// SUMMARY
-
-sampleProgress: progress,
-
-Sample:
-
-progress >= 100
-? "Completed"
-: "Running"
-
-}
-
-);
-
-alert("Sample Updated Successfully");
-
-}
-catch(error){
-
-console.log(error);
-
-alert("Save Failed");
-
-}
-
-};
-
-
-// ==========================
-// SAVE BUTTON
-// ==========================
-
-document
-.getElementById("saveBtn")
-.addEventListener(
-"click",
-saveSampleUpdate
-);
-}
-
-window.loadOrders = loadOrders;
-
-/* SELECT ORDER */
-
-window.selectOrder = function(id){
-
-selectedDocId = id;
-
-const data =
-allOrders.find(o=>o.id===id);
-
-if(!data) return;
-
-document.getElementById("showBuyer").innerText =
-data.buyer || "-";
-
-document.getElementById("showIKL").innerText =
-data.ikl || "-";
-
-document.getElementById("showStyle").innerText =
-data.style || "-";
-
-document.getElementById("showMerch").innerText =
-data.merchandiser || "-";
-
-document.getElementById("showQty").innerText =
-(data.totalQty || 0) + " PCS";
-
-document.getElementById("showShip").innerText =
-data.shipdate ||
-data.shipDate ||
-"-";
-
-/* LOAD COLOR TABLE */
-
-loadColorTable(data.colors || []);
-
-};
-
-/* SEARCH */
-
-function setupSearch(){
-
-const searchIds = [
-
-"searchBuyer",
-"searchIKL",
-"searchStyle",
-"searchMerch"
-
-];
-
-searchIds.forEach(id=>{
-
-document
-.getElementById(id)
-.addEventListener("keyup",filterOrders);
-
-});
-
-}
-
-function filterOrders(){
-
-const buyer =
-document.getElementById("searchBuyer")
-.value.toLowerCase();
-
-const ikl =
-document.getElementById("searchIKL")
-.value.toLowerCase();
-
-const style =
-document.getElementById("searchStyle")
-.value.toLowerCase();
-
-const merch =
-document.getElementById("searchMerch")
-.value.toLowerCase();
-
-document
-.querySelectorAll(".order-card")
-.forEach(card=>{
-
-const show =
-
-card.dataset.buyer.toLowerCase().includes(buyer)
-&&
-card.dataset.ikl.toLowerCase().includes(ikl)
-&&
-card.dataset.style.toLowerCase().includes(style)
-&&
-card.dataset.merch.toLowerCase().includes(merch);
-
-card.style.display =
-show ? "block" : "none";
-
-});
-
-}
-
-/* KPI DASHBOARD */
-
-function updateDashboard(){
-
-let totalOrders =
-allOrders.length;
-
-let totalQty = 0;
-
-allOrders.forEach(order=>{
-
-totalQty +=
-Number(order.totalQty || 0);
-
-});
-
-document.getElementById("totalOrders")
-.innerText = totalOrders;
-
-document.getElementById("totalQty")
-.innerText =
-totalQty.toLocaleString() + " PCS";
-
-}
-
-/* PAGE LOAD */
-
-setupSearch();
-loadOrders();
-
-</script>
-</body>
-</html>
