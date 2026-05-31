@@ -462,6 +462,22 @@ document.getElementById("totalSampleQty").innerText =
 totalSampleQty.toLocaleString();
 
 document.getElementById("runningOrders").innerText =
+
+const completedCount =
+
+allOrders.filter(
+
+o =>
+
+(o.sampleProgress || 0) >= 100
+
+).length;
+
+document.getElementById(
+"completedOrders"
+).innerText =
+completedCount;
+
 allOrders.filter(
 o => o.SampleDepartment !== "Completed"
 ).length;
