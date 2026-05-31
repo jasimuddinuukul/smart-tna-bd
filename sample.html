@@ -387,10 +387,11 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 getFirestore,
 collection,
-getDocs
+getDocs,
+updateDoc,
+doc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 /* FIREBASE */
 
 const firebaseConfig = {
@@ -725,16 +726,211 @@ document.getElementById("editModal").style.display =
 
 });
 
-Firebase Save
-Auto Progress %
-Refresh Table
-Auto Target Date
+/* =========================
+AUTO PROGRESS
+========================= */
 
-Development = Shipment - 60 Days
-Fit = Shipment - 50 Days
-Fabric = Shipment - 45 Days
-PP = Shipment - 40 Days
-TOP = Shipment - 15 Days
+function calculateProgress(){
+
+let total = 5;
+let complete = 0;
+
+if(document.getElementById("fabricReceiveStatus")?.value==="Complete")
+complete++;
+
+if(document.getElementById("developmentStatus")?.value==="Complete")
+complete++;
+
+if(document.getElementById("fitStatus")?.value==="Complete")
+complete++;
+
+if(document.getElementById("ppStatus")?.value==="Complete")
+complete++;
+
+if(document.getElementById("topStatus")?.value==="Complete")
+complete++;
+
+return Math.round(
+(complete / total) * 100
+);
+
+}
+
+/* =========================
+SAVE BUTTON
+========================= */
+
+document
+.getElementById("saveBtn")
+.addEventListener("click",saveSampleUpdate);
+
+async function saveSampleUpdate(){
+
+if(!selectedDocId){
+
+alert("Select Order First");
+return;
+
+}
+
+try{
+
+const progress =
+calculateProgress();
+
+await updateDoc(
+
+doc(db,"orders",selectedDocId),
+
+{
+
+fabricReceiveTarget:
+document.getElementById("fabricReceiveTarget").value,
+
+fabricReceiveActual:
+document.getElementById("fabricReceiveActual").value,
+
+fabricReceiveStatus:
+document.getElementById("fabricReceiveStatus").value,
+
+developmentTarget:
+document.getElementById("developmentTarget").value,
+
+developmentActual:
+document.getElementById("developmentActual").value,
+
+developmentStatus:
+document.getElementById("developmentStatus").value,
+
+fitTarget:
+document.getElementById("fitTarget").value,
+
+fitActual:
+document.getElementById("fitActual").value,
+
+fitStatus:
+document.getElementById("fitStatus").value,
+
+ppTarget:
+document.getElementById("ppTarget").value,
+
+ppActual:
+document.getElementById("ppActual").value,
+
+ppStatus:
+document.getElementById("ppStatus").value,
+
+topTarget:
+document.getElementById("topTarget").value,
+
+topActual:
+document.getElementById("topActual").value,
+
+topStatus:
+document.getElementById("topStatus").value,
+
+sampleProgress:
+progress,
+
+SampleDepartment:
+progress >= 100
+? "Completed"
+: "Running"
+
+}
+
+);
+
+alert("Sample Updated Successfully");
+
+document.getElementById("editModal").style.display =
+"none";
+
+loadOrders();
+
+}
+catch(error){
+
+console.log(error);
+
+alert("Save Failed");
+
+}
+
+}
+
+/* =========================
+AUTO TARGET DATE
+========================= */
+
+function autoTargetDate(shipDate){
+
+if(!shipDate) return;
+
+const ship =
+new Date(shipDate);
+
+const fabric =
+new Date(ship);
+
+fabric.setDate(
+fabric.getDate() - 45
+);
+
+const dev =
+new Date(ship);
+
+dev.setDate(
+dev.getDate() - 60
+);
+
+const fit =
+new Date(ship);
+
+fit.setDate(
+fit.getDate() - 50
+);
+
+const pp =
+new Date(ship);
+
+pp.setDate(
+pp.getDate() - 40
+);
+
+const top =
+new Date(ship);
+
+top.setDate(
+top.getDate() - 15
+);
+
+console.log(
+"Fabric",
+fabric
+);
+
+console.log(
+"Development",
+dev
+);
+
+console.log(
+"Fit",
+fit
+);
+
+console.log(
+"PP",
+pp
+);
+
+console.log(
+"TOP",
+top
+);
+
+}
 
 loadOrders();
 
