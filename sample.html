@@ -481,3 +481,332 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 </button>
 
 </div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+authDomain: "smart-tna-bd.firebaseapp.com",
+
+projectId: "smart-tna-bd",
+
+storageBucket: "smart-tna-bd.firebasestorage.app",
+
+messagingSenderId: "372049573207",
+
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* GLOBAL */
+
+let allOrders = [];
+let selectedDocId = null;
+
+/* LOAD ORDERS */
+
+async function loadOrders(){
+
+const querySnapshot =
+await getDocs(collection(db,"orders"));
+
+const orderList =
+document.getElementById("orderList");
+
+orderList.innerHTML = "";
+
+allOrders = [];
+
+let totalQty = 0;
+let totalSampleQty = 0;
+
+querySnapshot.forEach((docItem)=>{
+
+const data = docItem.data();
+
+allOrders.push({
+
+id: docItem.id,
+...data
+
+});
+
+totalQty += Number(data.totalQty || 0);
+totalSampleQty += Number(data.sampleQty || 0);
+
+orderList.innerHTML += `
+
+<div
+class="order-card"
+onclick="selectOrder('${docItem.id}')"
+data-search="
+${data.buyer || ""}
+${data.ikl || ""}
+${data.style || ""}
+${data.merchandiser || ""}
+">
+
+<h3>${data.ikl || ""}</h3>
+
+<p>Buyer : ${data.buyer || ""}</p>
+
+<p>Style : ${data.style || ""}</p>
+
+<p>Merch : ${data.merchandiser || ""}</p>
+
+</div>
+
+`;
+
+});
+
+/* KPI */
+
+document.getElementById("totalOrders").innerText =
+allOrders.length;
+
+document.getElementById("totalQty").innerText =
+totalQty.toLocaleString() + " PCS";
+
+document.getElementById("totalSampleQty").innerText =
+totalSampleQty.toLocaleString();
+
+}
+
+/* SEARCH */
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+const value =
+this.value.toLowerCase();
+
+const cards =
+document.querySelectorAll(".order-card");
+
+cards.forEach(card=>{
+
+const txt =
+card.dataset.search.toLowerCase();
+
+card.style.display =
+txt.includes(value)
+? "block"
+: "none";
+
+});
+
+});
+
+/* SELECT ORDER */
+
+window.selectOrder = function(id){
+
+selectedDocId = id;
+
+const data =
+allOrders.find(o => o.id === id);
+
+if(!data) return;
+
+/* ORDER INFO */
+
+document.getElementById("showBuyer").innerText =
+data.buyer || "-";
+
+document.getElementById("showIKL").innerText =
+data.ikl || "-";
+
+document.getElementById("showStyle").innerText =
+data.style || "-";
+
+document.getElementById("showMerch").innerText =
+data.merchandiser || "-";
+
+document.getElementById("showQty").innerText =
+(data.totalQty || 0) + " PCS";
+
+document.getElementById("showSampleQty").innerText =
+(data.sampleQty || 0) + " PCS";
+
+document.getElementById("showShip").innerText =
+data.shipDate ||
+data.shipmentDate ||
+data.shipdate ||
+"-";
+
+
+loadSampleData(data);
+
+};
+
+/* =========================
+LOAD SAMPLE DATA
+========================= */
+
+function loadSampleData(data){
+
+/* SAMPLE QTY */
+
+document.getElementById("showSampleQty").innerText =
+(data.sampleQty || 0) + " PCS";
+
+/* FABRIC RECEIVE */
+
+document.getElementById("fabricReceiveTarget").value =
+data.fabricReceiveTarget || "";
+
+document.getElementById("fabricReceiveActual").value =
+data.fabricReceiveActual || "";
+
+document.getElementById("fabricReceiveStatus").value =
+data.fabricReceiveStatus || "Pending";
+
+/* DEVELOPMENT SAMPLE */
+
+document.getElementById("developmentTarget").value =
+data.developmentTarget || "";
+
+document.getElementById("developmentActual").value =
+data.developmentActual || "";
+
+document.getElementById("developmentStatus").value =
+data.developmentStatus || "Pending";
+
+/* FIT SAMPLE */
+
+document.getElementById("fitTarget").value =
+data.fitTarget || "";
+
+document.getElementById("fitActual").value =
+data.fitActual || "";
+
+document.getElementById("fitStatus").value =
+data.fitStatus || "Pending";
+
+/* PP SAMPLE */
+
+document.getElementById("ppTarget").value =
+data.ppTarget || "";
+
+document.getElementById("ppActual").value =
+data.ppActual || "";
+
+document.getElementById("ppStatus").value =
+data.ppStatus || "Pending";
+
+/* TOP SAMPLE */
+
+document.getElementById("topTarget").value =
+data.topTarget || "";
+
+document.getElementById("topActual").value =
+data.topActual || "";
+
+document.getElementById("topStatus").value =
+data.topStatus || "Pending";
+
+/* AUTO PROGRESS */
+
+calculateProgress();
+
+}
+
+/* =========================
+AUTO PROGRESS
+========================= */
+
+function calculateProgress(){
+
+const stages = [
+
+document.getElementById("fabricReceiveStatus").value,
+
+document.getElementById("developmentStatus").value,
+
+document.getElementById("fitStatus").value,
+
+document.getElementById("ppStatus").value,
+
+document.getElementById("topStatus").value
+
+];
+
+let complete = 0;
+
+stages.forEach(stage=>{
+
+if(stage === "Complete"){
+
+complete++;
+
+}
+
+});
+
+const progress =
+Math.round(
+(complete / stages.length) * 100
+);
+
+document.getElementById("showProgress").innerText =
+progress + "%";
+
+return progress;
+
+}
+
+/* =========================
+AUTO UPDATE PROGRESS
+========================= */
+
+document.addEventListener(
+
+"change",
+
+function(e){
+
+if(e.target.tagName === "SELECT"){
+
+calculateProgress();
+
+}
+
+}
+
+);
+
+loadOrders();
+
+</script>
+
+</body>
+</html>
