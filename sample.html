@@ -804,6 +804,129 @@ calculateProgress();
 
 );
 
+import {
+updateDoc,
+doc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* =========================
+SAVE SAMPLE UPDATE
+========================= */
+
+window.saveUpdates = async function(){
+
+if(!selectedDocId){
+
+alert("Select Order First");
+return;
+
+}
+
+try{
+
+const progress =
+calculateProgress();
+
+await updateDoc(
+
+doc(db,"orders",selectedDocId),
+
+{
+
+/* FABRIC RECEIVE */
+
+fabricReceiveTarget:
+document.getElementById("fabricReceiveTarget").value,
+
+fabricReceiveActual:
+document.getElementById("fabricReceiveActual").value,
+
+fabricReceiveStatus:
+document.getElementById("fabricReceiveStatus").value,
+
+/* DEVELOPMENT SAMPLE */
+
+developmentTarget:
+document.getElementById("developmentTarget").value,
+
+developmentActual:
+document.getElementById("developmentActual").value,
+
+developmentStatus:
+document.getElementById("developmentStatus").value,
+
+/* FIT SAMPLE */
+
+fitTarget:
+document.getElementById("fitTarget").value,
+
+fitActual:
+document.getElementById("fitActual").value,
+
+fitStatus:
+document.getElementById("fitStatus").value,
+
+/* PP SAMPLE */
+
+ppTarget:
+document.getElementById("ppTarget").value,
+
+ppActual:
+document.getElementById("ppActual").value,
+
+ppStatus:
+document.getElementById("ppStatus").value,
+
+/* TOP SAMPLE */
+
+topTarget:
+document.getElementById("topTarget").value,
+
+topActual:
+document.getElementById("topActual").value,
+
+topStatus:
+document.getElementById("topStatus").value,
+
+/* SAMPLE PROGRESS */
+
+sampleProgress: progress,
+
+SampleDepartment:
+progress >= 100
+? "Completed"
+: "Running"
+
+}
+
+);
+
+alert("Sample Department Updated Successfully");
+
+}
+catch(error){
+
+console.log(error);
+
+alert("Save Failed");
+
+}
+
+};
+
+/* =========================
+SAVE BUTTON
+========================= */
+
+document
+.getElementById("saveBtn")
+.addEventListener(
+"click",
+saveUpdates
+);
+
+  
 loadOrders();
 
 </script>
