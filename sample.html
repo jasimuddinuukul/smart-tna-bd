@@ -518,15 +518,17 @@ colorsText =
 
 order.colors.map(c => `
 
-<b>${c.color || ""}</b> <br>
-Order Qty :
-${c.qty || 0} <br>
-Sample Qty :
-${c.sampleQty || 0}
+${c.color || ""}
 
-`).join("<hr>");
+→
 
-}
+${Number(c.qty || 0).toLocaleString()} PCS
+
+→
+
+${Number(c.sampleQty || 0).toLocaleString()} PCS
+
+`).join("<br>");
 
 const progress =
 order.sampleProgress || 0;
