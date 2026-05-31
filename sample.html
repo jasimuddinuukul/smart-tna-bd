@@ -575,6 +575,169 @@ txt.includes(value)
 
 });
 
+/* =========================
+EDIT BUTTON
+========================= */
+
+window.openSampleEdit = function(id){
+
+selectedDocId = id;
+
+const data =
+allOrders.find(o => o.id === id);
+
+if(!data) return;
+
+document.getElementById("editModal").style.display =
+"block";
+
+const modal =
+document.getElementById("modalFormArea");
+
+modal.innerHTML = `
+
+<div class="form-grid">
+
+<div class="form-box">
+<label>Fabric Receive Target</label>
+<input type="date" id="fabricReceiveTarget"
+value="${data.fabricReceiveTarget || ''}">
+</div>
+
+<div class="form-box">
+<label>Fabric Receive Actual</label>
+<input type="date" id="fabricReceiveActual"
+value="${data.fabricReceiveActual || ''}">
+</div>
+
+<div class="form-box">
+<label>Fabric Receive Status</label>
+<select id="fabricReceiveStatus">
+<option ${data.fabricReceiveStatus==="Pending"?"selected":""}>Pending</option>
+<option ${data.fabricReceiveStatus==="Running"?"selected":""}>Running</option>
+<option ${data.fabricReceiveStatus==="Complete"?"selected":""}>Complete</option>
+<option ${data.fabricReceiveStatus==="Delay"?"selected":""}>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>Development Sample Target</label>
+<input type="date" id="developmentTarget"
+value="${data.developmentTarget || ''}">
+</div>
+
+<div class="form-box">
+<label>Development Sample Actual</label>
+<input type="date" id="developmentActual"
+value="${data.developmentActual || ''}">
+</div>
+
+<div class="form-box">
+<label>Development Status</label>
+<select id="developmentStatus">
+<option ${data.developmentStatus==="Pending"?"selected":""}>Pending</option>
+<option ${data.developmentStatus==="Running"?"selected":""}>Running</option>
+<option ${data.developmentStatus==="Complete"?"selected":""}>Complete</option>
+<option ${data.developmentStatus==="Delay"?"selected":""}>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>Fit Sample Target</label>
+<input type="date" id="fitTarget"
+value="${data.fitTarget || ''}">
+</div>
+
+<div class="form-box">
+<label>Fit Sample Actual</label>
+<input type="date" id="fitActual"
+value="${data.fitActual || ''}">
+</div>
+
+<div class="form-box">
+<label>Fit Status</label>
+<select id="fitStatus">
+<option ${data.fitStatus==="Pending"?"selected":""}>Pending</option>
+<option ${data.fitStatus==="Running"?"selected":""}>Running</option>
+<option ${data.fitStatus==="Complete"?"selected":""}>Complete</option>
+<option ${data.fitStatus==="Delay"?"selected":""}>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>PP Sample Target</label>
+<input type="date" id="ppTarget"
+value="${data.ppTarget || ''}">
+</div>
+
+<div class="form-box">
+<label>PP Sample Actual</label>
+<input type="date" id="ppActual"
+value="${data.ppActual || ''}">
+</div>
+
+<div class="form-box">
+<label>PP Status</label>
+<select id="ppStatus">
+<option ${data.ppStatus==="Pending"?"selected":""}>Pending</option>
+<option ${data.ppStatus==="Running"?"selected":""}>Running</option>
+<option ${data.ppStatus==="Complete"?"selected":""}>Complete</option>
+<option ${data.ppStatus==="Delay"?"selected":""}>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>TOP Sample Target</label>
+<input type="date" id="topTarget"
+value="${data.topTarget || ''}">
+</div>
+
+<div class="form-box">
+<label>TOP Sample Actual</label>
+<input type="date" id="topActual"
+value="${data.topActual || ''}">
+</div>
+
+<div class="form-box">
+<label>TOP Status</label>
+<select id="topStatus">
+<option ${data.topStatus==="Pending"?"selected":""}>Pending</option>
+<option ${data.topStatus==="Running"?"selected":""}>Running</option>
+<option ${data.topStatus==="Complete"?"selected":""}>Complete</option>
+<option ${data.topStatus==="Delay"?"selected":""}>Delay</option>
+</select>
+</div>
+
+</div>
+
+`;
+
+};
+
+/* CLOSE MODAL */
+
+document
+.getElementById("closeBtn")
+.addEventListener("click",()=>{
+
+document.getElementById("editModal").style.display =
+"none";
+
+});
+
+Firebase Save
+Auto Progress %
+Refresh Table
+Auto Target Date
+
+Development = Shipment - 60 Days
+Fit = Shipment - 50 Days
+Fabric = Shipment - 45 Days
+PP = Shipment - 40 Days
+TOP = Shipment - 15 Days
+
+loadOrders();
+
 </script>
 
 </body>
