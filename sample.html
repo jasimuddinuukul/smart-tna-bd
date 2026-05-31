@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD - SAMPLE ERP</title>
+<title>SMART TNA BD ERP - SAMPLE DEPARTMENT</title>
 
 <style>
 
@@ -23,101 +23,30 @@ background:#0f172a;
 color:white;
 }
 
+/* HEADER */
+
 header{
 background:#111827;
-padding:15px;
+padding:20px;
 text-align:center;
-}
-
-.logo{
-font-size:22px;
-font-weight:bold;
-color:#00ff99;
-margin-top:10px;
+border-bottom:2px solid #1e293b;
 }
 
 .bismillah{
-font-size:20px;
-margin-bottom:8px;
+font-size:22px;
+margin-bottom:10px;
 }
 
 .company{
-font-size:24px;
+font-size:28px;
 font-weight:bold;
 color:#00ff99;
 }
 
 .system{
 font-size:18px;
+margin-top:8px;
 color:#cbd5e1;
-margin-top:5px;
-}
-
-.main{
-display:grid;
-grid-template-columns:350px 1fr;
-height:calc(100vh - 130px);
-}
-
-/* LEFT PANEL */
-
-.sidebar{
-background:#111827;
-padding:15px;
-overflow:auto;
-border-right:2px solid #1e293b;
-}
-
-.sidebar h2{
-color:#00ff99;
-margin-bottom:15px;
-}
-
-.search-box input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#1e293b;
-color:white;
-margin-bottom:15px;
-}
-
-.order-card{
-background:#1e293b;
-padding:15px;
-border-radius:12px;
-margin-bottom:12px;
-cursor:pointer;
-transition:.3s;
-}
-
-.order-card:hover{
-background:#334155;
-}
-
-.order-card h3{
-color:#00ff99;
-margin-bottom:5px;
-}
-
-/* RIGHT PANEL */
-
-.content{
-padding:20px;
-overflow:auto;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-}
-
-.card h2{
-color:#00ff99;
-margin-bottom:15px;
 }
 
 /* KPI */
@@ -126,71 +55,159 @@ margin-bottom:15px;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:15px;
-margin-bottom:20px;
+padding:20px;
 }
 
-.kpi-box{
-background:#111827;
-padding:15px;
-border-radius:10px;
+.kpi-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
 text-align:center;
 }
 
-.kpi-box h3{
-font-size:28px;
+.kpi-card h2{
 color:#00ff99;
+font-size:32px;
+margin-bottom:10px;
 }
 
-.kpi-box p{
-margin-top:5px;
-color:#94a3b8;
+.kpi-card p{
+color:#cbd5e1;
 }
 
-/* ORDER INFO */
+/* SEARCH */
 
-.info-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
+.search-section{
+padding:0 20px 20px;
 }
 
-.info-box{
-background:#111827;
-padding:15px;
+.search-box{
+width:100%;
+padding:14px;
+border:none;
 border-radius:10px;
-}
-
-.info-box span{
-display:block;
-color:#94a3b8;
-margin-bottom:5px;
+background:#1e293b;
+color:white;
+font-size:16px;
 }
 
 /* TABLE */
 
+.table-card{
+padding:20px;
+}
+
+.table-wrapper{
+overflow:auto;
+background:#1e293b;
+padding:15px;
+border-radius:15px;
+}
+
 table{
 width:100%;
 border-collapse:collapse;
-min-width:2200px;
+min-width:2600px;
 }
 
-table th,
-table td{
+th{
+background:#111827;
+color:#00ff99;
+padding:12px;
 border:1px solid #334155;
+}
+
+td{
 padding:10px;
+border:1px solid #334155;
 text-align:center;
 }
 
-table th{
-background:#111827;
-color:#00ff99;
+.edit-btn{
+background:#00aa66;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
 }
 
-/* FORM */
+.edit-btn:hover{
+background:#008844;
+}
+
+/* STATUS */
+
+.pending{
+color:#f59e0b;
+font-weight:bold;
+}
+
+.running{
+color:#84cc16;
+font-weight:bold;
+}
+
+.complete{
+color:#22c55e;
+font-weight:bold;
+}
+
+.delay{
+color:#ef4444;
+font-weight:bold;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.7);
+z-index:999;
+}
+
+.modal-content{
+background:#1e293b;
+width:90%;
+max-width:1200px;
+margin:30px auto;
+padding:20px;
+border-radius:15px;
+max-height:90vh;
+overflow:auto;
+}
+
+.modal h2{
+color:#00ff99;
+margin-bottom:20px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.form-box{
+background:#111827;
+padding:15px;
+border-radius:10px;
+}
+
+.form-box label{
+display:block;
+margin-bottom:5px;
+color:#94a3b8;
+}
 
 input,
-select,
-textarea{
+select{
 width:100%;
 padding:10px;
 border:none;
@@ -199,46 +216,26 @@ background:#0f172a;
 color:white;
 }
 
-button{
+.save-btn{
+margin-top:20px;
 background:#00aa66;
-color:white;
+padding:12px 20px;
 border:none;
-padding:10px 20px;
-border-radius:8px;
-cursor:pointer;
+border-radius:10px;
+color:white;
 font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{
-background:#008844;
-}
-
-/* STATUS */
-
-.pending{
-background:#f59e0b;
-}
-
-.running{
-background:#22c55e;
-}
-
-.complete{
-background:#16a34a;
-}
-
-.delay{
+.close-btn{
+margin-left:10px;
 background:#dc2626;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-.main{
-grid-template-columns:1fr;
-}
-
+padding:12px 20px;
+border:none;
+border-radius:10px;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
 </style>
@@ -263,120 +260,49 @@ SMART TNA BD ERP - SAMPLE DEPARTMENT
 
 </header>
 
-<div class="main">
-
-<!-- LEFT -->
-
-<div class="sidebar">
-
-<h2>🔍 Smart Search</h2>
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search Buyer / IKL / Style / Merchandiser">
-
-</div>
-
-<div id="orderList">
-
-<!-- Orders Load Here -->
-
-</div>
-
-</div>
-
-<!-- RIGHT -->
-
-<div class="content">
-
 <!-- KPI -->
 
 <div class="kpi-grid">
 
-<div class="kpi-box">
-<h3 id="totalOrders">0</h3>
+<div class="kpi-card">
+<h2 id="totalOrders">0</h2>
 <p>Total Orders</p>
 </div>
 
-<div class="kpi-box">
-<h3 id="totalQty">0</h3>
+<div class="kpi-card">
+<h2 id="totalQty">0</h2>
 <p>Total Qty</p>
 </div>
 
-<div class="kpi-box">
-<h3 id="totalSampleQty">0</h3>
+<div class="kpi-card">
+<h2 id="totalSampleQty">0</h2>
 <p>Total Sample Qty</p>
 </div>
 
-<div class="kpi-box">
-<h3 id="runningOrders">0</h3>
+<div class="kpi-card">
+<h2 id="runningOrders">0</h2>
 <p>Running Orders</p>
 </div>
 
 </div>
 
-<!-- ORDER INFO -->
+<!-- SEARCH -->
 
-<div class="card">
+<div class="search-section">
 
-<h2>📋 Selected Order Information</h2>
-
-<div class="info-grid">
-
-<div class="info-box">
-<span>Buyer</span>
-<b id="showBuyer">-</b>
-</div>
-
-<div class="info-box">
-<span>IKL No</span>
-<b id="showIKL">-</b>
-</div>
-
-<div class="info-box">
-<span>Style</span>
-<b id="showStyle">-</b>
-</div>
-
-<div class="info-box">
-<span>Merchandiser</span>
-<b id="showMerch">-</b>
-</div>
-
-<div class="info-box">
-<span>Total Qty</span>
-<b id="showQty">-</b>
-</div>
-
-<div class="info-box">
-<span>Sample Qty</span>
-<b id="showSampleQty">-</b>
-</div>
-
-<div class="info-box">
-<span>Shipment Date</span>
-<b id="showShip">-</b>
-</div>
-
-<div class="info-box">
-<span>Progress</span>
-<b id="showProgress">0%</b>
-</div>
+<input
+type="text"
+id="searchInput"
+class="search-box"
+placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
-</div>
+<!-- DASHBOARD TABLE -->
 
-<!-- SAMPLE UPDATE -->
+<div class="table-card">
 
-<div class="card">
-
-<h2>🧪 Sample Department Update</h2>
-
-<div style="overflow:auto;">
+<div class="table-wrapper">
 
 <table>
 
@@ -384,89 +310,42 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 <tr>
 
-<th>Stage</th>
+<th>Buyer</th>
+<th>IKL</th>
+<th>Style</th>
+<th>Colors</th>
+<th>Total Qty</th>
+<th>Sample Qty</th>
 
-<th>Target Date</th>
+<th>Fabric Target</th>
+<th>Fabric Actual</th>
+<th>Fabric Status</th>
 
-<th>Actual Date</th>
+<th>Dev Target</th>
+<th>Dev Actual</th>
+<th>Dev Status</th>
 
-<th>Status</th>
+<th>Fit Target</th>
+<th>Fit Actual</th>
+<th>Fit Status</th>
+
+<th>PP Target</th>
+<th>PP Actual</th>
+<th>PP Status</th>
+
+<th>TOP Target</th>
+<th>TOP Actual</th>
+<th>TOP Status</th>
+
+<th>Progress</th>
+
+<th>Action</th>
 
 </tr>
 
 </thead>
 
-<tbody>
-
-<tr>
-<td>Fabric Receive</td>
-<td><input type="date" id="fabricReceiveTarget"></td>
-<td><input type="date" id="fabricReceiveActual"></td>
-<td>
-<select id="fabricReceiveStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</td>
-</tr>
-
-<tr>
-<td>Development Sample</td>
-<td><input type="date" id="developmentTarget"></td>
-<td><input type="date" id="developmentActual"></td>
-<td>
-<select id="developmentStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</td>
-</tr>
-
-<tr>
-<td>Fit Sample</td>
-<td><input type="date" id="fitTarget"></td>
-<td><input type="date" id="fitActual"></td>
-<td>
-<select id="fitStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</td>
-</tr>
-
-<tr>
-<td>PP Sample</td>
-<td><input type="date" id="ppTarget"></td>
-<td><input type="date" id="ppActual"></td>
-<td>
-<select id="ppStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</td>
-</tr>
-
-<tr>
-<td>TOP Sample</td>
-<td><input type="date" id="topTarget"></td>
-<td><input type="date" id="topActual"></td>
-<td>
-<select id="topStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</td>
-</tr>
+<tbody id="sampleTableBody">
 
 </tbody>
 
@@ -474,11 +353,29 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
 
-<br>
+</div>
 
-<button id="saveBtn">
-💾 Save Sample Update
+<!-- EDIT MODAL -->
+
+<div class="modal" id="editModal">
+
+<div class="modal-content">
+
+<h2>Sample Department Update</h2>
+
+<div id="modalFormArea">
+
+</div>
+
+<button class="save-btn" id="saveBtn">
+💾 Save
 </button>
+
+<button class="close-btn" id="closeBtn">
+✖ Close
+</button>
+
+</div>
 
 </div>
 
@@ -490,12 +387,11 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 getFirestore,
 collection,
-getDocs,
-updateDoc,
-doc
+getDocs
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-/* FIREBASE CONFIG */
+
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -528,11 +424,6 @@ async function loadOrders(){
 const querySnapshot =
 await getDocs(collection(db,"orders"));
 
-const orderList =
-document.getElementById("orderList");
-
-orderList.innerHTML = "";
-
 allOrders = [];
 
 let totalQty = 0;
@@ -552,42 +443,108 @@ id: docItem.id,
 totalQty += Number(data.totalQty || 0);
 totalSampleQty += Number(data.sampleQty || 0);
 
-orderList.innerHTML += `
-
-<div
-class="order-card"
-onclick="selectOrder('${docItem.id}')"
-data-search="
-${data.buyer || ""}
-${data.ikl || ""}
-${data.style || ""}
-${data.merchandiser || ""}
-">
-
-<h3>${data.ikl || ""}</h3>
-
-<p>Buyer : ${data.buyer || ""}</p>
-
-<p>Style : ${data.style || ""}</p>
-
-<p>Merch : ${data.merchandiser || ""}</p>
-
-</div>
-
-`;
-
 });
-
-/* KPI */
 
 document.getElementById("totalOrders").innerText =
 allOrders.length;
 
 document.getElementById("totalQty").innerText =
-totalQty.toLocaleString() + " PCS";
+totalQty.toLocaleString();
 
 document.getElementById("totalSampleQty").innerText =
 totalSampleQty.toLocaleString();
+
+document.getElementById("runningOrders").innerText =
+allOrders.filter(
+o => o.SampleDepartment !== "Completed"
+).length;
+
+const tableBody =
+document.getElementById("sampleTableBody");
+
+tableBody.innerHTML = "";
+
+allOrders.forEach(order=>{
+
+let colorsText = "";
+
+if(order.colors && order.colors.length){
+
+colorsText =
+order.colors.map(c=>
+
+`${c.color || ""} - ${c.qty || 0}`
+
+).join("<br>");
+
+}
+
+const progress =
+order.sampleProgress || 0;
+
+tableBody.innerHTML += `
+
+<tr
+class="sample-row"
+data-search="
+${order.buyer || ""}
+${order.ikl || ""}
+${order.style || ""}
+${order.merchandiser || ""}
+">
+
+<td>${order.buyer || ""}</td>
+
+<td>${order.ikl || ""}</td>
+
+<td>${order.style || ""}</td>
+
+<td>${colorsText}</td>
+
+<td>${order.totalQty || 0}</td>
+
+<td>${order.sampleQty || 0}</td>
+
+<td>${order.fabricReceiveTarget || "-"}</td>
+<td>${order.fabricReceiveActual || "-"}</td>
+<td>${order.fabricReceiveStatus || "Pending"}</td>
+
+<td>${order.developmentTarget || "-"}</td>
+<td>${order.developmentActual || "-"}</td>
+<td>${order.developmentStatus || "Pending"}</td>
+
+<td>${order.fitTarget || "-"}</td>
+<td>${order.fitActual || "-"}</td>
+<td>${order.fitStatus || "Pending"}</td>
+
+<td>${order.ppTarget || "-"}</td>
+<td>${order.ppActual || "-"}</td>
+<td>${order.ppStatus || "Pending"}</td>
+
+<td>${order.topTarget || "-"}</td>
+<td>${order.topActual || "-"}</td>
+<td>${order.topStatus || "Pending"}</td>
+
+<td>${progress}%</td>
+
+<td>
+
+<button
+class="edit-btn"
+onclick="openSampleEdit('${order.id}')">
+
+✏️ Edit
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
 
 }
 
@@ -600,319 +557,23 @@ document
 const value =
 this.value.toLowerCase();
 
-const cards =
-document.querySelectorAll(".order-card");
+const rows =
+document.querySelectorAll(".sample-row");
 
-cards.forEach(card=>{
+rows.forEach(row=>{
 
 const txt =
-card.dataset.search.toLowerCase();
+row.dataset.search.toLowerCase();
 
-card.style.display =
+row.style.display =
+
 txt.includes(value)
-? "block"
+? ""
 : "none";
 
 });
 
 });
-
-/* SELECT ORDER */
-
-window.selectOrder = function(id){
-
-selectedDocId = id;
-
-const data =
-allOrders.find(o => o.id === id);
-
-if(!data) return;
-
-/* ORDER INFO */
-
-document.getElementById("showBuyer").innerText =
-data.buyer || "-";
-
-document.getElementById("showIKL").innerText =
-data.ikl || "-";
-
-document.getElementById("showStyle").innerText =
-data.style || "-";
-
-document.getElementById("showMerch").innerText =
-data.merchandiser || "-";
-
-document.getElementById("showQty").innerText =
-(data.totalQty || 0) + " PCS";
-
-document.getElementById("showSampleQty").innerText =
-(data.sampleQty || 0) + " PCS";
-
-document.getElementById("showShip").innerText =
-data.shipDate ||
-data.shipmentDate ||
-data.shipdate ||
-"-";
-
-
-loadSampleData(data);
-
-};
-
-/* =========================
-LOAD SAMPLE DATA
-========================= */
-
-function loadSampleData(data){
-
-/* SAMPLE QTY */
-
-document.getElementById("showSampleQty").innerText =
-(data.sampleQty || 0) + " PCS";
-
-/* FABRIC RECEIVE */
-
-document.getElementById("fabricReceiveTarget").value =
-data.fabricReceiveTarget || "";
-
-document.getElementById("fabricReceiveActual").value =
-data.fabricReceiveActual || "";
-
-document.getElementById("fabricReceiveStatus").value =
-data.fabricReceiveStatus || "Pending";
-
-/* DEVELOPMENT SAMPLE */
-
-document.getElementById("developmentTarget").value =
-data.developmentTarget || "";
-
-document.getElementById("developmentActual").value =
-data.developmentActual || "";
-
-document.getElementById("developmentStatus").value =
-data.developmentStatus || "Pending";
-
-/* FIT SAMPLE */
-
-document.getElementById("fitTarget").value =
-data.fitTarget || "";
-
-document.getElementById("fitActual").value =
-data.fitActual || "";
-
-document.getElementById("fitStatus").value =
-data.fitStatus || "Pending";
-
-/* PP SAMPLE */
-
-document.getElementById("ppTarget").value =
-data.ppTarget || "";
-
-document.getElementById("ppActual").value =
-data.ppActual || "";
-
-document.getElementById("ppStatus").value =
-data.ppStatus || "Pending";
-
-/* TOP SAMPLE */
-
-document.getElementById("topTarget").value =
-data.topTarget || "";
-
-document.getElementById("topActual").value =
-data.topActual || "";
-
-document.getElementById("topStatus").value =
-data.topStatus || "Pending";
-
-/* AUTO PROGRESS */
-
-calculateProgress();
-
-}
-
-/* =========================
-AUTO PROGRESS
-========================= */
-
-function calculateProgress(){
-
-const stages = [
-
-document.getElementById("fabricReceiveStatus").value,
-
-document.getElementById("developmentStatus").value,
-
-document.getElementById("fitStatus").value,
-
-document.getElementById("ppStatus").value,
-
-document.getElementById("topStatus").value
-
-];
-
-let complete = 0;
-
-stages.forEach(stage=>{
-
-if(stage === "Complete"){
-
-complete++;
-
-}
-
-});
-
-const progress =
-Math.round(
-(complete / stages.length) * 100
-);
-
-document.getElementById("showProgress").innerText =
-progress + "%";
-
-return progress;
-
-}
-
-/* =========================
-AUTO UPDATE PROGRESS
-========================= */
-
-document.addEventListener(
-
-"change",
-
-function(e){
-
-if(e.target.tagName === "SELECT"){
-
-calculateProgress();
-
-}
-
-}
-
-);
-
-/* =========================
-SAVE SAMPLE UPDATE
-========================= */
-
-window.saveUpdates = async function(){
-
-if(!selectedDocId){
-
-alert("Select Order First");
-return;
-
-}
-
-try{
-
-const progress =
-calculateProgress();
-
-await updateDoc(
-
-doc(db,"orders",selectedDocId),
-
-{
-
-/* FABRIC RECEIVE */
-
-fabricReceiveTarget:
-document.getElementById("fabricReceiveTarget").value,
-
-fabricReceiveActual:
-document.getElementById("fabricReceiveActual").value,
-
-fabricReceiveStatus:
-document.getElementById("fabricReceiveStatus").value,
-
-/* DEVELOPMENT SAMPLE */
-
-developmentTarget:
-document.getElementById("developmentTarget").value,
-
-developmentActual:
-document.getElementById("developmentActual").value,
-
-developmentStatus:
-document.getElementById("developmentStatus").value,
-
-/* FIT SAMPLE */
-
-fitTarget:
-document.getElementById("fitTarget").value,
-
-fitActual:
-document.getElementById("fitActual").value,
-
-fitStatus:
-document.getElementById("fitStatus").value,
-
-/* PP SAMPLE */
-
-ppTarget:
-document.getElementById("ppTarget").value,
-
-ppActual:
-document.getElementById("ppActual").value,
-
-ppStatus:
-document.getElementById("ppStatus").value,
-
-/* TOP SAMPLE */
-
-topTarget:
-document.getElementById("topTarget").value,
-
-topActual:
-document.getElementById("topActual").value,
-
-topStatus:
-document.getElementById("topStatus").value,
-
-/* SAMPLE PROGRESS */
-
-sampleProgress: progress,
-
-SampleDepartment:
-progress >= 100
-? "Completed"
-: "Running"
-
-}
-
-);
-
-alert("Sample Department Updated Successfully");
-
-}
-catch(error){
-
-console.log(error);
-
-alert("Save Failed");
-
-}
-
-};
-
-/* =========================
-SAVE BUTTON
-========================= */
-
-document
-.getElementById("saveBtn")
-.addEventListener(
-"click",
-saveUpdates
-);
-
-  
-loadOrders();
 
 </script>
 
