@@ -595,6 +595,77 @@ selectedDocId = id;
 const data =
 allOrders.find(o => o.id === id);
 
+const shipDate =
+
+data.shipDate ||
+data.shipmentDate ||
+data.shipdate;
+
+if(shipDate){
+
+const ship =
+new Date(shipDate);
+
+const formatDate = d =>
+d.toISOString().split("T")[0];
+
+if(!data.fabricReceiveTarget){
+
+const x = new Date(ship);
+
+x.setDate(x.getDate()-45);
+
+data.fabricReceiveTarget =
+formatDate(x);
+
+}
+
+if(!data.developmentTarget){
+
+const x = new Date(ship);
+
+x.setDate(x.getDate()-60);
+
+data.developmentTarget =
+formatDate(x);
+
+}
+
+if(!data.fitTarget){
+
+const x = new Date(ship);
+
+x.setDate(x.getDate()-50);
+
+data.fitTarget =
+formatDate(x);
+
+}
+
+if(!data.ppTarget){
+
+const x = new Date(ship);
+
+x.setDate(x.getDate()-40);
+
+data.ppTarget =
+formatDate(x);
+
+}
+
+if(!data.topTarget){
+
+const x = new Date(ship);
+
+x.setDate(x.getDate()-15);
+
+data.topTarget =
+formatDate(x);
+
+}
+
+}
+
 if(!data) return;
 
 document.getElementById("editModal").style.display =
