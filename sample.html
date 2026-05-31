@@ -469,14 +469,22 @@ allOrders.forEach(order=>{
 
 let colorsText = "";
 
-if(order.colors && order.colors.length){
+if(
+order.colors &&
+order.colors.length
+){
 
 colorsText =
-order.colors.map(c=>
 
-`${c.color || ""} - ${c.qty || 0}`
+order.colors.map(c => `
 
-).join("<br>");
+<b>${c.color || ""}</b> <br>
+Order Qty :
+${c.qty || 0} <br>
+Sample Qty :
+${c.sampleQty || 0}
+
+`).join("<hr>");
 
 }
 
