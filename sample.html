@@ -626,32 +626,33 @@ txt.includes(value)
 EDIT BUTTON
 ========================= */
 
-window.openSampleEdit = function(id){
-
 selectedDocId = id;
 
 const data =
+allOrders.find(
+o => o.id === id
+);
 
-selectedDocId = id;
+if(!data) return;
 
-const colorBox =
-document.getElementById("colorSampleArea");
+const modalArea =
+document.getElementById("modalFormArea");
 
-if(colorBox){
-
-colorBox.innerHTML = "";
+modalArea.innerHTML = "";
 
 if(
 data.colors &&
 data.colors.length
 ){
 
+modalArea.innerHTML +=
+"<h3>🎨 Color Wise Sample Qty</h3>";
+
 data.colors.forEach((c,index)=>{
 
-colorBox.innerHTML += `
+modalArea.innerHTML += `
 
-<div
-style="
+<div style="
 padding:10px;
 margin-bottom:10px;
 border:1px solid #334155;
@@ -684,10 +685,6 @@ value="${c.sampleQty || 0}"
 
 }
 
-}
-
-allOrders.find(o => o.id === id);
-
 const shipDate =
 
 data.shipDate ||
@@ -705,9 +702,7 @@ d.toISOString().split("T")[0];
 if(!data.fabricReceiveTarget){
 
 const x = new Date(ship);
-
 x.setDate(x.getDate()-45);
-
 data.fabricReceiveTarget =
 formatDate(x);
 
@@ -716,9 +711,7 @@ formatDate(x);
 if(!data.developmentTarget){
 
 const x = new Date(ship);
-
 x.setDate(x.getDate()-60);
-
 data.developmentTarget =
 formatDate(x);
 
@@ -727,9 +720,7 @@ formatDate(x);
 if(!data.fitTarget){
 
 const x = new Date(ship);
-
 x.setDate(x.getDate()-50);
-
 data.fitTarget =
 formatDate(x);
 
@@ -738,9 +729,7 @@ formatDate(x);
 if(!data.ppTarget){
 
 const x = new Date(ship);
-
 x.setDate(x.getDate()-40);
-
 data.ppTarget =
 formatDate(x);
 
@@ -749,20 +738,13 @@ formatDate(x);
 if(!data.topTarget){
 
 const x = new Date(ship);
-
 x.setDate(x.getDate()-15);
-
 data.topTarget =
 formatDate(x);
 
 }
 
 }
-
-if(!data) return;
-
-document.getElementById("editModal").style.display =
-"block";
 
 const modal =
 document.getElementById("modalFormArea");
