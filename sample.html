@@ -770,21 +770,165 @@ order.colors.forEach((c,index)=>{
 
 colorSection += `
 
-<div class="form-box">
+<div
+style="
+border:1px solid #334155;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+">
 
-<label>
+<h3>
 
 ${c.color}
 
-(Order Qty :
-${c.qty || 0})
+</h3>
 
+<p>
+
+Order Qty :
+${Number(c.qty || 0).toLocaleString()}
+
+</p>
+
+<label>
+Sample Qty
 </label>
 
 <input
 type="number"
 id="sampleQty_${index}"
 value="${c.sampleQty || 0}">
+
+<br><br>
+
+<label>
+Fabric Status
+</label>
+
+<select
+id="fabric_${index}">
+
+<option
+${c.fabricStatus==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+${c.fabricStatus==="Running"?"selected":""}>
+Running
+</option>
+
+<option
+${c.fabricStatus==="Complete"?"selected":""}>
+Complete
+</option>
+
+</select>
+
+<br><br>
+
+<label>
+Development Status
+</label>
+
+<select
+id="dev_${index}">
+
+<option
+${c.developmentStatus==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+${c.developmentStatus==="Running"?"selected":""}>
+Running
+</option>
+
+<option
+${c.developmentStatus==="Complete"?"selected":""}>
+Complete
+</option>
+
+</select>
+
+<br><br>
+
+<label>
+Fit Status
+</label>
+
+<select
+id="fit_${index}">
+
+<option
+${c.fitStatus==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+${c.fitStatus==="Running"?"selected":""}>
+Running
+</option>
+
+<option
+${c.fitStatus==="Complete"?"selected":""}>
+Complete
+</option>
+
+</select>
+
+<br><br>
+
+<label>
+PP Status
+</label>
+
+<select
+id="pp_${index}">
+
+<option
+${c.ppStatus==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+${c.ppStatus==="Running"?"selected":""}>
+Running
+</option>
+
+<option
+${c.ppStatus==="Complete"?"selected":""}>
+Complete
+</option>
+
+</select>
+
+<br><br>
+
+<label>
+TOP Status
+</label>
+
+<select
+id="top_${index}">
+
+<option
+${c.topStatus==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+${c.topStatus==="Running"?"selected":""}>
+Running
+</option>
+
+<option
+${c.topStatus==="Complete"?"selected":""}>
+Complete
+</option>
+
+</select>
 
 </div>
 
