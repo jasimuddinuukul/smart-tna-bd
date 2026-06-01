@@ -1,3 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SMART TNA BD ERP - SAMPLE DEPARTMENT</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#111827;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #1e293b;
+}
+
+.company{
+font-size:28px;
+font-weight:bold;
+color:#00ff99;
+}
+
+.system{
+font-size:18px;
+margin-top:8px;
+color:#cbd5e1;
+}
+
+.search-section{
+padding:20px;
+}
+
+.search-box{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+font-size:16px;
+}
+
+.table-wrapper{
+overflow:auto;
+padding:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:4500px;
+background:#1e293b;
+}
+
+th{
+background:#111827;
+color:#00ff99;
+padding:12px;
+border:1px solid #334155;
+}
+
+td{
+padding:10px;
+border:1px solid #334155;
+text-align:center;
+}
+
+.edit-btn{
+background:#00aa66;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="company">
+INNOVATIVE KNITEX LTD
+</div>
+
+<div class="system">
+SMART TNA BD ERP - SAMPLE DEPARTMENT
+</div>
+
+</header>
+
+<div class="search-section">
+
+<input
+type="text"
+id="searchInput"
+class="search-box"
+placeholder="Search Buyer / IKL / Style / Merchandiser">
+
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
 <tr>
 
 <th>Buyer</th>
@@ -37,3 +161,13 @@
 <th>Action</th>
 
 </tr>
+
+</thead>
+
+<tbody id="dashboardBody">
+
+</tbody>
+
+</table>
+
+</div>
