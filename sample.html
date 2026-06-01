@@ -626,12 +626,17 @@ txt.includes(value)
 EDIT BUTTON
 ========================= */
 
+window.openSampleEdit = function(id){
+
 selectedDocId = id;
 
 const data =
 allOrders.find(
 o => o.id === id
 );
+
+if(!data) return;
+
 
 const modalArea =
 document.getElementById("modalFormArea");
