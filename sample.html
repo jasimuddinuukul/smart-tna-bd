@@ -365,6 +365,120 @@ txt.includes(value)
 
 });
 
+/* =========================
+EDIT BUTTON
+========================= */
+
+window.openOrder = function(id){
+
+const data =
+allOrders.find(
+o => o.id === id
+);
+
+if(!data) return;
+
+document
+.getElementById("editModal")
+.style.display = "block";
+
+const modal =
+document.getElementById(
+"modalFormArea"
+);
+
+modal.innerHTML = `
+
+<div class="form-grid">
+
+<div class="form-box">
+<label>Buyer</label>
+<input value="${data.buyer || ''}" readonly>
+</div>
+
+<div class="form-box">
+<label>IKL No</label>
+<input value="${data.ikl || ''}" readonly>
+</div>
+
+<div class="form-box">
+<label>Style</label>
+<input value="${data.style || ''}" readonly>
+</div>
+
+<div class="form-box">
+<label>Merchandiser</label>
+<input value="${data.merchandiser || ''}" readonly>
+</div>
+
+<div class="form-box">
+<label>Fabric Status</label>
+<select id="fabricReceiveStatus">
+<option value="Pending">Pending</option>
+<option value="Running">Running</option>
+<option value="Complete">Complete</option>
+<option value="Delay">Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>Development Status</label>
+<select id="developmentStatus">
+<option value="Pending">Pending</option>
+<option value="Running">Running</option>
+<option value="Complete">Complete</option>
+<option value="Delay">Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>Fit Status</label>
+<select id="fitStatus">
+<option value="Pending">Pending</option>
+<option value="Running">Running</option>
+<option value="Complete">Complete</option>
+<option value="Delay">Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>PP Status</label>
+<select id="ppStatus">
+<option value="Pending">Pending</option>
+<option value="Running">Running</option>
+<option value="Complete">Complete</option>
+<option value="Delay">Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>TOP Status</label>
+<select id="topStatus">
+<option value="Pending">Pending</option>
+<option value="Running">Running</option>
+<option value="Complete">Complete</option>
+<option value="Delay">Delay</option>
+</select>
+</div>
+
+</div>
+
+`;
+
+};
+
+/* CLOSE MODAL */
+
+document
+.getElementById("closeBtn")
+.addEventListener("click",()=>{
+
+document
+.getElementById("editModal")
+.style.display = "none";
+
+});
+
 /* INITIAL LOAD */
 
 loadOrders();
