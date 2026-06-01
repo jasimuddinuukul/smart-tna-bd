@@ -637,16 +637,11 @@ o => o.id === id
 
 if(!data) return;
 
+document.getElementById("editModal").style.display =
+"block";
 
-const modalArea =
+const modal =
 document.getElementById("modalFormArea");
-
-modalArea.innerHTML = "";
-
-if(
-data.colors &&
-data.colors.length
-){
 
 modalArea.innerHTML +=
 "<h3>🎨 Color Wise Sample Qty</h3>";
@@ -654,6 +649,9 @@ modalArea.innerHTML +=
 data.colors.forEach((c,index)=>{
 
 modalArea.innerHTML += `
+
+};
+
 
 <div style="
 padding:10px;
