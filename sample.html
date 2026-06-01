@@ -1042,18 +1042,84 @@ order.colors || [];
 
 colors.forEach((c,index)=>{
 
-const box =
+const sampleQtyBox =
 
 document.getElementById(
 `sampleQty_${index}`
 );
 
-if(box){
+if(sampleQtyBox){
 
 c.sampleQty =
+
 Number(
-box.value || 0
+sampleQtyBox.value || 0
 );
+
+}
+
+const fabricBox =
+
+document.getElementById(
+`fabric_${index}`
+);
+
+if(fabricBox){
+
+c.fabricStatus =
+fabricBox.value;
+
+}
+
+const devBox =
+
+document.getElementById(
+`dev_${index}`
+);
+
+if(devBox){
+
+c.developmentStatus =
+devBox.value;
+
+}
+
+const fitBox =
+
+document.getElementById(
+`fit_${index}`
+);
+
+if(fitBox){
+
+c.fitStatus =
+fitBox.value;
+
+}
+
+const ppBox =
+
+document.getElementById(
+`pp_${index}`
+);
+
+if(ppBox){
+
+c.ppStatus =
+ppBox.value;
+
+}
+
+const topBox =
+
+document.getElementById(
+`top_${index}`
+);
+
+if(topBox){
+
+c.topStatus =
+topBox.value;
 
 }
 
