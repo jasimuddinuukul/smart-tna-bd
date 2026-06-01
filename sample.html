@@ -169,5 +169,213 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 </tbody>
 
 </table>
+<!-- FIREBASE + DASHBOARD SCRIPT -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+apiKey: "YOUR_API_KEY",
+
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+
+projectId: "YOUR_PROJECT_ID",
+
+storageBucket: "YOUR_PROJECT.appspot.com",
+
+messagingSenderId: "XXXXXXXX",
+
+appId: "XXXXXXXX"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+/* GLOBAL */
+
+let allOrders = [];
+
+/* LOAD ORDERS */
+
+async function loadOrders(){
+
+const querySnapshot =
+
+await getDocs(
+collection(db,"orders")
+);
+
+allOrders = [];
+
+querySnapshot.forEach(docItem=>{
+
+allOrders.push({
+
+id: docItem.id,
+...docItem.data()
+
+});
+
+});
+
+renderDashboard();
+
+}
+
+/* DASHBOARD */
+
+function renderDashboard(){
+
+const dashboardBody =
+
+document.getElementById(
+"dashboardBody"
+);
+
+dashboardBody.innerHTML = "";
+
+allOrders.forEach(order=>{
+
+let colorText = "";
+
+if(
+order.colors &&
+order.colors.length
+){
+
+colorText =
+
+order.colors.map(c=>
+
+`${c.color || ""} (${c.qty || 0})`
+
+).join("<br>");
+
+}
+
+dashboardBody.innerHTML += `
+
+<tr
+class="order-row"
+data-search="
+${order.buyer || ""}
+${order.ikl || ""}
+${order.style || ""}
+${order.merchandiser || ""}
+">
+
+<td>${order.buyer || ""}</td>
+
+<td>${order.ikl || ""}</td>
+
+<td>${order.style || ""}</td>
+
+<td>${order.orderDate || "-"}</td>
+
+<td>
+${order.shipDate ||
+order.shipmentDate ||
+"-"}
+</td>
+
+<td>${order.leadTime || "-"}</td>
+
+<td>${order.merchandiser || "-"}</td>
+
+<td>${colorText}</td>
+
+<td>${order.item || "-"}</td>
+
+<td>${order.sampleProgress || 0}%</td>
+
+<td>${order.sampleQty || 0}</td>
+
+<td>${order.fabricReceiveTarget || "-"}</td>
+<td>${order.fabricReceiveActual || "-"}</td>
+<td>${order.fabricReceiveStatus || "-"}</td>
+
+<td>${order.developmentTarget || "-"}</td>
+<td>${order.developmentActual || "-"}</td>
+<td>${order.developmentStatus || "-"}</td>
+
+<td>${order.fitTarget || "-"}</td>
+<td>${order.fitActual || "-"}</td>
+<td>${order.fitStatus || "-"}</td>
+
+<td>${order.ppTarget || "-"}</td>
+<td>${order.ppActual || "-"}</td>
+<td>${order.ppStatus || "-"}</td>
+
+<td>${order.topTarget || "-"}</td>
+<td>${order.topActual || "-"}</td>
+<td>${order.topStatus || "-"}</td>
+
+<td>
+
+<button
+class="edit-btn"
+onclick="openOrder('${order.id}')">
+
+Edit
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* SEARCH */
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+const value =
+this.value.toLowerCase();
+
+document
+.querySelectorAll(".order-row")
+.forEach(row=>{
+
+const txt =
+row.dataset.search.toLowerCase();
+
+row.style.display =
+
+txt.includes(value)
+? ""
+: "none";
+
+});
+
+});
+
+/* INITIAL LOAD */
+
+loadOrders();
+
+</script>
 
 </div>
