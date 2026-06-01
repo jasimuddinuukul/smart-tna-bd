@@ -631,6 +631,61 @@ window.openSampleEdit = function(id){
 selectedDocId = id;
 
 const data =
+
+selectedDocId = id;
+
+const colorBox =
+document.getElementById("colorSampleArea");
+
+if(colorBox){
+
+colorBox.innerHTML = "";
+
+if(
+data.colors &&
+data.colors.length
+){
+
+data.colors.forEach((c,index)=>{
+
+colorBox.innerHTML += `
+
+<div
+style="
+padding:10px;
+margin-bottom:10px;
+border:1px solid #334155;
+border-radius:10px;
+">
+
+<b>${c.color}</b>
+
+<br><br>
+
+Order Qty :
+${c.qty || 0}
+
+<br><br>
+
+Sample Qty
+
+<input
+type="number"
+id="sampleQty_${index}"
+value="${c.sampleQty || 0}"
+
+>
+
+</div>
+
+`;
+
+});
+
+}
+
+}
+
 allOrders.find(o => o.id === id);
 
 const shipDate =
