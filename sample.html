@@ -393,3 +393,635 @@ getFirestore(app);
 let allOrders = [];
 
 let selectedDocId = null;
+
+/* =========================
+LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+const querySnapshot =
+
+await getDocs(
+collection(db,"orders")
+);
+
+allOrders = [];
+
+let totalStyles = 0;
+let totalSampleQty = 0;
+let runningQty = 0;
+let progressSum = 0;
+
+const currentMonth =
+new Date().getMonth();
+
+let currentMonthQty = 0;
+let nextMonthQty = 0;
+
+querySnapshot.forEach(docItem=>{
+
+const data =
+docItem.data();
+
+allOrders.push({
+
+id: docItem.id,
+...data
+
+});
+
+totalStyles++;
+
+totalSampleQty +=
+Number(
+data.sampleQty || 0
+);
+
+if(
+(data.sampleProgress || 0)
+< 100
+){
+
+runningQty++;
+
+}
+
+progressSum +=
+Number(
+data.sampleProgress || 0
+);
+
+const shipDate =
+
+data.shipDate ||
+data.shipmentDate;
+
+if(shipDate){
+
+const ship =
+new Date(shipDate);
+
+if(
+ship.getMonth()
+=== currentMonth
+){
+
+currentMonthQty +=
+Number(
+data.sampleQty || 0
+);
+
+}
+
+if(
+ship.getMonth()
+=== currentMonth + 1
+){
+
+nextMonthQty +=
+Number(
+data.sampleQty || 0
+);
+
+}
+
+}
+
+});
+
+document.getElementById(
+"totalStyles"
+).innerText =
+totalStyles;
+
+document.getElementById(
+"totalSampleQty"
+).innerText =
+totalSampleQty.toLocaleString();
+
+document.getElementById(
+"runningQty"
+).innerText =
+runningQty;
+
+document.getElementById(
+"currentMonthQty"
+).innerText =
+currentMonthQty.toLocaleString();
+
+document.getElementById(
+"nextMonthQty"
+).innerText =
+nextMonthQty.toLocaleString();
+
+document.getElementById(
+"avgProgress"
+).innerText =
+
+totalStyles
+?
+
+Math.round(
+progressSum /
+totalStyles
+) + "%"
+
+:
+
+"0%";
+
+renderOrderList();
+
+}
+
+/* =========================
+ORDER LIST
+========================= */
+
+function renderOrderList(){
+
+const body =
+
+document.getElementById(
+"orderTableBody"
+);
+
+body.innerHTML = "";
+
+allOrders.forEach(order=>{
+
+let colorText = "";
+let qtyText = "";
+
+if(
+order.colors &&
+order.colors.length
+){
+
+colorText =
+
+order.colors.map(c=>
+
+`${c.color || ""}`
+
+).join("<hr>");
+
+qtyText =
+
+order.colors.map(c=>
+
+`${Number(
+c.qty || 0
+).toLocaleString()}`
+
+).join("<hr>");
+
+}
+
+const shipDate =
+
+order.shipDate ||
+order.shipmentDate;
+
+let leadTime = "-";
+
+if(shipDate){
+
+const today =
+new Date();
+
+const ship =
+new Date(shipDate);
+
+leadTime =
+
+Math.ceil(
+(ship - today) /
+(1000*60*60*24)
+)
+
+* " Days";
+
+}
+
+body.innerHTML += `
+
+<tr
+class="order-row"
+data-search="
+
+${order.buyer || ""}
+
+${order.ikl || ""}
+
+${order.style || ""}
+
+${order.merchandiser || ""}
+
+">
+
+<td>${order.buyer || ""}</td>
+
+<td>${order.ikl || ""}</td>
+
+<td>${order.style || ""}</td>
+
+<td>${order.orderDate || "-"}</td>
+
+<td>${shipDate || "-"}</td>
+
+<td>${leadTime}</td>
+
+<td>
+${order.merchandiser || "-"}
+</td>
+
+<td>${colorText}</td>
+
+<td>${qtyText}</td>
+
+<td>
+${Number(
+order.totalQty || 0
+).toLocaleString()}
+</td>
+
+<td>
+${order.item || "-"}
+</td>
+
+<td>
+${order.sampleProgress || 0}%
+</td>
+
+<td>
+${order.sampleQty || 0}
+</td>
+
+<td>${order.fabricReceiveTarget || "-"}</td>
+<td>${order.fabricReceiveActual || "-"}</td>
+<td>${order.fabricReceiveStatus || "-"}</td>
+
+<td>${order.developmentTarget || "-"}</td>
+<td>${order.developmentActual || "-"}</td>
+<td>${order.developmentStatus || "-"}</td>
+
+<td>${order.fitTarget || "-"}</td>
+<td>${order.fitActual || "-"}</td>
+<td>${order.fitStatus || "-"}</td>
+
+<td>${order.ppTarget || "-"}</td>
+<td>${order.ppActual || "-"}</td>
+<td>${order.ppStatus || "-"}</td>
+
+<td>${order.topTarget || "-"}</td>
+<td>${order.topActual || "-"}</td>
+<td>${order.topStatus || "-"}</td>
+
+<td>
+
+<button
+class="edit-btn"
+onclick="openOrder('${order.id}')">
+
+Edit
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+/* =========================
+SEARCH
+========================= */
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+const value =
+this.value.toLowerCase();
+
+document
+.querySelectorAll(".order-row")
+.forEach(row=>{
+
+const txt =
+row.dataset.search.toLowerCase();
+
+row.style.display =
+
+txt.includes(value)
+
+? ""
+
+: "none";
+
+});
+
+});
+
+/* =========================
+EDIT POPUP
+========================= */
+
+window.openOrder = function(id){
+
+selectedDocId = id;
+
+const order =
+
+allOrders.find(
+o => o.id === id
+);
+
+if(!order) return;
+
+document.getElementById(
+"editModal"
+).style.display =
+"block";
+
+const modal =
+document.getElementById(
+"modalFormArea"
+);
+
+let colorSection = "";
+
+if(
+order.colors &&
+order.colors.length
+){
+
+colorSection +=
+
+"<h3>Color Wise Sample Qty</h3>";
+
+order.colors.forEach((c,index)=>{
+
+colorSection += `
+
+<div class="form-box">
+
+<label>
+
+${c.color}
+
+(Order Qty :
+${c.qty || 0})
+
+</label>
+
+<input
+type="number"
+id="sampleQty_${index}"
+value="${c.sampleQty || 0}">
+
+</div>
+
+`;
+
+});
+
+}
+
+modal.innerHTML = `
+
+${colorSection}
+
+<div class="form-grid">
+
+<div class="form-box">
+<label>Fabric Status</label>
+<select id="fabricReceiveStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>Development Status</label>
+<select id="developmentStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>Fit Status</label>
+<select id="fitStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>PP Status</label>
+<select id="ppStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</div>
+
+<div class="form-box">
+<label>TOP Status</label>
+<select id="topStatus">
+<option>Pending</option>
+<option>Running</option>
+<option>Complete</option>
+<option>Delay</option>
+</select>
+</div>
+
+</div>
+
+`;
+
+};
+
+/* =========================
+CLOSE
+========================= */
+
+document
+.getElementById("closeBtn")
+.addEventListener("click",()=>{
+
+document.getElementById(
+"editModal"
+).style.display =
+"none";
+
+});
+
+/* =========================
+SAVE
+========================= */
+
+document
+.getElementById("saveBtn")
+.addEventListener("click",
+
+async ()=>{
+
+if(!selectedDocId)
+return;
+
+const order =
+
+allOrders.find(
+o => o.id === selectedDocId
+);
+
+if(!order)
+return;
+
+let colors =
+order.colors || [];
+
+colors.forEach((c,index)=>{
+
+const box =
+
+document.getElementById(
+`sampleQty_${index}`
+);
+
+if(box){
+
+c.sampleQty =
+Number(
+box.value || 0
+);
+
+}
+
+});
+
+let progress = 0;
+let total = 5;
+
+if(
+document.getElementById(
+"fabricReceiveStatus"
+).value
+=== "Complete"
+) progress++;
+
+if(
+document.getElementById(
+"developmentStatus"
+).value
+=== "Complete"
+) progress++;
+
+if(
+document.getElementById(
+"fitStatus"
+).value
+=== "Complete"
+) progress++;
+
+if(
+document.getElementById(
+"ppStatus"
+).value
+=== "Complete"
+) progress++;
+
+if(
+document.getElementById(
+"topStatus"
+).value
+=== "Complete"
+) progress++;
+
+progress =
+
+Math.round(
+(progress / total) * 100
+);
+
+await updateDoc(
+
+doc(
+db,
+"orders",
+selectedDocId
+),
+
+{
+
+colors: colors,
+
+fabricReceiveStatus:
+document.getElementById(
+"fabricReceiveStatus"
+).value,
+
+developmentStatus:
+document.getElementById(
+"developmentStatus"
+).value,
+
+fitStatus:
+document.getElementById(
+"fitStatus"
+).value,
+
+ppStatus:
+document.getElementById(
+"ppStatus"
+).value,
+
+topStatus:
+document.getElementById(
+"topStatus"
+).value,
+
+sampleProgress:
+progress
+
+}
+
+);
+
+document.getElementById(
+"editModal"
+).style.display =
+"none";
+
+loadOrders();
+
+alert(
+"Updated Successfully"
+);
+
+});
+
+/* INITIAL LOAD */
+
+loadOrders();
+
+</script>
+
+</body>
+</html>
+
