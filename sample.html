@@ -484,6 +484,126 @@ document
 
 });
 
+/* =========================
+AUTO PROGRESS
+========================= */
+
+function calculateProgress(){
+
+let total = 5;
+let complete = 0;
+
+if(
+document.getElementById("fabricReceiveStatus")?.value
+=== "Complete"
+) complete++;
+
+if(
+document.getElementById("developmentStatus")?.value
+=== "Complete"
+) complete++;
+
+if(
+document.getElementById("fitStatus")?.value
+=== "Complete"
+) complete++;
+
+if(
+document.getElementById("ppStatus")?.value
+=== "Complete"
+) complete++;
+
+if(
+document.getElementById("topStatus")?.value
+=== "Complete"
+) complete++;
+
+return Math.round(
+(complete / total) * 100
+);
+
+}
+
+/* =========================
+SAVE BUTTON
+========================= */
+
+document.addEventListener("click",async(e)=>{
+
+if(
+e.target &&
+e.target.id === "saveBtn"
+){
+
+if(!selectedDocId){
+
+alert("No Order Selected");
+return;
+
+}
+
+try{
+
+const progress =
+calculateProgress();
+
+await updateDoc(
+
+doc(
+db,
+"orders",
+selectedDocId
+),
+
+{
+
+fabricReceiveStatus:
+document.getElementById("fabricReceiveStatus").value,
+
+developmentStatus:
+document.getElementById("developmentStatus").value,
+
+fitStatus:
+document.getElementById("fitStatus").value,
+
+ppStatus:
+document.getElementById("ppStatus").value,
+
+topStatus:
+document.getElementById("topStatus").value,
+
+sampleProgress:
+progress
+
+}
+
+);
+
+alert(
+"Updated Successfully"
+);
+
+document
+.getElementById("editModal")
+.style.display = "none";
+
+loadOrders();
+
+}
+catch(error){
+
+console.log(error);
+
+alert(
+"Save Failed"
+);
+
+}
+
+}
+
+});
+
 /* INITIAL LOAD */
 
 loadOrders();
