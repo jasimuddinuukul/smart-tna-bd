@@ -641,17 +641,54 @@ document.getElementById("editModal").style.display =
 "block";
 
 const modal =
-document.getElementById("modalFormArea");
+document.getElementById("modalFormArea";
 
-modalArea.innerHTML +=
+modal.innerHTML = "";
+
+if(
+data.colors &&
+data.colors.length
+){
+
+modal.innerHTML +=
 "<h3>🎨 Color Wise Sample Qty</h3>";
 
 data.colors.forEach((c,index)=>{
 
-modalArea.innerHTML += `
+modal.innerHTML += `
 
-};
+<div style="
+padding:10px;
+margin-bottom:10px;
+border:1px solid #334155;
+border-radius:10px;
+">
 
+<b>${c.color}</b>
+
+<br><br>
+
+Order Qty :
+${c.qty || 0}
+
+<br><br>
+
+Sample Qty
+
+<input
+type="number"
+id="sampleQty_${index}"
+value="${c.sampleQty || 0}"
+
+>
+
+</div>
+
+`;
+
+});
+
+}
 
 <div style="
 padding:10px;
