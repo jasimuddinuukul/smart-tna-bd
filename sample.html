@@ -552,7 +552,6 @@ body.innerHTML = "";
 allOrders.forEach(order=>{
 
 let colorText = "";
-let qtyText = "";
 
 if(
 order.colors &&
@@ -561,23 +560,51 @@ order.colors.length
 
 colorText =
 
-order.colors.map(c=>
+order.colors.map(c => `
 
-`${c.color || ""}`
+<b>${c.color || ""}</b>
 
-).join("<hr>");
+<br>
 
-qtyText =
+Qty :
+${Number(c.qty || 0).toLocaleString()}
 
-order.colors.map(c=>
+<br>
 
-`${Number(
-c.qty || 0
-).toLocaleString()}`
+Sample :
+${Number(c.sampleQty || 0).toLocaleString()}
 
-).join("<hr>");
+<br>
+
+Fabric :
+${c.fabricStatus || "Pending"}
+
+<br>
+
+Dev :
+${c.developmentStatus || "Pending"}
+
+<br>
+
+Fit :
+${c.fitStatus || "Pending"}
+
+<br>
+
+PP :
+${c.ppStatus || "Pending"}
+
+<br>
+
+TOP :
+${c.topStatus || "Pending"}
+
+<hr>
+
+`).join("");
 
 }
+
 
 const shipDate =
 
