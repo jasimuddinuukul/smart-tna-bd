@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SMART TNA BD ERP - SAMPLE DEPARTMENT</title>
+<title>
+SMART TNA BD ERP - SAMPLE DEPARTMENT
+</title>
 
 <style>
 
@@ -21,6 +25,8 @@ background:#0f172a;
 color:white;
 }
 
+/* HEADER */
+
 header{
 background:#111827;
 padding:20px;
@@ -28,8 +34,13 @@ text-align:center;
 border-bottom:2px solid #1e293b;
 }
 
+.bismillah{
+font-size:24px;
+margin-bottom:10px;
+}
+
 .company{
-font-size:28px;
+font-size:30px;
 font-weight:bold;
 color:#00ff99;
 }
@@ -40,8 +51,37 @@ margin-top:8px;
 color:#cbd5e1;
 }
 
-.search-section{
+/* KPI DASHBOARD */
+
+.kpi-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 padding:20px;
+}
+
+.kpi-card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.kpi-card h2{
+font-size:30px;
+color:#00ff99;
+margin-bottom:10px;
+}
+
+.kpi-card p{
+color:#cbd5e1;
+}
+
+/* SEARCH */
+
+.search-section{
+padding:0 20px 20px;
 }
 
 .search-box{
@@ -54,15 +94,17 @@ color:white;
 font-size:16px;
 }
 
+/* ORDER TABLE */
+
 .table-wrapper{
-overflow:auto;
 padding:20px;
+overflow:auto;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
-min-width:4500px;
+min-width:4200px;
 background:#1e293b;
 }
 
@@ -96,6 +138,10 @@ cursor:pointer;
 
 <header>
 
+<div class="bismillah">
+﷽
+</div>
+
 <div class="company">
 INNOVATIVE KNITEX LTD
 </div>
@@ -106,6 +152,44 @@ SMART TNA BD ERP - SAMPLE DEPARTMENT
 
 </header>
 
+<!-- KPI -->
+
+<div class="kpi-grid">
+
+<div class="kpi-card">
+<h2 id="totalStyles">0</h2>
+<p>Total Styles</p>
+</div>
+
+<div class="kpi-card">
+<h2 id="totalSampleQty">0</h2>
+<p>Total Sample Qty</p>
+</div>
+
+<div class="kpi-card">
+<h2 id="runningQty">0</h2>
+<p>Running Sample Qty</p>
+</div>
+
+<div class="kpi-card">
+<h2 id="currentMonthQty">0</h2>
+<p>This Month Qty</p>
+</div>
+
+<div class="kpi-card">
+<h2 id="nextMonthQty">0</h2>
+<p>Next Month Qty</p>
+</div>
+
+<div class="kpi-card">
+<h2 id="avgProgress">0%</h2>
+<p>Average Progress</p>
+</div>
+
+</div>
+
+<!-- SEARCH -->
+
 <div class="search-section">
 
 <input
@@ -115,6 +199,8 @@ class="search-box"
 placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </div>
+
+<!-- ORDER LIST -->
 
 <div class="table-wrapper">
 
@@ -127,11 +213,19 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 <th>Buyer</th>
 <th>IKL No</th>
 <th>Style</th>
+
 <th>Order Date</th>
 <th>Shipment Date</th>
 <th>Lead Time</th>
+
 <th>Merchandiser</th>
+
 <th>Color</th>
+
+<th>Quantity</th>
+
+<th>Total Qty</th>
+
 <th>Item</th>
 
 <th>Progress</th>
@@ -164,12 +258,96 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 </thead>
 
-<tbody id="dashboardBody">
+<tbody id="orderTableBody">
 
 </tbody>
 
 </table>
-<!-- FIREBASE + DASHBOARD SCRIPT -->
+
+</div>
+<!-- EDIT MODAL -->
+
+<div class="modal" id="editModal">
+
+<div class="modal-content">
+
+<h2>Sample Department Update</h2>
+
+<div id="modalFormArea"></div>
+
+<button
+id="saveBtn"
+class="edit-btn">
+
+💾 Save
+
+</button>
+
+<button
+id="closeBtn"
+class="edit-btn">
+
+✖ Close
+
+</button>
+
+</div>
+
+</div>
+
+<style>
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.7);
+z-index:999;
+}
+
+.modal-content{
+background:#1e293b;
+width:95%;
+max-width:1200px;
+margin:30px auto;
+padding:20px;
+border-radius:15px;
+max-height:90vh;
+overflow:auto;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.form-box{
+background:#111827;
+padding:15px;
+border-radius:10px;
+}
+
+.form-box label{
+display:block;
+margin-bottom:5px;
+}
+
+.form-box input,
+.form-box select{
+width:100%;
+padding:10px;
+background:#0f172a;
+color:white;
+border:none;
+border-radius:8px;
+}
+
+</style>
 
 <script type="module">
 
@@ -184,15 +362,23 @@ updateDoc,
 doc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-/* FIREBASE CONFIG */
+
+/* FIREBASE */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain: "smart-tna-bd.firebaseapp.com",
-  projectId: "smart-tna-bd",
-  storageBucket: "smart-tna-bd.firebasestorage.app",
-  messagingSenderId: "372049573207",
-  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+authDomain: "smart-tna-bd.firebaseapp.com",
+
+projectId: "smart-tna-bd",
+
+storageBucket: "smart-tna-bd.firebasestorage.app",
+
+messagingSenderId: "372049573207",
+
+appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
 };
 
 const app =
@@ -206,437 +392,3 @@ getFirestore(app);
 let allOrders = [];
 
 let selectedDocId = null;
-  
-/* LOAD ORDERS */
-
-async function loadOrders(){
-
-const querySnapshot =
-
-await getDocs(
-collection(db,"orders")
-);
-
-allOrders = [];
-
-querySnapshot.forEach(docItem=>{
-
-allOrders.push({
-
-id: docItem.id,
-...docItem.data()
-
-});
-
-});
-
-renderDashboard();
-
-}
-
-/* DASHBOARD */
-
-function renderDashboard(){
-
-const dashboardBody =
-
-document.getElementById(
-"dashboardBody"
-);
-
-dashboardBody.innerHTML = "";
-
-allOrders.forEach(order=>{
-
-let colorText = "";
-
-if(
-order.colors &&
-order.colors.length
-){
-
-colorText =
-
-order.colors.map(c=>
-
-`${c.color || ""} (${c.qty || 0})`
-
-).join("<br>");
-
-}
-
-dashboardBody.innerHTML += `
-
-<tr
-class="order-row"
-data-search="
-${order.buyer || ""}
-${order.ikl || ""}
-${order.style || ""}
-${order.merchandiser || ""}
-">
-
-<td>${order.buyer || ""}</td>
-
-<td>${order.ikl || ""}</td>
-
-<td>${order.style || ""}</td>
-
-<td>${order.orderDate || "-"}</td>
-
-<td>
-${order.shipDate ||
-order.shipmentDate ||
-"-"}
-</td>
-
-<td>${order.leadTime || "-"}</td>
-
-<td>${order.merchandiser || "-"}</td>
-
-<td>${colorText}</td>
-
-<td>${order.item || "-"}</td>
-
-<td>${order.sampleProgress || 0}%</td>
-
-<td>${order.sampleQty || 0}</td>
-
-<td>${order.fabricReceiveTarget || "-"}</td>
-<td>${order.fabricReceiveActual || "-"}</td>
-<td>${order.fabricReceiveStatus || "-"}</td>
-
-<td>${order.developmentTarget || "-"}</td>
-<td>${order.developmentActual || "-"}</td>
-<td>${order.developmentStatus || "-"}</td>
-
-<td>${order.fitTarget || "-"}</td>
-<td>${order.fitActual || "-"}</td>
-<td>${order.fitStatus || "-"}</td>
-
-<td>${order.ppTarget || "-"}</td>
-<td>${order.ppActual || "-"}</td>
-<td>${order.ppStatus || "-"}</td>
-
-<td>${order.topTarget || "-"}</td>
-<td>${order.topActual || "-"}</td>
-<td>${order.topStatus || "-"}</td>
-
-<td>
-
-<button
-class="edit-btn"
-onclick="openOrder('${order.id}')">
-
-Edit
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-/* SEARCH */
-
-document
-.getElementById("searchInput")
-.addEventListener("keyup",function(){
-
-const value =
-this.value.toLowerCase();
-
-document
-.querySelectorAll(".order-row")
-.forEach(row=>{
-
-const txt =
-row.dataset.search.toLowerCase();
-
-row.style.display =
-
-txt.includes(value)
-? ""
-: "none";
-
-});
-
-});
-
-/* =========================
-EDIT BUTTON
-========================= */
-
-window.openOrder = function(id){
-
-const data =
-allOrders.find(
-o => o.id === id
-);
-
-selectedDocId = id;
-  
-if(!data) return;
-
-document
-.getElementById("editModal")
-.style.display = "block";
-
-const modal =
-document.getElementById(
-"modalFormArea"
-);
-
-modal.innerHTML = `
-
-<div class="form-grid">
-
-<div class="form-box">
-<label>Buyer</label>
-<input value="${data.buyer || ''}" readonly>
-</div>
-
-<div class="form-box">
-<label>IKL No</label>
-<input value="${data.ikl || ''}" readonly>
-</div>
-
-<div class="form-box">
-<label>Style</label>
-<input value="${data.style || ''}" readonly>
-</div>
-
-<div class="form-box">
-<label>Merchandiser</label>
-<input value="${data.merchandiser || ''}" readonly>
-</div>
-
-<div class="form-box">
-<label>Fabric Status</label>
-<select id="fabricReceiveStatus">
-<option value="Pending">Pending</option>
-<option value="Running">Running</option>
-<option value="Complete">Complete</option>
-<option value="Delay">Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>Development Status</label>
-<select id="developmentStatus">
-<option value="Pending">Pending</option>
-<option value="Running">Running</option>
-<option value="Complete">Complete</option>
-<option value="Delay">Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>Fit Status</label>
-<select id="fitStatus">
-<option value="Pending">Pending</option>
-<option value="Running">Running</option>
-<option value="Complete">Complete</option>
-<option value="Delay">Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>PP Status</label>
-<select id="ppStatus">
-<option value="Pending">Pending</option>
-<option value="Running">Running</option>
-<option value="Complete">Complete</option>
-<option value="Delay">Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>TOP Status</label>
-<select id="topStatus">
-<option value="Pending">Pending</option>
-<option value="Running">Running</option>
-<option value="Complete">Complete</option>
-<option value="Delay">Delay</option>
-</select>
-</div>
-
-</div>
-
-`;
-
-};
-
-/* CLOSE MODAL */
-
-document
-.getElementById("closeBtn")
-.addEventListener("click",()=>{
-
-document
-.getElementById("editModal")
-.style.display = "none";
-
-});
-
-/* =========================
-AUTO PROGRESS
-========================= */
-
-function calculateProgress(){
-
-let total = 5;
-let complete = 0;
-
-if(
-document.getElementById("fabricReceiveStatus")?.value
-=== "Complete"
-) complete++;
-
-if(
-document.getElementById("developmentStatus")?.value
-=== "Complete"
-) complete++;
-
-if(
-document.getElementById("fitStatus")?.value
-=== "Complete"
-) complete++;
-
-if(
-document.getElementById("ppStatus")?.value
-=== "Complete"
-) complete++;
-
-if(
-document.getElementById("topStatus")?.value
-=== "Complete"
-) complete++;
-
-return Math.round(
-(complete / total) * 100
-);
-
-}
-
-/* =========================
-SAVE BUTTON
-========================= */
-
-document.addEventListener("click",async(e)=>{
-
-if(
-e.target &&
-e.target.id === "saveBtn"
-){
-
-if(!selectedDocId){
-
-alert("No Order Selected");
-return;
-
-}
-
-try{
-
-const progress =
-calculateProgress();
-
-await updateDoc(
-
-doc(
-db,
-"orders",
-selectedDocId
-),
-
-{
-
-fabricReceiveStatus:
-document.getElementById("fabricReceiveStatus").value,
-
-developmentStatus:
-document.getElementById("developmentStatus").value,
-
-fitStatus:
-document.getElementById("fitStatus").value,
-
-ppStatus:
-document.getElementById("ppStatus").value,
-
-topStatus:
-document.getElementById("topStatus").value,
-
-sampleProgress:
-progress
-
-}
-
-);
-
-alert(
-"Updated Successfully"
-);
-
-document
-.getElementById("editModal")
-.style.display = "none";
-
-loadOrders();
-
-}
-catch(error){
-
-console.log(error);
-
-alert(
-"Save Failed"
-);
-
-}
-
-}
-
-});
-
-/* INITIAL LOAD */
-
-loadOrders();
-
-</script>
-
-</div>
-
-</div>
-
-<!-- EDIT MODAL -->
-
-<div class="modal" id="editModal">
-
-<div class="modal-content">
-
-<h2>Department Update</h2>
-
-<div id="modalFormArea"></div>
-
-<button
-class="save-btn"
-id="saveBtn">
-💾 Save Update
-</button>
-  
-<button id="closeBtn" class="edit-btn">
-Close
-</button>
-
-</div>
-
-</div>
-
-</body>
-</html>
