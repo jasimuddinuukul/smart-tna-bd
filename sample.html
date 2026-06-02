@@ -542,7 +542,6 @@ ORDER LIST
 function renderOrderList(){
 
 const body =
-
 document.getElementById(
 "orderTableBody"
 );
@@ -551,60 +550,116 @@ body.innerHTML = "";
 
 allOrders.forEach(order=>{
 
-let colorText = "";
-
 if(
 order.colors &&
 order.colors.length
 ){
 
-colorText =
+order.colors.forEach(c=>{
 
-order.colors.map(c => `
+body.innerHTML += `
 
-<b>${c.color || ""}</b>
+<tr
+class="order-row"
+data-search="
 
-<br>
+${order.buyer || ""}
 
-Qty :
-${Number(c.qty || 0).toLocaleString()}
+${order.ikl || ""}
 
-<br>
+${order.style || ""}
 
-Sample :
-${Number(c.sampleQty || 0).toLocaleString()}
+${order.merchandiser || ""}
 
-<br>
+${c.color || ""}
 
-Fabric :
+">
+
+<td>${order.buyer || ""}</td>
+
+<td>${order.ikl || ""}</td>
+
+<td>${order.style || ""}</td>
+
+<td>${order.orderDate || "-"}</td>
+
+<td>
+${order.shipDate ||
+order.shipmentDate ||
+"-"}
+</td>
+
+<td>
+${order.leadTime || "-"}
+</td>
+
+<td>
+${order.merchandiser || "-"}
+</td>
+
+<td>
+${c.color || "-"}
+</td>
+
+<td>
+${Number(
+c.qty || 0
+).toLocaleString()}
+</td>
+
+<td>
+${Number(
+c.sampleQty || 0
+).toLocaleString()}
+</td>
+
+<td>
 ${c.fabricStatus || "Pending"}
+</td>
 
-<br>
-
-Dev :
+<td>
 ${c.developmentStatus || "Pending"}
+</td>
 
-<br>
-
-Fit :
+<td>
 ${c.fitStatus || "Pending"}
+</td>
 
-<br>
-
-PP :
+<td>
 ${c.ppStatus || "Pending"}
+</td>
 
-<br>
-
-TOP :
+<td>
 ${c.topStatus || "Pending"}
+</td>
 
-<hr>
+<td>
+${order.sampleProgress || 0}%
+</td>
 
-`).join("");
+<td>
+
+<button
+class="edit-btn"
+onclick="openOrder('${order.id}')">
+
+Edit
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
 
 }
 
+});
+
+}
 
 const shipDate =
 
