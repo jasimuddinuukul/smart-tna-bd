@@ -576,17 +576,16 @@ if(shipDate !== "-"){
 
 const today = new Date();
 
-const ship = new Date(shipDate);
+const ship = new Date(shipDate + "T00:00:00");
+
+const diffMs = ship.getTime() - today.getTime();
 
 leadTime = Math.ceil(
-(ship - today) /
-(1000*60*60*24)
+diffMs / (1000*60*60*24)
 );
 
 if(leadTime < 0){
-
 leadTime = 0;
-
 }
 
 }
