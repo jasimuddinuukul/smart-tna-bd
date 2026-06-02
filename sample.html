@@ -565,18 +565,17 @@ let topTarget = "-";
 allOrders.forEach(order=>{
 
 const shipDate =
-
+order.shipdate ||
+order.shipDate ||
+order.shipmentDate ||
+"-";
+  
 console.log(
 "STYLE:",
 order.style,
 "SHIP:",
 shipDate
 );
-  
-order.shipdate ||
-order.shipDate ||
-order.shipmentDate ||
-"-";
   
 let leadTime = "-";
 
