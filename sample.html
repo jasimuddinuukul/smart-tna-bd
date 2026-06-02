@@ -565,6 +565,7 @@ let topTarget = "-";
 allOrders.forEach(order=>{
 
 const shipDate =
+order.shipdate ||
 order.shipDate ||
 order.shipmentDate ||
 "-";
