@@ -5,11 +5,15 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>
 SMART TNA BD ERP - SAMPLE DEPARTMENT
 </title>
+
+<style>
 
 <style>
 
@@ -25,8 +29,6 @@ background:#0f172a;
 color:white;
 }
 
-/* HEADER */
-
 header{
 background:#111827;
 padding:20px;
@@ -34,13 +36,8 @@ text-align:center;
 border-bottom:2px solid #1e293b;
 }
 
-.bismillah{
-font-size:24px;
-margin-bottom:10px;
-}
-
 .company{
-font-size:30px;
+font-size:28px;
 font-weight:bold;
 color:#00ff99;
 }
@@ -51,12 +48,11 @@ margin-top:8px;
 color:#cbd5e1;
 }
 
-/* KPI DASHBOARD */
+/* KPI */
 
 .kpi-grid{
 display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:15px;
 padding:20px;
 }
@@ -69,8 +65,8 @@ text-align:center;
 }
 
 .kpi-card h2{
-font-size:30px;
 color:#00ff99;
+font-size:30px;
 margin-bottom:10px;
 }
 
@@ -81,7 +77,7 @@ color:#cbd5e1;
 /* SEARCH */
 
 .search-section{
-padding:0 20px 20px;
+padding:20px;
 }
 
 .search-box{
@@ -94,7 +90,7 @@ color:white;
 font-size:16px;
 }
 
-/* ORDER TABLE */
+/* TABLE */
 
 .table-wrapper{
 padding:20px;
@@ -104,7 +100,7 @@ overflow:auto;
 table{
 width:100%;
 border-collapse:collapse;
-min-width:4200px;
+min-width:4500px;
 background:#1e293b;
 }
 
@@ -119,7 +115,23 @@ td{
 padding:10px;
 border:1px solid #334155;
 text-align:center;
+vertical-align:middle;
 }
+
+/* STYLE HEADER ROW */
+
+.style-row{
+background:#172554;
+font-weight:bold;
+}
+
+/* COLOR ROW */
+
+.color-row{
+background:#1e293b;
+}
+
+/* BUTTON */
 
 .edit-btn{
 background:#00aa66;
@@ -128,17 +140,103 @@ border:none;
 padding:8px 15px;
 border-radius:8px;
 cursor:pointer;
+font-weight:bold;
 }
+
+.edit-btn:hover{
+background:#008844;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.7);
+z-index:999;
+}
+
+.modal-content{
+background:#1e293b;
+width:95%;
+max-width:1400px;
+margin:30px auto;
+padding:20px;
+border-radius:15px;
+max-height:90vh;
+overflow:auto;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.form-box{
+background:#111827;
+padding:15px;
+border-radius:10px;
+}
+
+.form-box label{
+display:block;
+margin-bottom:5px;
+color:#94a3b8;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#0f172a;
+color:white;
+}
+
+.save-btn{
+margin-top:20px;
+background:#00aa66;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.close-btn{
+margin-top:20px;
+margin-left:10px;
+background:#dc2626;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+</style>
+
 
 </style>
 
 </head>
 
+
 <body>
 
 <header>
 
-<div class="bismillah">
+<div style="font-size:24px;margin-bottom:10px;">
 ﷽
 </div>
 
@@ -152,7 +250,7 @@ SMART TNA BD ERP - SAMPLE DEPARTMENT
 
 </header>
 
-<!-- KPI -->
+<!-- KPI DASHBOARD -->
 
 <div class="kpi-grid">
 
@@ -167,12 +265,12 @@ SMART TNA BD ERP - SAMPLE DEPARTMENT
 </div>
 
 <div class="kpi-card">
-<h2 id="runningQty">0</h2>
-<p>Running Sample Qty</p>
+<h2 id="runningStyles">0</h2>
+<p>Running Styles</p>
 </div>
 
 <div class="kpi-card">
-<h2 id="currentMonthQty">0</h2>
+<h2 id="thisMonthQty">0</h2>
 <p>This Month Qty</p>
 </div>
 
@@ -210,11 +308,17 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 <tr>
 
+<th>SL</th>
+
 <th>Buyer</th>
 
 <th>IKL</th>
 
 <th>Style</th>
+
+<th>Total Qty</th>
+
+<th>Item</th>
 
 <th>Order Date</th>
 
@@ -224,23 +328,35 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 
 <th>Merchandiser</th>
 
+<th>Progress</th>
+
 <th>Color</th>
 
 <th>Color Qty</th>
 
 <th>Sample Qty</th>
 
-<th>Fabric</th>
+<th>Fabric Target</th>
 
-<th>Development</th>
+<th>Fabric Actual</th>
 
-<th>Fit</th>
+<th>PP Cutting</th>
 
-<th>PP</th>
+<th>PP Target</th>
 
-<th>TOP</th>
+<th>PP Status</th>
 
-<th>Progress</th>
+<th>PP Actual</th>
+
+<th>TOP Cutting</th>
+
+<th>TOP Target</th>
+
+<th>TOP Status</th>
+
+<th>TOP Actual</th>
+
+<th>Remark</th>
 
 <th>Action</th>
 
@@ -255,28 +371,32 @@ placeholder="Search Buyer / IKL / Style / Merchandiser">
 </table>
 
 </div>
-  
+
 <!-- EDIT MODAL -->
 
 <div class="modal" id="editModal">
 
 <div class="modal-content">
 
-<h2>Sample Department Update</h2>
+<h2>
+Sample Department Update
+</h2>
 
-<div id="modalFormArea"></div>
+<div id="modalFormArea">
+
+</div>
 
 <button
-id="saveBtn"
-class="edit-btn">
+class="save-btn"
+id="saveBtn">
 
 💾 Save
 
 </button>
 
 <button
-id="closeBtn"
-class="edit-btn">
+class="close-btn"
+id="closeBtn">
 
 ✖ Close
 
@@ -286,907 +406,11 @@ class="edit-btn">
 
 </div>
 
-<style>
-
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.7);
-z-index:999;
-}
-
-.modal-content{
-background:#1e293b;
-width:95%;
-max-width:1200px;
-margin:30px auto;
-padding:20px;
-border-radius:15px;
-max-height:90vh;
-overflow:auto;
-}
-
-.form-grid{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-}
-
-.form-box{
-background:#111827;
-padding:15px;
-border-radius:10px;
-}
-
-.form-box label{
-display:block;
-margin-bottom:5px;
-}
-
-.form-box input,
-.form-box select{
-width:100%;
-padding:10px;
-background:#0f172a;
-color:white;
-border:none;
-border-radius:8px;
-}
-
-</style>
-
 <script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-getDocs,
-updateDoc,
-doc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* FIREBASE */
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-
-authDomain: "smart-tna-bd.firebaseapp.com",
-
-projectId: "smart-tna-bd",
-
-storageBucket: "smart-tna-bd.firebasestorage.app",
-
-messagingSenderId: "372049573207",
-
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
-};
-
-const app =
-initializeApp(firebaseConfig);
-
-const db =
-getFirestore(app);
-
-/* GLOBAL */
-
-let allOrders = [];
-
-let selectedDocId = null;
-
-/* =========================
-LOAD ORDERS
-========================= */
-
-async function loadOrders(){
-
-const querySnapshot =
-
-await getDocs(
-collection(db,"orders")
-);
-
-allOrders = [];
-
-let totalStyles = 0;
-let totalSampleQty = 0;
-let runningQty = 0;
-let progressSum = 0;
-
-const currentMonth =
-new Date().getMonth();
-
-let currentMonthQty = 0;
-let nextMonthQty = 0;
-
-querySnapshot.forEach(docItem=>{
-
-const data =
-docItem.data();
-
-allOrders.push({
-
-id: docItem.id,
-...data
-
-});
-
-totalStyles++;
-
-totalSampleQty +=
-Number(
-data.sampleQty || 0
-);
-
-if(
-(data.sampleProgress || 0)
-< 100
-){
-
-runningQty++;
-
-}
-
-progressSum +=
-Number(
-data.sampleProgress || 0
-);
-
-const shipDate =
-
-data.shipDate ||
-data.shipmentDate;
-
-if(shipDate){
-
-const ship =
-new Date(shipDate);
-
-if(
-ship.getMonth()
-=== currentMonth
-){
-
-currentMonthQty +=
-Number(
-data.sampleQty || 0
-);
-
-}
-
-if(
-ship.getMonth()
-=== currentMonth + 1
-){
-
-nextMonthQty +=
-Number(
-data.sampleQty || 0
-);
-
-}
-
-}
-
-});
-
-document.getElementById(
-"totalStyles"
-).innerText =
-totalStyles;
-
-document.getElementById(
-"totalSampleQty"
-).innerText =
-totalSampleQty.toLocaleString();
-
-document.getElementById(
-"runningQty"
-).innerText =
-runningQty;
-
-document.getElementById(
-"currentMonthQty"
-).innerText =
-currentMonthQty.toLocaleString();
-
-document.getElementById(
-"nextMonthQty"
-).innerText =
-nextMonthQty.toLocaleString();
-
-document.getElementById(
-"avgProgress"
-).innerText =
-
-totalStyles
-?
-
-Math.round(
-progressSum /
-totalStyles
-) + "%"
-
-:
-
-"0%";
-
-renderOrderList();
-
-}
-
-/* =========================
-ORDER LIST
-========================= */
-
-function renderOrderList(){
-
-const body =
-document.getElementById(
-"orderTableBody"
-);
-
-body.innerHTML = "";
-
-allOrders.forEach(order=>{
-
-if(
-order.colors &&
-order.colors.length
-){
-
-order.colors.forEach(c=>{
-
-body.innerHTML += `
-
-<tr
-class="order-row"
-data-search="
-
-${order.buyer || ""}
-
-${order.ikl || ""}
-
-${order.style || ""}
-
-${order.merchandiser || ""}
-
-${c.color || ""}
-
-">
-
-<td>${order.buyer || ""}</td>
-
-<td>${order.ikl || ""}</td>
-
-<td>${order.style || ""}</td>
-
-<td>${order.orderDate || "-"}</td>
-
-<td>
-${order.shipDate ||
-order.shipmentDate ||
-"-"}
-</td>
-
-<td>
-${order.leadTime || "-"}
-</td>
-
-<td>
-${order.merchandiser || "-"}
-</td>
-
-<td>
-${c.color || "-"}
-</td>
-
-<td>
-${Number(
-c.qty || 0
-).toLocaleString()}
-</td>
-
-<td>
-${Number(
-c.sampleQty || 0
-).toLocaleString()}
-</td>
-
-<td>
-${c.fabricStatus || "Pending"}
-</td>
-
-<td>
-${c.developmentStatus || "Pending"}
-</td>
-
-<td>
-${c.fitStatus || "Pending"}
-</td>
-
-<td>
-${c.ppStatus || "Pending"}
-</td>
-
-<td>
-${c.topStatus || "Pending"}
-</td>
-
-<td>
-${order.sampleProgress || 0}%
-</td>
-
-<td>
-
-<button
-class="edit-btn"
-onclick="openOrder('${order.id}')">
-
-Edit
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-});
-
-}
-
-/* =========================
-SEARCH
-========================= */
-
-document
-.getElementById("searchInput")
-.addEventListener("keyup",function(){
-
-const value =
-this.value.toLowerCase();
-
-document
-.querySelectorAll(".order-row")
-.forEach(row=>{
-
-const txt =
-row.dataset.search.toLowerCase();
-
-row.style.display =
-
-txt.includes(value)
-
-? ""
-
-: "none";
-
-});
-
-});
-
-/* =========================
-EDIT POPUP
-========================= */
-
-window.openOrder = function(id){
-
-selectedDocId = id;
-
-const order =
-
-allOrders.find(
-o => o.id === id
-);
-
-if(!order) return;
-
-document.getElementById(
-"editModal"
-).style.display =
-"block";
-
-const modal =
-document.getElementById(
-"modalFormArea"
-);
-
-let colorSection = "";
-
-if(
-order.colors &&
-order.colors.length
-){
-
-colorSection +=
-
-"<h3>Color Wise Sample Qty</h3>";
-
-order.colors.forEach((c,index)=>{
-
-colorSection += `
-
-<div
-style="
-border:1px solid #334155;
-padding:15px;
-margin-bottom:15px;
-border-radius:10px;
-">
-
-<h3>
-
-${c.color}
-
-</h3>
-
-<p>
-
-Order Qty :
-${Number(c.qty || 0).toLocaleString()}
-
-</p>
-
-<label>
-Sample Qty
-</label>
-
-<input
-type="number"
-id="sampleQty_${index}"
-value="${c.sampleQty || 0}">
-
-<br><br>
-
-<label>
-Fabric Status
-</label>
-
-<select
-id="fabric_${index}">
-
-<option
-${c.fabricStatus==="Pending"?"selected":""}>
-Pending
-</option>
-
-<option
-${c.fabricStatus==="Running"?"selected":""}>
-Running
-</option>
-
-<option
-${c.fabricStatus==="Complete"?"selected":""}>
-Complete
-</option>
-
-</select>
-
-<br><br>
-
-<label>
-Development Status
-</label>
-
-<select
-id="dev_${index}">
-
-<option
-${c.developmentStatus==="Pending"?"selected":""}>
-Pending
-</option>
-
-<option
-${c.developmentStatus==="Running"?"selected":""}>
-Running
-</option>
-
-<option
-${c.developmentStatus==="Complete"?"selected":""}>
-Complete
-</option>
-
-</select>
-
-<br><br>
-
-<label>
-Fit Status
-</label>
-
-<select
-id="fit_${index}">
-
-<option
-${c.fitStatus==="Pending"?"selected":""}>
-Pending
-</option>
-
-<option
-${c.fitStatus==="Running"?"selected":""}>
-Running
-</option>
-
-<option
-${c.fitStatus==="Complete"?"selected":""}>
-Complete
-</option>
-
-</select>
-
-<br><br>
-
-<label>
-PP Status
-</label>
-
-<select
-id="pp_${index}">
-
-<option
-${c.ppStatus==="Pending"?"selected":""}>
-Pending
-</option>
-
-<option
-${c.ppStatus==="Running"?"selected":""}>
-Running
-</option>
-
-<option
-${c.ppStatus==="Complete"?"selected":""}>
-Complete
-</option>
-
-</select>
-
-<br><br>
-
-<label>
-TOP Status
-</label>
-
-<select
-id="top_${index}">
-
-<option
-${c.topStatus==="Pending"?"selected":""}>
-Pending
-</option>
-
-<option
-${c.topStatus==="Running"?"selected":""}>
-Running
-</option>
-
-<option
-${c.topStatus==="Complete"?"selected":""}>
-Complete
-</option>
-
-</select>
-
-</div>
-
-`;
-
-});
-
-}
-
-modal.innerHTML = `
-
-${colorSection}
-
-<div class="form-grid">
-
-<div class="form-box">
-<label>Fabric Status</label>
-<select id="fabricReceiveStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>Development Status</label>
-<select id="developmentStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>Fit Status</label>
-<select id="fitStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>PP Status</label>
-<select id="ppStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</div>
-
-<div class="form-box">
-<label>TOP Status</label>
-<select id="topStatus">
-<option>Pending</option>
-<option>Running</option>
-<option>Complete</option>
-<option>Delay</option>
-</select>
-</div>
-
-</div>
-
-`;
-
-};
-
-/* =========================
-CLOSE
-========================= */
-
-document
-.getElementById("closeBtn")
-.addEventListener("click",()=>{
-
-document.getElementById(
-"editModal"
-).style.display =
-"none";
-
-});
-
-/* =========================
-SAVE
-========================= */
-
-document
-.getElementById("saveBtn")
-.addEventListener("click",
-
-async ()=>{
-
-if(!selectedDocId)
-return;
-
-const order =
-
-allOrders.find(
-o => o.id === selectedDocId
-);
-
-if(!order)
-return;
-
-let colors =
-order.colors || [];
-
-colors.forEach((c,index)=>{
-
-const sampleQtyBox =
-
-document.getElementById(
-`sampleQty_${index}`
-);
-
-if(sampleQtyBox){
-
-c.sampleQty =
-
-Number(
-sampleQtyBox.value || 0
-);
-
-}
-
-const fabricBox =
-
-document.getElementById(
-`fabric_${index}`
-);
-
-if(fabricBox){
-
-c.fabricStatus =
-fabricBox.value;
-
-}
-
-const devBox =
-
-document.getElementById(
-`dev_${index}`
-);
-
-if(devBox){
-
-c.developmentStatus =
-devBox.value;
-
-}
-
-const fitBox =
-
-document.getElementById(
-`fit_${index}`
-);
-
-if(fitBox){
-
-c.fitStatus =
-fitBox.value;
-
-}
-
-const ppBox =
-
-document.getElementById(
-`pp_${index}`
-);
-
-if(ppBox){
-
-c.ppStatus =
-ppBox.value;
-
-}
-
-const topBox =
-
-document.getElementById(
-`top_${index}`
-);
-
-if(topBox){
-
-c.topStatus =
-topBox.value;
-
-}
-
-});
-
-let progress = 0;
-let total = 5;
-
-if(
-document.getElementById(
-"fabricReceiveStatus"
-).value
-=== "Complete"
-) progress++;
-
-if(
-document.getElementById(
-"developmentStatus"
-).value
-=== "Complete"
-) progress++;
-
-if(
-document.getElementById(
-"fitStatus"
-).value
-=== "Complete"
-) progress++;
-
-if(
-document.getElementById(
-"ppStatus"
-).value
-=== "Complete"
-) progress++;
-
-if(
-document.getElementById(
-"topStatus"
-).value
-=== "Complete"
-) progress++;
-
-progress =
-
-Math.round(
-(progress / total) * 100
-);
-
-await updateDoc(
-
-doc(
-db,
-"orders",
-selectedDocId
-),
-
-{
-
-colors: colors,
-
-fabricReceiveStatus:
-document.getElementById(
-"fabricReceiveStatus"
-).value,
-
-developmentStatus:
-document.getElementById(
-"developmentStatus"
-).value,
-
-fitStatus:
-document.getElementById(
-"fitStatus"
-).value,
-
-ppStatus:
-document.getElementById(
-"ppStatus"
-).value,
-
-topStatus:
-document.getElementById(
-"topStatus"
-).value,
-
-sampleProgress:
-progress,
-
-lastUpdated:
-new Date().toISOString()
-
-}
-
-);
-
-document.getElementById(
-"editModal"
-).style.display =
-"none";
-
-loadOrders();
-
-alert(
-"Updated Successfully"
-);
-
-});
-
-/* INITIAL LOAD */
-
-loadOrders();
 
 </script>
 
 </body>
+
 </html>
 
