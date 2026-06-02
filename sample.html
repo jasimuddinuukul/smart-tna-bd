@@ -614,6 +614,34 @@ sum + Number(c.qty || 0)
 
 0;
 
+let fabricTarget = "-";
+let ppTarget = "-";
+let topTarget = "-";
+
+if(shipDate !== "-"){
+
+const ship = new Date(shipDate + "T00:00:00");
+
+const fabric = new Date(ship);
+fabric.setDate(fabric.getDate() - 45);
+
+const pp = new Date(ship);
+pp.setDate(pp.getDate() - 30);
+
+const top = new Date(ship);
+top.setDate(top.getDate() - 15);
+
+fabricTarget =
+fabric.toISOString().split("T")[0];
+
+ppTarget =
+pp.toISOString().split("T")[0];
+
+topTarget =
+top.toISOString().split("T")[0];
+
+}
+
 if(order.colors && order.colors.length){
 
 order.colors.forEach((c,index)=>{
