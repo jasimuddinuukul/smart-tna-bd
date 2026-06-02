@@ -482,6 +482,223 @@ renderOrderList();
 
 }
 
+// =========================
+// KPI DASHBOARD
+// =========================
+
+function renderKPI(){
+
+document.getElementById("totalStyles").innerText =
+allOrders.length;
+
+let totalSampleQty = 0;
+let runningStyles = 0;
+let progressTotal = 0;
+
+allOrders.forEach(order=>{
+
+if(order.colors){
+
+order.colors.forEach(c=>{
+
+totalSampleQty +=
+Number(c.sampleQty || 0);
+
+});
+
+}
+
+progressTotal +=
+Number(order.sampleProgress || 0);
+
+if(Number(order.sampleProgress || 0) > 0){
+
+runningStyles++;
+
+}
+
+});
+
+document.getElementById("totalSampleQty").innerText =
+totalSampleQty.toLocaleString();
+
+document.getElementById("runningStyles").innerText =
+runningStyles;
+
+document.getElementById("avgProgress").innerText =
+
+allOrders.length
+
+?
+
+Math.round(
+progressTotal / allOrders.length
+) + "%"
+
+:
+
+"0%";
+
+document.getElementById("thisMonthQty").innerText = 0;
+document.getElementById("nextMonthQty").innerText = 0;
+
+}
+
+// =========================
+// ORDER LIST
+// =========================
+
+function renderOrderList(){
+
+const body =
+document.getElementById("orderTableBody");
+
+body.innerHTML = "";
+
+let serial = 1;
+
+allOrders.forEach(order=>{
+
+const shipDate =
+order.shipDate ||
+order.shipmentDate ||
+"-";
+
+let leadTime = "-";
+
+if(shipDate !== "-"){
+
+const today = new Date();
+
+const ship = new Date(shipDate);
+
+leadTime = Math.ceil(
+(ship - today) /
+(1000*60*60*24)
+);
+
+if(leadTime < 0){
+
+leadTime = 0;
+
+}
+
+}
+
+const totalQty =
+
+order.colors
+
+?
+
+order.colors.reduce(
+(sum,c)=>
+
+sum + Number(c.qty || 0)
+
+,0)
+
+:
+
+0;
+
+if(order.colors && order.colors.length){
+
+order.colors.forEach((c,index)=>{
+
+body.innerHTML += `
+
+<tr class="order-row">
+
+<td>${index===0 ? serial : ""}</td>
+
+<td>${index===0 ? (order.buyer || "") : ""}</td>
+
+<td>${index===0 ? (order.ikl || "") : ""}</td>
+
+<td>${index===0 ? (order.style || "") : ""}</td>
+
+<td>${index===0 ? totalQty.toLocaleString() : ""}</td>
+
+<td>${index===0 ? (order.item || "-") : ""}</td>
+
+<td>${index===0 ? (order.orderDate || "-") : ""}</td>
+
+<td>${index===0 ? shipDate : ""}</td>
+
+<td>${index===0 ? leadTime + " Days" : ""}</td>
+
+<td>${index===0 ? (order.merchandiser || "-") : ""}</td>
+
+<td>${index===0 ? ((order.sampleProgress || 0) + "%") : ""}</td>
+
+<td>${c.color || "-"}</td>
+
+<td>
+${Number(c.qty || 0).toLocaleString()}
+</td>
+
+<td>
+${Number(c.sampleQty || 0).toLocaleString()}
+</td>
+
+<td>${c.fabricTarget || "-"}</td>
+
+<td>${c.fabricActual || "-"}</td>
+
+<td>${c.ppCuttingDate || "-"}</td>
+
+<td>${c.ppTarget || "-"}</td>
+
+<td>${c.ppStatus || "-"}</td>
+
+<td>${c.ppActual || "-"}</td>
+
+<td>${c.topCuttingDate || "-"}</td>
+
+<td>${c.topTarget || "-"}</td>
+
+<td>${c.topStatus || "-"}</td>
+
+<td>${c.topActual || "-"}</td>
+
+<td>${c.remark || "-"}</td>
+
+<td>
+
+${index===0 ?
+
+`<button
+class="edit-btn"
+onclick="openOrder('${order.id}')">
+Edit </button>`
+
+:
+
+""
+
+}
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+serial++;
+
+});
+
+}
+
+// INITIAL LOAD
+
+loadOrders();
+
 </script>
 
 </body>
