@@ -1,156 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>SMART TNA BD - ORDER ENTRY</title>
-
-<style>
-
-body{
-margin:0;
-padding:0;
-background:#0f172a;
-font-family:Arial;
-color:white;
-}
-
-header{
-background:#111827;
-padding:18px;
-text-align:center;
-font-size:30px;
-font-weight:bold;
-color:#00ff99;
-}
-
-.container{
-padding:20px;
-max-width:1900px;
-margin:auto;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-}
-
-h2{
-color:#00ff99;
-margin-top:0;
-}
-
-.form-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-input,
-textarea,
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-box-sizing:border-box;
-}
-
-input,
-textarea{
-background:#0f172a;
-color:white;
-}
-
-textarea{
-height:80px;
-}
-
-button{
-background:#00aa66;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-background:#008844;
-}
-
-.color-row{
-display:grid;
-grid-template-columns:2fr 2fr 1fr;
-gap:10px;
-margin-bottom:10px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-min-width:1800px;
-}
-
-table th,
-table td{
-border:1px solid #334155;
-padding:12px;
-text-align:center;
-}
-
-table th{
-background:#111827;
-color:#00ff99;
-}
-
-.search-box{
-margin-bottom:20px;
-}
-
-.search-box input{
-background:#111827;
-}
-
-.action-btn{
-padding:8px 12px;
-margin:2px;
-width:auto;
-}
-
-.delete-btn{
-background:#dc2626;
-}
-
-.edit-btn{
-background:#2563eb;
-}
-
-.table-container{
-overflow:auto;
-}
-
-</style>
-
-</head>
-
-<body>
-
+html
 <header>
-
 📦 SMART TNA BD - ORDER ENTRY SYSTEM
-
 </header>
 
 <div class="container">
-
-<!-- ORDER FORM -->
 
 <div class="card">
 
@@ -159,62 +12,69 @@ overflow:auto;
 <div class="form-grid">
 
 <div>
-
 <label>Buyer</label>
-
 <input
 type="text"
 id="buyer"
 placeholder="Buyer Name">
-
 </div>
 
 <div>
-
 <label>IKL No</label>
-
 <input
 type="text"
 id="ikl"
 placeholder="IKL Number">
-
 </div>
 
 <div>
-
 <label>Style</label>
-
 <input
 type="text"
 id="style"
 placeholder="Style Number">
-
 </div>
 
 <div>
+<label>Item</label>
+<input
+type="text"
+id="item"
+placeholder="Item Name">
+</div>
 
+<div>
+<label>Merchandiser</label>
+<input
+type="text"
+id="merchandiser"
+placeholder="Merchandiser Name">
+</div>
+
+<div>
+<label>Fabrication</label>
+<input
+type="text"
+id="fabrication"
+placeholder="Fabrication Details">
+</div>
+
+<div>
 <label>Order Date</label>
-
 <input
 type="date"
 id="orderDate">
-
 </div>
 
 <div>
-
 <label>Shipment Date</label>
-
 <input
 type="date"
 id="shipdate">
-
 </div>
 
 <div>
-
 <label>Lead Time</label>
-
 <input
 type="number"
 id="leadtime"
@@ -223,14 +83,12 @@ readonly>
 </div>
 
 <div>
-
-<label>Merchandiser</label>
-
+<label>Order Qty</label>
 <input
-type="text"
-id="merchandiser"
-placeholder="Merchandiser Name">
-
+type="number"
+id="orderQty"
+placeholder="Auto From Colors"
+readonly>
 </div>
 
 </div>
@@ -242,22 +100,16 @@ placeholder="Merchandiser Name">
 <div id="colorContainer"></div>
 
 <button onclick="addColorRow()">
-
 ➕ Add Color
-
 </button>
 
 <br><br>
 
 <button onclick="saveOrder()">
-
 💾 Save Order
-
 </button>
 
 </div>
-
-<!-- SEARCH -->
 
 <div class="card">
 
@@ -268,14 +120,12 @@ placeholder="Merchandiser Name">
 <input
 type="text"
 id="searchInput"
-placeholder="Search IKL / Style / Merchandiser"
+placeholder="Search Buyer / IKL / Style / Item / Merchandiser"
 onkeyup="filterOrders()">
 
 </div>
 
 </div>
-
-<!-- TABLE -->
 
 <div class="card">
 
@@ -288,23 +138,16 @@ onkeyup="filterOrders()">
 <tr>
 
 <th>Buyer</th>
-
 <th>IKL No</th>
-
 <th>Style</th>
-
-<th>Order Date</th>
-
-<th>Shipment Date</th>
-
-<th>Lead Time</th>
-
+<th>Item</th>
 <th>Merchandiser</th>
-
+<th>Fabrication</th>
+<th>Order Date</th>
+<th>Shipment Date</th>
+<th>Lead Time</th>
+<th>Order Qty</th>
 <th>Color Breakdown</th>
-
-<th>Total Qty</th>
-
 <th>Action</th>
 
 </tr>
@@ -320,11 +163,9 @@ onkeyup="filterOrders()">
 <script type="module">
 
 import { initializeApp }
-
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-
 getFirestore,
 collection,
 addDoc,
@@ -332,36 +173,29 @@ getDocs,
 deleteDoc,
 doc,
 updateDoc
-
 }
-
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// FIREBASE
+// FIREBASE CONFIG
 
 const firebaseConfig = {
 
 apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-
-authDomain: "smart-tna-bd.firebaseapp.com",
-
-projectId: "smart-tna-bd",
-
-storageBucket: "smart-tna-bd.firebasestorage.app",
-
-messagingSenderId: "372049573207",
-
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 let editId = null;
 
+// ========================
 // ADD COLOR ROW
+// ========================
 
 window.addColorRow = function(){
 
@@ -379,9 +213,10 @@ placeholder="Color Name">
 <input
 type="number"
 class="qty"
-placeholder="Quantity">
+placeholder="Quantity"
+oninput="calculateOrderQty()">
 
-<button onclick="this.parentElement.remove()">
+<button onclick="this.parentElement.remove();calculateOrderQty();">
 
 ❌ Remove
 
@@ -389,55 +224,77 @@ placeholder="Quantity">
 
 `;
 
-document.getElementById("colorContainer")
+document
+.getElementById("colorContainer")
 .appendChild(div);
 
 }
-// AUTO LEAD TIME
 
-document.getElementById("orderDate")
+// DEFAULT COLOR ROW
+
+addColorRow();
+
+// ========================
+// AUTO ORDER QTY
+// ========================
+
+window.calculateOrderQty = function(){
+
+let totalQty = 0;
+
+document.querySelectorAll(".qty")
+.forEach(input=>{
+
+totalQty += Number(input.value) || 0;
+
+});
+
+document.getElementById("orderQty").value =
+totalQty;
+
+}
+
+// ========================
+// AUTO LEAD TIME
+// ========================
+
+document
+.getElementById("orderDate")
 .addEventListener("change", calculateLeadTime);
 
-document.getElementById("shipdate")
+document
+.getElementById("shipdate")
 .addEventListener("change", calculateLeadTime);
 
 function calculateLeadTime(){
 
-    let orderDate =
-    document.getElementById("orderDate").value;
+let orderDate =
+document.getElementById("orderDate").value;
 
-    let shipdate =
-    document.getElementById("shipdate").value;
+let shipdate =
+document.getElementById("shipdate").value;
 
-    if(orderDate && shipdate){
+if(orderDate && shipdate){
 
-        let start =
-        new Date(orderDate);
+let start = new Date(orderDate);
 
-        let end =
-        new Date(shipdate);
+let end = new Date(shipdate);
 
-        let diffTime =
-        end - start;
+let diffTime = end - start;
 
-        let diffDays =
-        Math.ceil(
-            diffTime /
-            (1000 * 60 * 60 * 24)
-        );
+let diffDays =
+Math.ceil(diffTime / (1000*60*60*24));
 
-        document.getElementById("leadtime").value =
-        diffDays;
-
-    }
+document.getElementById("leadtime").value =
+diffDays;
 
 }
-  
-// DEFAULT ROW
 
-addColorRow();
+}
 
+// ========================
 // SAVE ORDER
+// ========================
 
 window.saveOrder = async function(){
 
@@ -450,6 +307,15 @@ document.getElementById("ikl").value;
 let style =
 document.getElementById("style").value;
 
+let item =
+document.getElementById("item").value;
+
+let merchandiser =
+document.getElementById("merchandiser").value;
+
+let fabrication =
+document.getElementById("fabrication").value;
+
 let orderDate =
 document.getElementById("orderDate").value;
 
@@ -459,12 +325,10 @@ document.getElementById("shipdate").value;
 let leadtime =
 document.getElementById("leadtime").value;
 
-let merchandiser =
-document.getElementById("merchandiser").value;
+let orderQty =
+document.getElementById("orderQty").value;
 
 let colors = [];
-
-let totalQty = 0;
 
 document.querySelectorAll(".color-row")
 .forEach(row=>{
@@ -478,13 +342,9 @@ Number(row.querySelector(".qty").value);
 if(color && qty){
 
 colors.push({
-
 color,
 qty
-
 });
-
-totalQty += qty;
 
 }
 
@@ -495,12 +355,18 @@ let orderData = {
 buyer,
 ikl,
 style,
+item,
+
+merchandiser,
+fabrication,
+
 orderDate,
 shipdate,
 leadtime,
-merchandiser,
+
+orderQty,
+
 colors,
-totalQty,
 
 Merchandising:"Pending",
 Knitting:"Pending",
@@ -514,30 +380,22 @@ Finishing:"Pending"
 if(editId){
 
 await updateDoc(
-
 doc(db,"orders",editId),
-
 orderData
-
 );
 
-alert("Order Updated!");
+alert("Order Updated Successfully");
 
 editId = null;
 
-}
-
-else{
+}else{
 
 await addDoc(
-
 collection(db,"orders"),
-
 orderData
-
 );
 
-alert("Order Saved!");
+alert("Order Saved Successfully");
 
 }
 
@@ -547,291 +405,29 @@ loadOrders();
 
 }
 
+// ========================
 // CLEAR FORM
+// ========================
 
 function clearForm(){
 
 document.getElementById("buyer").value = "";
-
 document.getElementById("ikl").value = "";
-
 document.getElementById("style").value = "";
-
-document.getElementById("orderDate").value = "";
-
-document.getElementById("shipdate").value = "";
-
-document.getElementById("leadtime").value = "";
-
+document.getElementById("item").value = "";
 document.getElementById("merchandiser").value = "";
+document.getElementById("fabrication").value = "";
+document.getElementById("orderDate").value = "";
+document.getElementById("shipdate").value = "";
+document.getElementById("leadtime").value = "";
+document.getElementById("orderQty").value = "";
 
-document.getElementById("colorContainer")
-.innerHTML = "";
+document.getElementById("colorContainer").innerHTML = "";
 
 addColorRow();
 
 }
 
-// LOAD ORDERS
 
-async function loadOrders(){
 
-const querySnapshot =
 
-await getDocs(collection(db,"orders"));
-
-let table =
-
-document.getElementById("orderTable");
-
-table.innerHTML = `
-
-<tr>
-
-<th>Buyer</th>
-
-<th>IKL No</th>
-
-<th>Style</th>
-
-<th>Order Date</th>
-
-<th>Shipment Date</th>
-
-<th>Lead Time</th>
-
-<th>Merchandiser</th>
-
-<th>Color Breakdown</th>
-
-<th>Total Qty</th>
-
-<th>Action</th>
-
-</tr>
-
-`;
-
-querySnapshot.forEach((docItem)=>{
-
-let data = docItem.data();
-
-let colorHtml = "";
-
-(data.colors || []).forEach(c=>{
-
-colorHtml += `
-
-${c.color}
--
-${c.qty} PCS
-<br>
-
-`;
-
-});
-
-table.innerHTML += `
-
-<tr
-data-search="
-${data.ikl || ""}
-${data.style || ""}
-${data.merchandiser || ""}
-">
-
-<td>${data.buyer || ""}</td>
-
-<td>${data.ikl || ""}</td>
-
-<td>${data.style || ""}</td>
-
-<td>${data.orderDate || ""}</td>
-
-<td>${data.shipdate || ""}</td>
-
-<td>${data.leadtime || ""} Days</td>
-
-<td>${data.merchandiser || ""}</td>
-
-<td>${colorHtml}</td>
-
-<td>${data.totalQty || 0} PCS</td>
-
-<td>
-
-<button
-class="action-btn edit-btn"
-onclick="editOrder('${docItem.id}')">
-
-Edit
-
-</button>
-
-<button
-class="action-btn delete-btn"
-onclick="deleteOrder('${docItem.id}')">
-
-Delete
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-// SEARCH
-
-window.filterOrders = function(){
-
-let input =
-
-document.getElementById("searchInput")
-.value.toLowerCase();
-
-let rows =
-
-document.querySelectorAll("#orderTable tr");
-
-rows.forEach((row,index)=>{
-
-if(index === 0) return;
-
-let text =
-row.dataset.search.toLowerCase();
-
-if(text.includes(input)){
-
-row.style.display = "";
-
-}
-
-else{
-
-row.style.display = "none";
-
-}
-
-});
-
-}
-
-// DELETE
-
-window.deleteOrder = async function(id){
-
-let confirmDelete =
-
-confirm("Delete this order?");
-
-if(confirmDelete){
-
-await deleteDoc(doc(db,"orders",id));
-
-alert("Order Deleted!");
-
-loadOrders();
-
-}
-
-}
-
-// EDIT
-
-window.editOrder = async function(id){
-
-const querySnapshot =
-
-await getDocs(collection(db,"orders"));
-
-querySnapshot.forEach((docItem)=>{
-
-if(docItem.id === id){
-
-editId = id;
-
-let data = docItem.data();
-
-document.getElementById("buyer").value =
-data.buyer || "";
-
-document.getElementById("ikl").value =
-data.ikl || "";
-
-document.getElementById("style").value =
-data.style || "";
-
-document.getElementById("orderDate").value =
-data.orderDate || "";
-
-document.getElementById("shipdate").value =
-data.shipdate || "";
-
-document.getElementById("leadtime").value =
-data.leadtime || "";
-
-document.getElementById("merchandiser").value =
-data.merchandiser || "";
-
-document.getElementById("colorContainer")
-.innerHTML = "";
-
-(data.colors || []).forEach(c=>{
-
-let div = document.createElement("div");
-
-div.className = "color-row";
-
-div.innerHTML = `
-
-<input
-type="text"
-class="color"
-value="${c.color}">
-
-<input
-type="number"
-class="qty"
-value="${c.qty}">
-
-<button onclick="this.parentElement.remove()">
-
-❌ Remove
-
-</button>
-
-`;
-
-document.getElementById("colorContainer")
-.appendChild(div);
-
-});
-
-window.scrollTo({
-
-top:0,
-behavior:"smooth"
-
-});
-
-}
-
-});
-
-}
-
-// LOAD PAGE
-
-loadOrders();
-
-</script>
-
-</body>
-
-</html>
