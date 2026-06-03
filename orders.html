@@ -410,7 +410,7 @@ loadOrders();
 // ========================
 
 function clearForm(){
-
+  
 document.getElementById("buyer").value = "";
 document.getElementById("ikl").value = "";
 document.getElementById("style").value = "";
@@ -428,6 +428,259 @@ addColorRow();
 
 }
 
+// ========================
+// LOAD ORDERS
+// ========================
 
+async function loadOrders(){
+
+const querySnapshot =
+await getDocs(collection(db,"orders"));
+
+let table =
+document.getElementById("orderTable");
+
+table.innerHTML = `
+
+<tr>
+<th>Buyer</th>
+<th>IKL No</th>
+<th>Style</th>
+<th>Item</th>
+<th>Merchandiser</th>
+<th>Fabrication</th>
+<th>Order Date</th>
+<th>Shipment Date</th>
+<th>Lead Time</th>
+<th>Order Qty</th>
+<th>Color Breakdown</th>
+<th>Action</th>
+</tr>
+
+`;
+
+querySnapshot.forEach((docItem)=>{
+
+let data = docItem.data();
+
+let colorHtml = "";
+
+(data.colors || []).forEach(c=>{
+
+colorHtml += `
+${c.color} - ${c.qty} PCS<br>
+`;
+
+});
+
+table.innerHTML += `
+
+<tr
+data-search="
+${data.buyer || ""}
+${data.ikl || ""}
+${data.style || ""}
+${data.item || ""}
+${data.merchandiser || ""}
+${data.fabrication || ""}
+">
+
+<td>${data.buyer || ""}</td>
+<td>${data.ikl || ""}</td>
+<td>${data.style || ""}</td>
+<td>${data.item || ""}</td>
+<td>${data.merchandiser || ""}</td>
+<td>${data.fabrication || ""}</td>
+<td>${data.orderDate || ""}</td>
+<td>${data.shipdate || ""}</td>
+<td>${data.leadtime || ""} Days</td>
+<td>${data.orderQty || 0} PCS</td>
+<td>${colorHtml}</td>
+
+<td>
+
+<button
+class="action-btn edit-btn"
+onclick="editOrder('${docItem.id}')">
+
+Edit
+
+</button>
+
+<button
+class="action-btn delete-btn"
+onclick="deleteOrder('${docItem.id}')">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+// ========================
+// SEARCH
+// ========================
+
+window.filterOrders = function(){
+
+let input =
+document.getElementById("searchInput")
+.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#orderTable tr");
+
+rows.forEach((row,index)=>{
+
+if(index === 0) return;
+
+let text =
+(row.dataset.search || "")
+.toLowerCase();
+
+row.style.display =
+text.includes(input)
+? ""
+: "none";
+
+});
+
+}
+
+// ========================
+// DELETE
+// ========================
+
+window.deleteOrder = async function(id){
+
+let confirmDelete =
+confirm("Delete this order?");
+
+if(confirmDelete){
+
+await deleteDoc(
+doc(db,"orders",id)
+);
+
+alert("Order Deleted");
+
+loadOrders();
+
+}
+
+}
+
+// ========================
+// EDIT
+// ========================
+
+window.editOrder = async function(id){
+
+const querySnapshot =
+await getDocs(collection(db,"orders"));
+
+querySnapshot.forEach((docItem)=>{
+
+if(docItem.id === id){
+
+editId = id;
+
+let data =
+docItem.data();
+
+document.getElementById("buyer").value =
+data.buyer || "";
+
+document.getElementById("ikl").value =
+data.ikl || "";
+
+document.getElementById("style").value =
+data.style || "";
+
+document.getElementById("item").value =
+data.item || "";
+
+document.getElementById("merchandiser").value =
+data.merchandiser || "";
+
+document.getElementById("fabrication").value =
+data.fabrication || "";
+
+document.getElementById("orderDate").value =
+data.orderDate || "";
+
+document.getElementById("shipdate").value =
+data.shipdate || "";
+
+document.getElementById("leadtime").value =
+data.leadtime || "";
+
+document.getElementById("orderQty").value =
+data.orderQty || "";
+
+document.getElementById("colorContainer")
+.innerHTML = "";
+
+(data.colors || []).forEach(c=>{
+
+let div =
+document.createElement("div");
+
+div.className = "color-row";
+
+div.innerHTML = `
+
+<input
+type="text"
+class="color"
+value="${c.color}">
+
+<input
+type="number"
+class="qty"
+value="${c.qty}"
+oninput="calculateOrderQty()">
+
+<button
+onclick="this.parentElement.remove();calculateOrderQty();">
+
+❌ Remove
+
+</button>
+
+`;
+
+document
+.getElementById("colorContainer")
+.appendChild(div);
+
+});
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+});
+
+}
+
+// ========================
+// INITIAL LOAD
+// ========================
+
+loadOrders();
+
+</script>
 
 
