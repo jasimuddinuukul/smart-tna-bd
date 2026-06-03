@@ -579,6 +579,19 @@ shipDate
   
 let leadTime = "-";
 
+let tnaType = "Normal";
+
+if(leadTime < 60){
+
+tnaType = "Super Urgent";
+
+}
+else if(leadTime < 90){
+
+tnaType = "Urgent";
+
+}
+
 if(shipDate !== "-"){
 
 const today = new Date();
