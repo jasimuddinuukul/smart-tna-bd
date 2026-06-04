@@ -891,18 +891,14 @@ ${Number(c.sampleQty || 0).toLocaleString()}
 
 <td>
 
-${index===0 ?
-
-`<button
+<button
 class="edit-btn"
-onclick="openOrder('${order.id}')">
-Edit </button>`
-
-:
-
-""
-
-}
+onclick="openOrder(
+'${order.id}',
+'${c.color}'
+)">
+Edit
+</button>
 
 </td>
 
