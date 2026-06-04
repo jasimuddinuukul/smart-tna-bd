@@ -585,15 +585,21 @@ let leadTime = "-";
 
 if(shipDate !== "-"){
 
-const today = new Date();
+const orderDt = new Date(
+(order.orderDate || "") + "T00:00:00"
+);
 
-const ship = new Date(shipDate + "T00:00:00");
+const ship = new Date(
+shipDate + "T00:00:00"
+);
 
-const diffMs = ship.getTime() - today.getTime();
+const diffMs =
+ship.getTime() - orderDt.getTime();
 
 leadTime = Math.ceil(
 diffMs / (1000*60*60*24)
 );
+
 
 if(leadTime < 0){
 leadTime = 0;
