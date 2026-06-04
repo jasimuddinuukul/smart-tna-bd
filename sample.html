@@ -486,6 +486,21 @@ renderOrderList();
 
 }
 
+function openOrder(docId){
+
+selectedDocId = docId;
+
+document.getElementById(
+"editModal"
+).style.display = "flex";
+
+console.log(
+"OPEN:",
+docId
+);
+
+}
+
 // =========================
 // KPI DASHBOARD
 // =========================
