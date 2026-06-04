@@ -504,6 +504,27 @@ o => o.id === docId
 
 if(!order) return;
 
+const currentFabricActual =
+order.fabricActual || "";
+
+const currentFabricStatus =
+order.fabricStatus || "Pending";
+
+const currentPPActual =
+order.ppActual || "";
+
+const currentPPStatus =
+order.ppStatus || "Pending";
+
+const currentTOPActual =
+order.topActual || "";
+
+const currentTOPStatus =
+order.topStatus || "Pending";
+
+const currentRemark =
+order.remark || "";
+
 document.getElementById(
 "modalFormArea"
 ).innerHTML = `
