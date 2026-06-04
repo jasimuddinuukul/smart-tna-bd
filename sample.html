@@ -670,11 +670,8 @@ const remark =
 document.getElementById("remark").value;
   
 console.log("SAVING:", selectedDocId);
-  
-await updateDoc(
 
-console.log("UPDATE SUCCESS");
-  
+await updateDoc(
 doc(db,"orders",selectedDocId),
 {
 fabricActual,
@@ -686,6 +683,9 @@ topStatus,
 remark
 }
 );
+
+console.log("UPDATE SUCCESS");
+
 
 alert("Saved Successfully");
 
