@@ -490,14 +490,88 @@ window.openOrder = function(docId){
 
 selectedDocId = docId;
 
+const order = allOrders.find(
+o => o.id === docId
+);
+
+if(!order) return;
+
+document.getElementById(
+"modalFormArea"
+).innerHTML = `
+
+<label>Fabric Actual</label>
+
+<input
+type="date"
+id="fabricActual">
+
+<br><br>
+
+<label>Fabric Status</label>
+
+<select id="fabricStatus">
+
+<option>Pending</option>
+<option>Running</option>
+<option>Approved</option>
+
+</select>
+
+<br><br>
+
+<label>PP Actual</label>
+
+<input
+type="date"
+id="ppActual">
+
+<br><br>
+
+<label>PP Status</label>
+
+<select id="ppStatus">
+
+<option>Pending</option>
+<option>Running</option>
+<option>Approved</option>
+
+</select>
+
+<br><br>
+
+<label>TOP Actual</label>
+
+<input
+type="date"
+id="topActual">
+
+<br><br>
+
+<label>TOP Status</label>
+
+<select id="topStatus">
+
+<option>Pending</option>
+<option>Running</option>
+<option>Approved</option>
+
+</select>
+
+<br><br>
+
+<label>Remark</label>
+
+<textarea
+id="remark"
+rows="4"
+style="width:100%;"></textarea>
+
+`;
+
 document.getElementById(
 "editModal"
 ).style.display = "flex";
-
-console.log(
-"OPEN:",
-docId
-);
 
 };
 
