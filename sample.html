@@ -668,8 +668,13 @@ document.getElementById("topStatus").value;
 
 const remark =
 document.getElementById("remark").value;
-
+  
+console.log("SAVING:", selectedDocId);
+  
 await updateDoc(
+
+console.log("UPDATE SUCCESS");
+  
 doc(db,"orders",selectedDocId),
 {
 fabricActual,
