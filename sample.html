@@ -589,11 +589,51 @@ document.getElementById(
 
 document.getElementById(
 "saveBtn"
-).onclick = function(){
+).onclick = async function(){
 
-console.log("SAVE CLICKED");
+if(!selectedDocId) return;
 
-alert("SAVE WORKING");
+const fabricActual =
+document.getElementById("fabricActual").value;
+
+const fabricStatus =
+document.getElementById("fabricStatus").value;
+
+const ppActual =
+document.getElementById("ppActual").value;
+
+const ppStatus =
+document.getElementById("ppStatus").value;
+
+const topActual =
+document.getElementById("topActual").value;
+
+const topStatus =
+document.getElementById("topStatus").value;
+
+const remark =
+document.getElementById("remark").value;
+
+await updateDoc(
+doc(db,"orders",selectedDocId),
+{
+fabricActual,
+fabricStatus,
+ppActual,
+ppStatus,
+topActual,
+topStatus,
+remark
+}
+);
+
+alert("Saved Successfully");
+
+document.getElementById(
+"editModal"
+).style.display = "none";
+
+loadOrders();
 
 };
   
