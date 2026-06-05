@@ -1,990 +1,722 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-SMART TNA BD ERP - SAMPLE DEPARTMENT
-</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART TNA BD ERP - SAMPLE DEPARTMENT</title>
 <style>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-body{
-background:#0f172a;
-color:white;
+body {
+  background: #0f172a;
+  color: white;
 }
 
-header{
-background:#111827;
-padding:20px;
-text-align:center;
-border-bottom:2px solid #1e293b;
+header {
+  background: #111827;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid #1e293b;
 }
 
-.company{
-font-size:28px;
-font-weight:bold;
-color:#00ff99;
+.company {
+  font-size: 28px;
+  font-weight: bold;
+  color: #00ff99;
 }
 
-.system{
-font-size:18px;
-margin-top:8px;
-color:#cbd5e1;
+.system {
+  font-size: 18px;
+  margin-top: 8px;
+  color: #cbd5e1;
 }
 
 /* KPI */
-
-.kpi-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-padding:20px;
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 20px;
 }
 
-.kpi-card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-text-align:center;
+.kpi-card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
 }
 
-.kpi-card h2{
-color:#00ff99;
-font-size:30px;
-margin-bottom:10px;
+.kpi-card h2 {
+  color: #00ff99;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
-.kpi-card p{
-color:#cbd5e1;
+.kpi-card p {
+  color: #cbd5e1;
 }
 
 /* SEARCH */
-
-.search-section{
-padding:20px;
+.search-section {
+  padding: 20px;
 }
 
-.search-box{
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-background:#1e293b;
-color:white;
-font-size:16px;
+.search-box {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #1e293b;
+  color: white;
+  font-size: 16px;
 }
 
 /* TABLE */
-
-.table-wrapper{
-padding:20px;
-overflow:auto;
+.table-wrapper {
+  padding: 20px;
+  overflow: auto;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-min-width:4500px;
-background:#1e293b;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 4500px;
+  background: #1e293b;
 }
 
-th{
-background:#111827;
-color:#00ff99;
-padding:12px;
-border:1px solid #334155;
+th {
+  background: #111827;
+  color: #00ff99;
+  padding: 12px;
+  border: 1px solid #334155;
 }
 
-td{
-padding:10px;
-border:1px solid #334155;
-text-align:center;
-vertical-align:middle;
-}
-
-/* STYLE HEADER ROW */
-
-.style-row{
-background:#172554;
-font-weight:bold;
-}
-
-/* COLOR ROW */
-
-.color-row{
-background:#1e293b;
+td {
+  padding: 10px;
+  border: 1px solid #334155;
+  text-align: center;
+  vertical-align: middle;
 }
 
 /* BUTTON */
-
-.edit-btn{
-background:#00aa66;
-color:white;
-border:none;
-padding:8px 15px;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
+.edit-btn {
+  background: #00aa66;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.edit-btn:hover{
-background:#008844;
+.edit-btn:hover {
+  background: #008844;
 }
 
 /* MODAL */
-
-.modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.7);
-z-index:999;
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .7);
+  z-index: 999;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.modal-content{
-background:#1e293b;
-width:95%;
-max-width:1400px;
-margin:30px auto;
-padding:20px;
-border-radius:15px;
-max-height:90vh;
-overflow:auto;
+.modal-content {
+  background: #1e293b;
+  width: 95%;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 25px;
+  border-radius: 15px;
+  max-height: 90vh;
+  overflow: auto;
 }
 
-.form-grid{
-display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
+.modal-content h2 {
+  color: #00ff99;
+  margin-bottom: 20px;
+  font-size: 20px;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 10px;
 }
 
-.form-box{
-background:#111827;
-padding:15px;
-border-radius:10px;
+.form-row {
+  margin-bottom: 15px;
 }
 
-.form-box label{
-display:block;
-margin-bottom:5px;
-color:#94a3b8;
+.form-row label {
+  display: block;
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-input,
+input[type="date"],
 select,
-textarea{
-width:100%;
-padding:10px;
-border:none;
-border-radius:8px;
-background:#0f172a;
-color:white;
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #0f172a;
+  color: white;
+  font-size: 14px;
 }
 
-.save-btn{
-margin-top:20px;
-background:#00aa66;
-padding:12px 20px;
-border:none;
-border-radius:10px;
-color:white;
-font-weight:bold;
-cursor:pointer;
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #00ff99;
 }
 
-.close-btn{
-margin-top:20px;
-margin-left:10px;
-background:#dc2626;
-padding:12px 20px;
-border:none;
-border-radius:10px;
-color:white;
-font-weight:bold;
-cursor:pointer;
+.modal-info-box {
+  background: #111827;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-left: 4px solid #00ff99;
 }
 
+.modal-info-box p {
+  margin-bottom: 5px;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.modal-info-box span {
+  color: white;
+  font-weight: bold;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.save-btn {
+  background: #00aa66;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  flex: 1;
+}
+
+.save-btn:hover {
+  background: #008844;
+}
+
+.close-btn {
+  background: #dc2626;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  flex: 1;
+}
+
+.close-btn:hover {
+  background: #b91c1c;
+}
+
+/* Status badges */
+.badge-pending  { color: #f59e0b; font-weight: bold; }
+.badge-running  { color: #3b82f6; font-weight: bold; }
+.badge-approved { color: #00ff99; font-weight: bold; }
 </style>
-
-
-</style>
-
 </head>
-
 
 <body>
 
 <header>
-
-<div style="font-size:24px;margin-bottom:10px;">
-﷽
-</div>
-
-<div class="company">
-INNOVATIVE KNITEX LTD
-</div>
-
-<div class="system">
-SMART TNA BD ERP - SAMPLE DEPARTMENT
-</div>
-
+  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
+  <div class="company">INNOVATIVE KNITEX LTD</div>
+  <div class="system">SMART TNA BD ERP - SAMPLE DEPARTMENT</div>
 </header>
 
 <!-- KPI DASHBOARD -->
-
 <div class="kpi-grid">
-
-<div class="kpi-card">
-<h2 id="totalStyles">0</h2>
-<p>Total Styles</p>
-</div>
-
-<div class="kpi-card">
-<h2 id="totalSampleQty">0</h2>
-<p>Total Sample Qty</p>
-</div>
-
-<div class="kpi-card">
-<h2 id="runningStyles">0</h2>
-<p>Running Styles</p>
-</div>
-
-<div class="kpi-card">
-<h2 id="thisMonthQty">0</h2>
-<p>This Month Qty</p>
-</div>
-
-<div class="kpi-card">
-<h2 id="nextMonthQty">0</h2>
-<p>Next Month Qty</p>
-</div>
-
-<div class="kpi-card">
-<h2 id="avgProgress">0%</h2>
-<p>Average Progress</p>
-</div>
-
+  <div class="kpi-card">
+    <h2 id="totalStyles">0</h2>
+    <p>Total Styles</p>
+  </div>
+  <div class="kpi-card">
+    <h2 id="totalSampleQty">0</h2>
+    <p>Total Sample Qty</p>
+  </div>
+  <div class="kpi-card">
+    <h2 id="runningStyles">0</h2>
+    <p>Running Styles</p>
+  </div>
+  <div class="kpi-card">
+    <h2 id="thisMonthQty">0</h2>
+    <p>This Month Qty</p>
+  </div>
+  <div class="kpi-card">
+    <h2 id="nextMonthQty">0</h2>
+    <p>Next Month Qty</p>
+  </div>
+  <div class="kpi-card">
+    <h2 id="avgProgress">0%</h2>
+    <p>Average Progress</p>
+  </div>
 </div>
 
 <!-- SEARCH -->
-
 <div class="search-section">
-
-<input
-type="text"
-id="searchInput"
-class="search-box"
-placeholder="Search Buyer / IKL / Style / Merchandiser">
-
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser"
+    oninput="filterOrders()"
+  >
 </div>
 
 <!-- ORDER LIST -->
-
 <div class="table-wrapper">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>SL</th>
-
-<th>Buyer</th>
-
-<th>IKL</th>
-
-<th>Style</th>
-
-<th>Total Qty</th>
-
-<th>Item</th>
-
-<th>Order Date</th>
-
-<th>Shipment Date</th>
-
-<th>Lead Time</th>
-
-<th>TNA Type</th>
-  
-<th>Merchandiser</th>
-
-<th>Progress</th>
-
-<th>Fabrication</th>
-  
-<th>Color</th>
-
-<th>Color Qty</th>
-
-<th>Sample Qty</th>
-
-<th>Fabric Target</th>
-
-<th>Fabric Actual</th>
-
-<th>PP Cutting</th>
-
-<th>PP Target</th>
-
-<th>PP Status</th>
-
-<th>PP Actual</th>
-
-<th>TOP Cutting</th>
-
-<th>TOP Target</th>
-
-<th>TOP Status</th>
-
-<th>TOP Actual</th>
-
-<th>Remark</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="orderTableBody">
-
-</tbody>
-
-</table>
-
+  <table>
+    <thead>
+      <tr>
+        <th>SL</th>
+        <th>Buyer</th>
+        <th>IKL</th>
+        <th>Style</th>
+        <th>Total Qty</th>
+        <th>Item</th>
+        <th>Order Date</th>
+        <th>Shipment Date</th>
+        <th>Lead Time</th>
+        <th>TNA Type</th>
+        <th>Merchandiser</th>
+        <th>Progress</th>
+        <th>Fabrication</th>
+        <th>Color</th>
+        <th>Color Qty</th>
+        <th>Sample Qty</th>
+        <th>Fabric Target</th>
+        <th>Fabric Actual</th>
+        <th>PP Cutting</th>
+        <th>PP Target</th>
+        <th>PP Status</th>
+        <th>PP Actual</th>
+        <th>TOP Cutting</th>
+        <th>TOP Target</th>
+        <th>TOP Status</th>
+        <th>TOP Actual</th>
+        <th>Remark</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="orderTableBody"></tbody>
+  </table>
 </div>
 
 <!-- EDIT MODAL -->
-
 <div class="modal" id="editModal">
-
-<div class="modal-content">
-
-<h2>
-Sample Department Update
-</h2>
-
-<div id="modalFormArea">
-
-</div>
-
-<button
-class="save-btn"
-id="saveBtn">
-
-💾 Save
-
-</button>
-
-<button
-class="close-btn"
-id="closeBtn">
-
-✖ Close
-
-</button>
-
-</div>
-
+  <div class="modal-content">
+    <h2>✏️ Sample Department Update</h2>
+    <div id="modalFormArea"></div>
+    <div class="btn-group">
+      <button class="save-btn" id="saveBtn">💾 Save</button>
+      <button class="close-btn" id="closeBtn">✖ Close</button>
+    </div>
+  </div>
 </div>
 
 <script type="module">
 
-// FIREBASE
-
+// =====================
+// FIREBASE IMPORT
+// =====================
 import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-getDocs,
-doc,
-updateDoc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+// =====================
+// FIREBASE CONFIG
+// =====================
 const firebaseConfig = {
-
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-
-authDomain: "smart-tna-bd.firebaseapp.com",
-
-projectId: "smart-tna-bd",
-
-storageBucket: "smart-tna-bd.firebasestorage.app",
-
-messagingSenderId: "372049573207",
-
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
+  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
 
-const app =
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
-const db =
-getFirestore(app);
+// =====================
+// GLOBAL VARIABLES
+// =====================
+let allOrders          = [];
+let selectedDocId      = null;
+let selectedColorIndex = null; // ✅ FIX: color index track করার জন্য
 
-// GLOBAL
-
-let allOrders = [];
-
-let selectedDocId = null;
-
+// =====================
 // LOAD ORDERS
-
-async function loadOrders(){
-
-const querySnapshot =
-
-await getDocs(
-collection(db,"orders")
-);
-
-allOrders = [];
-
-querySnapshot.forEach(docItem=>{
-
-allOrders.push({
-
-id: docItem.id,
-
-...docItem.data()
-
-});
-
-});
-
-// NEXT PART WILL CALL THESE
-
-renderKPI();
-
-renderOrderList();
-
+// =====================
+async function loadOrders() {
+  const querySnapshot = await getDocs(collection(db, "orders"));
+  allOrders = [];
+  querySnapshot.forEach(docItem => {
+    allOrders.push({ id: docItem.id, ...docItem.data() });
+  });
+  renderKPI();
+  renderOrderList(allOrders);
 }
 
-window.openOrder = function(
-docId,
-colorName
-){
-
-console.log(
-"EDIT COLOR:",
-colorName
-);
-  
-selectedDocId = docId;
-
-const order = allOrders.find(
-o => o.id === docId
-);
-
-console.log("ORDER DATA:", order);
-  
-console.log(order);
-if(!order) return;
-
-const currentFabricActual =
-order.fabricActual || "";
-
-const currentFabricStatus =
-order.fabricStatus || "Pending";
-
-const currentPPActual =
-order.ppActual || "";
-
-const currentPPStatus =
-order.ppStatus || "Pending";
-
-const currentTOPActual =
-order.topActual || "";
-
-const currentTOPStatus =
-order.topStatus || "Pending";
-
-const currentRemark =
-order.remark || "";
-
-document.getElementById(
-"modalFormArea"
-).innerHTML = `
-
-<div style="margin-bottom:15px">
-
-<b>Style :</b>
-${order.style}
-
-<br>
-
-<b>Color :</b>
-${order.color || "-"}
-
-<br>
-
-<b>Buyer :</b>
-${order.buyer}
-
-<br>
-
-<b>Ship Date :</b>
-${order.shipdate}
-
-</div>
-
-<label>Fabric Actual</label>
-
-<input
-type="date"
-id="fabricActual"
-value="${currentFabricActual}">
-
-<br><br>
-
-<label>Fabric Status</label>
-
-<select id="fabricStatus">
-
-<option>Pending</option>
-<option>Running</option>
-<option>Approved</option>
-
-</select>
-
-<br><br>
-
-<label>PP Actual</label>
-
-<input
-type="date"
-id="ppActual">
-
-<br><br>
-
-<label>PP Status</label>
-
-<select id="ppStatus">
-
-<option>Pending</option>
-<option>Running</option>
-<option>Approved</option>
-
-</select>
-
-<br><br>
-
-<label>TOP Actual</label>
-
-<input
-type="date"
-id="topActual">
-
-<br><br>
-
-<label>TOP Status</label>
-
-<select id="topStatus">
-
-<option>Pending</option>
-<option>Running</option>
-<option>Approved</option>
-
-</select>
-
-<br><br>
-
-<label>Remark</label>
-
-<textarea
-id="remark"
-rows="4"
-style="width:100%;"
->${currentRemark}</textarea>
-`;
-
-document.getElementById(
-"editModal"
-).style.display = "flex";
-
+// =====================
+// SEARCH / FILTER
+// =====================
+window.filterOrders = function() {
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+  if (!keyword) {
+    renderOrderList(allOrders);
+    return;
+  }
+  const filtered = allOrders.filter(order =>
+    (order.buyer        || "").toLowerCase().includes(keyword) ||
+    (order.ikl          || "").toLowerCase().includes(keyword) ||
+    (order.style        || "").toLowerCase().includes(keyword) ||
+    (order.merchandiser || "").toLowerCase().includes(keyword)
+  );
+  renderOrderList(filtered);
 };
 
-/* PASTE HERE */
+// =====================
+// OPEN MODAL — ✅ FIX: colorIndex pass করা হচ্ছে
+// =====================
+window.openOrder = function(docId, colorIndex) {
 
-document.getElementById(
-"closeBtn"
-).onclick = function(){
+  selectedDocId      = docId;
+  selectedColorIndex = colorIndex; // ✅ index সংরক্ষণ
 
-document.getElementById(
-"editModal"
-).style.display = "none";
+  const order = allOrders.find(o => o.id === docId);
+  if (!order) return;
 
+  const c = order.colors[colorIndex]; // ✅ সঠিক color object
+  if (!c) return;
+
+  // ✅ FIX: color object থেকে পুরানো data নেওয়া হচ্ছে
+  const currentFabricActual = c.fabricActual || "";
+  const currentFabricStatus = c.fabricStatus || "Pending";
+  const currentPPActual     = c.ppActual     || "";
+  const currentPPStatus     = c.ppStatus     || "Pending";
+  const currentTOPActual    = c.topActual    || "";
+  const currentTOPStatus    = c.topStatus    || "Pending";
+  const currentRemark       = c.remark       || "";
+
+  // ✅ FIX: Select dropdown এ সঠিক option selected হচ্ছে
+  const fabricOptions = ["Pending","Running","Approved"]
+    .map(opt => `<option value="${opt}" ${currentFabricStatus===opt?"selected":""}>${opt}</option>`).join("");
+
+  const ppOptions = ["Pending","Running","Approved"]
+    .map(opt => `<option value="${opt}" ${currentPPStatus===opt?"selected":""}>${opt}</option>`).join("");
+
+  const topOptions = ["Pending","Running","Approved"]
+    .map(opt => `<option value="${opt}" ${currentTOPStatus===opt?"selected":""}>${opt}</option>`).join("");
+
+  document.getElementById("modalFormArea").innerHTML = `
+
+    <div class="modal-info-box">
+      <p><span>Style   :</span> ${order.style   || "-"}</p>
+      <p><span>Color   :</span> ${c.color        || "-"}</p>
+      <p><span>Buyer   :</span> ${order.buyer    || "-"}</p>
+      <p><span>Ship Date :</span> ${order.shipdate || order.shipDate || "-"}</p>
+    </div>
+
+    <div class="form-grid-2">
+
+      <div class="form-row">
+        <label>Fabric Actual</label>
+        <input type="date" id="fabricActual" value="${currentFabricActual}">
+      </div>
+
+      <div class="form-row">
+        <label>Fabric Status</label>
+        <select id="fabricStatus">${fabricOptions}</select>
+      </div>
+
+      <div class="form-row">
+        <label>PP Actual</label>
+        <input type="date" id="ppActual" value="${currentPPActual}">
+      </div>
+
+      <div class="form-row">
+        <label>PP Status</label>
+        <select id="ppStatus">${ppOptions}</select>
+      </div>
+
+      <div class="form-row">
+        <label>TOP Actual</label>
+        <input type="date" id="topActual" value="${currentTOPActual}">
+      </div>
+
+      <div class="form-row">
+        <label>TOP Status</label>
+        <select id="topStatus">${topOptions}</select>
+      </div>
+
+    </div>
+
+    <div class="form-row">
+      <label>Remark</label>
+      <textarea id="remark" rows="4">${currentRemark}</textarea>
+    </div>
+  `;
+
+  document.getElementById("editModal").style.display = "flex";
 };
 
-document.getElementById(
-"saveBtn"
-).onclick = async function(){
-
-console.log("SAVE BUTTON CLICKED");
-  
-if(!selectedDocId) return;
-
-const fabricActual =
-document.getElementById("fabricActual").value;
-
-const fabricStatus =
-document.getElementById("fabricStatus").value;
-
-const ppActual =
-document.getElementById("ppActual").value;
-
-const ppStatus =
-document.getElementById("ppStatus").value;
-
-const topActual =
-document.getElementById("topActual").value;
-
-const topStatus =
-document.getElementById("topStatus").value;
-
-const remark =
-document.getElementById("remark").value;
-  
-console.log("SAVING:", selectedDocId);
-
-await updateDoc(
-doc(db,"orders",selectedDocId),
-{
-fabricActual,
-fabricStatus,
-ppActual,
-ppStatus,
-topActual,
-topStatus,
-remark
-}
-);
-
-console.log("UPDATE SUCCESS");
-
-
-alert("Saved Successfully");
-
-document.getElementById(
-"editModal"
-).style.display = "none";
-
-loadOrders();
-
+// =====================
+// CLOSE MODAL
+// =====================
+document.getElementById("closeBtn").onclick = function() {
+  document.getElementById("editModal").style.display = "none";
 };
-  
-// =========================
+
+// =====================
+// SAVE — ✅ FIX: colors array আপডেট করা হচ্ছে
+// =====================
+document.getElementById("saveBtn").onclick = async function() {
+
+  if (selectedDocId === null || selectedColorIndex === null) return;
+
+  const order = allOrders.find(o => o.id === selectedDocId);
+  if (!order || !order.colors) return;
+
+  // ✅ FIX: পুরো colors array copy করে নির্দিষ্ট index আপডেট
+  const updatedColors = order.colors.map((c, idx) => {
+    if (idx === selectedColorIndex) {
+      return {
+        ...c,
+        fabricActual: document.getElementById("fabricActual").value,
+        fabricStatus: document.getElementById("fabricStatus").value,
+        ppActual:     document.getElementById("ppActual").value,
+        ppStatus:     document.getElementById("ppStatus").value,
+        topActual:    document.getElementById("topActual").value,
+        topStatus:    document.getElementById("topStatus").value,
+        remark:       document.getElementById("remark").value,
+      };
+    }
+    return c;
+  });
+
+  try {
+    // ✅ FIX: Firestore এ colors array save হচ্ছে
+    await updateDoc(doc(db, "orders", selectedDocId), {
+      colors: updatedColors
+    });
+
+    alert("✅ Saved Successfully!");
+    document.getElementById("editModal").style.display = "none";
+    loadOrders();
+
+  } catch (err) {
+    console.error("Save Error:", err);
+    alert("❌ Save Failed! Check console.");
+  }
+};
+
+// =====================
 // KPI DASHBOARD
-// =========================
+// =====================
+function renderKPI() {
 
-function renderKPI(){
+  document.getElementById("totalStyles").innerText = allOrders.length;
 
-document.getElementById("totalStyles").innerText =
-allOrders.length;
+  let totalSampleQty = 0;
+  let runningStyles  = 0;
+  let progressTotal  = 0;
+  let thisMonthQty   = 0;
+  let nextMonthQty   = 0;
 
-let totalSampleQty = 0;
-let runningStyles = 0;
-let progressTotal = 0;
+  const now       = new Date();
+  const thisMonth = now.getMonth();
+  const thisYear  = now.getFullYear();
 
-allOrders.forEach(order=>{
+  allOrders.forEach(order => {
 
-if(order.colors){
+    if (order.colors) {
+      order.colors.forEach(c => {
+        totalSampleQty += Number(c.sampleQty || 0);
+      });
+    }
 
-order.colors.forEach(c=>{
+    const progress = Number(order.sampleProgress || 0);
+    progressTotal += progress;
+    if (progress > 0) runningStyles++;
 
-totalSampleQty +=
-Number(c.sampleQty || 0);
+    // This Month / Next Month ship qty
+    const shipDate = order.shipdate || order.shipDate || "";
+    if (shipDate) {
+      const sd = new Date(shipDate + "T00:00:00");
+      const totalQty = order.colors
+        ? order.colors.reduce((sum, c) => sum + Number(c.qty || 0), 0)
+        : 0;
 
-});
+      if (sd.getFullYear() === thisYear && sd.getMonth() === thisMonth) {
+        thisMonthQty += totalQty;
+      }
+      if (
+        (thisMonth === 11 && sd.getFullYear() === thisYear + 1 && sd.getMonth() === 0) ||
+        (thisMonth !== 11 && sd.getFullYear() === thisYear && sd.getMonth() === thisMonth + 1)
+      ) {
+        nextMonthQty += totalQty;
+      }
+    }
+  });
 
+  document.getElementById("totalSampleQty").innerText =
+    totalSampleQty.toLocaleString();
+  document.getElementById("runningStyles").innerText = runningStyles;
+  document.getElementById("avgProgress").innerText   =
+    allOrders.length ? Math.round(progressTotal / allOrders.length) + "%" : "0%";
+  document.getElementById("thisMonthQty").innerText  = thisMonthQty.toLocaleString();
+  document.getElementById("nextMonthQty").innerText  = nextMonthQty.toLocaleString();
 }
 
-progressTotal +=
-Number(order.sampleProgress || 0);
+// =====================
+// RENDER TABLE
+// =====================
+function renderOrderList(orders) {
 
-if(Number(order.sampleProgress || 0) > 0){
+  const body = document.getElementById("orderTableBody");
+  body.innerHTML = "";
 
-runningStyles++;
+  let serial = 1;
 
+  orders.forEach(order => {
+
+    const shipDate =
+      order.shipdate || order.shipDate || order.shipmentDate || "-";
+
+    let leadTime = "-";
+    let tnaType  = "Normal";
+
+    if (shipDate !== "-" && order.orderDate) {
+      const orderDt = new Date(order.orderDate + "T00:00:00");
+      const ship    = new Date(shipDate + "T00:00:00");
+      const diffMs  = ship.getTime() - orderDt.getTime();
+      leadTime = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+
+      if      (leadTime < 60) tnaType = "Super Urgent";
+      else if (leadTime < 90) tnaType = "Urgent";
+    }
+
+    const totalQty = order.colors
+      ? order.colors.reduce((sum, c) => sum + Number(c.qty || 0), 0)
+      : 0;
+
+    let fabricTarget = "-";
+    let ppTarget     = "-";
+    let topTarget    = "-";
+
+    if (shipDate !== "-") {
+      const ship = new Date(shipDate + "T00:00:00");
+
+      const fDate = new Date(ship); fDate.setDate(fDate.getDate() - 45);
+      const pDate = new Date(ship); pDate.setDate(pDate.getDate() - 30);
+      const tDate = new Date(ship); tDate.setDate(tDate.getDate() - 15);
+
+      fabricTarget = fDate.toISOString().split("T")[0];
+      ppTarget     = pDate.toISOString().split("T")[0];
+      topTarget    = tDate.toISOString().split("T")[0];
+    }
+
+    if (order.colors && order.colors.length) {
+
+      order.colors.forEach((c, index) => {
+
+        // ✅ FIX: index pass করা হচ্ছে colorName এর বদলে
+        body.innerHTML += `
+          <tr>
+            <td>${index === 0 ? serial : ""}</td>
+            <td>${index === 0 ? (order.buyer        || "-") : ""}</td>
+            <td>${index === 0 ? (order.ikl           || "-") : ""}</td>
+            <td>${index === 0 ? (order.style         || "-") : ""}</td>
+            <td>${index === 0 ? totalQty.toLocaleString()    : ""}</td>
+            <td>${index === 0 ? (order.item          || "-") : ""}</td>
+            <td>${index === 0 ? (order.orderDate     || "-") : ""}</td>
+            <td>${index === 0 ? shipDate                     : ""}</td>
+            <td>${index === 0 ? (leadTime + (leadTime !== "-" ? " Days" : "")) : ""}</td>
+            <td>${index === 0 ? tnaType                      : ""}</td>
+            <td>${index === 0 ? (order.merchandiser  || "-") : ""}</td>
+            <td>${index === 0 ? ((order.sampleProgress || 0) + "%") : ""}</td>
+            <td>${order.fabrication || "-"}</td>
+            <td>${c.color           || "-"}</td>
+            <td>${Number(c.qty      || 0).toLocaleString()}</td>
+            <td>${Number(c.sampleQty|| 0).toLocaleString()}</td>
+            <td>${fabricTarget}</td>
+            <td>${c.fabricActual    || "-"}</td>
+            <td>${c.ppCuttingDate   || "-"}</td>
+            <td>${ppTarget}</td>
+            <td>${c.ppStatus        || "-"}</td>
+            <td>${c.ppActual        || "-"}</td>
+            <td>${c.topCuttingDate  || "-"}</td>
+            <td>${topTarget}</td>
+            <td>${c.topStatus       || "-"}</td>
+            <td>${c.topActual       || "-"}</td>
+            <td>${c.remark          || "-"}</td>
+            <td>
+              <button
+                class="edit-btn"
+                onclick="openOrder('${order.id}', ${index})">
+                ✏️ Edit
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    serial++;
+  });
 }
 
-});
-
-document.getElementById("totalSampleQty").innerText =
-totalSampleQty.toLocaleString();
-
-document.getElementById("runningStyles").innerText =
-runningStyles;
-
-document.getElementById("avgProgress").innerText =
-
-allOrders.length
-
-?
-
-Math.round(
-progressTotal / allOrders.length
-) + "%"
-
-:
-
-"0%";
-
-document.getElementById("thisMonthQty").innerText = 0;
-document.getElementById("nextMonthQty").innerText = 0;
-
-}
-
-// =========================
-// ORDER LIST
-// =========================
-
-function renderOrderList(){
-
-const body =
-document.getElementById("orderTableBody");
-
-body.innerHTML = "";
-
-let serial = 1;
-
-let fabricTarget = "-";
-let ppTarget = "-";
-let topTarget = "-";
-
-
-allOrders.forEach(order=>{
-
-const shipDate =
-order.shipdate ||
-order.shipDate ||
-order.shipmentDate ||
-"-";
-  
-console.log(
-"STYLE:",
-order.style,
-"SHIP:",
-shipDate
-);
-  
-let leadTime = "-";
-
-if(shipDate !== "-"){
-
-const orderDt = new Date(
-(order.orderDate || "") + "T00:00:00"
-);
-
-const ship = new Date(
-shipDate + "T00:00:00"
-);
-
-const diffMs =
-ship.getTime() - orderDt.getTime();
-
-leadTime = Math.ceil(
-diffMs / (1000*60*60*24)
-);
-
-
-if(leadTime < 0){
-leadTime = 0;
-}
-
-}
-
-let tnaType = "Normal";
-
-if(leadTime < 60){
-
-tnaType = "Super Urgent";
-
-}
-else if(leadTime < 90){
-
-tnaType = "Urgent";
-
-}
-
-
-const totalQty =
-
-order.colors
-
-?
-
-order.colors.reduce(
-(sum,c)=>
-
-sum + Number(c.qty || 0)
-
-,0)
-
-:
-
-0;
-
-let fabricTarget = "-";
-let ppTarget = "-";
-let topTarget = "-";
-
-if(shipDate !== "-"){
-
-const ship = new Date(shipDate + "T00:00:00");
-
-const fabric = new Date(ship);
-fabric.setDate(fabric.getDate() - 45);
-
-const pp = new Date(ship);
-pp.setDate(pp.getDate() - 30);
-
-const top = new Date(ship);
-top.setDate(top.getDate() - 15);
-
-fabricTarget =
-fabric.toISOString().split("T")[0];
-
-ppTarget =
-pp.toISOString().split("T")[0];
-
-topTarget =
-top.toISOString().split("T")[0];
-
-console.log(
-fabricTarget,
-ppTarget,
-topTarget
-);
-  
-}
-
-if(order.colors && order.colors.length){
-
-order.colors.forEach((c,index)=>{
-
-body.innerHTML += `
-
-<tr class="order-row">
-
-<td>${index===0 ? serial : ""}</td>
-
-<td>${index===0 ? (order.buyer || "") : ""}</td>
-
-<td>${index===0 ? (order.ikl || "") : ""}</td>
-
-<td>${index===0 ? (order.style || "") : ""}</td>
-
-<td>${index===0 ? totalQty.toLocaleString() : ""}</td>
-
-<td>${index===0 ? (order.item || "-") : ""}</td>
-
-<td>${index===0 ? (order.orderDate || "-") : ""}</td>
-
-<td>${index===0 ? shipDate : ""}</td>
-
-<td>${index===0 ? leadTime + " Days" : ""}</td>
-
-<td>${index===0 ? tnaType : ""}</td>
-
-<td>${index===0 ? (order.merchandiser || "-") : ""}</td>
-
-<td>${index===0 ? ((order.sampleProgress || 0) + "%") : ""}</td>
-
-<td>${order.fabrication || "-"}</td>
-
-<td>${c.color || "-"}</td>
-
-<td>
-${Number(c.qty || 0).toLocaleString()}
-</td>
-
-<td>
-${Number(c.sampleQty || 0).toLocaleString()}
-</td>
-
-<td>${fabricTarget}</td>
-
-<td>${c.fabricActual || "-"}</td>
-
-<td>${c.ppCuttingDate || "-"}</td>
-
-<td>${ppTarget}</td>
-
-<td>${c.ppStatus || "-"}</td>
-
-<td>${c.ppActual || "-"}</td>
-
-<td>${c.topCuttingDate || "-"}</td>
-
-<td>${topTarget}</td>
-
-<td>${c.topStatus || "-"}</td>
-
-<td>${c.topActual || "-"}</td>
-
-<td>${c.remark || "-"}</td>
-
-<td>
-
-<button
-class="edit-btn"
-onclick="openOrder(
-'${order.id}',
-'${c.color}'
-)">
-Edit
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-serial++;
-
-});
-
-}
-
+// =====================
 // INITIAL LOAD
-
+// =====================
 loadOrders();
 
 </script>
-
 </body>
-
 </html>
-
