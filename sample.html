@@ -252,9 +252,10 @@ window.openOrder = function(docId, colorIndex) {
   let autoFabricTarget="", autoPPTarget="", autoTOPTarget="";
   if (shipDate !== "-") {
     const ship = new Date(shipDate+"T00:00:00");
-    const fD=new Date(ship); fD.setDate(fD.getDate()-45);
     const pD=new Date(ship); pD.setDate(pD.getDate()-30);
     const tD=new Date(ship); tD.setDate(tD.getDate()-15);
+    // Fabric Target = PP Target + 7 days
+    const fD=new Date(pD); fD.setDate(fD.getDate()+7);
     autoFabricTarget = fD.toISOString().split("T")[0];
     autoPPTarget     = pD.toISOString().split("T")[0];
     autoTOPTarget    = tD.toISOString().split("T")[0];
@@ -448,9 +449,10 @@ function renderOrderList(orders) {
     let autoFabricTarget="-", autoPPTarget="-", autoTOPTarget="-";
     if (shipDate!=="-") {
       const ship=new Date(shipDate+"T00:00:00");
-      const fD=new Date(ship); fD.setDate(fD.getDate()-45);
       const pD=new Date(ship); pD.setDate(pD.getDate()-30);
       const tD=new Date(ship); tD.setDate(tD.getDate()-15);
+      // Fabric Target = PP Target + 7 days
+      const fD=new Date(pD); fD.setDate(fD.getDate()+7);
       autoFabricTarget = fD.toISOString().split("T")[0];
       autoPPTarget     = pD.toISOString().split("T")[0];
       autoTOPTarget    = tD.toISOString().split("T")[0];
