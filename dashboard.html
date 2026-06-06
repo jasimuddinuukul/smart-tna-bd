@@ -12,7 +12,7 @@
   --card:#0e1829; --card2:#111e30; --border:#1e3048;
   --muted:#4a6080; --text:#ffffff; --sidebar-w:270px;
 }
-body { background:var(--bg); color:#ffffff; font-family:'Rajdhani',sans-serif; font-weight:600; display:flex; min-height:100vh; overflow-x:hidden; }
+body { background:var(--bg); color:#ffffff; font-family:'Rajdhani',sans-serif; font-weight:600; display:flex; min-height:100vh; overflow-x:clip; }
 
 /* ══ SIDEBAR ══ */
 .sidebar { width:var(--sidebar-w); min-width:var(--sidebar-w); background:var(--sidebar); height:100vh; position:fixed; top:0; left:0; z-index:1100; display:flex; flex-direction:column; border-right:1px solid var(--border); transform:translateX(0); transition:transform 0.32s cubic-bezier(.4,0,.2,1); overflow-y:auto; overflow-x:hidden; }
@@ -32,7 +32,7 @@ body { background:var(--bg); color:#ffffff; font-family:'Rajdhani',sans-serif; f
 .sb-foot { padding:10px 8px; border-top:1px solid var(--border); }
 
 /* ══ MAIN ══ */
-.main-wrap { flex:1; margin-left:var(--sidebar-w); transition:margin-left 0.32s cubic-bezier(.4,0,.2,1); min-height:100vh; display:flex; flex-direction:column; }
+.main-wrap { flex:1; margin-left:var(--sidebar-w); transition:margin-left 0.32s cubic-bezier(.4,0,.2,1); min-height:100vh; display:flex; flex-direction:column; overflow-x:hidden; }
 .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:1050; backdrop-filter:blur(2px); }
 .overlay.show { display:block; }
 
@@ -61,7 +61,7 @@ body { background:var(--bg); color:#ffffff; font-family:'Rajdhani',sans-serif; f
 .tb-user { background:var(--green); color:#000; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; }
 
 /* ══ CONTENT ══ */
-.content { padding:18px; flex:1; }
+.content { padding:18px; flex:1; max-width:1400px; width:100%; box-sizing:border-box; overflow-x:hidden; }
 
 /* ══ HERO ══ */
 .hero-header { background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%); border:1px solid var(--border); border-radius:16px; padding:28px 24px 22px; text-align:center; margin-bottom:18px; position:relative; overflow:hidden; }
@@ -97,19 +97,21 @@ body { background:var(--bg); color:#ffffff; font-family:'Rajdhani',sans-serif; f
 .mbar.r { background:#dc262618; border:1px solid #dc262644; color:#f87171; }
 
 /* ══ CARD ══ */
-.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:18px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:18px; overflow:visible; min-width:0; }
 .card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:14px; }
 
 /* ══ TABLE SCROLL — KEY FIX ══ */
 .tbl-wrap {
   position:relative;
   width:100%;
-  overflow-x:auto;          /* ← this makes the scroll work */
+  max-width:100%;
+  overflow-x:scroll;
   overflow-y:visible;
   -webkit-overflow-scrolling:touch;
   scroll-behavior:smooth;
   border-radius:8px;
   display:block;
+  box-sizing:border-box;
 }
 .tbl-wrap::-webkit-scrollbar { height:7px; }
 .tbl-wrap::-webkit-scrollbar-track { background:#0a1220; border-radius:4px; }
@@ -324,7 +326,7 @@ tr:hover td { background:#ffffff04; }
         <button class="scr-btn" id="btnR1">RIGHT ▶</button>
       </div>
 
-      <div class="tbl-wrap" id="tnaScroll">
+      <div class="tbl-wrap" id="tnaScroll" style="overflow-x:scroll !important; width:100%; max-width:100%;">
         <table class="wide-tbl">
           <thead>
             <tr>
@@ -698,23 +700,28 @@ function initLayout(){
 initLayout();
 window.addEventListener("resize", initLayout);
 
-/* ── Table scroll — wire buttons directly ── */
-function wireScroll(){
-  const tbl = document.getElementById("tnaScroll");
-  if(!tbl) return;
-  function go(px){ tbl.scrollBy({left:px, behavior:"smooth"}); }
-  const bl1=document.getElementById("btnL1");
-  const br1=document.getElementById("btnR1");
-  const bl2=document.getElementById("btnL2");
-  const br2=document.getElementById("btnR2");
-  if(bl1) bl1.onclick=function(){ go(-400); };
-  if(br1) br1.onclick=function(){ go(400);  };
-  if(bl2) bl2.onclick=function(){ go(-400); };
-  if(br2) br2.onclick=function(){ go(400);  };
+/* ── Table scroll — DEFINITIVE FIX ── */
+/* Uses scrollLeft directly — works in all browsers */
+function scrollTNA(direction){
+  var tbl = document.getElementById("tnaScroll");
+  if(!tbl){ alert("Table not found"); return; }
+  var amount = direction * 450;
+  var start = tbl.scrollLeft;
+  var startTime = null;
+  function step(timestamp){
+    if(!startTime) startTime = timestamp;
+    var progress = Math.min((timestamp - startTime) / 300, 1);
+    var ease = progress < 0.5 ? 2*progress*progress : -1+(4-2*progress)*progress;
+    tbl.scrollLeft = start + amount * ease;
+    if(progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
-/* Run immediately (elements already in DOM) and again after 1s for safety */
-wireScroll();
-setTimeout(wireScroll, 1000);
+
+document.getElementById("btnL1").onclick = function(){ scrollTNA(-1); };
+document.getElementById("btnR1").onclick = function(){ scrollTNA(1); };
+document.getElementById("btnL2").onclick = function(){ scrollTNA(-1); };
+document.getElementById("btnR2").onclick = function(){ scrollTNA(1); };
 
 /* ── Date ── */
 document.getElementById("dateEl").textContent =
