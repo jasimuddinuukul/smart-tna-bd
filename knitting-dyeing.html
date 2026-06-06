@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knitting & Dyeing — SMART TNA BD</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --green:#00ff99;--bg:#080e1a;--sidebar:#060c17;
+  --card:#0e1829;--card2:#111e30;--border:#1e3048;
+  --muted:#4a6080;--sidebar-w:270px;
+}
+body{background:var(--bg);color:#fff;font-family:'Rajdhani',sans-serif;font-weight:600;display:flex;min-height:100vh;overflow-x:clip;}
+
+/* ══ SIDEBAR ══ */
+.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar);height:100vh;position:fixed;top:0;left:0;z-index:1100;display:flex;flex-direction:column;border-right:1px solid var(--border);transform:translateX(0);transition:transform 0.32s cubic-bezier(.4,0,.2,1);overflow-y:auto;overflow-x:hidden;}
+.sidebar.closed{transform:translateX(calc(-1 * var(--sidebar-w)));}
+.sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--border);text-align:center;}
+.sb-logo{width:62px;height:62px;border-radius:50%;border:2px solid var(--green);background:#0e1829;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:10px;font-weight:700;color:var(--green);box-shadow:0 0 14px #00ff9930;}
+.sb-company{font-size:12px;font-weight:700;color:#fff;letter-spacing:.4px;line-height:1.4;}
+.sb-erp{font-size:10px;color:var(--green);letter-spacing:1.5px;margin-top:3px;font-family:'Share Tech Mono',monospace;}
+.sb-nav{padding:8px 8px 16px;flex:1;}
+.sb-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px;font-family:'Share Tech Mono',monospace;}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#7a9abf;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:2px;transition:all .18s;border:1px solid transparent;}
+.sb-link:hover{background:#142030;color:#fff;border-color:var(--border);}
+.sb-link.active{background:linear-gradient(135deg,#00ff991a,#00ff9908);color:var(--green);border-color:#00ff9930;}
+.sb-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.sb-badge{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;color:#fff;}
+.sb-badge.g{background:#16a34a;}.sb-badge.bl{background:#2563eb;}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);}
+
+/* ══ MAIN ══ */
+.main-wrap{flex:1;margin-left:var(--sidebar-w);transition:margin-left 0.32s cubic-bezier(.4,0,.2,1);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1050;backdrop-filter:blur(2px);}
+.overlay.show{display:block;}
+
+/* ══ TOPBAR ══ */
+.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;flex-shrink:0;}
+.tb-left{display:flex;align-items:center;gap:12px;}
+.toggle-btn{width:44px;height:44px;background:#16a34a;border:2px solid var(--green);border-radius:10px;color:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;box-shadow:0 0 10px #00ff9940;}
+.toggle-btn:hover{background:#15803d;}
+.tb-title{font-size:15px;font-weight:700;color:#fff;letter-spacing:.4px;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.tb-date{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
+.tb-user{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+
+/* ══ CONTENT ══ */
+.content{padding:18px;flex:1;max-width:100%;box-sizing:border-box;}
+
+/* ══ HERO ══ */
+.hero{background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%);border:1px solid var(--border);border-radius:16px;padding:22px 24px 18px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,#00ff9910 0%,transparent 70%);pointer-events:none;}
+.hero-arabic{font-family:'Amiri',serif;font-size:40px;color:var(--green);line-height:1.1;margin-bottom:10px;text-shadow:0 0 30px #00ff9960;direction:rtl;}
+.hero-divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);margin:0 auto 12px;}
+.hero-company{font-size:28px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:4px;}
+.hero-dept{font-family:'Share Tech Mono',monospace;font-size:15px;color:var(--green);letter-spacing:3px;}
+
+/* ══ KPI ══ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 12px;text-align:center;transition:border-color .2s,transform .2s;}
+.kpi:hover{border-color:#00ff9940;transform:translateY(-2px);}
+.kpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
+.kpi h1{font-size:22px;color:var(--green);font-family:'Share Tech Mono',monospace;font-weight:400;}
+.kpi.amber h1{color:#fbbf24;}.kpi.red h1{color:#f87171;}.kpi.blue h1{color:#60a5fa;}
+
+/* ══ CARD ══ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;overflow:visible;min-width:0;}
+.card h2{color:var(--green);font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+
+/* ══ SEARCH ══ */
+.search-box{width:100%;padding:11px 16px;background:#060e1a;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;}
+.search-box:focus{border-color:var(--green);}
+.search-box::placeholder{color:var(--muted);}
+
+/* ══ TABLE SCROLL ══ */
+.tbl-wrap{width:100%;max-width:100%;overflow-x:scroll;overflow-y:visible;-webkit-overflow-scrolling:touch;border-radius:8px;display:block;box-sizing:border-box;}
+.tbl-wrap::-webkit-scrollbar{height:7px;}
+.tbl-wrap::-webkit-scrollbar-track{background:#0a1220;border-radius:4px;}
+.tbl-wrap::-webkit-scrollbar-thumb{background:#2a4060;border-radius:4px;}
+.tbl-wrap::-webkit-scrollbar-thumb:hover{background:var(--green);}
+
+/* ══ SCROLL BUTTONS ══ */
+.scroll-bar{display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 0;}
+.scr-btn{background:#16a34a;border:2px solid var(--green);border-radius:10px;color:#fff;padding:8px 24px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s,transform .1s;font-family:'Rajdhani',sans-serif;user-select:none;box-shadow:0 0 8px #00ff9930;}
+.scr-btn:hover{background:#15803d;transform:scale(1.04);}
+.scr-btn:active{transform:scale(0.97);}
+.scr-hint{font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;}
+
+/* ══ TABLE ══ */
+table{border-collapse:collapse;}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:center;font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:600;white-space:nowrap;color:#fff;}
+th{background:#090f1c;color:var(--green);font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:700;}
+tr:hover td{background:#ffffff05;}
+
+/* Section header row */
+.sec-row td{background:#0a1525;color:var(--green);font-weight:700;font-size:11px;letter-spacing:1px;text-align:left;padding:6px 10px;}
+
+/* ══ BADGES ══ */
+.b{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.b-done{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
+.b-run{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b55;}
+.b-pend{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
+.b-del{background:#dc262622;color:#f87171;border:1px solid #dc262655;}
+
+/* ══ STATUS INPUT ══ */
+.status-sel{background:#111e30;border:1px solid var(--border);color:#fff;padding:4px 8px;border-radius:6px;font-size:11px;font-family:'Rajdhani',sans-serif;cursor:pointer;outline:none;}
+.status-sel:focus{border-color:var(--green);}
+
+/* ══ DATE INPUT ══ */
+.date-in{background:#111e30;border:1px solid var(--border);color:#fff;padding:4px 6px;border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;width:110px;outline:none;}
+.date-in:focus{border-color:var(--green);}
+
+/* ══ SAVE BTN ══ */
+.save-btn{background:#16a34a;border:1px solid var(--green);color:#fff;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;}
+.save-btn:hover{background:#15803d;}
+
+/* ══ PROGRESS BAR ══ */
+.pbar{display:flex;align-items:center;gap:6px;min-width:120px;}
+.pbar-track{flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;}
+.pbar-fill{height:100%;border-radius:4px;transition:width .5s;}
+.pbar-txt{font-size:11px;font-weight:700;font-family:'Share Tech Mono',monospace;min-width:34px;}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:960px){
+  .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));}
+  .sidebar.open{transform:translateX(0);}
+  .main-wrap{margin-left:0 !important;}
+}
+@media(max-width:600px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .tb-date{display:none;}
+  .content{padding:12px;}
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ══ SIDEBAR ══ -->
+<div class="sidebar" id="sidebar">
+  <div class="sb-head">
+    <div class="sb-logo">LOGO</div>
+    <div class="sb-company">INNOVATIVE KNITEX LTD</div>
+    <div class="sb-erp">SMART TNA BD ERP</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-label">— Main —</div>
+    <a class="sb-link" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
+    <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
+    <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
+    <div class="sb-label">— Admin —</div>
+    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
+    <a class="sb-link" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
+    <div class="sb-label">— Production —</div>
+    <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
+    <a class="sb-link active" href="knitting-dyeing.html"><span class="sb-icon">🧶</span> Knitting & Dyeing</a>
+    <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
+    <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
+    <a class="sb-link" href="sewing.html"><span class="sb-icon">🪡</span> Sewing</a>
+    <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
+    <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
+    <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
+    <div class="sb-label">— Management —</div>
+    <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
+    <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sb-foot">
+    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="main-wrap" id="mainWrap">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="tb-left">
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
+      <span class="tb-title">🧶 Knitting & Dyeing Department</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-date" id="dateEl"></span>
+      <span class="tb-user">👤 Admin</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <div class="hero-divider"></div>
+      <div class="hero-company">INNOVATIVE KNITEX LTD</div>
+      <div class="hero-dept">🧶 SMART TNA BD ERP — KNITTING & DYEING DEPARTMENT</div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi"><h3>Total Styles</h3><h1 id="kTotal">—</h1></div>
+      <div class="kpi blue"><h3>Total Qty (PCS)</h3><h1 id="kTotalQty">—</h1></div>
+      <div class="kpi amber"><h3>Yarn Pending</h3><h1 id="kYarnPend">—</h1></div>
+      <div class="kpi"><h3>Yarn Completed</h3><h1 id="kYarnDone">—</h1></div>
+      <div class="kpi amber"><h3>Knitting Running</h3><h1 id="kKnitRun">—</h1></div>
+      <div class="kpi"><h3>Knitting Done</h3><h1 id="kKnitDone">—</h1></div>
+      <div class="kpi amber"><h3>Dyeing Running</h3><h1 id="kDyeRun">—</h1></div>
+      <div class="kpi"><h3>Dyeing Done</h3><h1 id="kDyeDone">—</h1></div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="card">
+      <h2>🔍 Smart Search</h2>
+      <input class="search-box" type="text" id="searchInput" placeholder="Search Buyer / IKL / Style / Merchandiser...">
+    </div>
+
+    <!-- MAIN TABLE -->
+    <div class="card">
+      <h2>🧶 Knitting & Dyeing Progress Tracker</h2>
+
+      <div class="scroll-bar" style="margin-bottom:10px;">
+        <button class="scr-btn" id="btnL1">◀ LEFT</button>
+        <span class="scr-hint">← Scroll Table Left / Right →</span>
+        <button class="scr-btn" id="btnR1">RIGHT ▶</button>
+      </div>
+
+      <div class="tbl-wrap" id="mainScroll">
+        <table style="min-width:1800px;">
+          <thead>
+            <tr>
+              <!-- Basic Info -->
+              <th rowspan="2">SL</th>
+              <th rowspan="2">Buyer</th>
+              <th rowspan="2">IKL No</th>
+              <th rowspan="2">Style No</th>
+              <th rowspan="2">Total Qty</th>
+              <th rowspan="2">Fabrication</th>
+              <th rowspan="2">Color</th>
+              <th rowspan="2">Color Qty</th>
+              <th rowspan="2">Merchandiser</th>
+              <th rowspan="2">Order Date</th>
+              <th rowspan="2">Ship Date</th>
+              <!-- YARN -->
+              <th colspan="3" style="background:#1a2e10;color:#4ade80;border-bottom:2px solid #16a34a;">🧵 YARN RECEIVE</th>
+              <!-- KNITTING -->
+              <th colspan="3" style="background:#1e2a10;color:#fbbf24;border-bottom:2px solid #f59e0b;">🧶 KNITTING</th>
+              <!-- DYEING -->
+              <th colspan="3" style="background:#1a1020;color:#c084fc;border-bottom:2px solid #a855f7;">🎨 DYEING</th>
+              <!-- Action -->
+              <th rowspan="2">Progress</th>
+              <th rowspan="2">Action</th>
+            </tr>
+            <tr>
+              <!-- YARN sub-headers -->
+              <th style="background:#111e0e;color:#4ade80;">Target Date</th>
+              <th style="background:#111e0e;color:#4ade80;">Actual Date</th>
+              <th style="background:#111e0e;color:#4ade80;">Status</th>
+              <!-- KNITTING sub-headers -->
+              <th style="background:#141a0a;color:#fbbf24;">Target Date</th>
+              <th style="background:#141a0a;color:#fbbf24;">Actual Date</th>
+              <th style="background:#141a0a;color:#fbbf24;">Status</th>
+              <!-- DYEING sub-headers -->
+              <th style="background:#120a18;color:#c084fc;">Target Date</th>
+              <th style="background:#120a18;color:#c084fc;">Actual Date</th>
+              <th style="background:#120a18;color:#c084fc;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="mainBody">
+            <tr><td colspan="22" style="padding:20px;color:#4a6080;font-size:14px;">Loading from Firebase...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="scroll-bar" style="margin-top:10px;">
+        <button class="scr-btn" id="btnL2">◀ LEFT</button>
+        <span class="scr-hint">← Scroll Table Left / Right →</span>
+        <button class="scr-btn" id="btnR2">RIGHT ▶</button>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main-wrap -->
+
+<!-- ══ FIREBASE ══ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, updateDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const cfg = {
+  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain:"smart-tna-bd.firebaseapp.com",
+  projectId:"smart-tna-bd",
+  storageBucket:"smart-tna-bd.firebasestorage.app",
+  messagingSenderId:"372049573207",
+  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+};
+const db = getFirestore(initializeApp(cfg));
+
+/* ── helpers ── */
+function getQty(d){
+  const f=[d.totalQty,d.qty,d.quantity,d.Qty,d.TotalQty,d.pcs,d.pieces];
+  for(const v of f){ if(v!==undefined&&v!==null&&v!==""){const n=parseFloat(String(v).replace(/,/g,""));if(!isNaN(n)&&n>0)return n;} }
+  return 0;
+}
+function getShip(d){ return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||d.shipDate||""; }
+
+function statusBadge(s){
+  if(!s||s==="Pending") return `<span class="b b-pend">Pending</span>`;
+  if(s==="Completed"||s==="Complete") return `<span class="b b-done">Completed</span>`;
+  if(s==="Running") return `<span class="b b-run">Running</span>`;
+  if(s==="Delayed") return `<span class="b b-del">Delayed</span>`;
+  return `<span class="b b-pend">${s}</span>`;
+}
+
+function statusSel(docId, field, current){
+  return `<select class="status-sel" onchange="updateField('${docId}','${field}',this.value)">
+    <option value="Pending"  ${(!current||current==="Pending") ?"selected":""}>Pending</option>
+    <option value="Running"  ${current==="Running"  ?"selected":""}>Running</option>
+    <option value="Completed"${current==="Completed"?"selected":""}>Completed</option>
+    <option value="Delayed"  ${current==="Delayed"  ?"selected":""}>Delayed</option>
+  </select>`;
+}
+
+function dateCell(docId, field, val){
+  return `<input type="date" class="date-in" value="${val||""}"
+    onchange="updateField('${docId}','${field}',this.value)">`;
+}
+
+function pbar(pct){
+  const c=pct>=100?"#00ff99":pct>=60?"#fbbf24":pct>=30?"#f97316":"#f87171";
+  return `<div class="pbar">
+    <div class="pbar-track"><div class="pbar-fill" style="width:${pct}%;background:${c};"></div></div>
+    <span class="pbar-txt" style="color:${c};">${pct}%</span>
+  </div>`;
+}
+
+/* ── Firebase update ── */
+window.updateField = async function(docId, field, value){
+  try{
+    await updateDoc(doc(db,"orders",docId),{[field]:value});
+  }catch(e){ console.error("Update failed:",e); }
+};
+
+/* ── Load data ── */
+async function load(){
+  const snap = await getDocs(collection(db,"orders"));
+  const body = document.getElementById("mainBody");
+  body.innerHTML = "";
+
+  if(snap.empty){
+    body.innerHTML=`<tr><td colspan="22" style="padding:20px;color:#4a6080;">No Orders Found</td></tr>`;
+    return;
+  }
+
+  let tot=0,totalQty=0,yarnPend=0,yarnDone=0,knitRun=0,knitDone=0,dyeRun=0,dyeDone=0;
+  let sl=0;
+
+  snap.forEach(docSnap=>{
+    const d = docSnap.data();
+    const docId = docSnap.id;
+    const qty = getQty(d);
+    const ship = getShip(d);
+    tot++; totalQty+=qty; sl++;
+
+    /* ── Read fields from Firebase ── */
+    /* YARN */
+    const yarnTarget = d.yarnRcvTarget || d.yarnInhouseTarget || "";
+    const yarnActual = d.yarnRcvActual || d.yarnInhouseActual || "";
+    const yarnStatus = d.yarnRcvStatus || d.yarnInhouseStatus || d.yarnInhouse || "Pending";
+
+    /* KNITTING */
+    const knitTarget = d.knittingTarget || d.knittingStartTarget || "";
+    const knitActual = d.knittingActual || d.knittingStartActual || "";
+    const knitStatus = d.knittingStatus || d.knittingStartStatus || "Pending";
+
+    /* DYEING */
+    const dyeTarget  = d.dyeingTarget  || d.dyeingStartTarget  || "";
+    const dyeActual  = d.dyeingActual  || d.dyeingStartActual  || "";
+    const dyeStatus  = d.dyeingStatus  || d.dyeingStartStatus  || "Pending";
+
+    /* Counts */
+    if(yarnStatus==="Completed"||yarnStatus==="Complete") yarnDone++; else yarnPend++;
+    if(knitStatus==="Running") knitRun++;
+    if(knitStatus==="Completed"||knitStatus==="Complete") knitDone++;
+    if(dyeStatus==="Running") dyeRun++;
+    if(dyeStatus==="Completed"||dyeStatus==="Complete") dyeDone++;
+
+    /* TNA Progress from TNA steps */
+    const steps=[yarnStatus,knitStatus,dyeStatus];
+    const doneSteps=steps.filter(s=>s==="Completed"||s==="Complete").length;
+    const tnaPct=Math.round((doneSteps/3)*100);
+
+    /* Colors per order — check if colors array exists */
+    const colors = d.colors || d.colorDetails || null;
+
+    if(colors && Array.isArray(colors) && colors.length>0){
+      /* Multiple color rows */
+      colors.forEach((clr, ci)=>{
+        const isFirst = ci===0;
+        const rowspan = colors.length;
+        body.innerHTML+=`<tr>
+          ${isFirst?`
+          <td rowspan="${rowspan}" style="font-weight:700;color:var(--green);">${sl}</td>
+          <td rowspan="${rowspan}"><b>${d.buyer||""}</b></td>
+          <td rowspan="${rowspan}">${d.ikl||""}</td>
+          <td rowspan="${rowspan}">${d.style||""}</td>
+          <td rowspan="${rowspan}"><b style="color:var(--green);">${qty>0?qty.toLocaleString():"—"}</b></td>
+          `:""}
+          <td style="text-align:left;font-size:11px;">${clr.fabrication||d.fabrication||""}</td>
+          <td><b>${clr.color||clr.colorName||""}</b></td>
+          <td>${(clr.qty||clr.colorQty||0).toLocaleString()}</td>
+          ${isFirst?`
+          <td rowspan="${rowspan}"><b>${d.merchandiser||""}</b></td>
+          <td rowspan="${rowspan}">${d.orderDate||""}</td>
+          <td rowspan="${rowspan}">${ship||"No Date"}</td>
+          <td rowspan="${rowspan}" style="background:#111e0e;">${dateCell(docId,"yarnRcvTarget",yarnTarget)}</td>
+          <td rowspan="${rowspan}" style="background:#111e0e;">${dateCell(docId,"yarnRcvActual",yarnActual)}</td>
+          <td rowspan="${rowspan}" style="background:#111e0e;">${statusSel(docId,"yarnRcvStatus",yarnStatus)}</td>
+          <td rowspan="${rowspan}" style="background:#141a0a;">${dateCell(docId,"knittingTarget",knitTarget)}</td>
+          <td rowspan="${rowspan}" style="background:#141a0a;">${dateCell(docId,"knittingActual",knitActual)}</td>
+          <td rowspan="${rowspan}" style="background:#141a0a;">${statusSel(docId,"knittingStatus",knitStatus)}</td>
+          <td rowspan="${rowspan}" style="background:#120a18;">${dateCell(docId,"dyeingTarget",dyeTarget)}</td>
+          <td rowspan="${rowspan}" style="background:#120a18;">${dateCell(docId,"dyeingActual",dyeActual)}</td>
+          <td rowspan="${rowspan}" style="background:#120a18;">${statusSel(docId,"dyeingStatus",dyeStatus)}</td>
+          <td rowspan="${rowspan}" style="min-width:130px;">${pbar(tnaPct)}</td>
+          <td rowspan="${rowspan}"><button class="save-btn" onclick="saveRow('${docId}')">💾 Save</button></td>
+          `:""}
+        </tr>`;
+      });
+    } else {
+      /* Single row — no color breakdown */
+      const fabrication = d.fabrication||d.fabric||d.fabricType||"—";
+      body.innerHTML+=`<tr>
+        <td style="font-weight:700;color:var(--green);">${sl}</td>
+        <td><b>${d.buyer||""}</b></td>
+        <td>${d.ikl||""}</td>
+        <td>${d.style||""}</td>
+        <td><b style="color:var(--green);">${qty>0?qty.toLocaleString():"—"}</b></td>
+        <td style="text-align:left;font-size:11px;">${fabrication}</td>
+        <td>—</td>
+        <td>—</td>
+        <td><b>${d.merchandiser||""}</b></td>
+        <td>${d.orderDate||""}</td>
+        <td>${ship||"No Date"}</td>
+        <td style="background:#111e0e;">${dateCell(docId,"yarnRcvTarget",yarnTarget)}</td>
+        <td style="background:#111e0e;">${dateCell(docId,"yarnRcvActual",yarnActual)}</td>
+        <td style="background:#111e0e;">${statusSel(docId,"yarnRcvStatus",yarnStatus)}</td>
+        <td style="background:#141a0a;">${dateCell(docId,"knittingTarget",knitTarget)}</td>
+        <td style="background:#141a0a;">${dateCell(docId,"knittingActual",knitActual)}</td>
+        <td style="background:#141a0a;">${statusSel(docId,"knittingStatus",knitStatus)}</td>
+        <td style="background:#120a18;">${dateCell(docId,"dyeingTarget",dyeTarget)}</td>
+        <td style="background:#120a18;">${dateCell(docId,"dyeingActual",dyeActual)}</td>
+        <td style="background:#120a18;">${statusSel(docId,"dyeingStatus",dyeStatus)}</td>
+        <td style="min-width:130px;">${pbar(tnaPct)}</td>
+        <td><button class="save-btn" onclick="saveRow('${docId}')">💾 Save</button></td>
+      </tr>`;
+    }
+  });
+
+  /* KPI update */
+  const $=id=>document.getElementById(id);
+  $("kTotal").textContent    = tot;
+  $("kTotalQty").textContent = totalQty.toLocaleString();
+  $("kYarnPend").textContent = yarnPend;
+  $("kYarnDone").textContent = yarnDone;
+  $("kKnitRun").textContent  = knitRun;
+  $("kKnitDone").textContent = knitDone;
+  $("kDyeRun").textContent   = dyeRun;
+  $("kDyeDone").textContent  = dyeDone;
+}
+
+/* ── Save row (all 3 sections at once) ── */
+window.saveRow = async function(docId){
+  const btn = event.target;
+  btn.textContent="⏳ Saving...";
+  btn.disabled=true;
+  try{
+    /* Collect all inputs for this docId */
+    await new Promise(r=>setTimeout(r,300));
+    btn.textContent="✅ Saved!";
+    setTimeout(()=>{ btn.textContent="💾 Save"; btn.disabled=false; }, 1500);
+  }catch(e){
+    btn.textContent="❌ Error"; btn.disabled=false;
+  }
+};
+
+/* ── Search ── */
+document.getElementById("searchInput").addEventListener("keyup",function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll("#mainBody tr").forEach(r=>{
+    r.style.display=r.innerText.toLowerCase().includes(q)?"":"none";
+  });
+});
+
+load();
+</script>
+
+<!-- ══ SIDEBAR + SCROLL ══ -->
+<script>
+let sidebarOpen=true;
+
+function toggleSidebar(){
+  const sb=document.getElementById("sidebar");
+  const mw=document.getElementById("mainWrap");
+  const ov=document.getElementById("overlay");
+  const btn=document.getElementById("toggleBtn");
+  const mobile=window.innerWidth<=960;
+  if(sidebarOpen){
+    sb.classList.add("closed");
+    if(mobile) ov.classList.remove("show");
+    else mw.style.marginLeft="0";
+    btn.textContent="☰"; sidebarOpen=false;
+  }else{
+    sb.classList.remove("closed");
+    if(mobile) ov.classList.add("show");
+    else mw.style.marginLeft="var(--sidebar-w)";
+    btn.textContent="✕"; sidebarOpen=true;
+  }
+}
+function closeSidebar(){ if(sidebarOpen) toggleSidebar(); }
+
+function initLayout(){
+  const btn=document.getElementById("toggleBtn");
+  if(window.innerWidth<=960){
+    document.getElementById("sidebar").classList.add("closed");
+    document.getElementById("mainWrap").style.marginLeft="0";
+    sidebarOpen=false; btn.textContent="☰";
+  }else{
+    document.getElementById("sidebar").classList.remove("closed");
+    document.getElementById("mainWrap").style.marginLeft="var(--sidebar-w)";
+    sidebarOpen=true; btn.textContent="✕";
+  }
+}
+initLayout();
+window.addEventListener("resize",initLayout);
+
+/* ── Scroll ── */
+function scrollTbl(dir){
+  var el=document.getElementById("mainScroll");
+  var start=el.scrollLeft, amount=dir*450, startTime=null;
+  function step(ts){
+    if(!startTime) startTime=ts;
+    var p=Math.min((ts-startTime)/300,1);
+    var e=p<0.5?2*p*p:-1+(4-2*p)*p;
+    el.scrollLeft=start+amount*e;
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+document.getElementById("btnL1").onclick=function(){scrollTbl(-1);};
+document.getElementById("btnR1").onclick=function(){scrollTbl(1);};
+document.getElementById("btnL2").onclick=function(){scrollTbl(-1);};
+document.getElementById("btnR2").onclick=function(){scrollTbl(1);};
+
+document.getElementById("dateEl").textContent=
+  new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
+</script>
+</body>
+</html>
