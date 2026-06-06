@@ -10,9 +10,9 @@
 :root {
   --green:#00ff99; --bg:#080e1a; --sidebar:#060c17;
   --card:#0e1829; --card2:#111e30; --border:#1e3048;
-  --muted:#4a6080; --text:#c8d8e8; --sidebar-w:270px;
+  --muted:#4a6080; --text:#ffffff; --sidebar-w:270px;
 }
-body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; font-weight:500; display:flex; min-height:100vh; overflow-x:hidden; }
+body { background:var(--bg); color:#ffffff; font-family:'Rajdhani',sans-serif; font-weight:600; display:flex; min-height:100vh; overflow-x:hidden; }
 
 /* ══ SIDEBAR ══ */
 .sidebar { width:var(--sidebar-w); min-width:var(--sidebar-w); background:var(--sidebar); height:100vh; position:fixed; top:0; left:0; z-index:1100; display:flex; flex-direction:column; border-right:1px solid var(--border); transform:translateX(0); transition:transform 0.32s cubic-bezier(.4,0,.2,1); overflow-y:auto; overflow-x:hidden; }
@@ -102,6 +102,7 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
 
 /* ══ TABLE SCROLL — KEY FIX ══ */
 .tbl-wrap {
+  position:relative;
   width:100%;
   overflow-x:auto;          /* ← this makes the scroll work */
   overflow-y:visible;
@@ -135,7 +136,7 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
 
 /* ══ TABLE ══ */
 table { border-collapse:collapse; }
-th,td { border:1px solid var(--border); padding:9px 12px; text-align:center; font-size:13px; font-family:'Rajdhani',sans-serif; font-weight:500; white-space:nowrap; }
+th,td { border:1px solid var(--border); padding:9px 12px; text-align:center; font-size:13px; font-family:'Rajdhani',sans-serif; font-weight:600; white-space:nowrap; color:#ffffff; }
 th { background:#090f1c; color:var(--green); font-size:11px; text-transform:uppercase; letter-spacing:.7px; font-weight:700; }
 tr:hover td { background:#ffffff04; }
 
@@ -535,6 +536,42 @@ async function load() {
     merch[mn].pctSum+=tnaPct;
     if(!isDone) merch[mn].r++;
 
+    /* ── Derive simple status from TNA step fields ── */
+    /* Firebase uses fabricBookingStatus, knittingStartStatus etc */
+    function tnaGrp(keys){
+      /* returns Complete if ALL non-empty keys are Complete, else first found value */
+      const vals = keys.map(k=> d[k+"Status"]||d[k]||"").filter(v=>v!=="");
+      if(vals.length===0) return "";
+      if(vals.every(v=>v==="Complete"||v==="Completed")) return "Completed";
+      if(vals.some(v=>v==="Complete"||v==="Completed")) return "Running";
+      return vals[0];
+    }
+
+    const mStatus  = tnaGrp(["fabricBooking","yarnInhouse","colorSwatch","labDipSubmit","labDipApproval","g2Receive","strikeOffSend","strikeOffApproval"]);
+    const knStatus = tnaGrp(["knittingStart","knittingComplete"]);
+    const dyStatus = tnaGrp(["dyeingStart","dyeingComplete"]);
+    const smStatus = tnaGrp(["sampleFabric","ppSampleSubmit"]);
+    const lbStatus = tnaGrp(["fabricTestStart","fabricTestComplete"]);
+    const ctStatus = tnaGrp(["cuttingStart"]);
+    const prStatus = tnaGrp(["printStart","printComplete"]);
+    const swStatus = tnaGrp(["sewingInput","sewingStart","sewingComplete"]);
+    const wsStatus = tnaGrp(["ppMeeting"]);  // no dedicated wash step in TNA
+    const fnStatus = tnaGrp(["finishingStart","packingStart","packingComplete"]);
+    const shStatus = tnaGrp(["finalInspection","shipmentApproval"]);
+
+    /* fallback to old simple fields if TNA fields empty */
+    const ms = mStatus  || d.merchandisingStatus || "";
+    const ks = knStatus || d.knittingStatus       || "";
+    const ds = dyStatus || d.dyeingStatus         || "";
+    const ss = smStatus || d.sampleStatus         || "";
+    const ls = lbStatus || d.laboratoryStatus     || "";
+    const cs = ctStatus || d.cuttingStatus        || "";
+    const ps = prStatus || d.printEmbStatus       || "";
+    const ws = swStatus || d.sewingStatus         || "";
+    const ww = wsStatus || d.washingStatus        || "";
+    const fs = fnStatus || d.finishingStatus      || "";
+    const xs = shStatus || d.shipmentStatus       || "";
+
     /* ── Table row with TNA progress bar ── */
     body.innerHTML+=`
     <tr>
@@ -546,18 +583,18 @@ async function load() {
       <td>${sdTxt||"No Date"}</td>
       <td>${days?days+" Days":"—"}</td>
       <td><b>${d.merchandiser||""}</b></td>
-      <td style="min-width:140px;">${progressBar(tnaPct)}</td>
-      <td>${badge(d.merchandisingStatus)}</td>
-      <td>${badge(d.knittingStatus)}</td>
-      <td>${badge(d.dyeingStatus)}</td>
-      <td>${badge(d.sampleStatus)}</td>
-      <td>${badge(d.laboratoryStatus)}</td>
-      <td>${badge(d.cuttingStatus)}</td>
-      <td>${badge(d.printEmbStatus)}</td>
-      <td>${badge(d.sewingStatus)}</td>
-      <td>${badge(d.washingStatus)}</td>
-      <td>${badge(d.finishingStatus)}</td>
-      <td>${badge(d.shipmentStatus)}</td>
+      <td style="min-width:160px;">${progressBar(tnaPct)}</td>
+      <td>${badge(ms)}</td>
+      <td>${badge(ks)}</td>
+      <td>${badge(ds)}</td>
+      <td>${badge(ss)}</td>
+      <td>${badge(ls)}</td>
+      <td>${badge(cs)}</td>
+      <td>${badge(ps)}</td>
+      <td>${badge(ws)}</td>
+      <td>${badge(ww)}</td>
+      <td>${badge(fs)}</td>
+      <td>${badge(xs)}</td>
     </tr>`;
   });
 
@@ -665,7 +702,7 @@ window.addEventListener("resize", initLayout);
 function wireScroll(){
   const tbl = document.getElementById("tnaScroll");
   if(!tbl) return;
-  function go(px){ tbl.scrollLeft += px; }
+  function go(px){ tbl.scrollBy({left:px, behavior:"smooth"}); }
   const bl1=document.getElementById("btnL1");
   const br1=document.getElementById("btnR1");
   const bl2=document.getElementById("btnL2");
