@@ -290,9 +290,9 @@ tr:hover td { background:#ffffff04; }
 
       <!-- TOP scroll buttons -->
       <div class="scroll-bar" style="margin-bottom:10px;">
-        <button class="scr-btn" id="btnLeft1">◀ Left</button>
+        <button class="scr-btn" onclick="scrollTbl(-400)">◀ Left</button>
         <span class="scr-hint">← Scroll Table Left / Right →</span>
-        <button class="scr-btn" id="btnRight1">Right ▶</button>
+        <button class="scr-btn" onclick="scrollTbl(400)">Right ▶</button>
       </div>
 
       <!-- ✅ ID matches JS -->
@@ -315,9 +315,9 @@ tr:hover td { background:#ffffff04; }
 
       <!-- BOTTOM scroll buttons -->
       <div class="scroll-bar" style="margin-top:10px;">
-        <button class="scr-btn" id="btnLeft2">◀ Left</button>
+        <button class="scr-btn" onclick="scrollTbl(-400)">◀ Left</button>
         <span class="scr-hint">← Scroll Table Left / Right →</span>
-        <button class="scr-btn" id="btnRight2">Right ▶</button>
+        <button class="scr-btn" onclick="scrollTbl(400)">Right ▶</button>
       </div>
     </div>
 
@@ -494,61 +494,62 @@ document.getElementById("searchInput").addEventListener("keyup",function(){
 });
 </script>
 
-<!-- ✅ SIDEBAR + SCROLL — regular script, NOT module -->
 <script>
-// ── Sidebar ──────────────────────────────────
-let sidebarOpen = true;
+// ── SCROLL TABLE ── simple global function ──
+function scrollTbl(amount){
+  var el = document.getElementById("tnaScroll");
+  el.scrollLeft += amount;
+}
+
+// ── SIDEBAR ──────────────────────────────────
+var sidebarOpen = true;
 
 function toggleSidebar(){
-  const sb=document.getElementById("sidebar");
-  const mw=document.getElementById("mainWrap");
-  const ov=document.getElementById("overlay");
-  const btn=document.getElementById("toggleBtn");
-  const mobile=window.innerWidth<=960;
+  var sb  = document.getElementById("sidebar");
+  var mw  = document.getElementById("mainWrap");
+  var ov  = document.getElementById("overlay");
+  var btn = document.getElementById("toggleBtn");
+  var mobile = window.innerWidth <= 960;
+
   if(sidebarOpen){
     sb.classList.add("closed");
-    if(mobile) ov.classList.remove("show");
-    else mw.style.marginLeft="0";
-    btn.textContent="☰"; sidebarOpen=false;
+    if(mobile){ ov.classList.remove("show"); }
+    else { mw.style.marginLeft = "0"; }
+    // OPEN icon = three lines
+    btn.innerHTML = "&#9776;";
+    sidebarOpen = false;
   } else {
     sb.classList.remove("closed");
-    if(mobile) ov.classList.add("show");
-    else mw.style.marginLeft="var(--sidebar-w)";
-    btn.textContent="✕"; sidebarOpen=true;
+    if(mobile){ ov.classList.add("show"); }
+    else { mw.style.marginLeft = "var(--sidebar-w)"; }
+    // CLOSE icon = clear X
+    btn.innerHTML = "&#10005;";
+    sidebarOpen = true;
   }
 }
-function closeSidebar(){ if(sidebarOpen) toggleSidebar(); }
+
+function closeSidebar(){
+  if(sidebarOpen) toggleSidebar();
+}
 
 function initLayout(){
-  const btn=document.getElementById("toggleBtn");
-  if(window.innerWidth<=960){
+  var btn = document.getElementById("toggleBtn");
+  if(window.innerWidth <= 960){
     document.getElementById("sidebar").classList.add("closed");
-    document.getElementById("mainWrap").style.marginLeft="0";
-    sidebarOpen=false; btn.textContent="☰";
+    document.getElementById("mainWrap").style.marginLeft = "0";
+    sidebarOpen = false;
+    btn.innerHTML = "&#9776;";
   } else {
     document.getElementById("sidebar").classList.remove("closed");
-    document.getElementById("mainWrap").style.marginLeft="var(--sidebar-w)";
-    sidebarOpen=true; btn.textContent="✕";
+    document.getElementById("mainWrap").style.marginLeft = "var(--sidebar-w)";
+    sidebarOpen = true;
+    btn.innerHTML = "&#10005;";
   }
 }
 initLayout();
-window.addEventListener("resize",initLayout);
+window.addEventListener("resize", initLayout);
 
-// ── ✅ SCROLL BUTTONS — FIXED ────────────────
-// Wait for DOM then wire up buttons directly
-document.addEventListener("DOMContentLoaded", function(){
-  const tbl = document.getElementById("tnaScroll");
-
-  function scrollLeft()  { tbl.scrollBy({ left:-400, behavior:"smooth" }); }
-  function scrollRight() { tbl.scrollBy({ left: 400, behavior:"smooth" }); }
-
-  document.getElementById("btnLeft1").addEventListener("click",  scrollLeft);
-  document.getElementById("btnRight1").addEventListener("click", scrollRight);
-  document.getElementById("btnLeft2").addEventListener("click",  scrollLeft);
-  document.getElementById("btnRight2").addEventListener("click", scrollRight);
-});
-
-// ── Date ──────────────────────────────────────
+// ── DATE ─────────────────────────────────────
 document.getElementById("dateEl").textContent =
   new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
 </script>
