@@ -409,7 +409,12 @@ function renderKPI() {
     const done = STAGES.filter(s => o[s.field+"Actual"]).length;
     const prog = Math.round(done/STAGES.length*100);
     progSum += prog;
-    totalQty += Number(o.totalQty||o.qty||0);
+    totalQty += Number(
+  o.orderQty ||
+  o.totalQty ||
+  o.qty ||
+  0
+);
     if (prog===100) completed++;
     else if (prog>0) running++;
     // check any delay
