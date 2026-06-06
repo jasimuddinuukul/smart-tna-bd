@@ -7,382 +7,157 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-
 :root {
-  --green:     #00ff99;
-  --bg:        #080e1a;
-  --sidebar:   #060c17;
-  --card:      #0e1829;
-  --card2:     #111e30;
-  --border:    #1e3048;
-  --muted:     #4a6080;
-  --text:      #c8d8e8;
-  --sidebar-w: 270px;
+  --green:#00ff99; --bg:#080e1a; --sidebar:#060c17;
+  --card:#0e1829; --card2:#111e30; --border:#1e3048;
+  --muted:#4a6080; --text:#c8d8e8; --sidebar-w:270px;
 }
+body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; font-weight:500; display:flex; min-height:100vh; overflow-x:hidden; }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 500;
-  display: flex;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ═══════════════════ SIDEBAR ═══════════════════ */
-.sidebar {
-  width: var(--sidebar-w);
-  min-width: var(--sidebar-w);
-  background: var(--sidebar);
-  height: 100vh;
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 1100;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--border);
-  transform: translateX(0);
-  transition: transform 0.32s cubic-bezier(.4,0,.2,1);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-.sidebar.closed {
-  transform: translateX(calc(-1 * var(--sidebar-w)));
-}
-.sb-head {
-  padding: 20px 16px 14px;
-  border-bottom: 1px solid var(--border);
-  text-align: center;
-}
-.sb-logo {
-  width: 62px; height: 62px;
-  border-radius: 50%;
-  border: 2px solid var(--green);
-  background: #0e1829;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 10px;
-  font-size: 10px; font-weight: 700;
-  color: var(--green);
-  box-shadow: 0 0 14px #00ff9930;
-}
-.sb-company {
-  font-size: 12px; font-weight: 700;
-  color: #fff; letter-spacing: .4px; line-height: 1.4;
-}
-.sb-erp {
-  font-size: 10px; color: var(--green);
-  letter-spacing: 1.5px; margin-top: 3px;
-  font-family: 'Share Tech Mono', monospace;
-}
-.sb-nav { padding: 8px 8px 16px; flex: 1; }
-.sb-label {
-  font-size: 9px; letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: 12px 10px 4px;
-  font-family: 'Share Tech Mono', monospace;
-  font-weight: 400;
-}
-.sb-link {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px;
-  border-radius: 8px;
-  color: #7a9abf;
-  text-decoration: none;
-  font-size: 13px; font-weight: 600;
-  margin-bottom: 2px;
-  transition: all 0.18s ease;
-  border: 1px solid transparent;
-  cursor: pointer;
-  letter-spacing: .2px;
-}
+/* ══ SIDEBAR ══ */
+.sidebar { width:var(--sidebar-w); min-width:var(--sidebar-w); background:var(--sidebar); height:100vh; position:fixed; top:0; left:0; z-index:1100; display:flex; flex-direction:column; border-right:1px solid var(--border); transform:translateX(0); transition:transform 0.32s cubic-bezier(.4,0,.2,1); overflow-y:auto; overflow-x:hidden; }
+.sidebar.closed { transform:translateX(calc(-1 * var(--sidebar-w))); }
+.sb-head { padding:20px 16px 14px; border-bottom:1px solid var(--border); text-align:center; }
+.sb-logo { width:62px; height:62px; border-radius:50%; border:2px solid var(--green); background:#0e1829; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:10px; font-weight:700; color:var(--green); box-shadow:0 0 14px #00ff9930; }
+.sb-company { font-size:12px; font-weight:700; color:#fff; letter-spacing:.4px; line-height:1.4; }
+.sb-erp { font-size:10px; color:var(--green); letter-spacing:1.5px; margin-top:3px; font-family:'Share Tech Mono',monospace; }
+.sb-nav { padding:8px 8px 16px; flex:1; }
+.sb-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:12px 10px 4px; font-family:'Share Tech Mono',monospace; }
+.sb-link { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:#7a9abf; text-decoration:none; font-size:13px; font-weight:600; margin-bottom:2px; transition:all 0.18s; border:1px solid transparent; cursor:pointer; }
 .sb-link:hover { background:#142030; color:#fff; border-color:var(--border); }
-.sb-link.active {
-  background: linear-gradient(135deg,#00ff991a,#00ff9908);
-  color: var(--green); border-color:#00ff9930;
-}
-.sb-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
-.sb-badge {
-  margin-left: auto;
-  font-size: 9px; padding: 1px 6px;
-  border-radius: 10px; font-weight: 700;
-  color: #fff;
-}
-.sb-badge.g  { background:#16a34a; }
-.sb-badge.bl { background:#2563eb; }
-.sb-foot { padding: 10px 8px; border-top: 1px solid var(--border); }
+.sb-link.active { background:linear-gradient(135deg,#00ff991a,#00ff9908); color:var(--green); border-color:#00ff9930; }
+.sb-icon { font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+.sb-badge { margin-left:auto; font-size:9px; padding:1px 6px; border-radius:10px; font-weight:700; color:#fff; }
+.sb-badge.g { background:#16a34a; } .sb-badge.bl { background:#2563eb; }
+.sb-foot { padding:10px 8px; border-top:1px solid var(--border); }
 
-/* ═══════════════════ MAIN ═══════════════════ */
-.main-wrap {
-  flex: 1;
-  margin-left: var(--sidebar-w);
-  transition: margin-left 0.32s cubic-bezier(.4,0,.2,1);
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-}
-.overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.65); z-index: 1050;
-  backdrop-filter: blur(2px);
-}
-.overlay.show { display: block; }
+/* ══ MAIN ══ */
+.main-wrap { flex:1; margin-left:var(--sidebar-w); transition:margin-left 0.32s cubic-bezier(.4,0,.2,1); min-height:100vh; display:flex; flex-direction:column; }
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:1050; backdrop-filter:blur(2px); }
+.overlay.show { display:block; }
 
-/* ═══════════════════ TOPBAR ═══════════════════ */
-.topbar {
-  background: #090f1c;
-  border-bottom: 1px solid var(--border);
-  padding: 0 20px; height: 52px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 900; flex-shrink: 0;
-}
-.tb-left { display: flex; align-items: center; gap: 12px; }
-.toggle-btn {
-  width: 36px; height: 36px;
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--green); font-size: 20px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s; flex-shrink: 0;
-}
-.toggle-btn:hover { background: #1a2e44; }
-.tb-title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: .4px; }
-.tb-right { display: flex; align-items: center; gap: 10px; }
+/* ══ TOPBAR ══ */
+.topbar { background:#090f1c; border-bottom:1px solid var(--border); padding:0 20px; height:52px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:900; flex-shrink:0; }
+.tb-left { display:flex; align-items:center; gap:12px; }
+.toggle-btn { width:36px; height:36px; background:var(--card2); border:1px solid var(--border); border-radius:8px; color:var(--green); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s; flex-shrink:0; }
+.toggle-btn:hover { background:#1a2e44; }
+.tb-title { font-size:15px; font-weight:700; color:#fff; letter-spacing:.4px; }
+.tb-right { display:flex; align-items:center; gap:10px; }
 .tb-date { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--muted); }
 .tb-user { background:var(--green); color:#000; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; }
 
-/* ═══════════════════ CONTENT ═══════════════════ */
-.content { padding: 18px; flex: 1; }
+/* ══ CONTENT ══ */
+.content { padding:18px; flex:1; }
 
-/* ═══════════════════ HERO HEADER ═══════════════════ */
-.hero-header {
-  background: linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 30px 24px 24px;
-  text-align: center;
-  margin-bottom: 18px;
-  position: relative; overflow: hidden;
-}
-.hero-header::before {
-  content:''; position:absolute;
-  top:-60px; left:50%; transform:translateX(-50%);
-  width:320px; height:320px;
-  background:radial-gradient(circle,#00ff9910 0%,transparent 70%);
-  pointer-events:none;
-}
+/* ══ HERO ══ */
+.hero-header { background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%); border:1px solid var(--border); border-radius:16px; padding:28px 24px 22px; text-align:center; margin-bottom:18px; position:relative; overflow:hidden; }
+.hero-header::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:320px; height:320px; background:radial-gradient(circle,#00ff9910 0%,transparent 70%); pointer-events:none; }
+.hero-arabic { font-family:'Amiri',serif; font-size:52px; color:var(--green); line-height:1.1; margin-bottom:16px; text-shadow:0 0 30px #00ff9960,0 0 60px #00ff9930; direction:rtl; display:block; }
+.hero-divider { width:140px; height:1px; background:linear-gradient(90deg,transparent,var(--green),transparent); margin:0 auto 16px; }
+.hero-company { font-size:34px; font-weight:700; color:#fff; letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; }
+.hero-erp { font-family:'Share Tech Mono',monospace; font-size:17px; color:var(--green); letter-spacing:4px; text-transform:uppercase; }
 
-/* ── Arabic Bismillah — ONE straight line ── */
-.hero-arabic {
-  font-family: 'Amiri', serif;
-  font-size: 54px;
-  color: var(--green);
-  line-height: 1;
-  margin-bottom: 18px;
-  text-shadow: 0 0 30px #00ff9960, 0 0 60px #00ff9930;
-  direction: rtl;
-  unicode-bidi: bidi-override;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
-}
-
-.hero-divider {
-  width: 140px; height: 1px;
-  background: linear-gradient(90deg,transparent,var(--green),transparent);
-  margin: 0 auto 18px;
-}
-.hero-company {
-  font-size: 36px; font-weight: 700;
-  color: #fff; letter-spacing: 2px;
-  text-transform: uppercase; margin-bottom: 5px;
-}
-.hero-erp {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 18px; color: var(--green);
-  letter-spacing: 4px; text-transform: uppercase;
-  font-weight: 400;
-}
-
-/* ═══════════════════ KPI CARDS ═══════════════════ */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px; margin-bottom: 18px;
-}
-.kpi-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 12px; text-align: center;
-  transition: border-color .2s, transform .2s;
-  cursor: default;
-}
+/* ══ KPI CARDS ══ */
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:12px; margin-bottom:18px; }
+.kpi-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 12px; text-align:center; transition:border-color .2s,transform .2s; }
 .kpi-card:hover { border-color:#00ff9940; transform:translateY(-2px); }
-.kpi-card h3 {
-  font-size: 10px; color: var(--muted);
-  text-transform: uppercase; letter-spacing: .8px;
-  margin-bottom: 8px; font-weight: 600;
-}
-.kpi-card h1 {
-  font-size: 24px; color: var(--green);
-  font-family: 'Share Tech Mono', monospace; font-weight: 400;
-}
-.kpi-card.red   h1 { color:#f87171; }
-.kpi-card.amber h1 { color:#fbbf24; }
-.kpi-card.blue  h1 { color:#60a5fa; }
+.kpi-card h3 { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-bottom:8px; font-weight:600; }
+.kpi-card h1 { font-size:22px; color:var(--green); font-family:'Share Tech Mono',monospace; font-weight:400; }
+.kpi-card.red h1 { color:#f87171; } .kpi-card.amber h1 { color:#fbbf24; } .kpi-card.blue h1 { color:#60a5fa; }
 
-/* ═══════════════════ TOP GRID ═══════════════════ */
-.top-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 18px; margin-bottom: 18px;
-}
-.circle-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 20px 16px; text-align: center;
-}
+/* ══ TOP GRID ══ */
+.top-grid { display:grid; grid-template-columns:280px 1fr; gap:18px; margin-bottom:18px; }
+.circle-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 16px; text-align:center; }
 .circle-card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:4px; }
 .circle-card h3 { color:var(--muted); font-size:11px; margin-bottom:12px; font-weight:500; }
-.prog-ring {
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  border: 14px solid var(--green);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 38px; font-weight: 700;
-  color: var(--green);
-  margin: 0 auto 12px;
-  box-shadow: 0 0 24px #00ff9940, 0 0 48px #00ff9920;
-  font-family: 'Share Tech Mono', monospace;
-  transition: all 0.5s ease;
-}
-.prog-stat { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 500; }
-.prog-stat b { color: #fff; font-weight: 700; }
-
-.month-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 20px;
-}
+.prog-ring { width:155px; height:155px; border-radius:50%; border:14px solid var(--green); display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:700; color:var(--green); margin:0 auto 12px; box-shadow:0 0 24px #00ff9940,0 0 48px #00ff9920; font-family:'Share Tech Mono',monospace; }
+.prog-stat { font-size:13px; color:var(--muted); margin-top:4px; font-weight:500; }
+.prog-stat b { color:#fff; font-weight:700; }
+.month-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px; }
 .month-card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:14px; }
-.mbar {
-  padding: 12px 16px; border-radius: 9px;
-  font-size: 14px; font-weight: 700;
-  margin-bottom: 10px; letter-spacing: .2px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.mbar span.pct {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 16px; font-weight: 400;
-}
+.mbar { padding:12px 16px; border-radius:9px; font-size:14px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
+.mbar .pct { font-family:'Share Tech Mono',monospace; font-size:15px; font-weight:400; }
 .mbar.g { background:#16a34a18; border:1px solid #16a34a44; color:#4ade80; }
 .mbar.o { background:#f59e0b18; border:1px solid #f59e0b44; color:#fbbf24; }
 .mbar.s { background:#64748b18; border:1px solid #64748b44; color:#94a3b8; }
 .mbar.r { background:#dc262618; border:1px solid #dc262644; color:#f87171; }
 
-/* ═══════════════════ CARD ═══════════════════ */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 18px;
-  margin-bottom: 18px;
-}
+/* ══ CARD ══ */
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:18px; }
 .card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:14px; }
 
-/* ═══════════════════ SCROLL TABLE WRAPPER ═══════════════════ */
-.table-scroll-wrap {
-  position: relative;
+/* ══ TABLE SCROLL — KEY FIX ══ */
+.tbl-wrap {
+  width:100%;
+  overflow-x:auto;          /* ← this makes the scroll work */
+  overflow-y:visible;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  border-radius:8px;
+  display:block;
 }
-.table-container {
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  border-radius: 8px;
-}
-/* Custom scrollbar */
-.table-container::-webkit-scrollbar { height: 6px; }
-.table-container::-webkit-scrollbar-track { background: #0a1220; border-radius: 3px; }
-.table-container::-webkit-scrollbar-thumb { background: #1e3048; border-radius: 3px; }
-.table-container::-webkit-scrollbar-thumb:hover { background: var(--green); }
+.tbl-wrap::-webkit-scrollbar { height:7px; }
+.tbl-wrap::-webkit-scrollbar-track { background:#0a1220; border-radius:4px; }
+.tbl-wrap::-webkit-scrollbar-thumb { background:#2a4060; border-radius:4px; }
+.tbl-wrap::-webkit-scrollbar-thumb:hover { background:var(--green); }
 
-/* LEFT / RIGHT scroll buttons */
-.scroll-btns {
-  display: flex; align-items: center; justify-content: center;
-  gap: 16px; margin-top: 10px;
+/* ◀ ▶ Scroll buttons */
+.scroll-bar {
+  display:flex; align-items:center; justify-content:center;
+  gap:14px; margin-top:10px;
 }
-.scroll-btn {
-  background: var(--card2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--green);
-  padding: 7px 20px;
-  font-size: 18px; cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-  font-weight: 700;
+.scr-btn {
+  background:var(--card2); border:1px solid var(--border);
+  border-radius:8px; color:var(--green);
+  padding:7px 22px; font-size:15px; font-weight:700;
+  cursor:pointer; transition:background .15s,border-color .15s;
+  font-family:'Rajdhani',sans-serif; letter-spacing:.5px;
+  user-select:none;
 }
-.scroll-btn:hover { background:#1a2e44; border-color:var(--green); }
-.scroll-label { font-size:11px; color:var(--muted); font-family:'Share Tech Mono',monospace; }
+.scr-btn:hover { background:#1a2e44; border-color:var(--green); }
+.scr-hint { font-size:11px; color:var(--muted); font-family:'Share Tech Mono',monospace; }
 
-/* ═══════════════════ TABLE ═══════════════════ */
-table { width:100%; border-collapse:collapse; }
-th, td {
-  border: 1px solid var(--border);
-  padding: 9px 11px;
-  text-align: center;
-  font-size: 13px;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 500;
-  white-space: nowrap;
-}
-th {
-  background: #090f1c;
-  color: var(--green);
-  font-size: 11px; text-transform: uppercase;
-  letter-spacing: .7px; font-weight: 700;
-}
+/* ══ TABLE ══ */
+table { border-collapse:collapse; }
+th,td { border:1px solid var(--border); padding:9px 12px; text-align:center; font-size:13px; font-family:'Rajdhani',sans-serif; font-weight:500; white-space:nowrap; }
+th { background:#090f1c; color:var(--green); font-size:11px; text-transform:uppercase; letter-spacing:.7px; font-weight:700; }
 tr:hover td { background:#ffffff04; }
 
-/* ═══════════════════ SEARCH ═══════════════════ */
-.search-box {
-  width: 100%; padding: 11px 16px;
-  background: #060e1a;
-  border: 1px solid var(--border);
-  border-radius: 10px; color: #fff;
-  font-size: 14px; font-family:'Rajdhani',sans-serif;
-  font-weight: 500; outline: none;
-  transition: border-color .2s;
-}
-.search-box:focus { border-color: var(--green); }
-.search-box::placeholder { color: var(--muted); }
+/* Full width tables */
+.full-tbl { width:100%; }
+/* Wide tracker table */
+.wide-tbl { min-width:1600px; }
 
-/* ═══════════════════ BADGES ═══════════════════ */
-.b {
-  display: inline-block; padding: 3px 9px;
-  border-radius: 20px; font-size: 11px;
-  font-weight: 700; letter-spacing: .2px;
-}
+/* ══ SEARCH ══ */
+.search-box { width:100%; padding:11px 16px; background:#060e1a; border:1px solid var(--border); border-radius:10px; color:#fff; font-size:14px; font-family:'Rajdhani',sans-serif; font-weight:500; outline:none; transition:border-color .2s; }
+.search-box:focus { border-color:var(--green); }
+.search-box::placeholder { color:var(--muted); }
+
+/* ══ BADGES ══ */
+.b { display:inline-block; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:.2px; }
 .b-done { background:#16a34a22; color:#4ade80; border:1px solid #16a34a55; }
 .b-run  { background:#f59e0b22; color:#fbbf24; border:1px solid #f59e0b55; }
 .b-pend { background:#64748b22; color:#94a3b8; border:1px solid #64748b55; }
 .b-del  { background:#dc262622; color:#f87171; border:1px solid #dc262655; }
 
-/* ═══════════════════ RESPONSIVE ═══════════════════ */
-@media (max-width: 960px) {
-  .sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
-  .sidebar.open { transform: translateX(0); }
-  .sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
-  .main-wrap { margin-left: 0 !important; }
-  .top-grid { grid-template-columns: 1fr; }
+/* ══ DEBUG BOX ══ */
+#debugBox { display:none; background:#0a1525; border:1px solid #dc2626; border-radius:10px; padding:14px; margin-bottom:16px; font-family:'Share Tech Mono',monospace; font-size:11px; color:#f87171; max-height:200px; overflow-y:auto; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width:960px) {
+  .sidebar { transform:translateX(calc(-1 * var(--sidebar-w))); }
+  .sidebar.open { transform:translateX(0); }
+  .sidebar.closed { transform:translateX(calc(-1 * var(--sidebar-w))); }
+  .main-wrap { margin-left:0 !important; }
+  .top-grid { grid-template-columns:1fr; }
 }
-@media (max-width: 600px) {
-  .kpi-grid { grid-template-columns: repeat(2,1fr); }
-  .hero-arabic { font-size: 34px; }
-  .hero-company { font-size: 22px; }
-  .hero-erp { font-size: 13px; letter-spacing: 2px; }
-  .tb-date { display: none; }
-  .content { padding: 12px; }
+@media (max-width:600px) {
+  .kpi-grid { grid-template-columns:repeat(2,1fr); }
+  .hero-arabic { font-size:32px; }
+  .hero-company { font-size:20px; }
+  .hero-erp { font-size:12px; letter-spacing:2px; }
+  .tb-date { display:none; }
+  .content { padding:12px; }
 }
 </style>
 </head>
@@ -390,93 +165,43 @@ tr:hover td { background:#ffffff04; }
 
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<!-- ══ SIDEBAR ══ -->
 <div class="sidebar" id="sidebar">
-
   <div class="sb-head">
     <div class="sb-logo">LOGO</div>
     <div class="sb-company">INNOVATIVE KNITEX LTD</div>
     <div class="sb-erp">SMART TNA BD ERP</div>
   </div>
-
   <nav class="sb-nav">
-
     <div class="sb-label">— Main —</div>
-
-    <a class="sb-link active" href="dashboard.html">
-      <span class="sb-icon">🏠</span> Dashboard
-    </a>
-    <a class="sb-link" href="orders.html">
-      <span class="sb-icon">📦</span> Order Entry
-      <span class="sb-badge g">NEW</span>
-    </a>
-    <a class="sb-link" href="tna-management.html">
-      <span class="sb-icon">📋</span> TNA Management
-    </a>
-
+    <a class="sb-link active" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
+    <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
+    <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
     <div class="sb-label">— Admin —</div>
-
-    <a class="sb-link" href="admin.html">
-      <span class="sb-icon">👑</span> Admin Panel
-      <span class="sb-badge bl">ADMIN</span>
-    </a>
-    <a class="sb-link" href="merchandising.html">
-      <span class="sb-icon">👔</span> Merchandising
-    </a>
-
+    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
+    <a class="sb-link" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
     <div class="sb-label">— Production —</div>
-
-    <a class="sb-link" href="sample.html">
-      <span class="sb-icon">🧵</span> Sample
-    </a>
-    <a class="sb-link" href="knitting.html">
-      <span class="sb-icon">🧶</span> Knitting
-    </a>
-    <a class="sb-link" href="dyeing.html">
-      <span class="sb-icon">🎨</span> Dyeing
-    </a>
-    <a class="sb-link" href="cutting.html">
-      <span class="sb-icon">✂️</span> Cutting
-    </a>
-    <a class="sb-link" href="print-emb.html">
-      <span class="sb-icon">🖨️</span> Print & Embroidery
-    </a>
-    <a class="sb-link" href="sewing.html">
-      <span class="sb-icon">🪡</span> Sewing
-    </a>
-    <a class="sb-link" href="washing.html">
-      <span class="sb-icon">💧</span> Washing
-    </a>
-    <a class="sb-link" href="finishing.html">
-      <span class="sb-icon">📦</span> Finishing
-    </a>
-    <a class="sb-link" href="shipment.html">
-      <span class="sb-icon">🚢</span> Shipment
-    </a>
-
+    <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
+    <a class="sb-link" href="knitting.html"><span class="sb-icon">🧶</span> Knitting</a>
+    <a class="sb-link" href="dyeing.html"><span class="sb-icon">🎨</span> Dyeing</a>
+    <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
+    <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
+    <a class="sb-link" href="sewing.html"><span class="sb-icon">🪡</span> Sewing</a>
+    <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
+    <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
+    <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
     <div class="sb-label">— Management —</div>
-
-    <a class="sb-link" href="reports.html">
-      <span class="sb-icon">📊</span> Reports
-    </a>
-    <a class="sb-link" href="settings.html">
-      <span class="sb-icon">⚙️</span> Settings
-    </a>
-
+    <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
+    <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
   </nav>
-
   <div class="sb-foot">
-    <a class="sb-link" href="login.html" style="color:#f87171;">
-      <span class="sb-icon">🚪</span> Logout
-    </a>
+    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
   </div>
-
 </div>
 
-<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<!-- ══ MAIN ══ -->
 <div class="main-wrap" id="mainWrap">
 
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="tb-left">
       <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
@@ -490,54 +215,31 @@ tr:hover td { background:#ffffff04; }
 
   <div class="content">
 
-    <!-- HERO HEADER -->
+    <!-- HERO -->
     <div class="hero-header">
-      <!-- Arabic Bismillah — ONE straight line -->
-      <div class="hero-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <span class="hero-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span>
       <div class="hero-divider"></div>
       <div class="hero-company">Innovative Knitex Ltd</div>
       <div class="hero-erp">◈ SMART TNA BD — ERP DASHBOARD ◈</div>
     </div>
 
-    <!-- KPI SUMMARY CARDS — all filled from Firebase -->
+    <!-- DEBUG BOX — shows if any order has qty=0 -->
+    <div id="debugBox"></div>
+
+    <!-- KPI CARDS -->
     <div class="kpi-grid">
-      <div class="kpi-card">
-        <h3>Total Orders</h3>
-        <h1 id="kTotalOrders">—</h1>
-      </div>
-      <div class="kpi-card blue">
-        <h3>Total Qty (PCS)</h3>
-        <h1 id="kTotalQty">—</h1>
-      </div>
-      <div class="kpi-card amber">
-        <h3>Running Orders</h3>
-        <h1 id="kRunning">—</h1>
-      </div>
-      <div class="kpi-card">
-        <h3>Completed Orders</h3>
-        <h1 id="kCompleted">—</h1>
-      </div>
-      <div class="kpi-card red">
-        <h3>Delayed Orders</h3>
-        <h1 id="kDelayed">—</h1>
-      </div>
-      <div class="kpi-card amber">
-        <h3>This Month Ship (PCS)</h3>
-        <h1 id="kThisMonth">—</h1>
-      </div>
-      <div class="kpi-card blue">
-        <h3>Next Month Book (PCS)</h3>
-        <h1 id="kNextMonth">—</h1>
-      </div>
-      <div class="kpi-card">
-        <h3>Avg Lead Time</h3>
-        <h1 id="kAvgLead">—</h1>
-      </div>
+      <div class="kpi-card"><h3>Total Orders</h3><h1 id="kTotalOrders">…</h1></div>
+      <div class="kpi-card blue"><h3>Total Qty (PCS)</h3><h1 id="kTotalQty">…</h1></div>
+      <div class="kpi-card amber"><h3>Running Orders</h3><h1 id="kRunning">…</h1></div>
+      <div class="kpi-card"><h3>Completed Orders</h3><h1 id="kCompleted">…</h1></div>
+      <div class="kpi-card red"><h3>Delayed Orders</h3><h1 id="kDelayed">…</h1></div>
+      <div class="kpi-card amber"><h3>This Month Ship</h3><h1 id="kThisMonth">…</h1></div>
+      <div class="kpi-card blue"><h3>Next Month Book</h3><h1 id="kNextMonth">…</h1></div>
+      <div class="kpi-card"><h3>Avg Lead Time</h3><h1 id="kAvgLead">…</h1></div>
     </div>
 
     <!-- PROGRESS + MONTHLY -->
     <div class="top-grid">
-
       <div class="circle-card">
         <h2>📦 Total Order Progress</h2>
         <h3>Running Factory Progress</h3>
@@ -546,46 +248,28 @@ tr:hover td { background:#ffffff04; }
         <p class="prog-stat">Running &nbsp;&nbsp;: <b id="runningCount">0</b></p>
         <p class="prog-stat">Delayed &nbsp;&nbsp;: <b id="delayedCount" style="color:#f87171;">0</b></p>
       </div>
-
       <div class="month-card">
         <h2>📅 Monthly Shipment Progress</h2>
-        <div class="mbar g">
-          <span>✅ THIS MONTH (Shipment)</span>
-          <span class="pct" id="m0pct">0 PCS</span>
-        </div>
-        <div class="mbar o">
-          <span>🔄 NEXT MONTH (Booked)</span>
-          <span class="pct" id="m1pct">0 PCS</span>
-        </div>
-        <div class="mbar s">
-          <span>📌 NEXT +1 MONTH</span>
-          <span class="pct" id="m2pct">0 PCS</span>
-        </div>
-        <div class="mbar r">
-          <span>⚠️ NEXT +2 MONTH</span>
-          <span class="pct" id="m3pct">0 PCS</span>
-        </div>
+        <div class="mbar g"><span>✅ THIS MONTH (Shipment)</span><span class="pct" id="m0pct">0 PCS</span></div>
+        <div class="mbar o"><span>🔄 NEXT MONTH (Booked)</span><span class="pct" id="m1pct">0 PCS</span></div>
+        <div class="mbar s"><span>📌 NEXT +1 MONTH</span><span class="pct" id="m2pct">0 PCS</span></div>
+        <div class="mbar r"><span>⚠️ NEXT +2 MONTH</span><span class="pct" id="m3pct">0 PCS</span></div>
       </div>
-
     </div>
 
     <!-- SEARCH -->
     <div class="card">
       <h2>🔍 Smart Search</h2>
-      <input class="search-box" type="text" id="searchInput"
-        placeholder="Search Buyer / IKL No / Style / Merchandiser...">
+      <input class="search-box" type="text" id="searchInput" placeholder="Search Buyer / IKL No / Style / Merchandiser...">
     </div>
 
     <!-- DAILY PRODUCTION -->
     <div class="card">
       <h2>🎯 Daily Production</h2>
-      <div class="table-container">
-        <table>
+      <div class="tbl-wrap">
+        <table class="full-tbl">
           <thead>
-            <tr>
-              <th>Department</th><th>Target</th><th>Actual</th>
-              <th>Balance</th><th>Efficiency</th>
-            </tr>
+            <tr><th>Department</th><th>Target</th><th>Actual</th><th>Balance</th><th>Efficiency</th></tr>
           </thead>
           <tbody>
             <tr><td><b>Knitting</b></td><td>20,000 KG</td><td>18,500 KG</td><td>1,500 KG</td><td><span class="b b-run">92%</span></td></tr>
@@ -602,163 +286,171 @@ tr:hover td { background:#ffffff04; }
     <!-- MERCHANDISER PERFORMANCE -->
     <div class="card">
       <h2>👔 Merchandiser Performance</h2>
-      <div class="table-container">
-        <table>
+      <div class="tbl-wrap">
+        <table class="full-tbl">
           <thead>
-            <tr>
-              <th>Merchandiser</th><th>Total Orders</th>
-              <th>Total Qty</th><th>Running</th><th>Completion %</th>
-            </tr>
+            <tr><th>Merchandiser</th><th>Total Orders</th><th>Total Qty</th><th>Running</th><th>Completion %</th></tr>
           </thead>
           <tbody id="merchTable"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- IKL TRACKER — with left/right scroll buttons -->
+    <!-- IKL TRACKER -->
     <div class="card">
       <h2>📦 IKL Wise Progress Tracker</h2>
 
-      <div class="table-scroll-wrap">
-        <div class="table-container" id="tnaScroll">
-          <table style="min-width:1600px;">
-            <thead>
-              <tr>
-                <th>Buyer</th><th>IKL No</th><th>Style No</th>
-                <th>Total Qty</th><th>Order Date</th><th>Shipment Date</th>
-                <th>Lead Time</th><th>Merchandiser</th>
-                <th>Merchandising</th><th>Knitting</th><th>Dyeing</th>
-                <th>Sample</th><th>Laboratory</th><th>Cutting</th>
-                <th>Print & Emb</th><th>Sewing</th><th>Washing</th>
-                <th>Finishing</th><th>Shipment</th>
-              </tr>
-            </thead>
-            <tbody id="tnaBody"></tbody>
-          </table>
-        </div>
+      <!-- ◀ ▶ Buttons — ABOVE and BELOW table -->
+      <div class="scroll-bar" style="margin-bottom:10px;">
+        <button class="scr-btn" id="btnLeft1">◀ Left</button>
+        <span class="scr-hint">← Scroll Table Left / Right →</span>
+        <button class="scr-btn" id="btnRight1">Right ▶</button>
+      </div>
 
-        <!-- ◀ ▶ SCROLL BUTTONS -->
-        <div class="scroll-btns">
-          <button class="scroll-btn" onclick="scrollTable(-300)">◀ Left</button>
-          <span class="scroll-label">← Scroll Table →</span>
-          <button class="scroll-btn" onclick="scrollTable(300)">Right ▶</button>
-        </div>
+      <div class="tbl-wrap" id="tnaScroll">
+        <table class="wide-tbl">
+          <thead>
+            <tr>
+              <th>Buyer</th><th>IKL No</th><th>Style No</th>
+              <th>Total Qty</th><th>Order Date</th><th>Shipment Date</th>
+              <th>Lead Time</th><th>Merchandiser</th>
+              <th>Merchandising</th><th>Knitting</th><th>Dyeing</th>
+              <th>Sample</th><th>Laboratory</th><th>Cutting</th>
+              <th>Print & Emb</th><th>Sewing</th><th>Washing</th>
+              <th>Finishing</th><th>Shipment</th>
+            </tr>
+          </thead>
+          <tbody id="tnaBody"></tbody>
+        </table>
+      </div>
+
+      <div class="scroll-bar" style="margin-top:10px;">
+        <button class="scr-btn" id="btnLeft2">◀ Left</button>
+        <span class="scr-hint">← Scroll Table Left / Right →</span>
+        <button class="scr-btn" id="btnRight2">Right ▶</button>
       </div>
     </div>
 
   </div><!-- /content -->
 </div><!-- /main-wrap -->
 
-<!-- ═══════════════════ FIREBASE ═══════════════════ -->
+<!-- ══ FIREBASE ══ -->
 <script type="module">
-
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const cfg = {
-  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain: "smart-tna-bd.firebaseapp.com",
-  projectId: "smart-tna-bd",
-  storageBucket: "smart-tna-bd.firebasestorage.app",
-  messagingSenderId: "372049573207",
-  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain:"smart-tna-bd.firebaseapp.com",
+  projectId:"smart-tna-bd",
+  storageBucket:"smart-tna-bd.firebasestorage.app",
+  messagingSenderId:"372049573207",
+  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
 };
-
 const db = getFirestore(initializeApp(cfg));
 
-/* ── badge helper ── */
+/* ── Read qty from ALL possible field names ── */
+function getQty(d) {
+  /* Try every possible field name Firebase might have */
+  const candidates = [
+    d.totalQty, d.total_qty, d.TotalQty, d.TOTALQTY,
+    d.qty,      d.Qty,       d.QTY,
+    d.quantity, d.Quantity,  d.QUANTITY,
+    d.orderQty, d.order_qty, d.OrderQty,
+    d.pcs,      d.PCS,       d.pieces
+  ];
+  for (const v of candidates) {
+    if (v !== undefined && v !== null && v !== "") {
+      const n = parseFloat(String(v).replace(/,/g, "").trim());
+      if (!isNaN(n) && n > 0) return n;
+    }
+  }
+  return 0;
+}
+
+/* ── Shipment date from ALL possible field names ── */
+function getShipTxt(d) {
+  return d.shipdate || d.shipmentDate || d.shipmentdate ||
+         d.ShipmentDate || d.shipDate || d.ship_date ||
+         d.deliveryDate || d.delivery_date || "";
+}
+
+/* ── Status badge ── */
 function badge(s) {
-  if (!s || s === "Pending")   return `<span class="b b-pend">Pending</span>`;
-  if (s === "Completed")       return `<span class="b b-done">Completed</span>`;
-  if (s === "Running")         return `<span class="b b-run">Running</span>`;
-  if (s === "Delayed")         return `<span class="b b-del">Delayed</span>`;
+  if (!s || s==="Pending")  return `<span class="b b-pend">Pending</span>`;
+  if (s==="Completed")      return `<span class="b b-done">Completed</span>`;
+  if (s==="Running")        return `<span class="b b-run">Running</span>`;
+  if (s==="Delayed")        return `<span class="b b-del">Delayed</span>`;
   return `<span class="b b-pend">${s}</span>`;
 }
 
-/* ── get qty from multiple possible field names ── */
-function getQty(d) {
-  const raw = d.totalQty ?? d.qty ?? d.quantity ?? d.Qty ?? d.TotalQty ?? 0;
-  const n = parseFloat(String(raw).replace(/,/g, ""));
-  return isNaN(n) ? 0 : n;
-}
-
-/* ── get shipment date text from multiple possible field names ── */
-function getShipDateTxt(d) {
-  return d.shipdate || d.shipmentDate || d.shipmentdate ||
-         d.ShipmentDate || d.shipDate || "";
-}
-
 async function load() {
-  const snap = await getDocs(collection(db, "orders"));
+  const snap = await getDocs(collection(db,"orders"));
   const body = document.getElementById("tnaBody");
 
   if (snap.empty) {
     body.innerHTML = `<tr><td colspan="19" style="padding:20px;color:#4a6080;">No Orders Found in Firebase</td></tr>`;
+    updateKPI(0,0,0,0,0,0,0,0,[0,0,0,0]);
     return;
   }
 
-  const now  = new Date();
-  const cm   = now.getMonth(), cy = now.getFullYear();
-  const months = [0,1,2,3].map(i => {
-    const m = (cm + i) % 12;
-    const y = cy + Math.floor((cm + i) / 12);
-    return { m, y };
+  const now = new Date();
+  const cm=now.getMonth(), cy=now.getFullYear();
+  const months=[0,1,2,3].map(i=>{
+    const m=(cm+i)%12, y=cy+Math.floor((cm+i)/12);
+    return {m,y};
   });
 
-  let tot=0, totalQty=0, run=0, done=0, late=0, leadSum=0;
-  const mQty = [0,0,0,0];   // this month, next, +2, +3
-  const merch = {};
+  let tot=0,totalQty=0,run=0,done=0,late=0,leadSum=0;
+  const mQty=[0,0,0,0];
+  const merch={};
+  const zeroQtyOrders=[];  // track orders with qty=0 for debug
 
-  snap.forEach(doc => {
-    const d = doc.data();
+  snap.forEach(doc=>{
+    const d=doc.data();
     tot++;
+    const qty=getQty(d);
+    totalQty+=qty;
 
-    /* ── qty fix: try every known field name ── */
-    const qty = getQty(d);
-    totalQty += qty;
-
-    const sdTxt = getShipDateTxt(d);
-    let days = 0;
-    if (d.orderDate && sdTxt) {
-      const a = new Date(d.orderDate), b = new Date(sdTxt);
-      if (!isNaN(a) && !isNaN(b)) days = Math.ceil((b - a) / 864e5);
+    /* Collect debug info for zero-qty orders */
+    if(qty===0){
+      const allKeys=Object.keys(d).join(", ");
+      zeroQtyOrders.push(`IKL:${d.ikl||d.iklNo||"?"} | Fields: ${allKeys}`);
     }
-    leadSum += days;
 
-    const isDone = d.shipmentStatus === "Completed";
-    isDone ? done++ : run++;
+    const sdTxt=getShipTxt(d);
+    let days=0;
+    if(d.orderDate&&sdTxt){
+      const a=new Date(d.orderDate),b=new Date(sdTxt);
+      if(!isNaN(a)&&!isNaN(b)) days=Math.ceil((b-a)/864e5);
+    }
+    leadSum+=days;
 
-    const sd = sdTxt ? new Date(sdTxt) : null;
-    if (sd && !isNaN(sd) && sd < now && !isDone) late++;
+    const isDone=d.shipmentStatus==="Completed";
+    isDone?done++:run++;
+    const sd=sdTxt?new Date(sdTxt):null;
+    if(sd&&!isNaN(sd)&&sd<now&&!isDone) late++;
 
-    /* Monthly qty buckets */
-    if (sd && !isNaN(sd)) {
-      months.forEach((mo, i) => {
-        if (sd.getMonth() === mo.m && sd.getFullYear() === mo.y) {
-          mQty[i] += qty;
-        }
+    if(sd&&!isNaN(sd)){
+      months.forEach((mo,i)=>{
+        if(sd.getMonth()===mo.m&&sd.getFullYear()===mo.y) mQty[i]+=qty;
       });
     }
 
-    /* Merchandiser map */
-    const mn = d.merchandiser || "Unknown";
-    if (!merch[mn]) merch[mn] = { o:0, q:0, r:0 };
-    merch[mn].o++;
-    merch[mn].q += qty;
-    if (!isDone) merch[mn].r++;
+    const mn=d.merchandiser||"Unknown";
+    if(!merch[mn]) merch[mn]={o:0,q:0,r:0};
+    merch[mn].o++; merch[mn].q+=qty;
+    if(!isDone) merch[mn].r++;
 
-    /* Table row */
-    body.innerHTML += `
+    body.innerHTML+=`
     <tr>
       <td><b>${d.buyer||""}</b></td>
       <td>${d.ikl||d.iklNo||""}</td>
       <td>${d.style||d.styleNo||""}</td>
-      <td><b>${qty > 0 ? qty.toLocaleString() : "—"}</b></td>
+      <td><b style="color:${qty>0?'#00ff99':'#f87171'}">${qty>0?qty.toLocaleString():"⚠ 0"}</b></td>
       <td>${d.orderDate||""}</td>
       <td>${sdTxt||"No Date"}</td>
-      <td>${days} Days</td>
+      <td>${days?days+" Days":"—"}</td>
       <td><b>${d.merchandiser||""}</b></td>
       <td>${badge(d.merchandisingStatus)}</td>
       <td>${badge(d.knittingStatus)}</td>
@@ -774,35 +466,20 @@ async function load() {
     </tr>`;
   });
 
-  /* ── Update KPI cards ── */
-  const $ = id => document.getElementById(id);
-  $("kTotalOrders").textContent = tot;
-  $("kTotalQty").textContent    = totalQty > 0 ? totalQty.toLocaleString() : "0";
-  $("kRunning").textContent     = run;
-  $("kCompleted").textContent   = done;
-  $("kDelayed").textContent     = late;
-  $("kThisMonth").textContent   = mQty[0].toLocaleString();
-  $("kNextMonth").textContent   = mQty[1].toLocaleString();
-  $("kAvgLead").textContent     = Math.round(leadSum / (tot || 1)) + " D";
+  /* Show debug box if any order has qty=0 */
+  if(zeroQtyOrders.length>0){
+    const db2=document.getElementById("debugBox");
+    db2.style.display="block";
+    db2.innerHTML=`⚠️ ${zeroQtyOrders.length} order(s) have Qty=0. Firebase field name mismatch:<br><br>${zeroQtyOrders.join("<br>")}`;
+  }
 
-  /* ── Progress circle ── */
-  const pct = tot > 0 ? Math.round((done / tot) * 100) : 0;
-  $("progressCircle").textContent = pct + "%";
-  $("completedCount").textContent = done;
-  $("runningCount").textContent   = run;
-  $("delayedCount").textContent   = late;
+  updateKPI(tot,totalQty,run,done,late,Math.round(leadSum/(tot||1)),mQty[0],mQty[1],mQty);
 
-  /* ── Monthly bars ── */
-  $("m0pct").textContent = mQty[0].toLocaleString() + " PCS";
-  $("m1pct").textContent = mQty[1].toLocaleString() + " PCS";
-  $("m2pct").textContent = mQty[2].toLocaleString() + " PCS";
-  $("m3pct").textContent = mQty[3].toLocaleString() + " PCS";
-
-  /* ── Merchandiser table ── */
-  const mt = document.getElementById("merchTable");
-  for (const [name, v] of Object.entries(merch)) {
-    const c = Math.round(((v.o - v.r) / v.o) * 100);
-    mt.innerHTML += `
+  /* Merchandiser table */
+  const mt=document.getElementById("merchTable");
+  for(const [name,v] of Object.entries(merch)){
+    const c=Math.round(((v.o-v.r)/v.o)*100);
+    mt.innerHTML+=`
     <tr>
       <td><b>${name}</b></td><td>${v.o}</td>
       <td>${v.q.toLocaleString()}</td><td>${v.r}</td>
@@ -811,79 +488,98 @@ async function load() {
   }
 }
 
+function updateKPI(tot,qty,run,done,late,avgLead,mQty0,mQty1,mQty){
+  const $=id=>document.getElementById(id);
+  $("kTotalOrders").textContent = tot;
+  $("kTotalQty").textContent    = qty>0 ? qty.toLocaleString() : "0";
+  $("kRunning").textContent     = run;
+  $("kCompleted").textContent   = done;
+  $("kDelayed").textContent     = late;
+  $("kThisMonth").textContent   = (mQty[0]||0).toLocaleString()+" PCS";
+  $("kNextMonth").textContent   = (mQty[1]||0).toLocaleString()+" PCS";
+  $("kAvgLead").textContent     = avgLead+" D";
+
+  const pct=tot>0?Math.round((done/tot)*100):0;
+  $("progressCircle").textContent = pct+"%";
+  $("completedCount").textContent = done;
+  $("runningCount").textContent   = run;
+  $("delayedCount").textContent   = late;
+
+  $("m0pct").textContent = (mQty[0]||0).toLocaleString()+" PCS";
+  $("m1pct").textContent = (mQty[1]||0).toLocaleString()+" PCS";
+  $("m2pct").textContent = (mQty[2]||0).toLocaleString()+" PCS";
+  $("m3pct").textContent = (mQty[3]||0).toLocaleString()+" PCS";
+}
+
 load();
 
 /* Search */
-document.getElementById("searchInput").addEventListener("keyup", function() {
-  const q = this.value.toLowerCase();
-  document.querySelectorAll("#tnaBody tr").forEach(r => {
-    r.style.display = r.innerText.toLowerCase().includes(q) ? "" : "none";
+document.getElementById("searchInput").addEventListener("keyup",function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll("#tnaBody tr").forEach(r=>{
+    r.style.display=r.innerText.toLowerCase().includes(q)?"":"none";
   });
 });
-
 </script>
 
-<!-- ═══════════════════ SIDEBAR + SCROLL JS ═══════════════════ -->
+<!-- ══ SIDEBAR + SCROLL JS (regular script — NOT module, so onclick works) ══ -->
 <script>
 
-/* ── Sidebar toggle ── */
+/* ── Sidebar ── */
 let sidebarOpen = true;
 
-function toggleSidebar() {
+function toggleSidebar(){
   const sb  = document.getElementById("sidebar");
   const mw  = document.getElementById("mainWrap");
   const ov  = document.getElementById("overlay");
   const btn = document.getElementById("toggleBtn");
-  const mobile = window.innerWidth <= 960;
-
-  if (sidebarOpen) {
+  const mobile = window.innerWidth<=960;
+  if(sidebarOpen){
     sb.classList.add("closed");
-    if (mobile) ov.classList.remove("show");
-    else mw.style.marginLeft = "0";
-    btn.textContent = "☰";
-    sidebarOpen = false;
+    if(mobile) ov.classList.remove("show");
+    else mw.style.marginLeft="0";
+    btn.textContent="☰"; sidebarOpen=false;
   } else {
     sb.classList.remove("closed");
-    if (mobile) ov.classList.add("show");
-    else mw.style.marginLeft = "var(--sidebar-w)";
-    btn.textContent = "✕";
-    sidebarOpen = true;
+    if(mobile) ov.classList.add("show");
+    else mw.style.marginLeft="var(--sidebar-w)";
+    btn.textContent="✕"; sidebarOpen=true;
   }
 }
+function closeSidebar(){ if(sidebarOpen) toggleSidebar(); }
 
-function closeSidebar() {
-  if (sidebarOpen) toggleSidebar();
-}
-
-function initLayout() {
-  const btn = document.getElementById("toggleBtn");
-  if (window.innerWidth <= 960) {
+function initLayout(){
+  const btn=document.getElementById("toggleBtn");
+  if(window.innerWidth<=960){
     document.getElementById("sidebar").classList.add("closed");
-    document.getElementById("mainWrap").style.marginLeft = "0";
-    sidebarOpen = false;
-    btn.textContent = "☰";
+    document.getElementById("mainWrap").style.marginLeft="0";
+    sidebarOpen=false; btn.textContent="☰";
   } else {
     document.getElementById("sidebar").classList.remove("closed");
-    document.getElementById("mainWrap").style.marginLeft = "var(--sidebar-w)";
-    sidebarOpen = true;
-    btn.textContent = "✕";
+    document.getElementById("mainWrap").style.marginLeft="var(--sidebar-w)";
+    sidebarOpen=true; btn.textContent="✕";
   }
 }
-
 initLayout();
 window.addEventListener("resize", initLayout);
 
-/* ── Table left/right scroll ── */
-function scrollTable(amount) {
-  const el = document.getElementById("tnaScroll");
-  el.scrollBy({ left: amount, behavior: "smooth" });
-}
+/* ── Table scroll buttons — wired after DOM ready ── */
+window.addEventListener("DOMContentLoaded", function(){
+  const tbl = document.getElementById("tnaScroll");
+
+  function doScroll(amount){
+    tbl.scrollBy({ left:amount, behavior:"smooth" });
+  }
+
+  document.getElementById("btnLeft1").addEventListener("click",  function(){ doScroll(-350); });
+  document.getElementById("btnRight1").addEventListener("click", function(){ doScroll(350);  });
+  document.getElementById("btnLeft2").addEventListener("click",  function(){ doScroll(-350); });
+  document.getElementById("btnRight2").addEventListener("click", function(){ doScroll(350);  });
+});
 
 /* ── Date ── */
 document.getElementById("dateEl").textContent =
-  new Date().toLocaleDateString("en-BD", {
-    weekday:"short", year:"numeric", month:"short", day:"numeric"
-  });
+  new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
 
 </script>
 </body>
