@@ -12,7 +12,7 @@
   --card:#0e1829; --card2:#111e30; --border:#1e3048;
   --muted:#4a6080; --text:#c8d8e8; --sidebar-w:270px;
 }
-body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; font-weight:500; display:flex; min-height:100vh; overflow-x:hidden; }
+body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; font-weight:500; display:flex; min-height:100vh; }
 
 /* SIDEBAR */
 .sidebar { width:var(--sidebar-w); min-width:var(--sidebar-w); background:var(--sidebar); height:100vh; position:fixed; top:0; left:0; z-index:1100; display:flex; flex-direction:column; border-right:1px solid var(--border); transition:transform 0.32s cubic-bezier(.4,0,.2,1); overflow-y:auto; overflow-x:hidden; }
@@ -32,14 +32,34 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
 .sb-foot { padding:10px 8px; border-top:1px solid var(--border); }
 
 /* MAIN */
-.main-wrap { flex:1; margin-left:var(--sidebar-w); transition:margin-left 0.32s cubic-bezier(.4,0,.2,1); min-height:100vh; display:flex; flex-direction:column; }
+.main-wrap { flex:1; margin-left:var(--sidebar-w); transition:margin-left 0.32s cubic-bezier(.4,0,.2,1); min-height:100vh; display:flex; flex-direction:column; min-width:0; overflow:hidden; }
 .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:1050; backdrop-filter:blur(2px); }
 .overlay.show { display:block; }
 
 /* TOPBAR */
 .topbar { background:#090f1c; border-bottom:1px solid var(--border); padding:0 20px; height:52px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:900; flex-shrink:0; }
 .tb-left { display:flex; align-items:center; gap:12px; }
-.toggle-btn { width:44px; height:44px; background:#16a34a; border:2px solid var(--green); border-radius:10px; color:#fff; font-size:22px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s,transform 0.15s; flex-shrink:0; box-shadow:0 0 10px #00ff9940; line-height:1; }
+.toggle-btn {
+  width:48px; height:48px;
+  background:#16a34a;
+  border:2px solid var(--green);
+  border-radius:10px;
+  color:#fff;
+  font-size:26px;
+  font-weight:900;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background 0.15s,transform 0.15s;
+  flex-shrink:0;
+  box-shadow:0 0 14px #00ff9960;
+  line-height:1;
+  user-select:none;
+  -webkit-user-select:none;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 .toggle-btn:hover { background:#15803d; transform:scale(1.08); }
 .tb-title { font-size:15px; font-weight:700; color:#fff; letter-spacing:.4px; }
 .tb-right { display:flex; align-items:center; gap:10px; }
@@ -47,7 +67,7 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
 .tb-user { background:var(--green); color:#000; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; }
 
 /* CONTENT */
-.content { padding:18px; flex:1; }
+.content { padding:18px; flex:1; min-width:0; overflow:hidden; }
 
 /* HERO */
 .hero-header { background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%); border:1px solid var(--border); border-radius:16px; padding:28px 24px 22px; text-align:center; margin-bottom:18px; position:relative; overflow:hidden; }
@@ -83,17 +103,18 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
 .mbar.r { background:#dc262618; border:1px solid #dc262644; color:#f87171; }
 
 /* CARD */
-.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:18px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:18px; min-width:0; overflow:hidden; }
 .card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:14px; }
 
 /* ══ TABLE SCROLL — FIXED ══ */
 .tbl-wrap {
   width:100%;
-  overflow-x:auto;
+  overflow-x:scroll !important;
   overflow-y:visible;
   -webkit-overflow-scrolling:touch;
   border-radius:8px;
   display:block;
+  position:relative;
 }
 .tbl-wrap::-webkit-scrollbar { height:7px; }
 .tbl-wrap::-webkit-scrollbar-track { background:#0a1220; border-radius:4px; }
@@ -121,7 +142,7 @@ th,td { border:1px solid var(--border); padding:9px 12px; text-align:center; fon
 th { background:#090f1c; color:var(--green); font-size:11px; text-transform:uppercase; letter-spacing:.7px; font-weight:700; }
 tr:hover td { background:#ffffff04; }
 .full-tbl { width:100%; }
-.wide-tbl { min-width:1600px; }
+.wide-tbl { min-width:2000px; width:max-content; }
 
 /* SEARCH */
 .search-box { width:100%; padding:11px 16px; background:#060e1a; border:1px solid var(--border); border-radius:10px; color:#fff; font-size:14px; font-family:'Rajdhani',sans-serif; font-weight:500; outline:none; transition:border-color .2s; }
@@ -498,6 +519,7 @@ document.getElementById("searchInput").addEventListener("keyup",function(){
 // ── SCROLL TABLE ── simple global function ──
 function scrollTbl(amount){
   var el = document.getElementById("tnaScroll");
+  if(!el){ return; }
   el.scrollLeft += amount;
 }
 
@@ -516,14 +538,14 @@ function toggleSidebar(){
     if(mobile){ ov.classList.remove("show"); }
     else { mw.style.marginLeft = "0"; }
     // OPEN icon = three lines
-    btn.innerHTML = "&#9776;";
+    btn.innerText = "=";
     sidebarOpen = false;
   } else {
     sb.classList.remove("closed");
     if(mobile){ ov.classList.add("show"); }
     else { mw.style.marginLeft = "var(--sidebar-w)"; }
     // CLOSE icon = clear X
-    btn.innerHTML = "&#10005;";
+    btn.innerText = "X";
     sidebarOpen = true;
   }
 }
@@ -538,12 +560,12 @@ function initLayout(){
     document.getElementById("sidebar").classList.add("closed");
     document.getElementById("mainWrap").style.marginLeft = "0";
     sidebarOpen = false;
-    btn.innerHTML = "&#9776;";
+    btn.innerText = "=";
   } else {
     document.getElementById("sidebar").classList.remove("closed");
     document.getElementById("mainWrap").style.marginLeft = "var(--sidebar-w)";
     sidebarOpen = true;
-    btn.innerHTML = "&#10005;";
+    btn.innerText = "X";
   }
 }
 initLayout();
