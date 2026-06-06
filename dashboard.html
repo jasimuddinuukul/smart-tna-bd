@@ -39,8 +39,22 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
 /* ══ TOPBAR ══ */
 .topbar { background:#090f1c; border-bottom:1px solid var(--border); padding:0 20px; height:52px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:900; flex-shrink:0; }
 .tb-left { display:flex; align-items:center; gap:12px; }
-.toggle-btn { width:36px; height:36px; background:var(--card2); border:1px solid var(--border); border-radius:8px; color:var(--green); font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.15s; flex-shrink:0; }
-.toggle-btn:hover { background:#1a2e44; }
+.toggle-btn {
+  width:44px; height:44px;
+  background:#16a34a;
+  border:2px solid var(--green);
+  border-radius:10px;
+  color:#fff;
+  font-size:22px;
+  font-weight:900;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s, transform 0.15s;
+  flex-shrink:0;
+  box-shadow:0 0 10px #00ff9940;
+  line-height:1;
+}
+.toggle-btn:hover { background:#15803d; transform:scale(1.08); }
 .tb-title { font-size:15px; font-weight:700; color:#fff; letter-spacing:.4px; }
 .tb-right { display:flex; align-items:center; gap:10px; }
 .tb-date { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--muted); }
@@ -107,14 +121,16 @@ body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-seri
   gap:14px; margin-top:10px;
 }
 .scr-btn {
-  background:var(--card2); border:1px solid var(--border);
-  border-radius:8px; color:var(--green);
-  padding:7px 22px; font-size:15px; font-weight:700;
-  cursor:pointer; transition:background .15s,border-color .15s;
+  background:#16a34a;
+  border:2px solid var(--green);
+  border-radius:10px; color:#fff;
+  padding:10px 28px; font-size:15px; font-weight:700;
+  cursor:pointer; transition:background .15s, transform .1s;
   font-family:'Rajdhani',sans-serif; letter-spacing:.5px;
-  user-select:none;
+  user-select:none; box-shadow:0 0 8px #00ff9930;
 }
-.scr-btn:hover { background:#1a2e44; border-color:var(--green); }
+.scr-btn:hover { background:#15803d; transform:scale(1.04); }
+.scr-btn:active { transform:scale(0.97); }
 .scr-hint { font-size:11px; color:var(--muted); font-family:'Share Tech Mono',monospace; }
 
 /* ══ TABLE ══ */
@@ -300,11 +316,11 @@ tr:hover td { background:#ffffff04; }
     <div class="card">
       <h2>📦 IKL Wise Progress Tracker</h2>
 
-      <!-- ◀ ▶ Buttons — ABOVE and BELOW table -->
+      <!-- ◀ ▶ Buttons — ABOVE table -->
       <div class="scroll-bar" style="margin-bottom:10px;">
-        <button class="scr-btn" id="btnLeft1">◀ Left</button>
+        <button class="scr-btn" onclick="tnaLeft()">◀ Left</button>
         <span class="scr-hint">← Scroll Table Left / Right →</span>
-        <button class="scr-btn" id="btnRight1">Right ▶</button>
+        <button class="scr-btn" onclick="tnaRight()">Right ▶</button>
       </div>
 
       <div class="tbl-wrap" id="tnaScroll">
