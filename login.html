@@ -1,154 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>INNOVATIVE KNITEX LTD - Login</title>
-
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#0f172a;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+body {
+    background: #0f172a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-.login-box{
-    width:450px;
-    max-width:100%;
-    background:#1e293b;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 0 30px rgba(0,0,0,.4);
+.login-box {
+    width: 450px;
+    max-width: 100%;
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(0,0,0,.4);
 }
 
-.company-header{
-    text-align:center;
-    margin-bottom:25px;
+.company-header {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-.bismillah{
-    font-size:32px;
-    font-weight:bold;
-    color:#22c55e;
-    margin-bottom:10px;
+.bismillah {
+    font-size: 32px;
+    font-weight: bold;
+    color: #22c55e;
+    margin-bottom: 10px;
 }
 
-.company-logo{
-    max-width:300px;
-    max-height:120px;
-    width:auto;
-    height:auto;
-    object-fit:contain;
-    display:block;
-    margin:0 auto 10px auto;
+.company-logo {
+    max-width: 300px;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 10px auto;
 }
 
-.company-header h1{
-    color:#00ff99;
-    font-size:28px;
-    margin-bottom:5px;
+.company-header h1 {
+    color: #00ff99;
+    font-size: 28px;
+    margin-bottom: 5px;
 }
 
-.company-header p{
-    color:#cbd5e1;
-    font-size:14px;
+.company-header p {
+    color: #cbd5e1;
+    font-size: 14px;
 }
 
-.input-group{
-    margin-bottom:18px;
+.input-group {
+    margin-bottom: 18px;
 }
 
-.input-group label{
-    display:block;
-    color:#e2e8f0;
-    margin-bottom:8px;
-    font-weight:bold;
+.input-group label {
+    display: block;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-.input-group input{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#0f172a;
-    color:white;
-    font-size:15px;
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #0f172a;
+    color: white;
+    font-size: 15px;
 }
 
-.input-group input:focus{
-    outline:2px solid #22c55e;
+.input-group input:focus {
+    outline: 2px solid #22c55e;
 }
 
-.password-box{
-    position:relative;
+.password-box {
+    position: relative;
 }
 
-.password-box input{
-    padding-right:55px;
+.password-box input {
+    padding-right: 55px;
 }
 
-.toggle-password{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%);
-    cursor:pointer;
-    font-size:20px;
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
 }
 
-.login-btn{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#16a34a;
-    color:white;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #16a34a;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.login-btn:hover{
-    background:#15803d;
+.login-btn:hover {
+    background: #15803d;
 }
 
-
+/* ✅ FOOTER — always at the bottom, centered */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #94a3b8;
+    font-size: 13px;
+    width: 100%;
 }
 
-.footer{
-    text-align:center;
-    margin-top:20px;
-    color:#94a3b8;
-    font-size:13px;
-}
-
-@media(max-width:500px){
-
-    .login-box{
-        padding:20px;
+@media (max-width: 500px) {
+    .login-box {
+        padding: 20px;
     }
-
-    .company-header h1{
-        font-size:22px;
+    .company-header h1 {
+        font-size: 22px;
     }
-
 }
 
 </style>
-
 </head>
 
 <body>
@@ -157,9 +150,7 @@ body{
 
     <div class="company-header">
 
-        <div class="bismillah">
-            ﷽
-        </div>
+        <div class="bismillah">﷽</div>
 
         <img src="logo.png" alt="Company Logo" class="company-logo">
 
@@ -170,51 +161,25 @@ body{
     </div>
 
     <div class="input-group">
-
         <label>Email</label>
-
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter Email">
-
+        <input type="email" id="email" placeholder="Enter Email">
     </div>
 
     <div class="input-group">
-
         <label>Password</label>
-
         <div class="password-box">
-
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter Password">
-
-            <span
-                class="toggle-password"
-                onclick="togglePassword()">
-
-                👁️
-
-            </span>
-
+            <input type="password" id="password" placeholder="Enter Password">
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
         </div>
-
     </div>
 
- <button class="login-btn" onclick="loginUser()">
-    Login
-</button>
+    <button class="login-btn" onclick="loginUser()">Login</button>
 
-    </div>
+</div>
 
-    <div class="footer">
-
-© INNOVATIVE KNITEX LTD
-
-    </div>
-
+<!-- ✅ Footer is OUTSIDE login-box but INSIDE body — shows at bottom center -->
+<div class="footer">
+    © INNOVATIVE KNITEX LTD
 </div>
 
 <script type="module">
@@ -235,34 +200,20 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 window.loginUser = async function(){
-
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-
     try {
-
         await signInWithEmailAndPassword(auth, email, password);
-
         alert("Login Successful");
-
         window.location.href = "dashboard.html";
-
     } catch(error){
-
         alert(error.message);
-
     }
-
 }
 
 window.togglePassword = function(){
-
     const password = document.getElementById("password");
-
-    password.type =
-        password.type === "password"
-        ? "text"
-        : "password";
+    password.type = password.type === "password" ? "text" : "password";
 }
 
 </script>
