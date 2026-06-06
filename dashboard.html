@@ -3,223 +3,888 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Merchandising — SMART TNA BD</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>SMART TNA BD — INNOVATIVE KNITEX LTD</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--green:#00ff99;--bg:#080e1a;--sidebar:#060c17;--card:#0e1829;--card2:#111e30;--border:#1e3048;--muted:#4a6080;--text:#c8d8e8;--sidebar-w:270px;}
-body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:500;display:flex;min-height:100vh;}
-.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar);height:100vh;position:fixed;top:0;left:0;z-index:1100;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow-y:auto;}
-.sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--border);text-align:center;}
-.sb-logo{width:62px;height:62px;border-radius:50%;border:2px solid var(--green);background:#0e1829;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:10px;font-weight:700;color:var(--green);}
-.sb-company{font-size:12px;font-weight:700;color:#fff;}
-.sb-erp{font-size:10px;color:var(--green);letter-spacing:1.5px;margin-top:3px;font-family:'Share Tech Mono',monospace;}
-.sb-nav{padding:8px 8px 16px;flex:1;}
-.sb-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px;font-family:'Share Tech Mono',monospace;}
-.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#7a9abf;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:2px;transition:all .18s;border:1px solid transparent;cursor:pointer;}
-.sb-link:hover{background:#142030;color:#fff;border-color:var(--border);}
-.sb-link.active{background:linear-gradient(135deg,#00ff991a,#00ff9908);color:var(--green);border-color:#00ff9930;}
-.sb-icon{font-size:16px;width:20px;text-align:center;}
-.sb-badge{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;color:#fff;}
-.sb-badge.g{background:#16a34a;}.sb-badge.bl{background:#2563eb;}
-.sb-foot{padding:10px 8px;border-top:1px solid var(--border);}
-.main-wrap{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh;}
-.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;}
-.tb-title{font-size:15px;font-weight:700;color:#fff;}
-.tb-user{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
-.content{padding:20px;flex:1;}
-.page-title{font-size:26px;font-weight:700;color:var(--green);margin-bottom:6px;}
-.page-sub{font-size:14px;color:var(--muted);margin-bottom:22px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;overflow-x:auto;}
-.card h2{color:var(--green);font-size:14px;font-weight:700;margin-bottom:14px;}
-table{width:100%;border-collapse:collapse;}
-th,td{border:1px solid var(--border);padding:9px 11px;text-align:center;font-size:13px;}
-th{background:#090f1c;color:var(--green);font-size:11px;text-transform:uppercase;font-weight:700;}
-tr:hover td{background:#ffffff04;}
-.b{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
-.b-done{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
-.b-run{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b55;}
-.b-pend{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
-.merch-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px;}
-.mkpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
-.mkpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
-.mkpi h1{font-size:24px;color:var(--green);font-family:'Share Tech Mono',monospace;}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --green:     #00ff99;
+  --bg:        #080e1a;
+  --sidebar:   #060c17;
+  --card:      #0e1829;
+  --card2:     #111e30;
+  --border:    #1e3048;
+  --muted:     #4a6080;
+  --text:      #c8d8e8;
+  --sidebar-w: 270px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════ SIDEBAR ═══════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--sidebar);
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  transform: translateX(0);
+  transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar.closed {
+  transform: translateX(calc(-1 * var(--sidebar-w)));
+}
+.sb-head {
+  padding: 20px 16px 14px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+.sb-logo {
+  width: 62px; height: 62px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  background: #0e1829;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 10px; font-weight: 700;
+  color: var(--green);
+  box-shadow: 0 0 14px #00ff9930;
+}
+.sb-company {
+  font-size: 12px; font-weight: 700;
+  color: #fff; letter-spacing: .4px; line-height: 1.4;
+}
+.sb-erp {
+  font-size: 10px; color: var(--green);
+  letter-spacing: 1.5px; margin-top: 3px;
+  font-family: 'Share Tech Mono', monospace;
+}
+.sb-nav { padding: 8px 8px 16px; flex: 1; }
+.sb-label {
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 10px 4px;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 400;
+}
+.sb-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: #7a9abf;
+  text-decoration: none;
+  font-size: 13px; font-weight: 600;
+  margin-bottom: 2px;
+  transition: all 0.18s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  letter-spacing: .2px;
+}
+.sb-link:hover { background:#142030; color:#fff; border-color:var(--border); }
+.sb-link.active {
+  background: linear-gradient(135deg,#00ff991a,#00ff9908);
+  color: var(--green); border-color:#00ff9930;
+}
+.sb-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.sb-badge {
+  margin-left: auto;
+  font-size: 9px; padding: 1px 6px;
+  border-radius: 10px; font-weight: 700;
+  color: #fff;
+}
+.sb-badge.g  { background:#16a34a; }
+.sb-badge.bl { background:#2563eb; }
+.sb-foot { padding: 10px 8px; border-top: 1px solid var(--border); }
+
+/* ═══════════════════ MAIN ═══════════════════ */
+.main-wrap {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  transition: margin-left 0.32s cubic-bezier(.4,0,.2,1);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 1050;
+  backdrop-filter: blur(2px);
+}
+.overlay.show { display: block; }
+
+/* ═══════════════════ TOPBAR ═══════════════════ */
+.topbar {
+  background: #090f1c;
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 900; flex-shrink: 0;
+}
+.tb-left { display: flex; align-items: center; gap: 12px; }
+.toggle-btn {
+  width: 36px; height: 36px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--green); font-size: 20px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s; flex-shrink: 0;
+}
+.toggle-btn:hover { background: #1a2e44; }
+.tb-title { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: .4px; }
+.tb-right { display: flex; align-items: center; gap: 10px; }
+.tb-date { font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--muted); }
+.tb-user { background:var(--green); color:#000; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:700; }
+
+/* ═══════════════════ CONTENT ═══════════════════ */
+.content { padding: 18px; flex: 1; }
+
+/* ═══════════════════ HERO HEADER ═══════════════════ */
+.hero-header {
+  background: linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 30px 24px 24px;
+  text-align: center;
+  margin-bottom: 18px;
+  position: relative; overflow: hidden;
+}
+.hero-header::before {
+  content:''; position:absolute;
+  top:-60px; left:50%; transform:translateX(-50%);
+  width:320px; height:320px;
+  background:radial-gradient(circle,#00ff9910 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* ── Arabic Bismillah — ONE straight line ── */
+.hero-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 54px;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 18px;
+  text-shadow: 0 0 30px #00ff9960, 0 0 60px #00ff9930;
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.hero-divider {
+  width: 140px; height: 1px;
+  background: linear-gradient(90deg,transparent,var(--green),transparent);
+  margin: 0 auto 18px;
+}
+.hero-company {
+  font-size: 36px; font-weight: 700;
+  color: #fff; letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 5px;
+}
+.hero-erp {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 18px; color: var(--green);
+  letter-spacing: 4px; text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* ═══════════════════ KPI CARDS ═══════════════════ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; margin-bottom: 18px;
+}
+.kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 12px; text-align: center;
+  transition: border-color .2s, transform .2s;
+  cursor: default;
+}
+.kpi-card:hover { border-color:#00ff9940; transform:translateY(-2px); }
+.kpi-card h3 {
+  font-size: 10px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .8px;
+  margin-bottom: 8px; font-weight: 600;
+}
+.kpi-card h1 {
+  font-size: 24px; color: var(--green);
+  font-family: 'Share Tech Mono', monospace; font-weight: 400;
+}
+.kpi-card.red   h1 { color:#f87171; }
+.kpi-card.amber h1 { color:#fbbf24; }
+.kpi-card.blue  h1 { color:#60a5fa; }
+
+/* ═══════════════════ TOP GRID ═══════════════════ */
+.top-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px; margin-bottom: 18px;
+}
+.circle-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 16px; text-align: center;
+}
+.circle-card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:4px; }
+.circle-card h3 { color:var(--muted); font-size:11px; margin-bottom:12px; font-weight:500; }
+.prog-ring {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 14px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; font-weight: 700;
+  color: var(--green);
+  margin: 0 auto 12px;
+  box-shadow: 0 0 24px #00ff9940, 0 0 48px #00ff9920;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.5s ease;
+}
+.prog-stat { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+.prog-stat b { color: #fff; font-weight: 700; }
+
+.month-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px;
+}
+.month-card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:14px; }
+.mbar {
+  padding: 12px 16px; border-radius: 9px;
+  font-size: 14px; font-weight: 700;
+  margin-bottom: 10px; letter-spacing: .2px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mbar span.pct {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 16px; font-weight: 400;
+}
+.mbar.g { background:#16a34a18; border:1px solid #16a34a44; color:#4ade80; }
+.mbar.o { background:#f59e0b18; border:1px solid #f59e0b44; color:#fbbf24; }
+.mbar.s { background:#64748b18; border:1px solid #64748b44; color:#94a3b8; }
+.mbar.r { background:#dc262618; border:1px solid #dc262644; color:#f87171; }
+
+/* ═══════════════════ CARD ═══════════════════ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px;
+  margin-bottom: 18px;
+}
+.card h2 { color:var(--green); font-size:14px; font-weight:700; margin-bottom:14px; }
+
+/* ═══════════════════ SCROLL TABLE WRAPPER ═══════════════════ */
+.table-scroll-wrap {
+  position: relative;
+}
+.table-container {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  border-radius: 8px;
+}
+/* Custom scrollbar */
+.table-container::-webkit-scrollbar { height: 6px; }
+.table-container::-webkit-scrollbar-track { background: #0a1220; border-radius: 3px; }
+.table-container::-webkit-scrollbar-thumb { background: #1e3048; border-radius: 3px; }
+.table-container::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+/* LEFT / RIGHT scroll buttons */
+.scroll-btns {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin-top: 10px;
+}
+.scroll-btn {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--green);
+  padding: 7px 20px;
+  font-size: 18px; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  font-weight: 700;
+}
+.scroll-btn:hover { background:#1a2e44; border-color:var(--green); }
+.scroll-label { font-size:11px; color:var(--muted); font-family:'Share Tech Mono',monospace; }
+
+/* ═══════════════════ TABLE ═══════════════════ */
+table { width:100%; border-collapse:collapse; }
+th, td {
+  border: 1px solid var(--border);
+  padding: 9px 11px;
+  text-align: center;
+  font-size: 13px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+}
+th {
+  background: #090f1c;
+  color: var(--green);
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: .7px; font-weight: 700;
+}
+tr:hover td { background:#ffffff04; }
+
+/* ═══════════════════ SEARCH ═══════════════════ */
+.search-box {
+  width: 100%; padding: 11px 16px;
+  background: #060e1a;
+  border: 1px solid var(--border);
+  border-radius: 10px; color: #fff;
+  font-size: 14px; font-family:'Rajdhani',sans-serif;
+  font-weight: 500; outline: none;
+  transition: border-color .2s;
+}
+.search-box:focus { border-color: var(--green); }
+.search-box::placeholder { color: var(--muted); }
+
+/* ═══════════════════ BADGES ═══════════════════ */
+.b {
+  display: inline-block; padding: 3px 9px;
+  border-radius: 20px; font-size: 11px;
+  font-weight: 700; letter-spacing: .2px;
+}
+.b-done { background:#16a34a22; color:#4ade80; border:1px solid #16a34a55; }
+.b-run  { background:#f59e0b22; color:#fbbf24; border:1px solid #f59e0b55; }
+.b-pend { background:#64748b22; color:#94a3b8; border:1px solid #64748b55; }
+.b-del  { background:#dc262622; color:#f87171; border:1px solid #dc262655; }
+
+/* ═══════════════════ RESPONSIVE ═══════════════════ */
+@media (max-width: 960px) {
+  .sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar.closed { transform: translateX(calc(-1 * var(--sidebar-w))); }
+  .main-wrap { margin-left: 0 !important; }
+  .top-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .kpi-grid { grid-template-columns: repeat(2,1fr); }
+  .hero-arabic { font-size: 34px; }
+  .hero-company { font-size: 22px; }
+  .hero-erp { font-size: 13px; letter-spacing: 2px; }
+  .tb-date { display: none; }
+  .content { padding: 12px; }
+}
 </style>
 </head>
 <body>
 
-<div class="sidebar">
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<div class="sidebar" id="sidebar">
+
   <div class="sb-head">
     <div class="sb-logo">LOGO</div>
     <div class="sb-company">INNOVATIVE KNITEX LTD</div>
     <div class="sb-erp">SMART TNA BD ERP</div>
   </div>
+
   <nav class="sb-nav">
+
     <div class="sb-label">— Main —</div>
-    <a class="sb-link" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
-    <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
-    <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
+
+    <a class="sb-link active" href="dashboard.html">
+      <span class="sb-icon">🏠</span> Dashboard
+    </a>
+    <a class="sb-link" href="orders.html">
+      <span class="sb-icon">📦</span> Order Entry
+      <span class="sb-badge g">NEW</span>
+    </a>
+    <a class="sb-link" href="tna-management.html">
+      <span class="sb-icon">📋</span> TNA Management
+    </a>
+
     <div class="sb-label">— Admin —</div>
-    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
-    <a class="sb-link active" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
+
+    <a class="sb-link" href="admin.html">
+      <span class="sb-icon">👑</span> Admin Panel
+      <span class="sb-badge bl">ADMIN</span>
+    </a>
+    <a class="sb-link" href="merchandising.html">
+      <span class="sb-icon">👔</span> Merchandising
+    </a>
+
     <div class="sb-label">— Production —</div>
-    <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
-    <a class="sb-link" href="knitting.html"><span class="sb-icon">🧶</span> Knitting</a>
-    <a class="sb-link" href="dyeing.html"><span class="sb-icon">🎨</span> Dyeing</a>
-    <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
-    <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
-    <a class="sb-link" href="sewing.html"><span class="sb-icon">🪡</span> Sewing</a>
-    <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
-    <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
-    <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
+
+    <a class="sb-link" href="sample.html">
+      <span class="sb-icon">🧵</span> Sample
+    </a>
+    <a class="sb-link" href="knitting.html">
+      <span class="sb-icon">🧶</span> Knitting
+    </a>
+    <a class="sb-link" href="dyeing.html">
+      <span class="sb-icon">🎨</span> Dyeing
+    </a>
+    <a class="sb-link" href="cutting.html">
+      <span class="sb-icon">✂️</span> Cutting
+    </a>
+    <a class="sb-link" href="print-emb.html">
+      <span class="sb-icon">🖨️</span> Print & Embroidery
+    </a>
+    <a class="sb-link" href="sewing.html">
+      <span class="sb-icon">🪡</span> Sewing
+    </a>
+    <a class="sb-link" href="washing.html">
+      <span class="sb-icon">💧</span> Washing
+    </a>
+    <a class="sb-link" href="finishing.html">
+      <span class="sb-icon">📦</span> Finishing
+    </a>
+    <a class="sb-link" href="shipment.html">
+      <span class="sb-icon">🚢</span> Shipment
+    </a>
+
     <div class="sb-label">— Management —</div>
-    <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
-    <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
+
+    <a class="sb-link" href="reports.html">
+      <span class="sb-icon">📊</span> Reports
+    </a>
+    <a class="sb-link" href="settings.html">
+      <span class="sb-icon">⚙️</span> Settings
+    </a>
+
   </nav>
+
   <div class="sb-foot">
-    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
+    <a class="sb-link" href="login.html" style="color:#f87171;">
+      <span class="sb-icon">🚪</span> Logout
+    </a>
   </div>
+
 </div>
 
-<div class="main-wrap">
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<div class="main-wrap" id="mainWrap">
+
+  <!-- TOPBAR -->
   <div class="topbar">
-    <div class="tb-title">👔 Merchandising Department</div>
-    <span class="tb-user">👤 Admin</span>
+    <div class="tb-left">
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
+      <span class="tb-title">📊 ERP Dashboard</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-date" id="dateEl"></span>
+      <span class="tb-user">👤 Admin</span>
+    </div>
   </div>
 
   <div class="content">
-    <div class="page-title">👔 Merchandising</div>
-    <div class="page-sub">Order-wise TNA tracking per merchandiser</div>
 
-    <div class="merch-kpi">
-      <div class="mkpi"><h3>Total Merchandisers</h3><h1 id="mTotal">—</h1></div>
-      <div class="mkpi"><h3>Total Orders</h3><h1 id="mOrders">—</h1></div>
-      <div class="mkpi"><h3>Total Qty (PCS)</h3><h1 id="mQty">—</h1></div>
-      <div class="mkpi"><h3>Running Orders</h3><h1 id="mRunning">—</h1></div>
+    <!-- HERO HEADER -->
+    <div class="hero-header">
+      <!-- Arabic Bismillah — ONE straight line -->
+      <div class="hero-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <div class="hero-divider"></div>
+      <div class="hero-company">Innovative Knitex Ltd</div>
+      <div class="hero-erp">◈ SMART TNA BD — ERP DASHBOARD ◈</div>
     </div>
 
+    <!-- KPI SUMMARY CARDS — all filled from Firebase -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <h3>Total Orders</h3>
+        <h1 id="kTotalOrders">—</h1>
+      </div>
+      <div class="kpi-card blue">
+        <h3>Total Qty (PCS)</h3>
+        <h1 id="kTotalQty">—</h1>
+      </div>
+      <div class="kpi-card amber">
+        <h3>Running Orders</h3>
+        <h1 id="kRunning">—</h1>
+      </div>
+      <div class="kpi-card">
+        <h3>Completed Orders</h3>
+        <h1 id="kCompleted">—</h1>
+      </div>
+      <div class="kpi-card red">
+        <h3>Delayed Orders</h3>
+        <h1 id="kDelayed">—</h1>
+      </div>
+      <div class="kpi-card amber">
+        <h3>This Month Ship (PCS)</h3>
+        <h1 id="kThisMonth">—</h1>
+      </div>
+      <div class="kpi-card blue">
+        <h3>Next Month Book (PCS)</h3>
+        <h1 id="kNextMonth">—</h1>
+      </div>
+      <div class="kpi-card">
+        <h3>Avg Lead Time</h3>
+        <h1 id="kAvgLead">—</h1>
+      </div>
+    </div>
+
+    <!-- PROGRESS + MONTHLY -->
+    <div class="top-grid">
+
+      <div class="circle-card">
+        <h2>📦 Total Order Progress</h2>
+        <h3>Running Factory Progress</h3>
+        <div class="prog-ring" id="progressCircle">0%</div>
+        <p class="prog-stat">Completed : <b id="completedCount">0</b></p>
+        <p class="prog-stat">Running &nbsp;&nbsp;: <b id="runningCount">0</b></p>
+        <p class="prog-stat">Delayed &nbsp;&nbsp;: <b id="delayedCount" style="color:#f87171;">0</b></p>
+      </div>
+
+      <div class="month-card">
+        <h2>📅 Monthly Shipment Progress</h2>
+        <div class="mbar g">
+          <span>✅ THIS MONTH (Shipment)</span>
+          <span class="pct" id="m0pct">0 PCS</span>
+        </div>
+        <div class="mbar o">
+          <span>🔄 NEXT MONTH (Booked)</span>
+          <span class="pct" id="m1pct">0 PCS</span>
+        </div>
+        <div class="mbar s">
+          <span>📌 NEXT +1 MONTH</span>
+          <span class="pct" id="m2pct">0 PCS</span>
+        </div>
+        <div class="mbar r">
+          <span>⚠️ NEXT +2 MONTH</span>
+          <span class="pct" id="m3pct">0 PCS</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SEARCH -->
     <div class="card">
-      <h2>👔 Merchandiser Performance Summary</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Merchandiser</th><th>Total Orders</th><th>Total Qty</th>
-            <th>Running</th><th>Completed</th><th>Delayed</th><th>Completion %</th>
-          </tr>
-        </thead>
-        <tbody id="mSummary"></tbody>
-      </table>
+      <h2>🔍 Smart Search</h2>
+      <input class="search-box" type="text" id="searchInput"
+        placeholder="Search Buyer / IKL No / Style / Merchandiser...">
     </div>
 
+    <!-- DAILY PRODUCTION -->
     <div class="card">
-      <h2>📦 Order Details by Merchandiser</h2>
-      <table style="min-width:1200px;">
-        <thead>
-          <tr>
-            <th>Merchandiser</th><th>Buyer</th><th>IKL No</th>
-            <th>Style No</th><th>Total Qty</th>
-            <th>Order Date</th><th>Shipment Date</th><th>Lead Time</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="mDetails"></tbody>
-      </table>
+      <h2>🎯 Daily Production</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Department</th><th>Target</th><th>Actual</th>
+              <th>Balance</th><th>Efficiency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Knitting</b></td><td>20,000 KG</td><td>18,500 KG</td><td>1,500 KG</td><td><span class="b b-run">92%</span></td></tr>
+            <tr><td><b>Dyeing</b></td><td>18,000 KG</td><td>17,200 KG</td><td>800 KG</td><td><span class="b b-done">95%</span></td></tr>
+            <tr><td><b>Cutting</b></td><td>25,000 PCS</td><td>24,300 PCS</td><td>700 PCS</td><td><span class="b b-done">97%</span></td></tr>
+            <tr><td><b>Print & Emb</b></td><td>15,000 PCS</td><td>14,000 PCS</td><td>1,000 PCS</td><td><span class="b b-run">93%</span></td></tr>
+            <tr><td><b>Sewing</b></td><td>30,000 PCS</td><td>28,000 PCS</td><td>2,000 PCS</td><td><span class="b b-run">93%</span></td></tr>
+            <tr><td><b>Finishing</b></td><td>27,000 PCS</td><td>25,500 PCS</td><td>1,500 PCS</td><td><span class="b b-run">94%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-  </div>
-</div>
+    <!-- MERCHANDISER PERFORMANCE -->
+    <div class="card">
+      <h2>👔 Merchandiser Performance</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Merchandiser</th><th>Total Orders</th>
+              <th>Total Qty</th><th>Running</th><th>Completion %</th>
+            </tr>
+          </thead>
+          <tbody id="merchTable"></tbody>
+        </table>
+      </div>
+    </div>
 
+    <!-- IKL TRACKER — with left/right scroll buttons -->
+    <div class="card">
+      <h2>📦 IKL Wise Progress Tracker</h2>
+
+      <div class="table-scroll-wrap">
+        <div class="table-container" id="tnaScroll">
+          <table style="min-width:1600px;">
+            <thead>
+              <tr>
+                <th>Buyer</th><th>IKL No</th><th>Style No</th>
+                <th>Total Qty</th><th>Order Date</th><th>Shipment Date</th>
+                <th>Lead Time</th><th>Merchandiser</th>
+                <th>Merchandising</th><th>Knitting</th><th>Dyeing</th>
+                <th>Sample</th><th>Laboratory</th><th>Cutting</th>
+                <th>Print & Emb</th><th>Sewing</th><th>Washing</th>
+                <th>Finishing</th><th>Shipment</th>
+              </tr>
+            </thead>
+            <tbody id="tnaBody"></tbody>
+          </table>
+        </div>
+
+        <!-- ◀ ▶ SCROLL BUTTONS -->
+        <div class="scroll-btns">
+          <button class="scroll-btn" onclick="scrollTable(-300)">◀ Left</button>
+          <span class="scroll-label">← Scroll Table →</span>
+          <button class="scroll-btn" onclick="scrollTable(300)">Right ▶</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main-wrap -->
+
+<!-- ═══════════════════ FIREBASE ═══════════════════ -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const cfg = {
-  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain:"smart-tna-bd.firebaseapp.com",
-  projectId:"smart-tna-bd",
-  storageBucket:"smart-tna-bd.firebasestorage.app",
-  messagingSenderId:"372049573207",
-  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
+
 const db = getFirestore(initializeApp(cfg));
 
-function getQty(d) {
-  const raw = d.totalQty ?? d.qty ?? d.quantity ?? d.Qty ?? 0;
-  const n = parseFloat(String(raw).replace(/,/g,""));
-  return isNaN(n) ? 0 : n;
-}
-function getShipTxt(d) {
-  return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||"";
-}
+/* ── badge helper ── */
 function badge(s) {
-  if (!s||s==="Pending") return `<span class="b b-pend">Pending</span>`;
-  if (s==="Completed")   return `<span class="b b-done">Completed</span>`;
-  if (s==="Running")     return `<span class="b b-run">Running</span>`;
+  if (!s || s === "Pending")   return `<span class="b b-pend">Pending</span>`;
+  if (s === "Completed")       return `<span class="b b-done">Completed</span>`;
+  if (s === "Running")         return `<span class="b b-run">Running</span>`;
+  if (s === "Delayed")         return `<span class="b b-del">Delayed</span>`;
   return `<span class="b b-pend">${s}</span>`;
 }
 
-async function load() {
-  const snap = await getDocs(collection(db,"orders"));
-  if (snap.empty) return;
+/* ── get qty from multiple possible field names ── */
+function getQty(d) {
+  const raw = d.totalQty ?? d.qty ?? d.quantity ?? d.Qty ?? d.TotalQty ?? 0;
+  const n = parseFloat(String(raw).replace(/,/g, ""));
+  return isNaN(n) ? 0 : n;
+}
 
-  const now = new Date();
+/* ── get shipment date text from multiple possible field names ── */
+function getShipDateTxt(d) {
+  return d.shipdate || d.shipmentDate || d.shipmentdate ||
+         d.ShipmentDate || d.shipDate || "";
+}
+
+async function load() {
+  const snap = await getDocs(collection(db, "orders"));
+  const body = document.getElementById("tnaBody");
+
+  if (snap.empty) {
+    body.innerHTML = `<tr><td colspan="19" style="padding:20px;color:#4a6080;">No Orders Found in Firebase</td></tr>`;
+    return;
+  }
+
+  const now  = new Date();
+  const cm   = now.getMonth(), cy = now.getFullYear();
+  const months = [0,1,2,3].map(i => {
+    const m = (cm + i) % 12;
+    const y = cy + Math.floor((cm + i) / 12);
+    return { m, y };
+  });
+
+  let tot=0, totalQty=0, run=0, done=0, late=0, leadSum=0;
+  const mQty = [0,0,0,0];   // this month, next, +2, +3
   const merch = {};
-  let totalOrders=0, totalQty=0, totalRunning=0;
-  const detailBody = document.getElementById("mDetails");
 
   snap.forEach(doc => {
     const d = doc.data();
-    const mn = d.merchandiser || "Unknown";
+    tot++;
+
+    /* ── qty fix: try every known field name ── */
     const qty = getQty(d);
-    const sdTxt = getShipTxt(d);
-    let days=0;
+    totalQty += qty;
+
+    const sdTxt = getShipDateTxt(d);
+    let days = 0;
     if (d.orderDate && sdTxt) {
-      const a=new Date(d.orderDate), b=new Date(sdTxt);
-      if (!isNaN(a)&&!isNaN(b)) days=Math.ceil((b-a)/864e5);
+      const a = new Date(d.orderDate), b = new Date(sdTxt);
+      if (!isNaN(a) && !isNaN(b)) days = Math.ceil((b - a) / 864e5);
     }
-    const isDone = d.shipmentStatus==="Completed";
+    leadSum += days;
+
+    const isDone = d.shipmentStatus === "Completed";
+    isDone ? done++ : run++;
+
     const sd = sdTxt ? new Date(sdTxt) : null;
-    const isLate = sd && !isNaN(sd) && sd < now && !isDone;
+    if (sd && !isNaN(sd) && sd < now && !isDone) late++;
 
-    if (!merch[mn]) merch[mn]={o:0,q:0,r:0,done:0,late:0};
-    merch[mn].o++; merch[mn].q+=qty;
-    if (isDone) merch[mn].done++; else merch[mn].r++;
-    if (isLate) merch[mn].late++;
+    /* Monthly qty buckets */
+    if (sd && !isNaN(sd)) {
+      months.forEach((mo, i) => {
+        if (sd.getMonth() === mo.m && sd.getFullYear() === mo.y) {
+          mQty[i] += qty;
+        }
+      });
+    }
 
-    totalOrders++; totalQty+=qty;
-    if (!isDone) totalRunning++;
+    /* Merchandiser map */
+    const mn = d.merchandiser || "Unknown";
+    if (!merch[mn]) merch[mn] = { o:0, q:0, r:0 };
+    merch[mn].o++;
+    merch[mn].q += qty;
+    if (!isDone) merch[mn].r++;
 
-    detailBody.innerHTML += `
+    /* Table row */
+    body.innerHTML += `
     <tr>
-      <td><b>${mn}</b></td>
-      <td>${d.buyer||""}</td><td>${d.ikl||d.iklNo||""}</td>
+      <td><b>${d.buyer||""}</b></td>
+      <td>${d.ikl||d.iklNo||""}</td>
       <td>${d.style||d.styleNo||""}</td>
-      <td><b>${qty>0?qty.toLocaleString():"—"}</b></td>
-      <td>${d.orderDate||""}</td><td>${sdTxt||"No Date"}</td>
+      <td><b>${qty > 0 ? qty.toLocaleString() : "—"}</b></td>
+      <td>${d.orderDate||""}</td>
+      <td>${sdTxt||"No Date"}</td>
       <td>${days} Days</td>
+      <td><b>${d.merchandiser||""}</b></td>
+      <td>${badge(d.merchandisingStatus)}</td>
+      <td>${badge(d.knittingStatus)}</td>
+      <td>${badge(d.dyeingStatus)}</td>
+      <td>${badge(d.sampleStatus)}</td>
+      <td>${badge(d.laboratoryStatus)}</td>
+      <td>${badge(d.cuttingStatus)}</td>
+      <td>${badge(d.printEmbStatus)}</td>
+      <td>${badge(d.sewingStatus)}</td>
+      <td>${badge(d.washingStatus)}</td>
+      <td>${badge(d.finishingStatus)}</td>
       <td>${badge(d.shipmentStatus)}</td>
     </tr>`;
   });
 
+  /* ── Update KPI cards ── */
   const $ = id => document.getElementById(id);
-  $("mTotal").textContent   = Object.keys(merch).length;
-  $("mOrders").textContent  = totalOrders;
-  $("mQty").textContent     = totalQty.toLocaleString();
-  $("mRunning").textContent = totalRunning;
+  $("kTotalOrders").textContent = tot;
+  $("kTotalQty").textContent    = totalQty > 0 ? totalQty.toLocaleString() : "0";
+  $("kRunning").textContent     = run;
+  $("kCompleted").textContent   = done;
+  $("kDelayed").textContent     = late;
+  $("kThisMonth").textContent   = mQty[0].toLocaleString();
+  $("kNextMonth").textContent   = mQty[1].toLocaleString();
+  $("kAvgLead").textContent     = Math.round(leadSum / (tot || 1)) + " D";
 
-  const sb = document.getElementById("mSummary");
-  for (const [name,v] of Object.entries(merch)) {
-    const c = Math.round((v.done/v.o)*100);
-    sb.innerHTML += `
+  /* ── Progress circle ── */
+  const pct = tot > 0 ? Math.round((done / tot) * 100) : 0;
+  $("progressCircle").textContent = pct + "%";
+  $("completedCount").textContent = done;
+  $("runningCount").textContent   = run;
+  $("delayedCount").textContent   = late;
+
+  /* ── Monthly bars ── */
+  $("m0pct").textContent = mQty[0].toLocaleString() + " PCS";
+  $("m1pct").textContent = mQty[1].toLocaleString() + " PCS";
+  $("m2pct").textContent = mQty[2].toLocaleString() + " PCS";
+  $("m3pct").textContent = mQty[3].toLocaleString() + " PCS";
+
+  /* ── Merchandiser table ── */
+  const mt = document.getElementById("merchTable");
+  for (const [name, v] of Object.entries(merch)) {
+    const c = Math.round(((v.o - v.r) / v.o) * 100);
+    mt.innerHTML += `
     <tr>
       <td><b>${name}</b></td><td>${v.o}</td>
       <td>${v.q.toLocaleString()}</td><td>${v.r}</td>
-      <td>${v.done}</td>
-      <td style="color:${v.late>0?'#f87171':'#4ade80'}">${v.late}</td>
       <td><span class="b ${c>=70?'b-done':c>=40?'b-run':'b-pend'}">${c}%</span></td>
     </tr>`;
   }
 }
+
 load();
+
+/* Search */
+document.getElementById("searchInput").addEventListener("keyup", function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll("#tnaBody tr").forEach(r => {
+    r.style.display = r.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+
+</script>
+
+<!-- ═══════════════════ SIDEBAR + SCROLL JS ═══════════════════ -->
+<script>
+
+/* ── Sidebar toggle ── */
+let sidebarOpen = true;
+
+function toggleSidebar() {
+  const sb  = document.getElementById("sidebar");
+  const mw  = document.getElementById("mainWrap");
+  const ov  = document.getElementById("overlay");
+  const btn = document.getElementById("toggleBtn");
+  const mobile = window.innerWidth <= 960;
+
+  if (sidebarOpen) {
+    sb.classList.add("closed");
+    if (mobile) ov.classList.remove("show");
+    else mw.style.marginLeft = "0";
+    btn.textContent = "☰";
+    sidebarOpen = false;
+  } else {
+    sb.classList.remove("closed");
+    if (mobile) ov.classList.add("show");
+    else mw.style.marginLeft = "var(--sidebar-w)";
+    btn.textContent = "✕";
+    sidebarOpen = true;
+  }
+}
+
+function closeSidebar() {
+  if (sidebarOpen) toggleSidebar();
+}
+
+function initLayout() {
+  const btn = document.getElementById("toggleBtn");
+  if (window.innerWidth <= 960) {
+    document.getElementById("sidebar").classList.add("closed");
+    document.getElementById("mainWrap").style.marginLeft = "0";
+    sidebarOpen = false;
+    btn.textContent = "☰";
+  } else {
+    document.getElementById("sidebar").classList.remove("closed");
+    document.getElementById("mainWrap").style.marginLeft = "var(--sidebar-w)";
+    sidebarOpen = true;
+    btn.textContent = "✕";
+  }
+}
+
+initLayout();
+window.addEventListener("resize", initLayout);
+
+/* ── Table left/right scroll ── */
+function scrollTable(amount) {
+  const el = document.getElementById("tnaScroll");
+  el.scrollBy({ left: amount, behavior: "smooth" });
+}
+
+/* ── Date ── */
+document.getElementById("dateEl").textContent =
+  new Date().toLocaleDateString("en-BD", {
+    weekday:"short", year:"numeric", month:"short", day:"numeric"
+  });
+
 </script>
 </body>
 </html>
