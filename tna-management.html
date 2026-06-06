@@ -12,24 +12,27 @@ header { background:#111827; padding:20px; text-align:center; border-bottom:2px 
 .company { font-size:26px; font-weight:bold; color:#00ff99; }
 .system  { font-size:17px; margin-top:6px; color:#cbd5e1; }
 
-/* KPI */
 .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; padding:20px; }
 .kpi-card { background:#1e293b; padding:18px; border-radius:15px; text-align:center; }
 .kpi-card h2 { color:#00ff99; font-size:28px; margin-bottom:8px; }
 .kpi-card p  { color:#cbd5e1; font-size:13px; }
 
-/* SEARCH */
 .search-section { padding:0 20px 20px; }
 .search-box { width:100%; padding:13px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:15px; }
 
-/* TABLE */
-.table-wrapper { padding:0 20px 30px; overflow:auto; }
-table { width:100%; border-collapse:collapse; min-width:12000px; background:#1e293b; }
+/* ✅ TABLE SCROLL FIX */
+.table-wrapper {
+  padding:0 20px 30px;
+  overflow-x:auto;
+  overflow-y:visible;
+  width:100%;
+  display:block;
+}
+table { border-collapse:collapse; min-width:12000px; background:#1e293b; }
 th { background:#111827; color:#00ff99; padding:10px 8px; border:1px solid #334155; font-size:12px; white-space:nowrap; position:sticky; top:0; z-index:10; }
 td { padding:8px; border:1px solid #334155; font-size:12px; text-align:center; white-space:nowrap; }
 tr:nth-child(even) { background:#1a2540; }
 
-/* TH GROUP COLORS */
 .th-fabric   { background:#1a3a2a !important; }
 .th-yarn     { background:#1a2a3a !important; }
 .th-labdip   { background:#2a1a3a !important; }
@@ -40,64 +43,45 @@ tr:nth-child(even) { background:#1a2540; }
 .th-sewing   { background:#3a3a1a !important; }
 .th-packing  { background:#1a1a3a !important; }
 
-/* STATUS BADGES */
 .st-pending  { color:#f97316; font-weight:bold; font-size:11px; }
 .st-running  { color:#3b82f6; font-weight:bold; font-size:11px; }
 .st-delay    { color:#ef4444; font-weight:bold; font-size:11px; }
 .st-complete { color:#00ff99; font-weight:bold; font-size:11px; }
 .st-na       { color:#475569; font-size:11px; }
 
-/* TARGET vs ACTUAL color */
-.date-ok      { color:#00ff99; }
-.date-warning { color:#f97316; }
-.date-late    { color:#ef4444; }
-.date-normal  { color:#cbd5e1; }
+.date-ok     { color:#00ff99; }
+.date-late   { color:#ef4444; }
+.date-normal { color:#cbd5e1; }
 
-/* PROGRESS BAR */
 .prog-wrap { background:#0f172a; border-radius:20px; height:14px; width:100px; display:inline-block; vertical-align:middle; margin-left:6px; }
 .prog-bar  { height:14px; border-radius:20px; background:#00ff99; }
 
-/* EDIT BUTTON */
 .edit-btn { background:#00aa66; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px; }
 .edit-btn:hover { background:#008844; }
 
-/* MODAL */
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,.8); z-index:999; justify-content:center;
-  align-items:flex-start; overflow-y:auto; }
-.modal-content { background:#1e293b; width:95%; max-width:900px;
-  margin:25px auto; padding:25px; border-radius:15px; }
-.modal-content h2 { color:#00ff99; margin-bottom:18px; font-size:19px;
-  border-bottom:1px solid #334155; padding-bottom:10px; }
+/* SCROLL BUTTONS */
+.scroll-bar { display:flex; align-items:center; justify-content:center; gap:14px; padding:10px 20px; }
+.scr-btn { background:#16a34a; border:2px solid #00ff99; border-radius:10px; color:#fff; padding:10px 28px; font-size:15px; font-weight:700; cursor:pointer; }
+.scr-btn:hover { background:#15803d; }
+.scr-hint { font-size:12px; color:#64748b; }
 
-.modal-info-box { background:#111827; padding:14px; border-radius:10px;
-  margin-bottom:18px; border-left:4px solid #00ff99;
-  display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; }
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:flex-start; overflow-y:auto; }
+.modal-content { background:#1e293b; width:95%; max-width:900px; margin:25px auto; padding:25px; border-radius:15px; }
+.modal-content h2 { color:#00ff99; margin-bottom:18px; font-size:19px; border-bottom:1px solid #334155; padding-bottom:10px; }
+
+.modal-info-box { background:#111827; padding:14px; border-radius:10px; margin-bottom:18px; border-left:4px solid #00ff99; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; }
 .modal-info-box p    { color:#cbd5e1; font-size:13px; }
 .modal-info-box span { color:white; font-weight:bold; }
 
-.section-title { background:#0f172a; color:#00ff99; padding:7px 12px;
-  border-radius:8px; font-size:12px; font-weight:bold;
-  text-transform:uppercase; letter-spacing:1px;
-  margin:16px 0 10px; border-left:3px solid #00ff99; }
+.section-title { background:#0f172a; color:#00ff99; padding:7px 12px; border-radius:8px; font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin:16px 0 10px; border-left:3px solid #00ff99; }
 
-.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-.form-grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; }
+.form-row label { display:block; margin-bottom:5px; color:#94a3b8; font-size:11px; font-weight:bold; text-transform:uppercase; }
+input[type="date"], select, textarea { width:100%; padding:9px; border:1px solid #334155; border-radius:7px; background:#0f172a; color:white; font-size:13px; }
+input[type="date"]:focus { outline:none; border-color:#00ff99; }
 
-.form-row label { display:block; margin-bottom:5px; color:#94a3b8;
-  font-size:11px; font-weight:bold; text-transform:uppercase; }
-input[type="date"], select, textarea {
-  width:100%; padding:9px; border:1px solid #334155; border-radius:7px;
-  background:#0f172a; color:white; font-size:13px; }
-input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
-
-/* STATUS TOGGLE */
 .status-group { display:flex; gap:6px; flex-wrap:wrap; }
-.status-btn {
-  flex:1; min-width:70px; padding:9px 4px; border:2px solid #334155;
-  border-radius:7px; background:#0f172a; color:#64748b;
-  font-weight:bold; font-size:12px; cursor:pointer; text-align:center; transition:all .2s; }
+.status-btn { flex:1; min-width:70px; padding:9px 4px; border:2px solid #334155; border-radius:7px; background:#0f172a; color:#64748b; font-weight:bold; font-size:12px; cursor:pointer; text-align:center; transition:all .2s; }
 .status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
 .status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
 .status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
@@ -108,7 +92,6 @@ input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
 .close-btn { background:#dc2626; padding:12px 20px; border:none; border-radius:9px; color:white; font-weight:bold; cursor:pointer; flex:1; }
 .save-btn:hover  { background:#008844; }
 .close-btn:hover { background:#b91c1c; }
-
 .auto-note { color:#64748b; font-size:10px; font-style:italic; margin-left:4px; }
 </style>
 </head>
@@ -120,7 +103,6 @@ input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
   <div class="system">📋 SMART TNA BD - TNA MANAGEMENT</div>
 </header>
 
-<!-- KPI -->
 <div class="kpi-grid">
   <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
   <div class="kpi-card"><h2 id="kRunning">0</h2><p>Running</p></div>
@@ -130,14 +112,20 @@ input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
   <div class="kpi-card"><h2 id="kTotalQty">0</h2><p>Total Qty</p></div>
 </div>
 
-<!-- SEARCH -->
 <div class="search-section">
   <input type="text" id="searchInput" class="search-box"
     placeholder="🔍  Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
 </div>
 
-<!-- TABLE -->
-<div class="table-wrapper">
+<!-- ✅ SCROLL BUTTONS TOP -->
+<div class="scroll-bar">
+  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft -= 400">◀ Left</button>
+  <span class="scr-hint">← Scroll Table →</span>
+  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft += 400">Right ▶</button>
+</div>
+
+<!-- ✅ TABLE WRAPPER WITH ID -->
+<div class="table-wrapper" id="tblWrap">
 <table>
 <thead>
 <tr>
@@ -151,77 +139,43 @@ input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
   <th rowspan="2">Lead Time</th>
   <th rowspan="2">Merchandiser</th>
   <th rowspan="2">Progress</th>
-  <!-- FABRIC BOOKING -->
   <th colspan="3" class="th-fabric">Fabric Booking</th>
-  <!-- YARN -->
   <th colspan="3" class="th-yarn">Yarn Inhouse</th>
-  <!-- COLOR SWATCH -->
   <th colspan="3" class="th-labdip">Color Swatch</th>
-  <!-- LAB DIP SUBMIT -->
   <th colspan="3" class="th-labdip">Lab Dip Submit</th>
-  <!-- LAB DIP APPROVAL -->
   <th colspan="3" class="th-labdip">Lab Dip Approval</th>
-  <!-- G2 -->
   <th colspan="3" class="th-fabric">G2 Receive</th>
-  <!-- STRIKE OFF SEND -->
   <th colspan="3" class="th-fabric">Strike Off Send</th>
-  <!-- STRIKE OFF APPROVAL -->
   <th colspan="3" class="th-fabric">Strike Off Approval</th>
-  <!-- KNITTING START -->
   <th colspan="3" class="th-knitting">Knitting Start</th>
-  <!-- KNITTING COMPLETE -->
   <th colspan="3" class="th-knitting">Knitting Complete</th>
-  <!-- DYEING START -->
   <th colspan="3" class="th-dyeing">Dyeing Start</th>
-  <!-- DYEING COMPLETE -->
   <th colspan="3" class="th-dyeing">Dyeing Complete</th>
-  <!-- SAMPLE FABRIC -->
   <th colspan="3" class="th-sample">Sample Fabric</th>
-  <!-- PP SAMPLE SUBMIT -->
   <th colspan="3" class="th-sample">PP Sample Submit</th>
-  <!-- SEWING TRIMS -->
   <th colspan="3" class="th-cutting">Sewing Trims</th>
-  <!-- FABRIC TEST START -->
   <th colspan="3" class="th-cutting">Fabric Test Start</th>
-  <!-- FABRIC TEST COMPLETE -->
   <th colspan="3" class="th-cutting">Fabric Test Complete</th>
-  <!-- PP APPROVAL -->
   <th colspan="3" class="th-sample">PP Approval</th>
-  <!-- SIZE SET -->
   <th colspan="3" class="th-sample">Size Set</th>
-  <!-- PP MEETING -->
   <th colspan="3" class="th-sample">PP Meeting</th>
-  <!-- CUTTING START -->
   <th colspan="3" class="th-cutting">Cutting Start</th>
-  <!-- PRINT START -->
   <th colspan="3" class="th-sewing">Print Start</th>
-  <!-- PRINT COMPLETE -->
   <th colspan="3" class="th-sewing">Print Complete</th>
-  <!-- SEWING INPUT -->
   <th colspan="3" class="th-sewing">Sewing Input</th>
-  <!-- SEWING START -->
   <th colspan="3" class="th-sewing">Sewing Start</th>
-  <!-- INLINE INSPECTION -->
   <th colspan="3" class="th-sewing">Inline Inspection</th>
-  <!-- PACKING TRIMS -->
   <th colspan="3" class="th-packing">Packing Trims</th>
-  <!-- SEWING COMPLETE -->
   <th colspan="3" class="th-sewing">Sewing Complete</th>
-  <!-- FINISHING START -->
   <th colspan="3" class="th-packing">Finishing Start</th>
-  <!-- PACKING START -->
   <th colspan="3" class="th-packing">Packing Start</th>
-  <!-- PACKING COMPLETE -->
   <th colspan="3" class="th-packing">Packing Complete</th>
-  <!-- FINAL INSPECTION -->
   <th colspan="3" class="th-packing">Final Inspection</th>
-  <!-- SHIPMENT APPROVAL -->
   <th colspan="3" class="th-packing">Shipment Approval</th>
   <th rowspan="2">Final Status</th>
   <th rowspan="2">Action</th>
 </tr>
 <tr>
-  <!-- sub headers: Target / Actual / Status  x 33 stages -->
   <th class="th-fabric">Target</th><th class="th-fabric">Actual</th><th class="th-fabric">Status</th>
   <th class="th-yarn">Target</th><th class="th-yarn">Actual</th><th class="th-yarn">Status</th>
   <th class="th-labdip">Target</th><th class="th-labdip">Actual</th><th class="th-labdip">Status</th>
@@ -263,7 +217,13 @@ input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
 </table>
 </div>
 
-<!-- EDIT MODAL -->
+<!-- ✅ SCROLL BUTTONS BOTTOM -->
+<div class="scroll-bar">
+  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft -= 400">◀ Left</button>
+  <span class="scr-hint">← Scroll Table →</span>
+  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft += 400">Right ▶</button>
+</div>
+
 <div class="modal" id="editModal">
   <div class="modal-content">
     <h2>✏️ TNA Update</h2>
@@ -295,9 +255,6 @@ const db  = getFirestore(app);
 let allOrders     = [];
 let selectedDocId = null;
 
-// ══════════════════════════════════════════
-// TNA STAGES — name, field, offset (days before ship)
-// ══════════════════════════════════════════
 const STAGES = [
   { label:"Fabric Booking",       field:"fabricBooking",      offset:60 },
   { label:"Yarn Inhouse",         field:"yarnInhouse",        offset:55 },
@@ -334,7 +291,6 @@ const STAGES = [
   { label:"Shipment Approval",    field:"shipmentApproval",   offset:1  },
 ];
 
-// ── STATUS OPTIONS ───────────────────────
 const ST_OPTS = [
   { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
   { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
@@ -342,7 +298,15 @@ const ST_OPTS = [
   { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
 ];
 
-// ── HELPERS ──────────────────────────────
+// ✅ QTY HELPER — colors array থেকেও নেয়
+function getOrderQty(o) {
+  let qty = Number(o.totalQty || o.qty || o.orderQty || 0);
+  if (!qty && o.colors && Array.isArray(o.colors)) {
+    qty = o.colors.reduce((sum, c) => sum + Number(c.qty || 0), 0);
+  }
+  return qty;
+}
+
 function addDays(dateStr, days) {
   const d = new Date(dateStr + "T00:00:00");
   d.setDate(d.getDate() + days);
@@ -360,7 +324,6 @@ function statusBadge(val) {
 function dateCell(target, actual) {
   const t = target || "-";
   const a = actual || "-";
-  // color actual vs target
   let cls = "date-normal";
   if (actual && target) {
     cls = actual <= target ? "date-ok" : "date-late";
@@ -382,7 +345,6 @@ window.selStatus = function(field, val, cls, btn) {
   btn.classList.add(cls);
 };
 
-// ── LOAD ─────────────────────────────────
 async function loadOrders() {
   const snap = await getDocs(collection(db,"orders"));
   allOrders  = [];
@@ -391,7 +353,6 @@ async function loadOrders() {
   renderTable(allOrders);
 }
 
-// ── SEARCH ───────────────────────────────
 window.filterOrders = function() {
   const kw = document.getElementById("searchInput").value.toLowerCase();
   renderTable(kw ? allOrders.filter(o =>
@@ -402,22 +363,17 @@ window.filterOrders = function() {
   ) : allOrders);
 };
 
-// ── KPI ──────────────────────────────────
 function renderKPI() {
   let running=0, completed=0, delay=0, progSum=0, totalQty=0;
   allOrders.forEach(o => {
-    const done = STAGES.filter(s => o[s.field+"Actual"]).length;
+    // ✅ Status দিয়ে progress count
+    const done = STAGES.filter(s => o[s.field+"Status"]==="Complete").length;
     const prog = Math.round(done/STAGES.length*100);
     progSum += prog;
-    totalQty += Number(
-  o.orderQty ||
-  o.totalQty ||
-  o.qty ||
-  0
-);
+    // ✅ colors array থেকেও qty নেওয়া হচ্ছে
+    totalQty += getOrderQty(o);
     if (prog===100) completed++;
     else if (prog>0) running++;
-    // check any delay
     const hasDelay = STAGES.some(s => o[s.field+"Status"]==="Delay");
     if (hasDelay) delay++;
   });
@@ -429,7 +385,6 @@ function renderKPI() {
   document.getElementById("kTotalQty").innerText  = totalQty.toLocaleString();
 }
 
-// ── RENDER TABLE ─────────────────────────
 function renderTable(orders) {
   const body = document.getElementById("tnaBody");
   body.innerHTML = "";
@@ -449,27 +404,24 @@ function renderTable(orders) {
       )) + " Days";
     }
 
-    const qty = o.totalQty || o.qty || "";
+    // ✅ colors array থেকেও qty নেওয়া হচ্ছে
+    const qty = getOrderQty(o);
 
-    // progress
-    const done = STAGES.filter(s => o[s.field+"Actual"]).length;
+    // ✅ Status দিয়ে progress count
+    const done = STAGES.filter(s => o[s.field+"Status"]==="Complete").length;
     const prog = Math.round(done/STAGES.length*100);
 
-    // final status
     const hasDelay = STAGES.some(s => o[s.field+"Status"]==="Delay");
     let finalSt = "Pending";
-    if (prog===100)      finalSt = "Complete";
-    else if (hasDelay)   finalSt = "Delay";
-    else if (prog>0)     finalSt = "Running";
+    if (prog===100)    finalSt = "Complete";
+    else if (hasDelay) finalSt = "Delay";
+    else if (prog>0)   finalSt = "Running";
 
-    // build stage cells
     let stageCells = "";
     STAGES.forEach(s => {
-      // auto target from ship date
       let target = "-";
       if (shipDate) {
         target = addDays(shipDate, -s.offset);
-        // use saved target if exists
         if (o[s.field+"Target"]) target = o[s.field+"Target"];
       }
       const actual = o[s.field+"Actual"] || "-";
@@ -483,11 +435,13 @@ function renderTable(orders) {
         <td>${o.buyer||"-"}</td>
         <td>${o.ikl||"-"}</td>
         <td>${o.style||"-"}</td>
-        <td>${Number(qty).toLocaleString()||"-"}</td>
+        <td style="color:${qty>0?'#00ff99':'#ef4444'};font-weight:bold;">
+          ${qty>0 ? qty.toLocaleString() : "⚠ 0"}
+        </td>
         <td>${orderDate||"-"}</td>
         <td>${shipDate||"-"}</td>
         <td>${leadTime}</td>
-        <td>${o.merchandiser||"-"}</td>
+        <td>${o.merchandiser||o.Merchandiser||"-"}</td>
         <td>
           ${prog}%
           <div class="prog-wrap"><div class="prog-bar" style="width:${prog}%"></div></div>
@@ -499,7 +453,6 @@ function renderTable(orders) {
   });
 }
 
-// ── OPEN MODAL ───────────────────────────
 window.openModal = function(docId) {
   selectedDocId = docId;
   const o = allOrders.find(x => x.id===docId);
@@ -508,40 +461,35 @@ window.openModal = function(docId) {
   const shipDate  = o.shipdate||o.shipDate||"";
   const orderDate = o.orderDate||"";
 
-  // build form sections grouped by category
   const GROUPS = [
-    { title:"🎨 Pre-Production",   fields: STAGES.slice(0,8)  },
-    { title:"🧶 Knitting & Dyeing", fields: STAGES.slice(8,12) },
-    { title:"🧪 Sample & Testing",  fields: STAGES.slice(12,20)},
-    { title:"✂️ Cutting & Sewing",  fields: STAGES.slice(20,28)},
+    { title:"🎨 Pre-Production",    fields: STAGES.slice(0,8)   },
+    { title:"🧶 Knitting & Dyeing", fields: STAGES.slice(8,12)  },
+    { title:"🧪 Sample & Testing",  fields: STAGES.slice(12,20) },
+    { title:"✂️ Cutting & Sewing",  fields: STAGES.slice(20,28) },
     { title:"📦 Finishing & Packing",fields: STAGES.slice(28,33)},
   ];
 
   let formHtml = `
     <div class="modal-info-box">
-      <p><span>Style     :</span> ${o.style||"-"}</p>
-      <p><span>Buyer     :</span> ${o.buyer||"-"}</p>
-      <p><span>IKL       :</span> ${o.ikl||"-"}</p>
-      <p><span>Order Date:</span> ${orderDate||"-"}</p>
-      <p><span>Ship Date :</span> ${shipDate||"-"}</p>
-      <p><span>Merchandiser:</span> ${o.merchandiser||"-"}</p>
+      <p><span>Style       :</span> ${o.style||"-"}</p>
+      <p><span>Buyer       :</span> ${o.buyer||"-"}</p>
+      <p><span>IKL         :</span> ${o.ikl||"-"}</p>
+      <p><span>Order Date  :</span> ${orderDate||"-"}</p>
+      <p><span>Ship Date   :</span> ${shipDate||"-"}</p>
+      <p><span>Merchandiser:</span> ${o.merchandiser||o.Merchandiser||"-"}</p>
     </div>`;
 
   GROUPS.forEach(grp => {
     formHtml += `<div class="section-title">${grp.title}</div>`;
     grp.fields.forEach(s => {
-      // auto target
       let autoTarget = "";
       if (shipDate) autoTarget = addDays(shipDate, -s.offset);
       const savedTarget = o[s.field+"Target"] || autoTarget;
       const actual      = o[s.field+"Actual"] || "";
       const status      = o[s.field+"Status"] || "Pending";
-
       formHtml += `
         <div style="background:#111827;border-radius:10px;padding:14px;margin-bottom:10px;">
-          <div style="color:#00ff99;font-size:13px;font-weight:bold;margin-bottom:10px;">
-            ${s.label}
-          </div>
+          <div style="color:#00ff99;font-size:13px;font-weight:bold;margin-bottom:10px;">${s.label}</div>
           <div class="form-grid-3">
             <div class="form-row">
               <label>Target <span class="auto-note">(auto·editable)</span></label>
@@ -565,12 +513,10 @@ window.openModal = function(docId) {
   document.getElementById("editModal").style.display = "flex";
 };
 
-// ── CLOSE ────────────────────────────────
 document.getElementById("closeBtn").onclick = () => {
   document.getElementById("editModal").style.display = "none";
 };
 
-// ── SAVE ─────────────────────────────────
 document.getElementById("saveBtn").onclick = async () => {
   if (!selectedDocId) return;
   const updateData = {};
