@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Management — SMART TNA BD</title>
+<title>Admin Panel — SMART TNA BD</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
@@ -17,7 +18,6 @@
   --green:#00ff99;--bg:#080e1a;--sidebar:#060c17;
   --card:#0e1829;--card2:#111e30;--border:#1e3048;
   --muted:#4a6080;--sidebar-w:270px;
-  --red:#f87171;--amber:#fbbf24;--blue:#60a5fa;
 }
 body{background:var(--bg);color:#fff;font-family:'Rajdhani',sans-serif;font-weight:600;display:flex;min-height:100vh;overflow-x:clip;}
 
@@ -36,7 +36,24 @@ body{background:var(--bg);color:#fff;font-family:'Rajdhani',sans-serif;font-weig
 .sb-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
 .sb-badge{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;color:#fff;}
 .sb-badge.g{background:#16a34a;}.sb-badge.bl{background:#2563eb;}
-.sb-foot{padding:10px 8px;border-top:1px solid var(--border);}
+
+/* ── BACK TO DASHBOARD BUTTON ── */
+.sb-dashboard-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,#006a4e,#00553e);
+  border:2px solid var(--green);
+  border-radius:10px;color:#fff;
+  padding:11px 14px;font-size:13px;font-weight:700;
+  text-decoration:none;font-family:'Rajdhani',sans-serif;
+  transition:all .2s;box-shadow:0 0 12px #00ff9930;
+  margin:0 8px 6px;
+}
+.sb-dashboard-btn:hover{
+  background:linear-gradient(135deg,#00ff99,#00cc77);
+  color:#000;box-shadow:0 0 20px #00ff9960;
+}
+
+.sb-foot{padding:8px 8px 10px;border-top:1px solid var(--border);}
 
 /* ══ MAIN ══ */
 .main-wrap{flex:1;margin-left:var(--sidebar-w);transition:margin-left 0.32s cubic-bezier(.4,0,.2,1);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
@@ -44,113 +61,91 @@ body{background:var(--bg);color:#fff;font-family:'Rajdhani',sans-serif;font-weig
 .overlay.show{display:block;}
 
 /* ══ TOPBAR ══ */
-.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;flex-shrink:0;}
-.tb-left{display:flex;align-items:center;gap:10px;}
+.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;flex-shrink:0;}
+.tb-left{display:flex;align-items:center;gap:12px;}
 .toggle-btn{width:44px;height:44px;background:#16a34a;border:2px solid var(--green);border-radius:10px;color:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;box-shadow:0 0 10px #00ff9940;}
 .toggle-btn:hover{background:#15803d;}
-/* ◀ BACK BUTTON */
-.back-btn{display:flex;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:#94a3b8;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .18s;font-family:'Rajdhani',sans-serif;}
-.back-btn:hover{background:#1a2e44;color:#fff;border-color:var(--green);}
 .tb-title{font-size:15px;font-weight:700;color:#fff;letter-spacing:.4px;}
 .tb-right{display:flex;align-items:center;gap:10px;}
 .tb-date{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
 .tb-user{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
 
 /* ══ CONTENT ══ */
-.content{padding:18px;flex:1;max-width:100%;box-sizing:border-box;}
+.content{padding:18px;flex:1;}
 
 /* ══ HERO ══ */
-.hero{background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%);border:1px solid var(--border);border-radius:16px;padding:20px 24px 16px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden;}
+.hero{background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%);border:1px solid var(--border);border-radius:16px;padding:22px 24px 18px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,#00ff9910 0%,transparent 70%);pointer-events:none;}
-.hero-arabic{font-family:'Amiri',serif;font-size:36px;color:var(--green);direction:rtl;margin-bottom:8px;text-shadow:0 0 30px #00ff9960;}
+.hero-arabic{font-family:'Amiri',serif;font-size:38px;color:var(--green);direction:rtl;margin-bottom:8px;text-shadow:0 0 30px #00ff9960;}
 .hero-divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);margin:0 auto 10px;}
-.hero-company{font-size:24px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:4px;}
-.hero-dept{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--green);letter-spacing:3px;}
+.hero-company{font-size:26px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:4px;}
+.hero-dept{font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--green);letter-spacing:3px;}
 
-/* ══ KPI ══ */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:border-color .2s,transform .2s;}
+/* ══ KPI CARDS ══ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;transition:border-color .2s,transform .2s;}
 .kpi:hover{border-color:#00ff9940;transform:translateY(-2px);}
-.kpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
-.kpi h1{font-size:22px;color:var(--green);font-family:'Share Tech Mono',monospace;font-weight:400;}
-.kpi.red h1{color:var(--red);}.kpi.amber h1{color:var(--amber);}.kpi.blue h1{color:var(--blue);}
+.kpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.kpi h1{font-size:24px;color:var(--green);font-family:'Share Tech Mono',monospace;font-weight:400;}
+.kpi.red h1{color:#f87171;}.kpi.amber h1{color:#fbbf24;}.kpi.blue h1{color:#60a5fa;}
 
-/* ══ CARD ══ */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;}
-.card-title{color:var(--green);font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+/* ══ ADMIN MODULES GRID ══ */
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px;}
+.module-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 16px;text-align:center;text-decoration:none;color:#fff;transition:all .2s;display:block;position:relative;overflow:hidden;}
+.module-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(0,255,153,.04));pointer-events:none;}
+.module-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,255,153,.15);}
+.module-card .ico{font-size:38px;margin-bottom:12px;display:block;}
+.module-card h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:.3px;}
+.module-card p{font-size:12px;color:var(--muted);line-height:1.4;}
+.module-card .arrow{position:absolute;top:14px;right:14px;color:var(--green);font-size:16px;opacity:0;transition:opacity .2s;}
+.module-card:hover .arrow{opacity:1;}
 
-/* ══ FORM ══ */
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
-.form-group{display:flex;flex-direction:column;gap:6px;}
-.form-group label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
-.form-control{background:#060e1a;border:1px solid var(--border);border-radius:8px;color:#fff;padding:10px 14px;font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;width:100%;}
-.form-control:focus{border-color:var(--green);}
-.form-control::placeholder{color:var(--muted);}
-select.form-control option{background:#0e1829;color:#fff;}
+/* Module color accents */
+.module-card.green{border-color:#16a34a44;}
+.module-card.green:hover{border-color:#16a34a;box-shadow:0 8px 24px rgba(22,163,74,.2);}
+.module-card.blue{border-color:#1d4ed844;}
+.module-card.blue:hover{border-color:#3b82f6;box-shadow:0 8px 24px rgba(59,130,246,.2);}
+.module-card.purple{border-color:#7c3aed44;}
+.module-card.purple:hover{border-color:#a855f7;box-shadow:0 8px 24px rgba(168,85,247,.2);}
+.module-card.amber{border-color:#b4530944;}
+.module-card.amber:hover{border-color:#f59e0b;box-shadow:0 8px 24px rgba(245,158,11,.2);}
+.module-card.red{border-color:#dc262644;}
+.module-card.red:hover{border-color:#f87171;box-shadow:0 8px 24px rgba(248,113,113,.2);}
+.module-card.cyan{border-color:#0891b244;}
+.module-card.cyan:hover{border-color:#22d3ee;box-shadow:0 8px 24px rgba(34,211,238,.2);}
 
-/* ══ BUTTONS ══ */
-.btn{padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:'Rajdhani',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:8px;}
-.btn-green{background:#16a34a;color:#fff;border:1px solid var(--green);}
-.btn-green:hover{background:#15803d;}
-.btn-amber{background:#b45309;color:#fff;border:1px solid var(--amber);}
-.btn-amber:hover{background:#92400e;}
-.btn-red{background:#dc2626;color:#fff;border:1px solid var(--red);}
-.btn-red:hover{background:#b91c1c;}
-.btn-gray{background:var(--card2);color:#94a3b8;border:1px solid var(--border);}
-.btn-gray:hover{background:#1a2e44;color:#fff;}
-.btn-sm{padding:5px 14px;font-size:12px;}
-
-/* ══ FORM ACTIONS ══ */
-.form-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
-
-/* ══ SEARCH ══ */
-.search-box{width:100%;padding:10px 16px;background:#060e1a;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;}
-.search-box:focus{border-color:var(--green);}
-.search-box::placeholder{color:var(--muted);}
-
-/* ══ TABLE ══ */
-.tbl-wrap{overflow-x:auto;border-radius:8px;}
-table{width:100%;border-collapse:collapse;min-width:900px;}
+/* ══ QUICK STATS TABLE ══ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;overflow-x:auto;}
+.card-title{color:var(--green);font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+table{width:100%;border-collapse:collapse;}
 th,td{border:1px solid var(--border);padding:10px 12px;text-align:center;font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:600;color:#fff;white-space:nowrap;}
 th{background:#090f1c;color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:.7px;font-weight:700;}
 tr:hover td{background:#ffffff05;}
-
-/* ══ BADGES ══ */
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
-.badge-active{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
-.badge-inactive{background:#dc262622;color:#f87171;border:1px solid #dc262655;}
-.badge-admin{background:#7c3aed22;color:#c084fc;border:1px solid #7c3aed55;}
-.badge-user{background:#1d4ed822;color:#60a5fa;border:1px solid #1d4ed855;}
-.badge-viewer{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
-
-/* ══ EDIT MODE HIGHLIGHT ══ */
-.edit-mode{border-color:var(--amber) !important;background:linear-gradient(135deg,#0e1829,#1a1208) !important;}
-.edit-banner{background:#b4530922;border:1px solid var(--amber);border-radius:10px;padding:10px 16px;margin-bottom:14px;color:var(--amber);font-size:13px;font-weight:700;display:none;align-items:center;gap:10px;}
-.edit-banner.show{display:flex;}
-
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0e1829;border:1px solid var(--green);border-radius:10px;padding:12px 24px;font-size:14px;font-weight:700;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,.4);display:none;font-family:'Rajdhani',sans-serif;}
-.toast.show{display:block;animation:fadeIn .3s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px);}to{opacity:1;transform:translate(-50%,0);}}
+.b-done{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
+.b-run{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b55;}
+.b-pend{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
 
 /* ══ RESPONSIVE ══ */
 @media(max-width:960px){
   .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));}
   .sidebar.open{transform:translateX(0);}
   .main-wrap{margin-left:0 !important;}
+  .modules-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:600px){
   .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .modules-grid{grid-template-columns:repeat(2,1fr);}
   .tb-date{display:none;}
   .content{padding:12px;}
-  .form-grid{grid-template-columns:1fr;}
+  .hero-arabic{font-size:28px;}
+  .hero-company{font-size:18px;}
 }
 </style>
 </head>
 <body>
 
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-<div class="toast" id="toast"></div>
 
 <!-- ══ SIDEBAR ══ -->
 <div class="sidebar" id="sidebar">
@@ -159,18 +154,22 @@ tr:hover td{background:#ffffff05;}
     <div class="sb-company">INNOVATIVE KNITEX LTD</div>
     <div class="sb-erp">SMART TNA BD ERP</div>
   </div>
+
   <nav class="sb-nav">
     <div class="sb-label">— Main —</div>
     <a class="sb-link" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
     <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
     <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
+
     <div class="sb-label">— Admin —</div>
-    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
-    <a class="sb-link active" href="admin-user-management.html"><span class="sb-icon">👥</span> User Management</a>
+    <a class="sb-link active" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
+    <a class="sb-link" href="admin-user-management.html"><span class="sb-icon">👥</span> User Management</a>
     <a class="sb-link" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
+
     <div class="sb-label">— Production —</div>
     <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
-    <a class="sb-link" href="knitting-dyeing.html"><span class="sb-icon">🧶</span> Knitting & Dyeing</a>
+    <a class="sb-link" href="knitting.html"><span class="sb-icon">🧶</span> Knitting</a>
+    <a class="sb-link" href="dyeing.html"><span class="sb-icon">🎨</span> Dyeing</a>
     <a class="sb-link" href="laboratory.html"><span class="sb-icon">🔬</span> Laboratory</a>
     <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
     <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
@@ -178,12 +177,23 @@ tr:hover td{background:#ffffff05;}
     <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
     <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
     <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
+
     <div class="sb-label">— Management —</div>
     <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
     <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
   </nav>
+
+  <!-- ✅ BACK TO DASHBOARD — সব user সহজে ফিরে যেতে পারবে -->
+  <div style="padding:10px 8px 4px;border-top:1px solid #1e3048;">
+    <a href="dashboard.html" class="sb-dashboard-btn">
+      🏠 Back to Dashboard
+    </a>
+  </div>
+
   <div class="sb-foot">
-    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
+    <a class="sb-link" href="login.html" style="color:#f87171;">
+      <span class="sb-icon">🚪</span> Logout
+    </a>
   </div>
 </div>
 
@@ -194,9 +204,7 @@ tr:hover td{background:#ffffff05;}
   <div class="topbar">
     <div class="tb-left">
       <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
-      <!-- ◀ BACK BUTTON -->
-      <a class="back-btn" href="admin.html">◀ Back</a>
-      <span class="tb-title">👥 User Management</span>
+      <span class="tb-title">👑 Admin Panel</span>
     </div>
     <div class="tb-right">
       <span class="tb-date" id="dateEl"></span>
@@ -211,138 +219,130 @@ tr:hover td{background:#ffffff05;}
       <div class="hero-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
       <div class="hero-divider"></div>
       <div class="hero-company">INNOVATIVE KNITEX LTD</div>
-      <div class="hero-dept">👥 USER MANAGEMENT — ADMIN PANEL</div>
+      <div class="hero-dept">👑 SMART TNA BD ERP — ADMIN PANEL</div>
     </div>
 
-    <!-- KPI -->
+    <!-- KPI CARDS — from Firebase -->
     <div class="kpi-grid">
-      <div class="kpi"><h3>Total Users</h3><h1 id="kTotal">—</h1></div>
-      <div class="kpi"><h3>Active</h3><h1 id="kActive">—</h1></div>
-      <div class="kpi red"><h3>Inactive</h3><h1 id="kInactive">—</h1></div>
-      <div class="kpi blue"><h3>Admin</h3><h1 id="kAdmin">—</h1></div>
-      <div class="kpi amber"><h3>Departments</h3><h1 id="kDepts">—</h1></div>
+      <div class="kpi"><h3>Total Users</h3><h1 id="kUsers">—</h1></div>
+      <div class="kpi"><h3>Active Users</h3><h1 id="kActive">—</h1></div>
+      <div class="kpi blue"><h3>Total Orders</h3><h1 id="kOrders">—</h1></div>
+      <div class="kpi amber"><h3>Running Orders</h3><h1 id="kRunning">—</h1></div>
+      <div class="kpi"><h3>Completed</h3><h1 id="kCompleted">—</h1></div>
+      <div class="kpi red"><h3>Delayed</h3><h1 id="kDelayed">—</h1></div>
     </div>
 
-    <!-- ADD / EDIT FORM -->
-    <div class="card" id="formCard">
-      <div class="card-title">➕ <span id="formTitle">Add New User</span></div>
-
-      <!-- Edit Mode Banner -->
-      <div class="edit-banner" id="editBanner">
-        ✏️ Edit Mode — User data loaded. Make changes and click Update.
-        <button class="btn btn-gray btn-sm" onclick="cancelEdit()" style="margin-left:auto;">✕ Cancel</button>
-      </div>
-
-      <div class="form-grid">
-
-        <div class="form-group">
-          <label>Employee ID *</label>
-          <input type="text" id="employeeId" class="form-control" placeholder="e.g. EMP-001" required>
-        </div>
-
-        <div class="form-group">
-          <label>Full Name *</label>
-          <input type="text" id="name" class="form-control" placeholder="e.g. Md. Jasim Uddin" required>
-        </div>
-
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="email" class="form-control" placeholder="user@knitex.com" required>
-        </div>
-
-        <div class="form-group">
-          <label>Password *</label>
-          <input type="text" id="defaultPassword" class="form-control" placeholder="Min 6 characters">
-        </div>
-
-        <div class="form-group">
-          <label>Department *</label>
-          <select id="department" class="form-control">
-            <option>Admin</option>
-            <option>Management</option>
-            <option>Merchandising</option>
-            <option>Sample</option>
-            <option>Laboratory</option>
-            <option>Knitting & Dyeing</option>
-            <option>Cutting</option>
-            <option>Print & Embroidery</option>
-            <option>Sewing</option>
-            <option>Washing</option>
-            <option>Finishing</option>
-            <option>Shipment</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Role *</label>
-          <select id="role" class="form-control">
-            <option value="admin">Admin — Full Access</option>
-            <option value="management">Management — View Only</option>
-            <option value="merchandiser">Merchandiser — Own Orders</option>
-            <option value="knitting">Knitting Dept</option>
-            <option value="dyeing">Dyeing Dept</option>
-            <option value="laboratory">Laboratory</option>
-            <option value="sample">Sample Dept</option>
-            <option value="cutting">Cutting Dept</option>
-            <option value="sewing">Sewing Dept</option>
-            <option value="finishing">Finishing Dept</option>
-            <option value="shipment">Shipment Dept</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Status</label>
-          <select id="active" class="form-control">
-            <option value="true">✅ Active</option>
-            <option value="false">❌ Inactive</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Phone (optional)</label>
-          <input type="text" id="phone" class="form-control" placeholder="01XXXXXXXXX">
-        </div>
-
-      </div>
-
-      <div class="form-actions">
-        <button class="btn btn-green" onclick="saveUser()" id="saveBtn">
-          💾 Save User
-        </button>
-        <button class="btn btn-gray" onclick="resetForm()">
-          🔄 Reset
-        </button>
-      </div>
+    <!-- ADMIN MODULE CARDS -->
+    <div style="color:var(--green);font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+      ⚡ Quick Access Modules
     </div>
 
-    <!-- SEARCH -->
+    <div class="modules-grid">
+
+      <a class="module-card green" href="admin-user-management.html">
+        <span class="arrow">→</span>
+        <span class="ico">👥</span>
+        <h3>User Management</h3>
+        <p>Add, edit, delete users. Assign roles & departments.</p>
+      </a>
+
+      <a class="module-card blue" href="orders.html">
+        <span class="arrow">→</span>
+        <span class="ico">📦</span>
+        <h3>Order Entry</h3>
+        <p>Create & manage buyer orders. Set IKL numbers.</p>
+      </a>
+
+      <a class="module-card purple" href="tna-management.html">
+        <span class="arrow">→</span>
+        <span class="ico">📋</span>
+        <h3>TNA Management</h3>
+        <p>Track all TNA steps. Update target & actual dates.</p>
+      </a>
+
+      <a class="module-card amber" href="merchandising.html">
+        <span class="arrow">→</span>
+        <span class="ico">👔</span>
+        <h3>Merchandising</h3>
+        <p>Merchandiser-wise order tracking & performance.</p>
+      </a>
+
+      <a class="module-card cyan" href="reports.html">
+        <span class="arrow">→</span>
+        <span class="ico">📊</span>
+        <h3>Reports</h3>
+        <p>View all ERP reports. Export data.</p>
+      </a>
+
+      <a class="module-card red" href="settings.html">
+        <span class="arrow">→</span>
+        <span class="ico">⚙️</span>
+        <h3>Settings</h3>
+        <p>System configuration & preferences.</p>
+      </a>
+
+      <a class="module-card green" href="dashboard.html">
+        <span class="arrow">→</span>
+        <span class="ico">🏠</span>
+        <h3>Main Dashboard</h3>
+        <p>Full ERP overview. All KPIs & progress tracking.</p>
+      </a>
+
+      <a class="module-card blue" href="sample.html">
+        <span class="arrow">→</span>
+        <span class="ico">🧵</span>
+        <h3>Sample Dept</h3>
+        <p>PP Sample, Size Set tracking.</p>
+      </a>
+
+      <a class="module-card purple" href="knitting.html">
+        <span class="arrow">→</span>
+        <span class="ico">🧶</span>
+        <h3>Knitting Dept</h3>
+        <p>Yarn receive, Knitting progress tracking.</p>
+      </a>
+
+      <a class="module-card amber" href="dyeing.html">
+        <span class="arrow">→</span>
+        <span class="ico">🎨</span>
+        <h3>Dyeing Dept</h3>
+        <p>Dyeing start, complete, color tracking.</p>
+      </a>
+
+      <a class="module-card cyan" href="laboratory.html">
+        <span class="arrow">→</span>
+        <span class="ico">🔬</span>
+        <h3>Laboratory</h3>
+        <p>Lab Dip, Fabric test, approval tracking.</p>
+      </a>
+
+      <a class="module-card red" href="shipment.html">
+        <span class="arrow">→</span>
+        <span class="ico">🚢</span>
+        <h3>Shipment</h3>
+        <p>Final inspection, shipment approval.</p>
+      </a>
+
+    </div>
+
+    <!-- QUICK USER TABLE -->
     <div class="card">
-      <div class="card-title">🔍 Search Users</div>
-      <input class="search-box" type="text" id="searchInput" placeholder="Search by Name / Email / Department / Role...">
-    </div>
-
-    <!-- USER TABLE -->
-    <div class="card">
-      <div class="card-title">👥 User List <span id="userCount" style="font-size:12px;color:var(--muted);margin-left:8px;"></span></div>
-      <div class="tbl-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Emp ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Department</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="userTableBody">
-            <tr><td colspan="9" style="padding:20px;color:#4a6080;">Loading users...</td></tr>
-          </tbody>
-        </table>
+      <div class="card-title">👥 Recent Users</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Name</th><th>Email</th>
+            <th>Department</th><th>Role</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="userTable">
+          <tr><td colspan="6" style="padding:16px;color:#4a6080;">Loading...</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px;text-align:right;">
+        <a href="admin-user-management.html" style="color:var(--green);font-size:13px;font-weight:700;text-decoration:none;">
+          View All Users →
+        </a>
       </div>
     </div>
 
@@ -352,193 +352,69 @@ tr:hover td{background:#ffffff05;}
 <!-- ══ FIREBASE ══ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, getDocs, getDoc, setDoc, doc, deleteDoc, updateDoc }
+import { getFirestore, collection, getDocs }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const cfg={apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",authDomain:"smart-tna-bd.firebaseapp.com",projectId:"smart-tna-bd",storageBucket:"smart-tna-bd.firebasestorage.app",messagingSenderId:"372049573207",appId:"1:372049573207:web:571beae951f9aa4b47fa12"};
-const app=initializeApp(cfg);
-const auth=getAuth(app);
-const db=getFirestore(app);
+const db=getFirestore(initializeApp(cfg));
 
-/* ── Toast ── */
-function toast(msg, color="#00ff99", dur=3000){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.style.color=color;
-  t.style.borderColor=color;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),dur);
-}
+function getQty(d){const f=[d.totalQty,d.qty,d.quantity,d.Qty,d.pcs];for(const v of f){if(v!==undefined&&v!==null&&v!==""){const n=parseFloat(String(v).replace(/,/g,""));if(!isNaN(n)&&n>0)return n;}}return 0;}
+function getShip(d){return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||"";}
 
-/* ── Role badge ── */
-function roleBadge(r){
-  const map={admin:"badge-admin",management:"badge-viewer",merchandiser:"badge-user"};
-  const cls=map[r]||"badge-user";
-  return `<span class="badge ${cls}">${r||"user"}</span>`;
-}
-
-/* ── Load Users ── */
-async function loadUsers(){
-  const body=document.getElementById("userTableBody");
-  body.innerHTML=`<tr><td colspan="9" style="padding:20px;color:#4a6080;">Loading...</td></tr>`;
-
-  const snap=await getDocs(collection(db,"users"));
-  body.innerHTML="";
-
-  if(snap.empty){
-    body.innerHTML=`<tr><td colspan="9" style="padding:20px;color:#4a6080;">No Users Found</td></tr>`;
-    return;
-  }
-
-  let tot=0,active=0,inactive=0,adminCount=0;
-  const depts=new Set();
+async function load(){
+  /* Users */
+  const userSnap=await getDocs(collection(db,"users"));
+  let totalUsers=0,activeUsers=0;
+  const tbody=document.getElementById("userTable");
+  tbody.innerHTML="";
   let sl=0;
 
-  snap.forEach(ds=>{
-    const u=ds.data(), id=ds.id;
-    tot++; sl++;
-    if(u.active===true||u.active==="true") active++; else inactive++;
-    if(u.role==="admin") adminCount++;
-    if(u.department) depts.add(u.department);
-
+  userSnap.forEach(ds=>{
+    const u=ds.data(); totalUsers++; sl++;
     const isActive=u.active===true||u.active==="true";
-    body.innerHTML+=`
-    <tr id="row-${id}">
-      <td style="color:var(--green);font-weight:700;">${sl}</td>
-      <td><b>${u.employeeId||"—"}</b></td>
+    if(isActive) activeUsers++;
+    const roleColor={admin:"color:#c084fc",management:"color:#94a3b8",merchandiser:"color:#60a5fa"}[u.role]||"color:#94a3b8";
+    tbody.innerHTML+=`
+    <tr>
+      <td style="color:var(--green);">${sl}</td>
       <td><b>${u.name||"—"}</b></td>
       <td style="font-size:12px;">${u.email||"—"}</td>
-      <td style="font-size:12px;">${u.phone||"—"}</td>
       <td>${u.department||"—"}</td>
-      <td>${roleBadge(u.role)}</td>
-      <td><span class="badge ${isActive?"badge-active":"badge-inactive"}">${isActive?"✅ Active":"❌ Inactive"}</span></td>
-      <td>
-        <button class="btn btn-amber btn-sm" onclick="editUser('${id}')">✏️ Edit</button>
-        <button class="btn btn-red btn-sm" onclick="deleteUser('${id}','${u.name||u.email}')">🗑️ Delete</button>
-      </td>
+      <td style="${roleColor};font-weight:700;">${u.role||"—"}</td>
+      <td><span class="badge ${isActive?"b-done":""}">
+        ${isActive?"✅ Active":"❌ Inactive"}
+      </span></td>
     </tr>`;
   });
 
-  /* KPI */
-  document.getElementById("kTotal").textContent=tot;
-  document.getElementById("kActive").textContent=active;
-  document.getElementById("kInactive").textContent=inactive;
-  document.getElementById("kAdmin").textContent=adminCount;
-  document.getElementById("kDepts").textContent=depts.size;
-  document.getElementById("userCount").textContent="("+tot+" users)";
+  if(sl===0) tbody.innerHTML=`<tr><td colspan="6" style="padding:16px;color:#4a6080;">No Users Found — <a href="admin-user-management.html" style="color:var(--green);">Add Users →</a></td></tr>`;
+
+  document.getElementById("kUsers").textContent=totalUsers;
+  document.getElementById("kActive").textContent=activeUsers;
+
+  /* Orders */
+  const orderSnap=await getDocs(collection(db,"orders"));
+  let tot=0,run=0,done=0,late=0;
+  const now=new Date();
+
+  orderSnap.forEach(ds=>{
+    const d=ds.data(); tot++;
+    const isDone=d.shipmentStatus==="Completed";
+    isDone?done++:run++;
+    const sd=d.shipdate||d.shipmentDate||"";
+    if(sd&&new Date(sd)<now&&!isDone) late++;
+  });
+
+  document.getElementById("kOrders").textContent=tot;
+  document.getElementById("kRunning").textContent=run;
+  document.getElementById("kCompleted").textContent=done;
+  document.getElementById("kDelayed").textContent=late;
 }
 
-/* ── Save User ── */
-window.saveUser=async function(){
-  const employeeId=document.getElementById("employeeId").value.trim();
-  const name=document.getElementById("name").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("defaultPassword").value.trim();
-  const department=document.getElementById("department").value;
-  const role=document.getElementById("role").value;
-  const active=document.getElementById("active").value==="true";
-  const phone=document.getElementById("phone").value.trim();
-
-  if(!employeeId||!name||!email){
-    toast("⚠️ Employee ID, Name & Email required!","#f87171"); return;
-  }
-
-  const btn=document.getElementById("saveBtn");
-  btn.textContent="⏳ Saving..."; btn.disabled=true;
-
-  try{
-    if(window._editId){
-      /* UPDATE */
-      await updateDoc(doc(db,"users",window._editId),{
-        employeeId,name,email,department,role,active,phone,
-        updatedAt:new Date().toISOString()
-      });
-      toast("✅ User Updated Successfully!","#00ff99");
-      cancelEdit();
-    } else {
-      /* CREATE — Firebase Auth + Firestore */
-      if(!password||password.length<6){
-        toast("⚠️ Password min 6 characters!","#f87171");
-        btn.textContent="💾 Save User"; btn.disabled=false; return;
-      }
-      const cred=await createUserWithEmailAndPassword(auth,email,password);
-      await setDoc(doc(db,"users",cred.user.uid),{
-        employeeId,name,email,defaultPassword:password,
-        department,role,active,phone,
-        createdAt:new Date().toISOString()
-      });
-      toast("✅ User Created! They can now login.","#00ff99");
-      resetForm();
-    }
-    loadUsers();
-  }catch(e){
-    toast("❌ "+e.message,"#f87171",5000);
-  }
-  btn.textContent="💾 Save User"; btn.disabled=false;
-};
-
-/* ── Edit ── */
-window.editUser=async function(id){
-  const ds=await getDoc(doc(db,"users",id));
-  if(!ds.exists()) return;
-  const u=ds.data();
-
-  window._editId=id;
-  document.getElementById("employeeId").value=u.employeeId||"";
-  document.getElementById("name").value=u.name||"";
-  document.getElementById("email").value=u.email||"";
-  document.getElementById("defaultPassword").value="";
-  document.getElementById("department").value=u.department||"Admin";
-  document.getElementById("role").value=u.role||"management";
-  document.getElementById("active").value=String(u.active);
-  document.getElementById("phone").value=u.phone||"";
-
-  document.getElementById("formTitle").textContent="Edit User — "+u.name;
-  document.getElementById("saveBtn").textContent="✏️ Update User";
-  document.getElementById("editBanner").classList.add("show");
-  document.getElementById("formCard").classList.add("edit-mode");
-  window.scrollTo({top:0,behavior:"smooth"});
-};
-
-/* ── Cancel Edit ── */
-window.cancelEdit=function(){
-  window._editId=null;
-  resetForm();
-  document.getElementById("formTitle").textContent="Add New User";
-  document.getElementById("saveBtn").textContent="💾 Save User";
-  document.getElementById("editBanner").classList.remove("show");
-  document.getElementById("formCard").classList.remove("edit-mode");
-};
-
-/* ── Reset Form ── */
-window.resetForm=function(){
-  ["employeeId","name","email","defaultPassword","phone"].forEach(id=>{
-    document.getElementById(id).value="";
-  });
-};
-
-/* ── Delete ── */
-window.deleteUser=async function(id,name){
-  if(!confirm("Delete user: "+name+"?\n\nThis cannot be undone!")) return;
-  await deleteDoc(doc(db,"users",id));
-  toast("🗑️ User Deleted: "+name,"#f87171");
-  loadUsers();
-};
-
-/* ── Search ── */
-document.getElementById("searchInput").addEventListener("keyup",function(){
-  const q=this.value.toLowerCase();
-  document.querySelectorAll("#userTableBody tr").forEach(r=>{
-    r.style.display=r.innerText.toLowerCase().includes(q)?"":"none";
-  });
-});
-
-loadUsers();
+load();
 </script>
 
-<!-- ══ SIDEBAR + PWA ══ -->
+<!-- ══ SIDEBAR JS + PWA ══ -->
 <script>
 let sidebarOpen=true;
 function toggleSidebar(){
@@ -558,11 +434,8 @@ initLayout();
 window.addEventListener("resize",initLayout);
 document.getElementById("dateEl").textContent=new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
 
-/* PWA Service Worker */
 if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js")
-    .then(()=>console.log("[PWA] SW registered"))
-    .catch(e=>console.warn("[PWA]",e));
+  navigator.serviceWorker.register("sw.js").catch(e=>console.warn(e));
 }
 </script>
 </body>
