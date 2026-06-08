@@ -1,16 +1,65 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SMART TNA BD ERP - SAMPLE DEPARTMENT</title>
+
+<!-- ✅ PWA — এখানে যোগ করুন সব HTML এ -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ff99">
+<script src="pwa-install.js" defer></script>
+
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
 body { background:#0f172a; color:white; }
 
-header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
-.company { font-size:28px; font-weight:bold; color:#00ff99; }
-.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+/* ✅ TOPBAR — Dashboard back button এর জন্য */
+.topbar {
+  background:#111827;
+  padding:12px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:2px solid #1e293b;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.topbar-left { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
+
+/* ✅ BACK BUTTON */
+.back-btn {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:8px;
+  color:#cbd5e1;
+  padding:8px 16px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  font-family:Arial,sans-serif;
+  transition:all .2s;
+}
+.back-btn:hover { background:#00ff9920; color:#00ff99; border-color:#00ff99; }
+
+.page-title { font-size:15px; font-weight:bold; color:#00ff99; }
+
+/* Header (company name area — simplified since topbar exists) */
+.company-header {
+  background:#111827;
+  padding:16px 20px;
+  text-align:center;
+  border-bottom:1px solid #1e293b;
+}
+.company { font-size:26px; font-weight:bold; color:#00ff99; }
+.system  { font-size:16px; margin-top:6px; color:#cbd5e1; }
 
 /* KPI */
 .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; padding:20px; }
@@ -28,13 +77,11 @@ table { width:100%; border-collapse:collapse; min-width:4500px; background:#1e29
 th { background:#111827; color:#00ff99; padding:12px; border:1px solid #334155; white-space:nowrap; }
 td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:middle; white-space:nowrap; }
 
-/* Status badge colors in TABLE */
 .st-pending  { color:#f97316; font-weight:bold; }
 .st-running  { color:#3b82f6; font-weight:bold; }
 .st-delay    { color:#ef4444; font-weight:bold; }
 .st-complete { color:#00ff99; font-weight:bold; }
 
-/* EDIT BUTTON */
 .edit-btn { background:#00aa66; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; }
 .edit-btn:hover { background:#008844; }
 
@@ -70,30 +117,16 @@ input[type="date"], input[type="number"], select, textarea {
 input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:focus {
   outline:none; border-color:#00ff99; }
 
-/* ── STATUS BUTTONS ── */
 .status-group { display:flex; gap:8px; }
 .status-btn {
   flex:1; padding:11px 6px; border:2px solid #334155; border-radius:8px;
   background:#0f172a; color:#64748b; font-weight:bold; font-size:13px;
   cursor:pointer; transition:all 0.2s; text-align:center; }
+.status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
+.status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
+.status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
+.status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
 
-/* Pending  → Orange */
-.status-btn.active-pending  {
-  border-color:#f97316; background:#431407; color:#f97316; }
-
-/* Running  → Blue */
-.status-btn.active-running  {
-  border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
-
-/* Delay    → Red */
-.status-btn.active-delay    {
-  border-color:#ef4444; background:#450a0a; color:#ef4444; }
-
-/* Complete → Green */
-.status-btn.active-complete {
-  border-color:#00ff99; background:#052e16; color:#00ff99; }
-
-/* BTN GROUP */
 .btn-group { display:flex; gap:10px; margin-top:25px; }
 .save-btn  { background:#00aa66; padding:13px 25px; border:none; border-radius:10px;
   color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
@@ -105,11 +138,24 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
 </head>
 <body>
 
-<header>
-  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
+<!-- ✅ TOPBAR — Back to Dashboard button এখানে -->
+<div class="topbar">
+  <div class="topbar-left">
+    <!-- ✅ এই back button টাই দরকার ছিল -->
+    <a class="back-btn" href="dashboard.html" id="backBtn">🏠 Dashboard</a>
+    <span class="page-title">🧵 Sample Department</span>
+  </div>
+  <div class="topbar-right">
+    <span style="font-size:11px;color:#64748b;font-family:monospace;" id="dateEl"></span>
+  </div>
+</div>
+
+<!-- Company Header -->
+<div class="company-header">
+  <div style="font-size:22px;margin-bottom:8px;">﷽</div>
   <div class="company">INNOVATIVE KNITEX LTD</div>
   <div class="system">SMART TNA BD ERP - SAMPLE DEPARTMENT</div>
-</header>
+</div>
 
 <!-- KPI -->
 <div class="kpi-grid">
@@ -179,8 +225,8 @@ const db  = getFirestore(app);
 let allOrders          = [];
 let selectedDocId      = null;
 let selectedColorIndex = null;
+let hasUnsavedData     = false; // ✅ Unsaved tracking
 
-// ── STATUS OPTIONS (4 options) ───────────────
 const STATUS_OPTIONS = [
   { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
   { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
@@ -188,7 +234,6 @@ const STATUS_OPTIONS = [
   { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
 ];
 
-// ── TABLE BADGE ──────────────────────────────
 function statusBadge(val) {
   if (!val || val==="-") return "-";
   if (val==="Running")  return `<span class="st-running">● Running</span>`;
@@ -197,7 +242,6 @@ function statusBadge(val) {
   return `<span class="st-pending">● Pending</span>`;
 }
 
-// ── STATUS BUTTON HTML builder ───────────────
 function statusBtns(field, current) {
   return STATUS_OPTIONS.map(opt => {
     const active = (current === opt.val) ? opt.cls : "";
@@ -207,16 +251,13 @@ function statusBtns(field, current) {
   }).join("");
 }
 
-// ── STATUS CLICK handler ─────────────────────
 window.selectStatus = function(field, value, activeCls, btn) {
   document.getElementById("f_" + field).value = value;
-  btn.parentElement.querySelectorAll(".status-btn").forEach(b => {
-    b.className = "status-btn";
-  });
+  btn.parentElement.querySelectorAll(".status-btn").forEach(b => b.className="status-btn");
   btn.classList.add(activeCls);
+  hasUnsavedData = true; // ✅ mark unsaved
 };
 
-// ── LOAD ─────────────────────────────────────
 async function loadOrders() {
   const snap = await getDocs(collection(db, "orders"));
   allOrders  = [];
@@ -225,7 +266,6 @@ async function loadOrders() {
   renderOrderList(allOrders);
 }
 
-// ── SEARCH ───────────────────────────────────
 window.filterOrders = function() {
   const kw = document.getElementById("searchInput").value.toLowerCase();
   if (!kw) { renderOrderList(allOrders); return; }
@@ -237,10 +277,10 @@ window.filterOrders = function() {
   ));
 };
 
-// ── OPEN MODAL ───────────────────────────────
 window.openOrder = function(docId, colorIndex) {
   selectedDocId      = docId;
   selectedColorIndex = colorIndex;
+  hasUnsavedData     = false; // reset when opening fresh
 
   const order = allOrders.find(o => o.id === docId);
   if (!order) return;
@@ -254,8 +294,7 @@ window.openOrder = function(docId, colorIndex) {
     const ship = new Date(shipDate+"T00:00:00");
     const pD=new Date(ship); pD.setDate(pD.getDate()-30);
     const tD=new Date(ship); tD.setDate(tD.getDate()-15);
-    // Fabric Target = PP Target - 7 days
-    const fD=new Date(pD); fD.setDate(fD.getDate()-7);
+    const fD=new Date(pD);   fD.setDate(fD.getDate()-7);
     autoFabricTarget = fD.toISOString().split("T")[0];
     autoPPTarget     = pD.toISOString().split("T")[0];
     autoTOPTarget    = tD.toISOString().split("T")[0];
@@ -275,7 +314,6 @@ window.openOrder = function(docId, colorIndex) {
   const remark         = c.remark         || "";
 
   document.getElementById("modalFormArea").innerHTML = `
-
     <div class="modal-info-box">
       <p><span>Style     :</span> ${order.style||"-"}</p>
       <p><span>Color     :</span> ${c.color||"-"}</p>
@@ -283,14 +321,12 @@ window.openOrder = function(docId, colorIndex) {
       <p><span>Ship Date :</span> ${shipDate}</p>
     </div>
 
-    <!-- SAMPLE QTY -->
     <div class="section-title">🧵 Sample Qty</div>
     <div class="form-row">
       <label>Sample Qty</label>
       <input type="number" id="f_sampleQty" value="${sampleQty}" min="0" placeholder="Enter sample qty">
     </div>
 
-    <!-- FABRIC -->
     <div class="section-title">🎨 Fabric</div>
     <div class="form-grid-2">
       <div class="form-row">
@@ -303,7 +339,6 @@ window.openOrder = function(docId, colorIndex) {
       </div>
     </div>
 
-    <!-- PP -->
     <div class="section-title">✂️ PP (Pre-Production)</div>
     <div class="form-grid-3">
       <div class="form-row">
@@ -325,7 +360,6 @@ window.openOrder = function(docId, colorIndex) {
       <input type="hidden" id="f_ppStatus" value="${ppStatus}">
     </div>
 
-    <!-- TOP -->
     <div class="section-title">👕 TOP (Top of Production)</div>
     <div class="form-grid-3">
       <div class="form-row">
@@ -347,22 +381,32 @@ window.openOrder = function(docId, colorIndex) {
       <input type="hidden" id="f_topStatus" value="${topStatus}">
     </div>
 
-    <!-- REMARK -->
     <div class="section-title">📝 Remark</div>
     <div class="form-row">
-      <textarea id="f_remark" rows="3">${remark}</textarea>
+      <textarea id="f_remark" rows="3" oninput="hasUnsavedData=true">${remark}</textarea>
     </div>
   `;
+
+  // ✅ Track changes in modal inputs
+  document.querySelectorAll("#modalFormArea input, #modalFormArea textarea").forEach(el => {
+    el.addEventListener("change", () => { hasUnsavedData = true; });
+  });
 
   document.getElementById("editModal").style.display = "flex";
 };
 
-// ── CLOSE ────────────────────────────────────
+// ✅ CLOSE — confirm if unsaved
 document.getElementById("closeBtn").onclick = function() {
+  if (hasUnsavedData) {
+    if (!confirm("⚠️ আপনি কি নিশ্চিত?\n\nSave না করে Close করলে সব পরিবর্তন হারিয়ে যাবে!")) {
+      return; // cancel close
+    }
+  }
+  hasUnsavedData = false;
   document.getElementById("editModal").style.display = "none";
 };
 
-// ── SAVE ─────────────────────────────────────
+// ✅ SAVE
 document.getElementById("saveBtn").onclick = async function() {
   if (selectedDocId === null || selectedColorIndex === null) return;
   const order = allOrders.find(o => o.id === selectedDocId);
@@ -389,21 +433,19 @@ document.getElementById("saveBtn").onclick = async function() {
 
   try {
     await updateDoc(doc(db, "orders", selectedDocId), { colors: updatedColors });
+    hasUnsavedData = false; // ✅ reset after save
     alert("✅ Saved Successfully!");
     document.getElementById("editModal").style.display = "none";
     loadOrders();
   } catch (err) {
-    console.error(err);
     alert("❌ Save Failed! " + err.message);
   }
 };
 
-// ── KPI ──────────────────────────────────────
 function renderKPI() {
   document.getElementById("totalStyles").innerText = allOrders.length;
   let totalSampleQty=0, runningStyles=0, progressTotal=0, thisMonthQty=0, nextMonthQty=0;
   const now=new Date(), thisMonth=now.getMonth(), thisYear=now.getFullYear();
-
   allOrders.forEach(order => {
     if (order.colors) order.colors.forEach(c => { totalSampleQty += Number(c.sampleQty||0); });
     const prog = Number(order.sampleProgress||0);
@@ -419,7 +461,6 @@ function renderKPI() {
       if (d.getFullYear()===ny && d.getMonth()===nm) nextMonthQty+=tq;
     }
   });
-
   document.getElementById("totalSampleQty").innerText = totalSampleQty.toLocaleString();
   document.getElementById("runningStyles").innerText   = runningStyles;
   document.getElementById("avgProgress").innerText     = allOrders.length ? Math.round(progressTotal/allOrders.length)+"%" : "0%";
@@ -427,43 +468,35 @@ function renderKPI() {
   document.getElementById("nextMonthQty").innerText    = nextMonthQty.toLocaleString();
 }
 
-// ── RENDER TABLE ─────────────────────────────
 function renderOrderList(orders) {
   const body = document.getElementById("orderTableBody");
   body.innerHTML = "";
   let serial = 1;
-
   orders.forEach(order => {
     const shipDate = order.shipdate||order.shipDate||order.shipmentDate||"-";
     let leadTime="-", tnaType="Normal";
-
     if (shipDate!=="-" && order.orderDate) {
       const ms = new Date(shipDate+"T00:00:00") - new Date(order.orderDate+"T00:00:00");
       leadTime = Math.max(0, Math.ceil(ms/86400000));
       if      (leadTime<60) tnaType="Super Urgent";
       else if (leadTime<90) tnaType="Urgent";
     }
-
     const totalQty = order.colors ? order.colors.reduce((s,c)=>s+Number(c.qty||0),0) : 0;
-
     let autoFabricTarget="-", autoPPTarget="-", autoTOPTarget="-";
     if (shipDate!=="-") {
       const ship=new Date(shipDate+"T00:00:00");
       const pD=new Date(ship); pD.setDate(pD.getDate()-30);
       const tD=new Date(ship); tD.setDate(tD.getDate()-15);
-      // Fabric Target = PP Target - 7 days
-      const fD=new Date(pD); fD.setDate(fD.getDate()-7);
+      const fD=new Date(pD);   fD.setDate(fD.getDate()-7);
       autoFabricTarget = fD.toISOString().split("T")[0];
       autoPPTarget     = pD.toISOString().split("T")[0];
       autoTOPTarget    = tD.toISOString().split("T")[0];
     }
-
     if (order.colors && order.colors.length) {
       order.colors.forEach((c, index) => {
         const fabricTarget = c.fabricTarget || autoFabricTarget;
         const ppTarget     = c.ppTarget     || autoPPTarget;
         const topTarget    = c.topTarget    || autoTOPTarget;
-
         body.innerHTML += `
           <tr>
             <td>${index===0 ? serial : ""}</td>
@@ -505,5 +538,35 @@ function renderOrderList(orders) {
 
 loadOrders();
 </script>
+
+<!-- ✅ BACK BUTTON CONFIRM + DATE -->
+<script>
+// ✅ Browser back / refresh এ confirm
+window.addEventListener("beforeunload", function(e) {
+  if (typeof hasUnsavedData !== "undefined" && hasUnsavedData) {
+    e.preventDefault();
+    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
+    return e.returnValue;
+  }
+});
+
+// ✅ Dashboard back button এ confirm
+var backBtn = document.getElementById("backBtn");
+if (backBtn) {
+  backBtn.addEventListener("click", function(e) {
+    if (typeof hasUnsavedData !== "undefined" && hasUnsavedData) {
+      e.preventDefault();
+      if (confirm("⚠️ Unsaved data আছে!\n\nDashboard এ গেলে data হারাবে।\n\nকি যাবেন?")) {
+        window.location.href = "dashboard.html";
+      }
+    }
+  });
+}
+
+// Date
+var d = document.getElementById("dateEl");
+if (d) d.textContent = new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
+</script>
+
 </body>
 </html>
