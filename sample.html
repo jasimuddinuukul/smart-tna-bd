@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SMART TNA BD ERP - SAMPLE DEPARTMENT</title>
 
-<!-- ✅ PWA — এখানে যোগ করুন সব HTML এ -->
+<!-- ✅ 1. PWA — HEAD এ যোগ করুন -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
 <script src="pwa-install.js" defer></script>
@@ -15,22 +15,22 @@
 * { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
 body { background:#0f172a; color:white; }
 
-/* ✅ TOPBAR — Dashboard back button এর জন্য */
+/* ✅ 2. TOPBAR STYLE — নতুন যোগ করা হয়েছে */
 .topbar {
   background:#111827;
   padding:12px 20px;
+  border-bottom:2px solid #1e293b;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:2px solid #1e293b;
   position:sticky;
   top:0;
-  z-index:100;
+  z-index:900;
 }
-.topbar-left { display:flex; align-items:center; gap:12px; }
+.topbar-left  { display:flex; align-items:center; gap:12px; }
 .topbar-right { display:flex; align-items:center; gap:10px; }
 
-/* ✅ BACK BUTTON */
+/* ✅ Back to Dashboard button */
 .back-btn {
   display:flex;
   align-items:center;
@@ -47,31 +47,54 @@ body { background:#0f172a; color:white; }
   font-family:Arial,sans-serif;
   transition:all .2s;
 }
-.back-btn:hover { background:#00ff9920; color:#00ff99; border-color:#00ff99; }
-
-.page-title { font-size:15px; font-weight:bold; color:#00ff99; }
-
-/* Header (company name area — simplified since topbar exists) */
-.company-header {
-  background:#111827;
-  padding:16px 20px;
-  text-align:center;
-  border-bottom:1px solid #1e293b;
+.back-btn:hover {
+  background:#00ff9920;
+  color:#00ff99;
+  border-color:#00ff99;
 }
-.company { font-size:26px; font-weight:bold; color:#00ff99; }
-.system  { font-size:16px; margin-top:6px; color:#cbd5e1; }
 
-/* KPI */
+.page-title {
+  font-size:16px;
+  font-weight:bold;
+  color:#fff;
+}
+
+/* PWA Install button */
+#installBtn {
+  display:none;
+  align-items:center;
+  gap:6px;
+  background:#00ff9920;
+  border:1px solid #00ff99;
+  border-radius:8px;
+  color:#00ff99;
+  padding:7px 13px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+}
+#installBtn:hover { background:#00ff9940; }
+
+.tb-date {
+  font-size:11px;
+  color:#64748b;
+  font-family:monospace;
+}
+
+/* ──── বাকি পুরানো CSS অপরিবর্তিত ──── */
+header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
+.company { font-size:28px; font-weight:bold; color:#00ff99; }
+.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+
 .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; padding:20px; }
 .kpi-card { background:#1e293b; padding:20px; border-radius:15px; text-align:center; }
 .kpi-card h2 { color:#00ff99; font-size:30px; margin-bottom:10px; }
 .kpi-card p  { color:#cbd5e1; }
 
-/* SEARCH */
 .search-section { padding:20px; }
 .search-box { width:100%; padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:16px; }
 
-/* TABLE */
 .table-wrapper { padding:20px; overflow:auto; }
 table { width:100%; border-collapse:collapse; min-width:4500px; background:#1e293b; }
 th { background:#111827; color:#00ff99; padding:12px; border:1px solid #334155; white-space:nowrap; }
@@ -85,7 +108,6 @@ td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:m
 .edit-btn { background:#00aa66; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; }
 .edit-btn:hover { background:#008844; }
 
-/* MODAL */
 .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
   background:rgba(0,0,0,.75); z-index:999; justify-content:center;
   align-items:flex-start; overflow-y:auto; }
@@ -138,26 +160,30 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
 </head>
 <body>
 
-<!-- ✅ TOPBAR — Back to Dashboard button এখানে -->
+<!-- ✅ 3. TOPBAR — header এর আগে যোগ করা হয়েছে -->
 <div class="topbar">
   <div class="topbar-left">
-    <!-- ✅ এই back button টাই দরকার ছিল -->
-    <a class="back-btn" href="dashboard.html" id="backBtn">🏠 Dashboard</a>
+    <!-- ✅ Back to Dashboard -->
+    <a class="back-btn" href="dashboard.html"
+       onclick="return confirmBack(event)">
+      🏠 Dashboard
+    </a>
     <span class="page-title">🧵 Sample Department</span>
   </div>
   <div class="topbar-right">
-    <span style="font-size:11px;color:#64748b;font-family:monospace;" id="dateEl"></span>
+    <!-- ✅ PWA Install button -->
+    <button id="installBtn" onclick="installPWA()">📲 Install App</button>
+    <span class="tb-date" id="dateEl"></span>
   </div>
 </div>
+<!-- ✅ TOPBAR শেষ -->
 
-<!-- Company Header -->
-<div class="company-header">
-  <div style="font-size:22px;margin-bottom:8px;">﷽</div>
+<header>
+  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
   <div class="company">INNOVATIVE KNITEX LTD</div>
   <div class="system">SMART TNA BD ERP - SAMPLE DEPARTMENT</div>
-</div>
+</header>
 
-<!-- KPI -->
 <div class="kpi-grid">
   <div class="kpi-card"><h2 id="totalStyles">0</h2><p>Total Styles</p></div>
   <div class="kpi-card"><h2 id="totalSampleQty">0</h2><p>Total Sample Qty</p></div>
@@ -167,13 +193,11 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
   <div class="kpi-card"><h2 id="avgProgress">0%</h2><p>Average Progress</p></div>
 </div>
 
-<!-- SEARCH -->
 <div class="search-section">
   <input type="text" id="searchInput" class="search-box"
     placeholder="Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
 </div>
 
-<!-- TABLE -->
 <div class="table-wrapper">
   <table>
     <thead>
@@ -192,7 +216,6 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
   </table>
 </div>
 
-<!-- MODAL -->
 <div class="modal" id="editModal">
   <div class="modal-content">
     <h2>✏️ Sample Department Update</h2>
@@ -203,6 +226,50 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
     </div>
   </div>
 </div>
+
+<!-- ✅ 4. CONFIRM BACK + DATE script — body শেষ হওয়ার আগে -->
+<script>
+// ── Unsaved data tracker ──────────────────────
+var hasUnsavedData = false;
+document.addEventListener("change", function(){ hasUnsavedData = true; });
+document.addEventListener("input",  function(){ hasUnsavedData = true; });
+function markSaved(){ hasUnsavedData = false; }
+
+// ── Confirm before leaving page ───────────────
+window.addEventListener("beforeunload", function(e){
+  if(hasUnsavedData){
+    e.preventDefault();
+    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
+    return e.returnValue;
+  }
+});
+
+// ✅ Dashboard back button এ confirm
+function confirmBack(e){
+  if(hasUnsavedData){
+    e.preventDefault();
+    var go = confirm(
+      "⚠️ Unsaved data আছে!\n\n" +
+      "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
+      "তবুও কি Dashboard এ যাবেন?"
+    );
+    if(go){
+      hasUnsavedData = false;
+      window.location.href = "dashboard.html";
+    }
+    return false;
+  }
+  return true;
+}
+
+// ── Date ─────────────────────────────────────
+document.getElementById("dateEl").textContent =
+  new Date().toLocaleDateString("en-BD",{
+    weekday:"short", year:"numeric",
+    month:"short", day:"numeric"
+  });
+</script>
+<!-- ✅ CONFIRM BACK script শেষ -->
 
 <script type="module">
 import { initializeApp }
@@ -225,7 +292,6 @@ const db  = getFirestore(app);
 let allOrders          = [];
 let selectedDocId      = null;
 let selectedColorIndex = null;
-let hasUnsavedData     = false; // ✅ Unsaved tracking
 
 const STATUS_OPTIONS = [
   { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
@@ -253,9 +319,8 @@ function statusBtns(field, current) {
 
 window.selectStatus = function(field, value, activeCls, btn) {
   document.getElementById("f_" + field).value = value;
-  btn.parentElement.querySelectorAll(".status-btn").forEach(b => b.className="status-btn");
+  btn.parentElement.querySelectorAll(".status-btn").forEach(b => { b.className = "status-btn"; });
   btn.classList.add(activeCls);
-  hasUnsavedData = true; // ✅ mark unsaved
 };
 
 async function loadOrders() {
@@ -280,15 +345,11 @@ window.filterOrders = function() {
 window.openOrder = function(docId, colorIndex) {
   selectedDocId      = docId;
   selectedColorIndex = colorIndex;
-  hasUnsavedData     = false; // reset when opening fresh
-
   const order = allOrders.find(o => o.id === docId);
   if (!order) return;
   const c = order.colors[colorIndex];
   if (!c) return;
-
   const shipDate = order.shipdate || order.shipDate || "-";
-
   let autoFabricTarget="", autoPPTarget="", autoTOPTarget="";
   if (shipDate !== "-") {
     const ship = new Date(shipDate+"T00:00:00");
@@ -299,19 +360,12 @@ window.openOrder = function(docId, colorIndex) {
     autoPPTarget     = pD.toISOString().split("T")[0];
     autoTOPTarget    = tD.toISOString().split("T")[0];
   }
-
-  const sampleQty      = c.sampleQty      || "";
-  const fabricTarget   = c.fabricTarget   || autoFabricTarget;
-  const fabricActual   = c.fabricActual   || "";
-  const ppCuttingDate  = c.ppCuttingDate  || "";
-  const ppTarget       = c.ppTarget       || autoPPTarget;
-  const ppStatus       = c.ppStatus       || "Pending";
-  const ppActual       = c.ppActual       || "";
-  const topCuttingDate = c.topCuttingDate || "";
-  const topTarget      = c.topTarget      || autoTOPTarget;
-  const topStatus      = c.topStatus      || "Pending";
-  const topActual      = c.topActual      || "";
-  const remark         = c.remark         || "";
+  const sampleQty=c.sampleQty||"", fabricTarget=c.fabricTarget||autoFabricTarget,
+    fabricActual=c.fabricActual||"", ppCuttingDate=c.ppCuttingDate||"",
+    ppTarget=c.ppTarget||autoPPTarget, ppStatus=c.ppStatus||"Pending",
+    ppActual=c.ppActual||"", topCuttingDate=c.topCuttingDate||"",
+    topTarget=c.topTarget||autoTOPTarget, topStatus=c.topStatus||"Pending",
+    topActual=c.topActual||"", remark=c.remark||"";
 
   document.getElementById("modalFormArea").innerHTML = `
     <div class="modal-info-box">
@@ -320,17 +374,15 @@ window.openOrder = function(docId, colorIndex) {
       <p><span>Buyer     :</span> ${order.buyer||"-"}</p>
       <p><span>Ship Date :</span> ${shipDate}</p>
     </div>
-
     <div class="section-title">🧵 Sample Qty</div>
     <div class="form-row">
       <label>Sample Qty</label>
-      <input type="number" id="f_sampleQty" value="${sampleQty}" min="0" placeholder="Enter sample qty">
+      <input type="number" id="f_sampleQty" value="${sampleQty}" min="0">
     </div>
-
     <div class="section-title">🎨 Fabric</div>
     <div class="form-grid-2">
       <div class="form-row">
-        <label>Fabric Target &nbsp;<small style="color:#64748b;">(auto · editable)</small></label>
+        <label>Fabric Target <small style="color:#64748b;">(auto·editable)</small></label>
         <input type="date" id="f_fabricTarget" value="${fabricTarget}">
       </div>
       <div class="form-row">
@@ -338,80 +390,50 @@ window.openOrder = function(docId, colorIndex) {
         <input type="date" id="f_fabricActual" value="${fabricActual}">
       </div>
     </div>
-
     <div class="section-title">✂️ PP (Pre-Production)</div>
     <div class="form-grid-3">
-      <div class="form-row">
-        <label>PP Cutting Date</label>
-        <input type="date" id="f_ppCuttingDate" value="${ppCuttingDate}">
-      </div>
-      <div class="form-row">
-        <label>PP Target &nbsp;<small style="color:#64748b;">(auto · editable)</small></label>
-        <input type="date" id="f_ppTarget" value="${ppTarget}">
-      </div>
-      <div class="form-row">
-        <label>PP Actual</label>
-        <input type="date" id="f_ppActual" value="${ppActual}">
-      </div>
+      <div class="form-row"><label>PP Cutting Date</label>
+        <input type="date" id="f_ppCuttingDate" value="${ppCuttingDate}"></div>
+      <div class="form-row"><label>PP Target <small style="color:#64748b;">(auto·editable)</small></label>
+        <input type="date" id="f_ppTarget" value="${ppTarget}"></div>
+      <div class="form-row"><label>PP Actual</label>
+        <input type="date" id="f_ppActual" value="${ppActual}"></div>
     </div>
     <div class="form-row" style="margin-top:14px;">
       <label>PP Status</label>
       <div class="status-group">${statusBtns("ppStatus", ppStatus)}</div>
       <input type="hidden" id="f_ppStatus" value="${ppStatus}">
     </div>
-
     <div class="section-title">👕 TOP (Top of Production)</div>
     <div class="form-grid-3">
-      <div class="form-row">
-        <label>TOP Cutting Date</label>
-        <input type="date" id="f_topCuttingDate" value="${topCuttingDate}">
-      </div>
-      <div class="form-row">
-        <label>TOP Target &nbsp;<small style="color:#64748b;">(auto · editable)</small></label>
-        <input type="date" id="f_topTarget" value="${topTarget}">
-      </div>
-      <div class="form-row">
-        <label>TOP Actual</label>
-        <input type="date" id="f_topActual" value="${topActual}">
-      </div>
+      <div class="form-row"><label>TOP Cutting Date</label>
+        <input type="date" id="f_topCuttingDate" value="${topCuttingDate}"></div>
+      <div class="form-row"><label>TOP Target <small style="color:#64748b;">(auto·editable)</small></label>
+        <input type="date" id="f_topTarget" value="${topTarget}"></div>
+      <div class="form-row"><label>TOP Actual</label>
+        <input type="date" id="f_topActual" value="${topActual}"></div>
     </div>
     <div class="form-row" style="margin-top:14px;">
       <label>TOP Status</label>
       <div class="status-group">${statusBtns("topStatus", topStatus)}</div>
       <input type="hidden" id="f_topStatus" value="${topStatus}">
     </div>
-
     <div class="section-title">📝 Remark</div>
     <div class="form-row">
-      <textarea id="f_remark" rows="3" oninput="hasUnsavedData=true">${remark}</textarea>
-    </div>
-  `;
-
-  // ✅ Track changes in modal inputs
-  document.querySelectorAll("#modalFormArea input, #modalFormArea textarea").forEach(el => {
-    el.addEventListener("change", () => { hasUnsavedData = true; });
-  });
+      <textarea id="f_remark" rows="3">${remark}</textarea>
+    </div>`;
 
   document.getElementById("editModal").style.display = "flex";
 };
 
-// ✅ CLOSE — confirm if unsaved
 document.getElementById("closeBtn").onclick = function() {
-  if (hasUnsavedData) {
-    if (!confirm("⚠️ আপনি কি নিশ্চিত?\n\nSave না করে Close করলে সব পরিবর্তন হারিয়ে যাবে!")) {
-      return; // cancel close
-    }
-  }
-  hasUnsavedData = false;
   document.getElementById("editModal").style.display = "none";
 };
 
-// ✅ SAVE
 document.getElementById("saveBtn").onclick = async function() {
   if (selectedDocId === null || selectedColorIndex === null) return;
   const order = allOrders.find(o => o.id === selectedDocId);
   if (!order || !order.colors) return;
-
   const updatedColors = order.colors.map((c, idx) => {
     if (idx !== selectedColorIndex) return c;
     return {
@@ -430,10 +452,9 @@ document.getElementById("saveBtn").onclick = async function() {
       remark:         document.getElementById("f_remark").value,
     };
   });
-
   try {
     await updateDoc(doc(db, "orders", selectedDocId), { colors: updatedColors });
-    hasUnsavedData = false; // ✅ reset after save
+    markSaved(); // ✅ saved হলে unsaved flag reset
     alert("✅ Saved Successfully!");
     document.getElementById("editModal").style.display = "none";
     loadOrders();
@@ -444,73 +465,72 @@ document.getElementById("saveBtn").onclick = async function() {
 
 function renderKPI() {
   document.getElementById("totalStyles").innerText = allOrders.length;
-  let totalSampleQty=0, runningStyles=0, progressTotal=0, thisMonthQty=0, nextMonthQty=0;
-  const now=new Date(), thisMonth=now.getMonth(), thisYear=now.getFullYear();
+  let totalSampleQty=0,runningStyles=0,progressTotal=0,thisMonthQty=0,nextMonthQty=0;
+  const now=new Date(),thisMonth=now.getMonth(),thisYear=now.getFullYear();
   allOrders.forEach(order => {
-    if (order.colors) order.colors.forEach(c => { totalSampleQty += Number(c.sampleQty||0); });
-    const prog = Number(order.sampleProgress||0);
-    progressTotal += prog;
-    if (prog > 0) runningStyles++;
-    const sd = order.shipdate||order.shipDate||"";
-    if (sd) {
-      const d  = new Date(sd+"T00:00:00");
-      const tq = order.colors ? order.colors.reduce((s,c)=>s+Number(c.qty||0),0) : 0;
-      if (d.getFullYear()===thisYear && d.getMonth()===thisMonth) thisMonthQty+=tq;
-      const nm = thisMonth===11 ? 0 : thisMonth+1;
-      const ny = thisMonth===11 ? thisYear+1 : thisYear;
-      if (d.getFullYear()===ny && d.getMonth()===nm) nextMonthQty+=tq;
+    if(order.colors) order.colors.forEach(c=>{ totalSampleQty+=Number(c.sampleQty||0); });
+    const prog=Number(order.sampleProgress||0);
+    progressTotal+=prog;
+    if(prog>0) runningStyles++;
+    const sd=order.shipdate||order.shipDate||"";
+    if(sd){
+      const d=new Date(sd+"T00:00:00");
+      const tq=order.colors?order.colors.reduce((s,c)=>s+Number(c.qty||0),0):0;
+      if(d.getFullYear()===thisYear&&d.getMonth()===thisMonth) thisMonthQty+=tq;
+      const nm=thisMonth===11?0:thisMonth+1, ny=thisMonth===11?thisYear+1:thisYear;
+      if(d.getFullYear()===ny&&d.getMonth()===nm) nextMonthQty+=tq;
     }
   });
-  document.getElementById("totalSampleQty").innerText = totalSampleQty.toLocaleString();
-  document.getElementById("runningStyles").innerText   = runningStyles;
-  document.getElementById("avgProgress").innerText     = allOrders.length ? Math.round(progressTotal/allOrders.length)+"%" : "0%";
-  document.getElementById("thisMonthQty").innerText    = thisMonthQty.toLocaleString();
-  document.getElementById("nextMonthQty").innerText    = nextMonthQty.toLocaleString();
+  document.getElementById("totalSampleQty").innerText=totalSampleQty.toLocaleString();
+  document.getElementById("runningStyles").innerText=runningStyles;
+  document.getElementById("avgProgress").innerText=allOrders.length?Math.round(progressTotal/allOrders.length)+"%":"0%";
+  document.getElementById("thisMonthQty").innerText=thisMonthQty.toLocaleString();
+  document.getElementById("nextMonthQty").innerText=nextMonthQty.toLocaleString();
 }
 
 function renderOrderList(orders) {
-  const body = document.getElementById("orderTableBody");
-  body.innerHTML = "";
-  let serial = 1;
+  const body=document.getElementById("orderTableBody");
+  body.innerHTML="";
+  let serial=1;
   orders.forEach(order => {
-    const shipDate = order.shipdate||order.shipDate||order.shipmentDate||"-";
-    let leadTime="-", tnaType="Normal";
-    if (shipDate!=="-" && order.orderDate) {
-      const ms = new Date(shipDate+"T00:00:00") - new Date(order.orderDate+"T00:00:00");
-      leadTime = Math.max(0, Math.ceil(ms/86400000));
-      if      (leadTime<60) tnaType="Super Urgent";
-      else if (leadTime<90) tnaType="Urgent";
+    const shipDate=order.shipdate||order.shipDate||order.shipmentDate||"-";
+    let leadTime="-",tnaType="Normal";
+    if(shipDate!=="-"&&order.orderDate){
+      const ms=new Date(shipDate+"T00:00:00")-new Date(order.orderDate+"T00:00:00");
+      leadTime=Math.max(0,Math.ceil(ms/86400000));
+      if(leadTime<60) tnaType="Super Urgent";
+      else if(leadTime<90) tnaType="Urgent";
     }
-    const totalQty = order.colors ? order.colors.reduce((s,c)=>s+Number(c.qty||0),0) : 0;
-    let autoFabricTarget="-", autoPPTarget="-", autoTOPTarget="-";
-    if (shipDate!=="-") {
+    const totalQty=order.colors?order.colors.reduce((s,c)=>s+Number(c.qty||0),0):0;
+    let autoFabricTarget="-",autoPPTarget="-",autoTOPTarget="-";
+    if(shipDate!=="-"){
       const ship=new Date(shipDate+"T00:00:00");
       const pD=new Date(ship); pD.setDate(pD.getDate()-30);
       const tD=new Date(ship); tD.setDate(tD.getDate()-15);
       const fD=new Date(pD);   fD.setDate(fD.getDate()-7);
-      autoFabricTarget = fD.toISOString().split("T")[0];
-      autoPPTarget     = pD.toISOString().split("T")[0];
-      autoTOPTarget    = tD.toISOString().split("T")[0];
+      autoFabricTarget=fD.toISOString().split("T")[0];
+      autoPPTarget=pD.toISOString().split("T")[0];
+      autoTOPTarget=tD.toISOString().split("T")[0];
     }
-    if (order.colors && order.colors.length) {
-      order.colors.forEach((c, index) => {
-        const fabricTarget = c.fabricTarget || autoFabricTarget;
-        const ppTarget     = c.ppTarget     || autoPPTarget;
-        const topTarget    = c.topTarget    || autoTOPTarget;
-        body.innerHTML += `
+    if(order.colors&&order.colors.length){
+      order.colors.forEach((c,index)=>{
+        const fabricTarget=c.fabricTarget||autoFabricTarget;
+        const ppTarget=c.ppTarget||autoPPTarget;
+        const topTarget=c.topTarget||autoTOPTarget;
+        body.innerHTML+=`
           <tr>
-            <td>${index===0 ? serial : ""}</td>
-            <td>${index===0 ? (order.buyer||"-") : ""}</td>
-            <td>${index===0 ? (order.ikl||"-")   : ""}</td>
-            <td>${index===0 ? (order.style||"-")  : ""}</td>
-            <td>${index===0 ? totalQty.toLocaleString() : ""}</td>
-            <td>${index===0 ? (order.item||"-")   : ""}</td>
-            <td>${index===0 ? (order.orderDate||"-") : ""}</td>
-            <td>${index===0 ? shipDate : ""}</td>
-            <td>${index===0 ? (leadTime!=="-" ? leadTime+" Days" : "-") : ""}</td>
-            <td>${index===0 ? tnaType : ""}</td>
-            <td>${index===0 ? (order.merchandiser||"-") : ""}</td>
-            <td>${index===0 ? ((order.sampleProgress||0)+"%") : ""}</td>
+            <td>${index===0?serial:""}</td>
+            <td>${index===0?(order.buyer||"-"):""}</td>
+            <td>${index===0?(order.ikl||"-"):""}</td>
+            <td>${index===0?(order.style||"-"):""}</td>
+            <td>${index===0?totalQty.toLocaleString():""}</td>
+            <td>${index===0?(order.item||"-"):""}</td>
+            <td>${index===0?(order.orderDate||"-"):""}</td>
+            <td>${index===0?shipDate:""}</td>
+            <td>${index===0?(leadTime!=="-"?leadTime+" Days":"-"):""}</td>
+            <td>${index===0?tnaType:""}</td>
+            <td>${index===0?(order.merchandiser||"-"):""}</td>
+            <td>${index===0?((order.sampleProgress||0)+"%"):""}</td>
             <td>${order.fabrication||"-"}</td>
             <td>${c.color||"-"}</td>
             <td>${Number(c.qty||0).toLocaleString()}</td>
@@ -526,9 +546,7 @@ function renderOrderList(orders) {
             <td>${statusBadge(c.topStatus)}</td>
             <td>${c.topActual||"-"}</td>
             <td>${c.remark||"-"}</td>
-            <td>
-              <button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button>
-            </td>
+            <td><button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button></td>
           </tr>`;
       });
     }
@@ -538,35 +556,11 @@ function renderOrderList(orders) {
 
 loadOrders();
 </script>
-
-<!-- ✅ BACK BUTTON CONFIRM + DATE -->
-<script>
-// ✅ Browser back / refresh এ confirm
-window.addEventListener("beforeunload", function(e) {
-  if (typeof hasUnsavedData !== "undefined" && hasUnsavedData) {
-    e.preventDefault();
-    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
-    return e.returnValue;
-  }
-});
-
-// ✅ Dashboard back button এ confirm
-var backBtn = document.getElementById("backBtn");
-if (backBtn) {
-  backBtn.addEventListener("click", function(e) {
-    if (typeof hasUnsavedData !== "undefined" && hasUnsavedData) {
-      e.preventDefault();
-      if (confirm("⚠️ Unsaved data আছে!\n\nDashboard এ গেলে data হারাবে।\n\nকি যাবেন?")) {
-        window.location.href = "dashboard.html";
-      }
-    }
-  });
-}
-
-// Date
-var d = document.getElementById("dateEl");
-if (d) d.textContent = new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
-</script>
-
 </body>
 </html>
+
+
+
+
+
+
