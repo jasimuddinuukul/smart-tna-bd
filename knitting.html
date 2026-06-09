@@ -1,328 +1,316 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Knitting — SMART TNA BD</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>SMART TNA BD ERP - KNITTING DEPARTMENT</title>
 
-<!-- ✅ PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="TNA BD ERP">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<script src="pwa-install.js" defer></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --green:#00ff99;--bg:#080e1a;--sidebar:#060c17;
-  --card:#0e1829;--card2:#111e30;--border:#1e3048;
-  --muted:#4a6080;--sidebar-w:270px;
-  --knit:#60a5fa; /* Knitting dept color = Blue */
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body { background:#0f172a; color:white; }
+
+/* TOPBAR */
+.topbar {
+  background:#111827;
+  padding:12px 20px;
+  border-bottom:2px solid #1e293b;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:900;
 }
-body{background:var(--bg);color:#fff;font-family:'Rajdhani',sans-serif;font-weight:600;display:flex;min-height:100vh;overflow-x:clip;}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
 
-/* ══ SIDEBAR ══ */
-.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar);height:100vh;position:fixed;top:0;left:0;z-index:1100;display:flex;flex-direction:column;border-right:1px solid var(--border);transform:translateX(0);transition:transform 0.32s cubic-bezier(.4,0,.2,1);overflow-y:auto;overflow-x:hidden;}
-.sidebar.closed{transform:translateX(calc(-1 * var(--sidebar-w)));}
-.sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--border);text-align:center;}
-.sb-logo{width:62px;height:62px;border-radius:50%;border:2px solid var(--green);background:#0e1829;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:10px;font-weight:700;color:var(--green);box-shadow:0 0 14px #00ff9930;}
-.sb-company{font-size:12px;font-weight:700;color:#fff;letter-spacing:.4px;line-height:1.4;}
-.sb-erp{font-size:10px;color:var(--green);letter-spacing:1.5px;margin-top:3px;font-family:'Share Tech Mono',monospace;}
-.sb-nav{padding:8px 8px 16px;flex:1;}
-.sb-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px;font-family:'Share Tech Mono',monospace;}
-.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#7a9abf;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:2px;transition:all .18s;border:1px solid transparent;}
-.sb-link:hover{background:#142030;color:#fff;border-color:var(--border);}
-.sb-link.active{background:linear-gradient(135deg,#1d4ed822,#1d4ed808);color:var(--knit);border-color:#1d4ed844;}
-.sb-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
-.sb-badge{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;color:#fff;}
-.sb-badge.g{background:#16a34a;}.sb-badge.bl{background:#2563eb;}
-/* ✅ BACK TO DASHBOARD BTN */
-.sb-back{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#006a4e,#00553e);border:2px solid var(--green);border-radius:10px;color:#fff;padding:11px 14px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Rajdhani',sans-serif;transition:all .2s;box-shadow:0 0 12px #00ff9930;margin:0 8px 4px;}
-.sb-back:hover{background:linear-gradient(135deg,#00ff99,#00cc77);color:#000;box-shadow:0 0 20px #00ff9960;}
-.sb-foot{padding:8px;border-top:1px solid var(--border);}
-
-/* ══ MAIN ══ */
-.main-wrap{flex:1;margin-left:var(--sidebar-w);transition:margin-left 0.32s cubic-bezier(.4,0,.2,1);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1050;backdrop-filter:blur(2px);}
-.overlay.show{display:block;}
-
-/* ══ TOPBAR ══ */
-.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;flex-shrink:0;}
-.tb-left{display:flex;align-items:center;gap:10px;}
-.toggle-btn{width:44px;height:44px;background:#16a34a;border:2px solid var(--green);border-radius:10px;color:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;box-shadow:0 0 10px #00ff9940;}
-.toggle-btn:hover{background:#15803d;}
-.tb-title{font-size:14px;font-weight:700;color:#fff;}
-.tb-right{display:flex;align-items:center;gap:8px;}
-.tb-date{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
-.tb-user{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
-
-/* ══ CONTENT ══ */
-.content{padding:18px;flex:1;max-width:100%;box-sizing:border-box;}
-
-/* ══ HERO ══ */
-.hero{background:linear-gradient(135deg,#080e1a 0%,#0a1020 40%,#080e1a 100%);border:1px solid #1d4ed844;border-radius:16px;padding:20px 24px 16px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle,#3b82f615 0%,transparent 70%);pointer-events:none;}
-.hero-arabic{font-family:'Amiri',serif;font-size:36px;color:var(--green);direction:rtl;margin-bottom:8px;text-shadow:0 0 30px #00ff9960;}
-.hero-divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--knit),transparent);margin:0 auto 10px;}
-.hero-company{font-size:22px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:4px;}
-.hero-dept{font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--knit);letter-spacing:3px;}
-
-/* ══ KPI ══ */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;transition:border-color .2s,transform .2s;}
-.kpi:hover{transform:translateY(-2px);}
-.kpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;}
-.kpi h1{font-size:22px;font-family:'Share Tech Mono',monospace;font-weight:400;}
-.kpi.gr h1{color:var(--green);}.kpi.bl h1{color:var(--knit);}
-.kpi.am h1{color:#fbbf24;}.kpi.rd h1{color:#f87171;}
-
-/* ══ CARD ══ */
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;overflow:visible;min-width:0;}
-.card h2{color:var(--knit);font-size:14px;font-weight:700;margin-bottom:14px;}
-
-/* ══ SEARCH ══ */
-.search-box{width:100%;padding:10px 16px;background:#060e1a;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;}
-.search-box:focus{border-color:var(--knit);}
-.search-box::placeholder{color:var(--muted);}
-
-/* ══ TABLE SCROLL ══ */
-.tbl-wrap{width:100%;overflow-x:scroll;overflow-y:visible;-webkit-overflow-scrolling:touch;border-radius:8px;display:block;box-sizing:border-box;}
-.tbl-wrap::-webkit-scrollbar{height:7px;}
-.tbl-wrap::-webkit-scrollbar-track{background:#0a1220;border-radius:4px;}
-.tbl-wrap::-webkit-scrollbar-thumb{background:#1d4ed855;border-radius:4px;}
-.tbl-wrap::-webkit-scrollbar-thumb:hover{background:var(--knit);}
-
-/* ══ SCROLL BUTTONS ══ */
-.scroll-bar{display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 0;}
-.scr-btn{background:#1d4ed8;border:2px solid var(--knit);border-radius:10px;color:#fff;padding:8px 24px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s,transform .1s;font-family:'Rajdhani',sans-serif;user-select:none;box-shadow:0 0 8px #3b82f630;}
-.scr-btn:hover{background:#1e40af;transform:scale(1.04);}
-.scr-btn:active{transform:scale(0.97);}
-.scr-hint{font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;}
-
-/* ══ TABLE ══ */
-table{border-collapse:collapse;}
-th,td{border:1px solid var(--border);padding:9px 11px;text-align:center;font-size:12px;font-family:'Rajdhani',sans-serif;font-weight:600;white-space:nowrap;color:#fff;}
-th{background:#090f1c;color:var(--knit);font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:700;}
-tr:hover td{background:#ffffff04;}
-/* Section colour headers */
-.th-yarn{background:#0a1a0a !important;color:#4ade80 !important;}
-.th-knit{background:#0a1020 !important;color:var(--knit) !important;}
-
-/* ══ INPUTS ══ */
-.date-in{background:#111e30;border:1px solid var(--border);color:#fff;padding:4px 6px;border-radius:6px;font-size:11px;font-family:'Share Tech Mono',monospace;width:112px;outline:none;}
-.date-in:focus{border-color:var(--knit);}
-.status-sel{background:#111e30;border:1px solid var(--border);color:#fff;padding:4px 8px;border-radius:6px;font-size:11px;font-family:'Rajdhani',sans-serif;cursor:pointer;outline:none;}
-.status-sel:focus{border-color:var(--knit);}
-.save-btn{background:#1d4ed8;border:1px solid var(--knit);color:#fff;padding:5px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;transition:background .15s;}
-.save-btn:hover{background:#1e40af;}
-
-/* ══ BADGES ══ */
-.b{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
-.b-done{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
-.b-run{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b55;}
-.b-pend{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
-.b-del{background:#dc262622;color:#f87171;border:1px solid #dc262655;}
-
-/* ══ PROGRESS BAR ══ */
-.pbar{display:flex;align-items:center;gap:6px;min-width:120px;}
-.pbar-track{flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;}
-.pbar-fill{height:100%;border-radius:4px;transition:width .5s;}
-.pbar-txt{font-size:11px;font-weight:700;font-family:'Share Tech Mono',monospace;min-width:34px;}
-
-/* ══ RESPONSIVE ══ */
-@media(max-width:960px){
-  .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));}
-  .sidebar.open{transform:translateX(0);}
-  .main-wrap{margin-left:0 !important;}
+.back-btn {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:8px;
+  color:#cbd5e1;
+  padding:8px 16px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  font-family:Arial,sans-serif;
+  transition:all .2s;
 }
-@media(max-width:600px){
-  .kpi-grid{grid-template-columns:repeat(2,1fr);}
-  .tb-date{display:none;}
-  .content{padding:12px;}
+.back-btn:hover {
+  background:#00ff9920;
+  color:#00ff99;
+  border-color:#00ff99;
 }
+
+.page-title {
+  font-size:16px;
+  font-weight:bold;
+  color:#fff;
+}
+
+#installBtn {
+  display:none;
+  align-items:center;
+  gap:6px;
+  background:#00ff9920;
+  border:1px solid #00ff99;
+  border-radius:8px;
+  color:#00ff99;
+  padding:7px 13px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+}
+#installBtn:hover { background:#00ff9940; }
+
+.tb-date {
+  font-size:11px;
+  color:#64748b;
+  font-family:monospace;
+}
+
+/* HEADER */
+header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
+.company { font-size:28px; font-weight:bold; color:#00ff99; }
+.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+
+/* KPI */
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; padding:20px; }
+.kpi-card { background:#1e293b; padding:20px; border-radius:15px; text-align:center; }
+.kpi-card h2 { color:#00ff99; font-size:30px; margin-bottom:10px; }
+.kpi-card p  { color:#cbd5e1; }
+
+/* SEARCH */
+.search-section { padding:20px; }
+.search-box { width:100%; padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:16px; }
+
+/* TABLE */
+.table-wrapper { padding:20px; overflow:auto; }
+table { width:100%; border-collapse:collapse; min-width:4500px; background:#1e293b; }
+th { background:#111827; color:#60a5fa; padding:12px; border:1px solid #334155; white-space:nowrap; }
+td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:middle; white-space:nowrap; }
+
+.st-pending  { color:#f97316; font-weight:bold; }
+.st-running  { color:#3b82f6; font-weight:bold; }
+.st-delay    { color:#ef4444; font-weight:bold; }
+.st-complete { color:#00ff99; font-weight:bold; }
+
+.edit-btn { background:#1d4ed8; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; }
+.edit-btn:hover { background:#1e40af; }
+
+/* MODAL */
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,.75); z-index:999; justify-content:center;
+  align-items:flex-start; overflow-y:auto; }
+.modal-content { background:#1e293b; width:95%; max-width:820px;
+  margin:30px auto; padding:25px; border-radius:15px; }
+.modal-content h2 { color:#60a5fa; margin-bottom:20px; font-size:20px;
+  border-bottom:1px solid #334155; padding-bottom:12px; }
+
+.modal-info-box { background:#111827; padding:15px; border-radius:10px;
+  margin-bottom:20px; border-left:4px solid #60a5fa;
+  display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.modal-info-box p    { color:#cbd5e1; font-size:14px; }
+.modal-info-box span { color:white; font-weight:bold; }
+
+.section-title { background:#0f172a; color:#60a5fa; padding:8px 12px;
+  border-radius:8px; font-size:13px; font-weight:bold;
+  text-transform:uppercase; letter-spacing:1px;
+  margin:18px 0 12px 0; border-left:3px solid #60a5fa; }
+
+.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+.form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; }
+
+.form-row label { display:block; margin-bottom:6px; color:#94a3b8;
+  font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; }
+
+input[type="date"], input[type="number"], select, textarea {
+  width:100%; padding:10px; border:1px solid #334155; border-radius:8px;
+  background:#0f172a; color:white; font-size:14px; }
+input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:focus {
+  outline:none; border-color:#60a5fa; }
+
+.status-group { display:flex; gap:8px; }
+.status-btn {
+  flex:1; padding:11px 6px; border:2px solid #334155; border-radius:8px;
+  background:#0f172a; color:#64748b; font-weight:bold; font-size:13px;
+  cursor:pointer; transition:all 0.2s; text-align:center; }
+.status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
+.status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
+.status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
+.status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
+
+.btn-group { display:flex; gap:10px; margin-top:25px; }
+.save-btn  { background:#1d4ed8; padding:13px 25px; border:none; border-radius:10px;
+  color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
+.save-btn:hover  { background:#1e40af; }
+.close-btn { background:#dc2626; padding:13px 25px; border:none; border-radius:10px;
+  color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
+.close-btn:hover { background:#b91c1c; }
 </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-<!-- ══ SIDEBAR ══ -->
-<div class="sidebar" id="sidebar">
-  <div class="sb-head">
-    <div class="sb-logo">LOGO</div>
-    <div class="sb-company">INNOVATIVE KNITEX LTD</div>
-    <div class="sb-erp">SMART TNA BD ERP</div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">
+      🏠 Dashboard
+    </a>
+    <span class="page-title">🧶 Knitting Department</span>
   </div>
-  <nav class="sb-nav">
-    <div class="sb-label">— Main —</div>
-    <a class="sb-link" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
-    <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
-    <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
-    <div class="sb-label">— Admin —</div>
-    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
-    <a class="sb-link" href="admin-user-management.html"><span class="sb-icon">👥</span> User Management</a>
-    <a class="sb-link" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
-    <div class="sb-label">— Production —</div>
-    <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
-    <a class="sb-link active" href="knitting.html"><span class="sb-icon">🧶</span> Knitting</a>
-    <a class="sb-link" href="dyeing.html"><span class="sb-icon">🎨</span> Dyeing</a>
-    <a class="sb-link" href="laboratory.html"><span class="sb-icon">🔬</span> Laboratory</a>
-    <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
-    <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
-    <a class="sb-link" href="sewing.html"><span class="sb-icon">🪡</span> Sewing</a>
-    <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
-    <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
-    <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
-    <div class="sb-label">— Management —</div>
-    <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
-    <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
-  </nav>
-  <!-- ✅ BACK TO DASHBOARD -->
-  <div style="padding:10px 8px 4px;border-top:1px solid #1e3048;">
-    <a href="dashboard.html" class="sb-back">🏠 Back to Dashboard</a>
-  </div>
-  <div class="sb-foot">
-    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
+  <div class="topbar-right">
+    <button id="installBtn" onclick="installPWA()">📲 Install App</button>
+    <span class="tb-date" id="dateEl"></span>
   </div>
 </div>
 
-<!-- ══ MAIN ══ -->
-<div class="main-wrap" id="mainWrap">
+<!-- HEADER -->
+<header>
+  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
+  <div class="company">INNOVATIVE KNITEX LTD</div>
+  <div class="system">SMART TNA BD ERP - KNITTING DEPARTMENT</div>
+</header>
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="tb-left">
-      <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
-      <span class="tb-title">🧶 Knitting Department</span>
-    </div>
-    <div class="tb-right">
-      <span class="tb-date" id="dateEl"></span>
-      <span class="tb-user">👤 Admin</span>
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
+  <div class="kpi-card"><h2 id="kQty">0</h2><p>Total Qty (PCS)</p></div>
+  <div class="kpi-card"><h2 id="kYarnPend">0</h2><p>Yarn Pending</p></div>
+  <div class="kpi-card"><h2 id="kYarnDone">0</h2><p>Yarn Received</p></div>
+  <div class="kpi-card"><h2 id="kKnitRun">0</h2><p>Knitting Running</p></div>
+  <div class="kpi-card"><h2 id="kKnitDone">0</h2><p>Knitting Done</p></div>
+  <div class="kpi-card"><h2 id="kDelayed">0</h2><p>Delayed</p></div>
+  <div class="kpi-card"><h2 id="kAvg">0%</h2><p>Avg Progress</p></div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <input type="text" id="searchInput" class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
+</div>
+
+<!-- TABLE -->
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>SL</th>
+        <th>Buyer</th>
+        <th>IKL No</th>
+        <th>Style No</th>
+        <th>Total Qty</th>
+        <th>Fabrication</th>
+        <th>Color</th>
+        <th>Color Qty</th>
+        <th>Merchandiser</th>
+        <th>Order Date</th>
+        <th>Ship Date</th>
+        <!-- YARN -->
+        <th style="background:#0a1a0a;color:#4ade80;">Yarn Target</th>
+        <th style="background:#0a1a0a;color:#4ade80;">Yarn Actual</th>
+        <th style="background:#0a1a0a;color:#4ade80;">Yarn Status</th>
+        <!-- KNITTING START -->
+        <th style="background:#0a1020;color:#60a5fa;">Knit Start Target</th>
+        <th style="background:#0a1020;color:#60a5fa;">Knit Start Actual</th>
+        <th style="background:#0a1020;color:#60a5fa;">Knit Start Status</th>
+        <!-- KNITTING COMPLETE -->
+        <th style="background:#06080e;color:#a78bfa;">Knit Complete Target</th>
+        <th style="background:#06080e;color:#a78bfa;">Knit Complete Actual</th>
+        <th style="background:#06080e;color:#a78bfa;">Knit Complete Status</th>
+        <th>Progress</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="orderTableBody"></tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h2>🧶 Knitting Department Update</h2>
+    <div id="modalFormArea"></div>
+    <div class="btn-group">
+      <button class="save-btn"  id="saveBtn">💾 Save</button>
+      <button class="close-btn" id="closeBtn">✖ Close</button>
     </div>
   </div>
+</div>
 
-  <div class="content">
+<!-- CONFIRM BACK + DATE -->
+<script>
+var hasUnsavedData = false;
+document.addEventListener("change", function(){ hasUnsavedData = true; });
+document.addEventListener("input",  function(){ hasUnsavedData = true; });
+function markSaved(){ hasUnsavedData = false; }
 
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-arabic">﷽<div>
-      <div class="hero-divider"></div>
-      <div class="hero-company">INNOVATIVE KNITEX LTD</div>
-      <div class="hero-dept">🧶 SMART TNA BD ERP — KNITTING DEPARTMENT</div>
-    </div>
+window.addEventListener("beforeunload", function(e){
+  if(hasUnsavedData){
+    e.preventDefault();
+    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
+    return e.returnValue;
+  }
+});
 
-    <!-- KPI -->
-    <div class="kpi-grid">
-      <div class="kpi gr"><h3>Total Orders</h3><h1 id="kTotal">—</h1></div>
-      <div class="kpi bl"><h3>Total Qty (PCS)</h3><h1 id="kQty">—</h1></div>
-      <div class="kpi am"><h3>Yarn Pending</h3><h1 id="kYarnPend">—</h1></div>
-      <div class="kpi gr"><h3>Yarn Received</h3><h1 id="kYarnDone">—</h1></div>
-      <div class="kpi am"><h3>Knitting Running</h3><h1 id="kKnitRun">—</h1></div>
-      <div class="kpi gr"><h3>Knitting Done</h3><h1 id="kKnitDone">—</h1></div>
-      <div class="kpi rd"><h3>Delayed</h3><h1 id="kDelayed">—</h1></div>
-      <div class="kpi bl"><h3>Avg Progress</h3><h1 id="kAvg">—</h1></div>
-    </div>
+function confirmBack(e){
+  if(hasUnsavedData){
+    e.preventDefault();
+    var go = confirm(
+      "⚠️ Unsaved data আছে!\n\n" +
+      "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
+      "তবুও কি Dashboard এ যাবেন?"
+    );
+    if(go){ hasUnsavedData = false; window.location.href = "dashboard.html"; }
+    return false;
+  }
+  return true;
+}
 
-    <!-- SEARCH -->
-    <div class="card">
-      <h2>🔍 Smart Search</h2>
-      <input class="search-box" type="text" id="searchInput"
-        placeholder="Search Buyer / IKL / Style / Merchandiser...">
-    </div>
+document.getElementById("dateEl").textContent =
+  new Date().toLocaleDateString("en-BD",{
+    weekday:"short", year:"numeric", month:"short", day:"numeric"
+  });
+</script>
 
-    <!-- MAIN TABLE -->
-    <div class="card">
-      <h2>🧶 Knitting Progress Tracker</h2>
-
-      <div class="scroll-bar" style="margin-bottom:10px;">
-        <button class="scr-btn" id="btnL1">◀ LEFT</button>
-        <span class="scr-hint">← Scroll Table Left / Right →</span>
-        <button class="scr-btn" id="btnR1">RIGHT ▶</button>
-      </div>
-
-      <div class="tbl-wrap" id="knitScroll">
-        <table style="min-width:1600px;">
-          <thead>
-            <tr>
-              <th rowspan="2">SL</th>
-              <th rowspan="2">Buyer</th>
-              <th rowspan="2">IKL No</th>
-              <th rowspan="2">Style No</th>
-              <th rowspan="2">Total Qty</th>
-              <th rowspan="2">Fabrication</th>
-              <th rowspan="2">Color</th>
-              <th rowspan="2">Color Qty</th>
-              <th rowspan="2">Merchandiser</th>
-              <th rowspan="2">Order Date</th>
-              <th rowspan="2">Ship Date</th>
-              <!-- YARN -->
-              <th colspan="3" style="background:#0a1a0a;color:#4ade80;border-bottom:2px solid #16a34a;">
-                🧵 YARN RECEIVE
-              </th>
-              <!-- KNITTING START -->
-              <th colspan="3" style="background:#0a1020;color:#60a5fa;border-bottom:2px solid #3b82f6;">
-                🧶 KNITTING START
-              </th>
-              <!-- KNITTING COMPLETE -->
-              <th colspan="3" style="background:#060e1a;color:#a78bfa;border-bottom:2px solid #7c3aed;">
-                ✅ KNITTING COMPLETE
-              </th>
-              <th rowspan="2">Progress</th>
-              <th rowspan="2">Action</th>
-            </tr>
-            <tr>
-              <!-- YARN -->
-              <th class="th-yarn">Target</th>
-              <th class="th-yarn">Actual</th>
-              <th class="th-yarn">Status</th>
-              <!-- KNIT START -->
-              <th class="th-knit">Target</th>
-              <th class="th-knit">Actual</th>
-              <th class="th-knit">Status</th>
-              <!-- KNIT COMPLETE -->
-              <th style="background:#06080e;color:#a78bfa;">Target</th>
-              <th style="background:#06080e;color:#a78bfa;">Actual</th>
-              <th style="background:#06080e;color:#a78bfa;">Status</th>
-            </tr>
-          </thead>
-          <tbody id="knitBody">
-            <tr><td colspan="22" style="padding:20px;color:#4a6080;">
-              Loading from Firebase...
-            </td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="scroll-bar" style="margin-top:10px;">
-        <button class="scr-btn" id="btnL2">◀ LEFT</button>
-        <span class="scr-hint">← Scroll Table Left / Right →</span>
-        <button class="scr-btn" id="btnR2">RIGHT ▶</button>
-      </div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /main-wrap -->
-
-<!-- ══ FIREBASE ══ -->
+<!-- FIREBASE -->
 <script type="module">
-import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs, doc, updateDoc }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const cfg={
-  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain:"smart-tna-bd.firebaseapp.com",
-  projectId:"smart-tna-bd",
-  storageBucket:"smart-tna-bd.firebasestorage.app",
-  messagingSenderId:"372049573207",
-  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+const firebaseConfig = {
+  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
-const db=getFirestore(initializeApp(cfg));
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+let allOrders          = [];
+let selectedDocId      = null;
+let selectedColorIndex = null;
+
+const STATUS_OPTIONS = [
+  { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
+  { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
+  { val:"Delay",    label:"🔴 Delay",    cls:"active-delay"    },
+  { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
+];
 
 /* ── Helpers ── */
 function getQty(d){
@@ -330,7 +318,7 @@ function getQty(d){
   for(const v of f){
     if(v!==undefined&&v!==null&&v!==""){
       const n=parseFloat(String(v).replace(/,/g,""));
-      if(!isNaN(n)&&n>0)return n;
+      if(!isNaN(n)&&n>0) return n;
     }
   }
   return 0;
@@ -338,273 +326,333 @@ function getQty(d){
 function getShip(d){
   return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||d.shipDate||"";
 }
-
-/* ── Auto Target Date calculator ── */
-function autoTarget(orderDate, shipDate, offsetDays, shipOffsetDays){
-  if(offsetDays!==null && orderDate){
-    const d=new Date(orderDate);
-    if(!isNaN(d)){d.setDate(d.getDate()+offsetDays);return d.toISOString().split("T")[0];}
-  }
-  if(shipOffsetDays!==null && shipDate){
-    const d=new Date(shipDate);
-    if(!isNaN(d)){d.setDate(d.getDate()+shipOffsetDays);return d.toISOString().split("T")[0];}
-  }
-  return "";
+function autoTarget(orderDate, offsetDays){
+  if(!orderDate) return "";
+  const d=new Date(orderDate);
+  if(isNaN(d)) return "";
+  d.setDate(d.getDate()+offsetDays);
+  return d.toISOString().split("T")[0];
 }
 
-/* ── Status badge ── */
-function badge(s){
-  if(!s||s==="Pending") return `<span class="b b-pend">Pending</span>`;
-  if(s==="Completed"||s==="Complete") return `<span class="b b-done">Completed</span>`;
-  if(s==="Running") return `<span class="b b-run">Running</span>`;
-  if(s==="Delayed") return `<span class="b b-del">Delayed</span>`;
-  return `<span class="b b-pend">${s}</span>`;
+function statusBadge(val){
+  if(!val||val==="-"||val==="Pending") return `<span class="st-pending">● Pending</span>`;
+  if(val==="Running")  return `<span class="st-running">● Running</span>`;
+  if(val==="Delay")    return `<span class="st-delay">● Delay</span>`;
+  if(val==="Complete") return `<span class="st-complete">● Complete</span>`;
+  return `<span class="st-pending">● ${val}</span>`;
 }
 
-/* ── Status select dropdown ── */
-function sSel(id,field,cur){
-  const opts=["Pending","Running","Completed","Delayed"];
-  return `<select class="status-sel" onchange="upd('${id}','${field}',this.value)">
-    ${opts.map(o=>`<option value="${o}"${cur===o?" selected":""}>${o}</option>`).join("")}
-  </select>`;
+function statusBtns(field, current){
+  return STATUS_OPTIONS.map(opt => {
+    const active = (current===opt.val) ? opt.cls : "";
+    return `<button type="button" class="status-btn ${active}"
+      onclick="selectStatus('${field}','${opt.val}','${opt.cls}',this)">
+      ${opt.label}</button>`;
+  }).join("");
 }
 
-/* ── Date input ── */
-function dIn(id,field,val){
-  return `<input type="date" class="date-in" value="${val||""}"
-    onchange="upd('${id}','${field}',this.value)">`;
-}
+window.selectStatus = function(field, value, activeCls, btn){
+  document.getElementById("f_"+field).value = value;
+  btn.parentElement.querySelectorAll(".status-btn").forEach(b=>{ b.className="status-btn"; });
+  btn.classList.add(activeCls);
+};
 
-/* ── Progress bar ── */
-function pbar(pct){
+function progressBar(pct){
   const c=pct>=100?"#00ff99":pct>=60?"#fbbf24":pct>=30?"#f97316":"#f87171";
-  return `<div class="pbar">
-    <div class="pbar-track">
-      <div class="pbar-fill" style="width:${pct}%;background:${c};"></div>
+  return `<div style="display:flex;align-items:center;gap:6px;min-width:120px;">
+    <div style="flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;">
+      <div style="width:${pct}%;height:100%;background:${c};border-radius:4px;"></div>
     </div>
-    <span class="pbar-txt" style="color:${c};">${pct}%</span>
+    <span style="font-size:11px;font-weight:700;color:${c};min-width:34px;">${pct}%</span>
   </div>`;
 }
 
-/* ── Firebase update ── */
-window.upd=async function(id,field,val){
-  try{ await updateDoc(doc(db,"orders",id),{[field]:val}); }
-  catch(e){ console.error("Update failed:",e); }
+/* ── Load ── */
+async function loadOrders(){
+  const snap = await getDocs(collection(db,"orders"));
+  allOrders  = [];
+  snap.forEach(d => allOrders.push({ id:d.id, ...d.data() }));
+  renderKPI();
+  renderOrderList(allOrders);
+}
+
+window.filterOrders = function(){
+  const kw = document.getElementById("searchInput").value.toLowerCase();
+  if(!kw){ renderOrderList(allOrders); return; }
+  renderOrderList(allOrders.filter(o =>
+    (o.buyer||"").toLowerCase().includes(kw)       ||
+    (o.ikl||o.iklNo||"").toLowerCase().includes(kw)||
+    (o.style||o.styleNo||"").toLowerCase().includes(kw)||
+    (o.merchandiser||"").toLowerCase().includes(kw)
+  ));
 };
 
-window.saveRow=async function(id){
-  const btn=event.target;
-  btn.textContent="⏳"; btn.disabled=true;
-  await new Promise(r=>setTimeout(r,400));
-  btn.textContent="✅"; btn.style.background="#16a34a";
-  setTimeout(()=>{btn.textContent="💾 Save";btn.style.background="";btn.disabled=false;},1800);
+/* ── Open Modal ── */
+window.openOrder = function(docId, colorIndex){
+  selectedDocId      = docId;
+  selectedColorIndex = colorIndex;
+  const order = allOrders.find(o=>o.id===docId);
+  if(!order) return;
+
+  const c         = order.colors ? order.colors[colorIndex] : null;
+  const orderDate = order.orderDate||"";
+  const shipDate  = getShip(order);
+
+  // Auto targets: Yarn = orderDate+7, KnitStart = orderDate+16, KnitComplete = orderDate+26
+  const yarnT  = (c&&c.yarnRcvTarget)  || autoTarget(orderDate,7);
+  const yarnA  = (c&&c.yarnRcvActual)  || "";
+  const yarnS  = (c&&c.yarnRcvStatus)  || "Pending";
+  const knitST = (c&&c.knitStartTarget)|| autoTarget(orderDate,16);
+  const knitSA = (c&&c.knitStartActual)|| "";
+  const knitSS = (c&&c.knitStartStatus)|| "Pending";
+  const knitCT = (c&&c.knitCompleteTarget)|| autoTarget(orderDate,26);
+  const knitCA = (c&&c.knitCompleteActual)|| "";
+  const knitCS = (c&&c.knitCompleteStatus)|| "Pending";
+  const remark = (c&&c.knitRemark)||"";
+
+  document.getElementById("modalFormArea").innerHTML = `
+    <div class="modal-info-box">
+      <p><span>Style     :</span> ${order.style||order.styleNo||"-"}</p>
+      <p><span>Color     :</span> ${c?c.color||"-":"-"}</p>
+      <p><span>Buyer     :</span> ${order.buyer||"-"}</p>
+      <p><span>Ship Date :</span> ${shipDate||"-"}</p>
+    </div>
+
+    <div class="section-title">🧵 Yarn Receive</div>
+    <div class="form-grid-3">
+      <div class="form-row">
+        <label>Yarn Target <small style="color:#64748b;">(auto·editable)</small></label>
+        <input type="date" id="f_yarnRcvTarget" value="${yarnT}">
+      </div>
+      <div class="form-row">
+        <label>Yarn Actual</label>
+        <input type="date" id="f_yarnRcvActual" value="${yarnA}">
+      </div>
+      <div class="form-row">
+        <label>Yarn Status</label>
+        <div class="status-group">${statusBtns("yarnRcvStatus",yarnS)}</div>
+        <input type="hidden" id="f_yarnRcvStatus" value="${yarnS}">
+      </div>
+    </div>
+
+    <div class="section-title">🧶 Knitting Start</div>
+    <div class="form-grid-3">
+      <div class="form-row">
+        <label>Knit Start Target <small style="color:#64748b;">(auto·editable)</small></label>
+        <input type="date" id="f_knitStartTarget" value="${knitST}">
+      </div>
+      <div class="form-row">
+        <label>Knit Start Actual</label>
+        <input type="date" id="f_knitStartActual" value="${knitSA}">
+      </div>
+      <div class="form-row">
+        <label>Knit Start Status</label>
+        <div class="status-group">${statusBtns("knitStartStatus",knitSS)}</div>
+        <input type="hidden" id="f_knitStartStatus" value="${knitSS}">
+      </div>
+    </div>
+
+    <div class="section-title">✅ Knitting Complete</div>
+    <div class="form-grid-3">
+      <div class="form-row">
+        <label>Knit Complete Target <small style="color:#64748b;">(auto·editable)</small></label>
+        <input type="date" id="f_knitCompleteTarget" value="${knitCT}">
+      </div>
+      <div class="form-row">
+        <label>Knit Complete Actual</label>
+        <input type="date" id="f_knitCompleteActual" value="${knitCA}">
+      </div>
+      <div class="form-row">
+        <label>Knit Complete Status</label>
+        <div class="status-group">${statusBtns("knitCompleteStatus",knitCS)}</div>
+        <input type="hidden" id="f_knitCompleteStatus" value="${knitCS}">
+      </div>
+    </div>
+
+    <div class="section-title">📝 Remark</div>
+    <div class="form-row">
+      <textarea id="f_knitRemark" rows="3">${remark}</textarea>
+    </div>`;
+
+  document.getElementById("editModal").style.display = "flex";
 };
 
-/* ── Load data ── */
-async function load(){
-  const snap=await getDocs(collection(db,"orders"));
-  const body=document.getElementById("knitBody");
-  body.innerHTML="";
+/* ── Close ── */
+document.getElementById("closeBtn").onclick = function(){
+  document.getElementById("editModal").style.display = "none";
+};
 
-  if(snap.empty){
-    body.innerHTML=`<tr><td colspan="22" style="padding:20px;color:#4a6080;">
-      No Orders Found in Firebase
-    </td></tr>`;
-    return;
+/* ── Save ── */
+document.getElementById("saveBtn").onclick = async function(){
+  if(selectedDocId===null) return;
+  const order = allOrders.find(o=>o.id===selectedDocId);
+  if(!order) return;
+
+  // Save per-color OR on root doc if no colors array
+  if(order.colors && order.colors.length){
+    const updatedColors = order.colors.map((c,idx)=>{
+      if(idx!==selectedColorIndex) return c;
+      return {
+        ...c,
+        yarnRcvTarget:      document.getElementById("f_yarnRcvTarget").value,
+        yarnRcvActual:      document.getElementById("f_yarnRcvActual").value,
+        yarnRcvStatus:      document.getElementById("f_yarnRcvStatus").value,
+        knitStartTarget:    document.getElementById("f_knitStartTarget").value,
+        knitStartActual:    document.getElementById("f_knitStartActual").value,
+        knitStartStatus:    document.getElementById("f_knitStartStatus").value,
+        knitCompleteTarget: document.getElementById("f_knitCompleteTarget").value,
+        knitCompleteActual: document.getElementById("f_knitCompleteActual").value,
+        knitCompleteStatus: document.getElementById("f_knitCompleteStatus").value,
+        knitRemark:         document.getElementById("f_knitRemark").value,
+      };
+    });
+    try{
+      await updateDoc(doc(db,"orders",selectedDocId),{ colors:updatedColors });
+      markSaved();
+      alert("✅ Saved Successfully!");
+      document.getElementById("editModal").style.display="none";
+      loadOrders();
+    }catch(err){ alert("❌ Save Failed! "+err.message); }
+  } else {
+    // No colors array — save on root
+    try{
+      await updateDoc(doc(db,"orders",selectedDocId),{
+        yarnRcvTarget:      document.getElementById("f_yarnRcvTarget").value,
+        yarnRcvActual:      document.getElementById("f_yarnRcvActual").value,
+        yarnRcvStatus:      document.getElementById("f_yarnRcvStatus").value,
+        knitStartTarget:    document.getElementById("f_knitStartTarget").value,
+        knitStartActual:    document.getElementById("f_knitStartActual").value,
+        knitStartStatus:    document.getElementById("f_knitStartStatus").value,
+        knitCompleteTarget: document.getElementById("f_knitCompleteTarget").value,
+        knitCompleteActual: document.getElementById("f_knitCompleteActual").value,
+        knitCompleteStatus: document.getElementById("f_knitCompleteStatus").value,
+        knitRemark:         document.getElementById("f_knitRemark").value,
+      });
+      markSaved();
+      alert("✅ Saved Successfully!");
+      document.getElementById("editModal").style.display="none";
+      loadOrders();
+    }catch(err){ alert("❌ Save Failed! "+err.message); }
   }
+};
 
-  let tot=0,totalQty=0,yarnPend=0,yarnDone=0;
-  let knitRun=0,knitDone=0,delayed=0,pctSum=0;
-  let sl=0;
-  const now=new Date();
-
-  snap.forEach(ds=>{
-    const d=ds.data(), id=ds.id;
-    tot++; sl++;
-    const qty=getQty(d);
+/* ── KPI ── */
+function renderKPI(){
+  let tot=0,totalQty=0,yarnPend=0,yarnDone=0,knitRun=0,knitDone=0,delayed=0,pctSum=0;
+  const today=new Date();
+  allOrders.forEach(order=>{
+    tot++;
+    const qty=getQty(order);
     totalQty+=qty;
-    const orderDate=d.orderDate||"";
-    const shipDate=getShip(d);
+    const orderDate=order.orderDate||"";
 
-    /* ── Read existing values OR auto-calculate targets ── */
-    /* YARN RECEIVE — auto target: orderDate + 7 days */
-    const yarnT = d.yarnRcvTarget || d.yarnInhouseTarget
-                  || autoTarget(orderDate,shipDate,7,null);
-    const yarnA = d.yarnRcvActual || d.yarnInhouseActual || "";
-    const yarnS = d.yarnRcvStatus || d.yarnInhouseStatus
-                  || d.yarnInhouse || "Pending";
-
-    /* KNITTING START — auto target: orderDate + 16 days */
-    const knitST = d.knittingStartTarget
-                   || autoTarget(orderDate,shipDate,16,null);
-    const knitSA = d.knittingStartActual || "";
-    const knitSS = d.knittingStartStatus || d.knittingStatus || "Pending";
-
-    /* KNITTING COMPLETE — auto target: orderDate + 26 days */
-    const knitCT = d.knittingCompleteTarget
-                   || autoTarget(orderDate,shipDate,26,null);
-    const knitCA = d.knittingCompleteActual || "";
-    const knitCS = d.knittingCompleteStatus || "Pending";
-
-    /* Auto-detect delayed */
-    const today=new Date();
-    const checkDelayed=(targetStr,status)=>{
-      if(status==="Completed"||status==="Complete") return status;
-      if(targetStr&&new Date(targetStr)<today&&(!status||status==="Pending")) return "Delayed";
-      return status||"Pending";
+    const getStatus=(saved,target,fallback)=>{
+      const s=saved||fallback;
+      if(s==="Complete"||s==="Completed") return s;
+      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
+      return s||"Pending";
     };
-    const yarnFinal  = checkDelayed(yarnT,yarnS);
-    const knitSFinal = checkDelayed(knitST,knitSS);
-    const knitCFinal = checkDelayed(knitCT,knitCS);
 
-    /* Counts */
-    if(yarnFinal==="Completed"||yarnFinal==="Complete") yarnDone++; else yarnPend++;
-    if(knitSFinal==="Running") knitRun++;
-    if(knitCFinal==="Completed"||knitCFinal==="Complete") knitDone++;
-    if(yarnFinal==="Delayed"||knitSFinal==="Delayed"||knitCFinal==="Delayed") delayed++;
+    // Try per-color first, fallback to root
+    const c0=(order.colors&&order.colors[0])||{};
+    const yarnT  = c0.yarnRcvTarget      || autoTarget(orderDate,7);
+    const yarnS  = getStatus(c0.yarnRcvStatus,     yarnT,  "Pending");
+    const knitST = c0.knitStartTarget    || autoTarget(orderDate,16);
+    const knitSS = getStatus(c0.knitStartStatus,   knitST, "Pending");
+    const knitCT = c0.knitCompleteTarget || autoTarget(orderDate,26);
+    const knitCS = getStatus(c0.knitCompleteStatus,knitCT, "Pending");
 
-    /* Progress — 3 steps */
-    const steps=[yarnFinal,knitSFinal,knitCFinal];
-    const doneSteps=steps.filter(s=>s==="Completed"||s==="Complete").length;
-    const tnaPct=Math.round((doneSteps/3)*100);
-    pctSum+=tnaPct;
+    if(yarnS==="Complete"||yarnS==="Completed") yarnDone++; else yarnPend++;
+    if(knitSS==="Running") knitRun++;
+    if(knitCS==="Complete"||knitCS==="Completed") knitDone++;
+    if(yarnS==="Delayed"||knitSS==="Delayed"||knitCS==="Delayed") delayed++;
 
-    /* Colors array or single row */
-    const colors=d.colors||d.colorDetails||null;
-    const rows=colors&&Array.isArray(colors)&&colors.length>0?colors:[{
-      fabrication:d.fabrication||d.fabric||"—",
-      color:d.color||"—",
-      qty:qty
-    }];
-    const rowspan=rows.length;
+    const steps=[yarnS,knitSS,knitCS];
+    const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
+    pctSum+=Math.round((done/3)*100);
+  });
 
-    rows.forEach((clr,ci)=>{
-      const isFirst=ci===0;
+  document.getElementById("kTotal").innerText   = tot;
+  document.getElementById("kQty").innerText     = totalQty.toLocaleString();
+  document.getElementById("kYarnPend").innerText= yarnPend;
+  document.getElementById("kYarnDone").innerText= yarnDone;
+  document.getElementById("kKnitRun").innerText = knitRun;
+  document.getElementById("kKnitDone").innerText= knitDone;
+  document.getElementById("kDelayed").innerText = delayed;
+  document.getElementById("kAvg").innerText     = Math.round(pctSum/(tot||1))+"%";
+}
+
+/* ── Render Table ── */
+function renderOrderList(orders){
+  const body=document.getElementById("orderTableBody");
+  body.innerHTML="";
+  let serial=1;
+  const today=new Date();
+
+  orders.forEach(order=>{
+    const orderDate = order.orderDate||"";
+    const shipDate  = getShip(order)||"-";
+    const totalQty  = getQty(order);
+
+    const getStatus=(saved,target,fallback)=>{
+      const s=saved||fallback;
+      if(s==="Complete"||s==="Completed") return "Complete";
+      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
+      return s||"Pending";
+    };
+
+    const colors = order.colors&&order.colors.length
+      ? order.colors
+      : [{ fabrication:order.fabrication||"-", color:order.color||"-", qty:totalQty }];
+
+    colors.forEach((c,index)=>{
+      const yarnT  = c.yarnRcvTarget      || autoTarget(orderDate,7);
+      const yarnA  = c.yarnRcvActual      || "-";
+      const yarnS  = getStatus(c.yarnRcvStatus,     yarnT,  "Pending");
+      const knitST = c.knitStartTarget    || autoTarget(orderDate,16);
+      const knitSA = c.knitStartActual    || "-";
+      const knitSS = getStatus(c.knitStartStatus,   knitST, "Pending");
+      const knitCT = c.knitCompleteTarget || autoTarget(orderDate,26);
+      const knitCA = c.knitCompleteActual || "-";
+      const knitCS = getStatus(c.knitCompleteStatus,knitCT, "Pending");
+
+      const steps=[yarnS,knitSS,knitCS];
+      const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
+      const pct=Math.round((done/3)*100);
+
       body.innerHTML+=`<tr>
-        ${isFirst?`
-        <td rowspan="${rowspan}" style="font-weight:700;color:var(--knit);">${sl}</td>
-        <td rowspan="${rowspan}"><b>${d.buyer||""}</b></td>
-        <td rowspan="${rowspan}">${d.ikl||d.iklNo||""}</td>
-        <td rowspan="${rowspan}">${d.style||d.styleNo||""}</td>
-        <td rowspan="${rowspan}"><b style="color:var(--green);">${qty>0?qty.toLocaleString():"—"}</b></td>
-        `:""}
-        <td style="text-align:left;font-size:11px;max-width:160px;white-space:normal;">${clr.fabrication||d.fabrication||"—"}</td>
-        <td><b>${clr.color||clr.colorName||d.color||"—"}</b></td>
-        <td>${(clr.qty||clr.colorQty||0).toLocaleString()||"—"}</td>
-        ${isFirst?`
-        <td rowspan="${rowspan}"><b>${d.merchandiser||""}</b></td>
-        <td rowspan="${rowspan}">${orderDate||""}</td>
-        <td rowspan="${rowspan}">${shipDate||"No Date"}</td>
+        <td>${index===0?serial:""}</td>
+        <td>${index===0?(order.buyer||"-"):""}</td>
+        <td>${index===0?(order.ikl||order.iklNo||"-"):""}</td>
+        <td>${index===0?(order.style||order.styleNo||"-"):""}</td>
+        <td>${index===0?totalQty.toLocaleString():""}</td>
+        <td style="text-align:left;">${c.fabrication||order.fabrication||"-"}</td>
+        <td>${c.color||c.colorName||"-"}</td>
+        <td>${Number(c.qty||c.colorQty||0).toLocaleString()}</td>
+        <td>${index===0?(order.merchandiser||"-"):""}</td>
+        <td>${index===0?(orderDate||"-"):""}</td>
+        <td>${index===0?shipDate:""}</td>
         <!-- YARN -->
-        <td rowspan="${rowspan}" style="background:#0a1a0a;">${dIn(id,"yarnRcvTarget",yarnT)}</td>
-        <td rowspan="${rowspan}" style="background:#0a1a0a;">${dIn(id,"yarnRcvActual",yarnA)}</td>
-        <td rowspan="${rowspan}" style="background:#0a1a0a;">${sSel(id,"yarnRcvStatus",yarnFinal)}</td>
+        <td style="background:#0a1a0a;">${yarnT}</td>
+        <td style="background:#0a1a0a;">${yarnA}</td>
+        <td style="background:#0a1a0a;">${statusBadge(yarnS)}</td>
         <!-- KNIT START -->
-        <td rowspan="${rowspan}" style="background:#0a1020;">${dIn(id,"knittingStartTarget",knitST)}</td>
-        <td rowspan="${rowspan}" style="background:#0a1020;">${dIn(id,"knittingStartActual",knitSA)}</td>
-        <td rowspan="${rowspan}" style="background:#0a1020;">${sSel(id,"knittingStartStatus",knitSFinal)}</td>
+        <td style="background:#0a1020;">${knitST}</td>
+        <td style="background:#0a1020;">${knitSA}</td>
+        <td style="background:#0a1020;">${statusBadge(knitSS)}</td>
         <!-- KNIT COMPLETE -->
-        <td rowspan="${rowspan}" style="background:#06080e;">${dIn(id,"knittingCompleteTarget",knitCT)}</td>
-        <td rowspan="${rowspan}" style="background:#06080e;">${dIn(id,"knittingCompleteActual",knitCA)}</td>
-        <td rowspan="${rowspan}" style="background:#06080e;">${sSel(id,"knittingCompleteStatus",knitCFinal)}</td>
-        <td rowspan="${rowspan}" style="min-width:130px;">${pbar(tnaPct)}</td>
-        <td rowspan="${rowspan}">
-          <button class="save-btn" onclick="saveRow('${id}')">💾 Save</button>
-        </td>
-        `:""}
+        <td style="background:#06080e;">${knitCT}</td>
+        <td style="background:#06080e;">${knitCA}</td>
+        <td style="background:#06080e;">${statusBadge(knitCS)}</td>
+        <td>${progressBar(pct)}</td>
+        <td><button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button></td>
       </tr>`;
     });
+    serial++;
   });
-
-  /* KPI */
-  const $=id=>document.getElementById(id);
-  $("kTotal").textContent   = tot;
-  $("kQty").textContent     = totalQty.toLocaleString();
-  $("kYarnPend").textContent= yarnPend;
-  $("kYarnDone").textContent= yarnDone;
-  $("kKnitRun").textContent = knitRun;
-  $("kKnitDone").textContent= knitDone;
-  $("kDelayed").textContent = delayed;
-  $("kAvg").textContent     = Math.round(pctSum/(tot||1))+"%";
 }
 
-/* Search */
-document.getElementById("searchInput").addEventListener("keyup",function(){
-  const q=this.value.toLowerCase();
-  document.querySelectorAll("#knitBody tr").forEach(r=>{
-    r.style.display=r.innerText.toLowerCase().includes(q)?"":"none";
-  });
-});
-
-load();
-</script>
-
-<!-- ══ SIDEBAR + SCROLL + PWA ══ -->
-<script>
-let sidebarOpen=true;
-function toggleSidebar(){
-  const sb=document.getElementById("sidebar"),mw=document.getElementById("mainWrap"),
-        ov=document.getElementById("overlay"),btn=document.getElementById("toggleBtn"),
-        mob=window.innerWidth<=960;
-  if(sidebarOpen){sb.classList.add("closed");if(mob)ov.classList.remove("show");
-    else mw.style.marginLeft="0";btn.textContent="☰";sidebarOpen=false;}
-  else{sb.classList.remove("closed");if(mob)ov.classList.add("show");
-    else mw.style.marginLeft="var(--sidebar-w)";btn.textContent="✕";sidebarOpen=true;}
-}
-function closeSidebar(){if(sidebarOpen)toggleSidebar();}
-function initLayout(){
-  const btn=document.getElementById("toggleBtn");
-  if(window.innerWidth<=960){
-    document.getElementById("sidebar").classList.add("closed");
-    document.getElementById("mainWrap").style.marginLeft="0";
-    sidebarOpen=false;btn.textContent="☰";
-  }else{
-    document.getElementById("sidebar").classList.remove("closed");
-    document.getElementById("mainWrap").style.marginLeft="var(--sidebar-w)";
-    sidebarOpen=true;btn.textContent="✕";
-  }
-}
-initLayout();
-window.addEventListener("resize",initLayout);
-
-/* ── Scroll ── */
-function scrollKnit(dir){
-  var el=document.getElementById("knitScroll"),
-      start=el.scrollLeft,amount=dir*450,startTime=null;
-  function step(ts){
-    if(!startTime)startTime=ts;
-    var p=Math.min((ts-startTime)/300,1),
-        e=p<0.5?2*p*p:-1+(4-2*p)*p;
-    el.scrollLeft=start+amount*e;
-    if(p<1)requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-document.getElementById("btnL1").onclick=function(){scrollKnit(-1);};
-document.getElementById("btnR1").onclick=function(){scrollKnit(1);};
-document.getElementById("btnL2").onclick=function(){scrollKnit(-1);};
-document.getElementById("btnR2").onclick=function(){scrollKnit(1);};
-
-/* Date */
-document.getElementById("dateEl").textContent=
-  new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
-
-/* ✅ PWA Service Worker */
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js")
-    .then(()=>console.log("[PWA] Knitting page SW registered"))
-    .catch(e=>console.warn("[PWA]",e));
-}
+loadOrders();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
