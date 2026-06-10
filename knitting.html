@@ -96,7 +96,7 @@ header { background:#111827; padding:20px; text-align:center; border-bottom:2px 
 /* TABLE */
 .table-wrapper { padding:20px; overflow:auto; }
 table { width:100%; border-collapse:collapse; min-width:4500px; background:#1e293b; }
-th { background:#111827; color:#00ff99; padding:12px; border:1px solid #334155; white-space:nowrap; }
+th { background:#111827; color:#60a5fa; padding:12px; border:1px solid #334155; white-space:nowrap; }
 td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:middle; white-space:nowrap; }
 
 .st-pending  { color:#f97316; font-weight:bold; }
@@ -104,8 +104,8 @@ td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:m
 .st-delay    { color:#ef4444; font-weight:bold; }
 .st-complete { color:#00ff99; font-weight:bold; }
 
-.edit-btn { background:#00aa66; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; }
-.edit-btn:hover { background:#008844; }
+.edit-btn { background:#1d4ed8; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; }
+.edit-btn:hover { background:#1e40af; }
 
 /* MODAL */
 .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
@@ -113,19 +113,19 @@ td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:m
   align-items:flex-start; overflow-y:auto; }
 .modal-content { background:#1e293b; width:95%; max-width:820px;
   margin:30px auto; padding:25px; border-radius:15px; }
-.modal-content h2 { color:#00ff99; margin-bottom:20px; font-size:20px;
+.modal-content h2 { color:#60a5fa; margin-bottom:20px; font-size:20px;
   border-bottom:1px solid #334155; padding-bottom:12px; }
 
 .modal-info-box { background:#111827; padding:15px; border-radius:10px;
-  margin-bottom:20px; border-left:4px solid #00ff99;
+  margin-bottom:20px; border-left:4px solid #60a5fa;
   display:grid; grid-template-columns:1fr 1fr; gap:6px; }
 .modal-info-box p    { color:#cbd5e1; font-size:14px; }
 .modal-info-box span { color:white; font-weight:bold; }
 
-.section-title { background:#0f172a; color:#00ff99; padding:8px 12px;
+.section-title { background:#0f172a; color:#60a5fa; padding:8px 12px;
   border-radius:8px; font-size:13px; font-weight:bold;
   text-transform:uppercase; letter-spacing:1px;
-  margin:18px 0 12px 0; border-left:3px solid #00ff99; }
+  margin:18px 0 12px 0; border-left:3px solid #60a5fa; }
 
 .form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
 .form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; }
@@ -137,7 +137,7 @@ input[type="date"], input[type="number"], select, textarea {
   width:100%; padding:10px; border:1px solid #334155; border-radius:8px;
   background:#0f172a; color:white; font-size:14px; }
 input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:focus {
-  outline:none; border-color:#00ff99; }
+  outline:none; border-color:#60a5fa; }
 
 .status-group { display:flex; gap:8px; }
 .status-btn {
@@ -150,9 +150,9 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
 .status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
 
 .btn-group { display:flex; gap:10px; margin-top:25px; }
-.save-btn  { background:#00aa66; padding:13px 25px; border:none; border-radius:10px;
+.save-btn  { background:#1d4ed8; padding:13px 25px; border:none; border-radius:10px;
   color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
-.save-btn:hover  { background:#008844; }
+.save-btn:hover  { background:#1e40af; }
 .close-btn { background:#dc2626; padding:13px 25px; border:none; border-radius:10px;
   color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
 .close-btn:hover { background:#b91c1c; }
@@ -215,15 +215,18 @@ input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:foc
         <th>Merchandiser</th>
         <th>Order Date</th>
         <th>Ship Date</th>
-        <th>Yarn Target</th>
-        <th>Yarn Actual</th>
-        <th>Yarn Status</th>
-        <th>Knit Start Target</th>
-        <th>Knit Start Actual</th>
-        <th>Knit Start Status</th>
-        <th>Knit Complete Target</th>
-        <th>Knit Complete Actual</th>
-        <th>Knit Complete Status</th>
+        <!-- YARN -->
+        <th style="background:#0a1a0a;color:#4ade80;">Yarn Target</th>
+        <th style="background:#0a1a0a;color:#4ade80;">Yarn Actual</th>
+        <th style="background:#0a1a0a;color:#4ade80;">Yarn Status</th>
+        <!-- KNITTING START -->
+        <th style="background:#0a1020;color:#60a5fa;">Knit Start Target</th>
+        <th style="background:#0a1020;color:#60a5fa;">Knit Start Actual</th>
+        <th style="background:#0a1020;color:#60a5fa;">Knit Start Status</th>
+        <!-- KNITTING COMPLETE -->
+        <th style="background:#06080e;color:#a78bfa;">Knit Complete Target</th>
+        <th style="background:#06080e;color:#a78bfa;">Knit Complete Actual</th>
+        <th style="background:#06080e;color:#a78bfa;">Knit Complete Status</th>
         <th>Progress</th>
         <th>Action</th>
       </tr>
@@ -332,11 +335,11 @@ function autoTarget(orderDate, offsetDays){
 }
 
 function statusBadge(val){
-  if(!val||val==="-") return "-";
+  if(!val||val==="-"||val==="Pending") return `<span class="st-pending">● Pending</span>`;
   if(val==="Running")  return `<span class="st-running">● Running</span>`;
   if(val==="Delay")    return `<span class="st-delay">● Delay</span>`;
   if(val==="Complete") return `<span class="st-complete">● Complete</span>`;
-  return `<span class="st-pending">● Pending</span>`;
+  return `<span class="st-pending">● ${val}</span>`;
 }
 
 function statusBtns(field, current){
@@ -395,12 +398,13 @@ window.openOrder = function(docId, colorIndex){
   const orderDate = order.orderDate||"";
   const shipDate  = getShip(order);
 
-  const yarnT  = (c&&c.yarnRcvTarget)     || autoTarget(orderDate,7);
-  const yarnA  = (c&&c.yarnRcvActual)     || "";
-  const yarnS  = (c&&c.yarnRcvStatus)     || "Pending";
-  const knitST = (c&&c.knitStartTarget)   || autoTarget(orderDate,16);
-  const knitSA = (c&&c.knitStartActual)   || "";
-  const knitSS = (c&&c.knitStartStatus)   || "Pending";
+  // Auto targets: Yarn = orderDate+7, KnitStart = orderDate+16, KnitComplete = orderDate+26
+  const yarnT  = (c&&c.yarnRcvTarget)  || autoTarget(orderDate,7);
+  const yarnA  = (c&&c.yarnRcvActual)  || "";
+  const yarnS  = (c&&c.yarnRcvStatus)  || "Pending";
+  const knitST = (c&&c.knitStartTarget)|| autoTarget(orderDate,16);
+  const knitSA = (c&&c.knitStartActual)|| "";
+  const knitSS = (c&&c.knitStartStatus)|| "Pending";
   const knitCT = (c&&c.knitCompleteTarget)|| autoTarget(orderDate,26);
   const knitCA = (c&&c.knitCompleteActual)|| "";
   const knitCS = (c&&c.knitCompleteStatus)|| "Pending";
@@ -484,6 +488,7 @@ document.getElementById("saveBtn").onclick = async function(){
   const order = allOrders.find(o=>o.id===selectedDocId);
   if(!order) return;
 
+  // Save per-color OR on root doc if no colors array
   if(order.colors && order.colors.length){
     const updatedColors = order.colors.map((c,idx)=>{
       if(idx!==selectedColorIndex) return c;
@@ -509,6 +514,7 @@ document.getElementById("saveBtn").onclick = async function(){
       loadOrders();
     }catch(err){ alert("❌ Save Failed! "+err.message); }
   } else {
+    // No colors array — save on root
     try{
       await updateDoc(doc(db,"orders",selectedDocId),{
         yarnRcvTarget:      document.getElementById("f_yarnRcvTarget").value,
@@ -547,6 +553,7 @@ function renderKPI(){
       return s||"Pending";
     };
 
+    // Try per-color first, fallback to root
     const c0=(order.colors&&order.colors[0])||{};
     const yarnT  = c0.yarnRcvTarget      || autoTarget(orderDate,7);
     const yarnS  = getStatus(c0.yarnRcvStatus,     yarnT,  "Pending");
@@ -625,15 +632,18 @@ function renderOrderList(orders){
         <td>${index===0?(order.merchandiser||"-"):""}</td>
         <td>${index===0?(orderDate||"-"):""}</td>
         <td>${index===0?shipDate:""}</td>
-        <td>${yarnT}</td>
-        <td>${yarnA}</td>
-        <td>${statusBadge(yarnS)}</td>
-        <td>${knitST}</td>
-        <td>${knitSA}</td>
-        <td>${statusBadge(knitSS)}</td>
-        <td>${knitCT}</td>
-        <td>${knitCA}</td>
-        <td>${statusBadge(knitCS)}</td>
+        <!-- YARN -->
+        <td style="background:#0a1a0a;">${yarnT}</td>
+        <td style="background:#0a1a0a;">${yarnA}</td>
+        <td style="background:#0a1a0a;">${statusBadge(yarnS)}</td>
+        <!-- KNIT START -->
+        <td style="background:#0a1020;">${knitST}</td>
+        <td style="background:#0a1020;">${knitSA}</td>
+        <td style="background:#0a1020;">${statusBadge(knitSS)}</td>
+        <!-- KNIT COMPLETE -->
+        <td style="background:#06080e;">${knitCT}</td>
+        <td style="background:#06080e;">${knitCA}</td>
+        <td style="background:#06080e;">${statusBadge(knitCS)}</td>
         <td>${progressBar(pct)}</td>
         <td><button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button></td>
       </tr>`;
