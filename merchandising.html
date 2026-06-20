@@ -1,802 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SMART TNA BD - MERCHANDISING ERP V3</title>
-
+<title>Merchandising — SMART TNA BD</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#0f172a;
-color:white;
-}
-
-header{
-background:#111827;
-padding:18px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-color:#00ff99;
-}
-
-.main{
-display:grid;
-grid-template-columns:350px 1fr;
-height:calc(100vh - 70px);
-}
-
-/* LEFT PANEL */
-
-.sidebar{
-background:#111827;
-padding:15px;
-overflow:auto;
-border-right:2px solid #1e293b;
-}
-
-.sidebar h2{
-color:#00ff99;
-margin-bottom:15px;
-}
-
-.search-box input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#1e293b;
-color:white;
-margin-bottom:15px;
-}
-
-.order-card{
-background:#1e293b;
-padding:15px;
-border-radius:12px;
-margin-bottom:12px;
-cursor:pointer;
-transition:.3s;
-}
-
-.order-card:hover{
-background:#334155;
-}
-
-.order-card h3{
-color:#00ff99;
-margin-bottom:8px;
-}
-
-/* RIGHT PANEL */
-
-.content{
-padding:20px;
-overflow:auto;
-}
-
-.card{
-background:#1e293b;
-padding:20px;
-border-radius:15px;
-margin-bottom:20px;
-}
-
-.card h2{
-color:#00ff99;
-margin-bottom:15px;
-}
-
-/* INFO GRID */
-
-.info-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-}
-
-.info-box{
-background:#111827;
-padding:15px;
-border-radius:10px;
-}
-
-.info-box span{
-display:block;
-color:#94a3b8;
-margin-bottom:5px;
-}
-
-/* TABLE */
-
-table{
-width:100%;
-border-collapse:collapse;
-min-width:3200px;
-}
-
-table th,
-table td{
-border:1px solid #334155;
-padding:10px;
-text-align:center;
-}
-
-table th{
-background:#111827;
-color:#00ff99;
-}
-
-/* FORM */
-
-input,
-select,
-textarea{
-width:100%;
-padding:8px;
-border:none;
-border-radius:8px;
-background:#0f172a;
-color:white;
-}
-
-textarea{
-height:120px;
-}
-
-button{
-background:#00aa66;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-}
-
-button:hover{
-background:#008844;
-}
-
-/* STATUS */
-
-.pending{
-background:#f59e0b;
-color:white;
-}
-
-.running{
-background:#84cc16;
-color:white;
-}
-
-.complete{
-background:#16a34a;
-color:white;
-}
-
-.delay{
-background:#dc2626;
-color:white;
-}
-
-@media(max-width:900px){
-
-.main{
-grid-template-columns:1fr;
-}
-
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--green:#00ff99;--bg:#080e1a;--sidebar:#060c17;--card:#0e1829;--card2:#111e30;--border:#1e3048;--muted:#4a6080;--text:#c8d8e8;--sidebar-w:270px;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:500;display:flex;min-height:100vh;}
+.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar);height:100vh;position:fixed;top:0;left:0;z-index:1100;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow-y:auto;}
+.sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--border);text-align:center;}
+.sb-logo{width:62px;height:62px;border-radius:50%;border:2px solid var(--green);background:#0e1829;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:10px;font-weight:700;color:var(--green);}
+.sb-company{font-size:12px;font-weight:700;color:#fff;}
+.sb-erp{font-size:10px;color:var(--green);letter-spacing:1.5px;margin-top:3px;font-family:'Share Tech Mono',monospace;}
+.sb-nav{padding:8px 8px 16px;flex:1;}
+.sb-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px;font-family:'Share Tech Mono',monospace;}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#7a9abf;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:2px;transition:all .18s;border:1px solid transparent;cursor:pointer;}
+.sb-link:hover{background:#142030;color:#fff;border-color:var(--border);}
+.sb-link.active{background:linear-gradient(135deg,#00ff991a,#00ff9908);color:var(--green);border-color:#00ff9930;}
+.sb-icon{font-size:16px;width:20px;text-align:center;}
+.sb-badge{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;color:#fff;}
+.sb-badge.g{background:#16a34a;}.sb-badge.bl{background:#2563eb;}
+.sb-foot{padding:10px 8px;border-top:1px solid var(--border);}
+.main-wrap{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh;}
+.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;}
+.tb-title{font-size:15px;font-weight:700;color:#fff;}
+.tb-user{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+.content{padding:20px;flex:1;}
+.page-title{font-size:26px;font-weight:700;color:var(--green);margin-bottom:6px;}
+.page-sub{font-size:14px;color:var(--muted);margin-bottom:22px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;overflow-x:auto;}
+.card h2{color:var(--green);font-size:14px;font-weight:700;margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;}
+th,td{border:1px solid var(--border);padding:9px 11px;text-align:center;font-size:13px;}
+th{background:#090f1c;color:var(--green);font-size:11px;text-transform:uppercase;font-weight:700;}
+tr:hover td{background:#ffffff04;}
+.b{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.b-done{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
+.b-run{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b55;}
+.b-pend{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
+.merch-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px;}
+.mkpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+.mkpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
+.mkpi h1{font-size:24px;color:var(--green);font-family:'Share Tech Mono',monospace;}
 </style>
-
 </head>
-
 <body>
 
-<header>
-🧵 SMART TNA BD - MERCHANDISING ERP V3
-</header>
-
-<div class="main">
-
-<!-- LEFT -->
-
 <div class="sidebar">
-
-<h2>🔍 Style / Merch Search</h2>
-
-<div class="search-box">
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search Style or Merchandiser">
-
+  <div class="sb-head">
+    <div class="sb-logo">LOGO</div>
+    <div class="sb-company">INNOVATIVE KNITEX LTD</div>
+    <div class="sb-erp">SMART TNA BD ERP</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-label">— Main —</div>
+    <a class="sb-link" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
+    <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
+    <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
+    <div class="sb-label">— Admin —</div>
+    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
+    <a class="sb-link active" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
+    <div class="sb-label">— Production —</div>
+    <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
+    <a class="sb-link" href="knitting.html"><span class="sb-icon">🧶</span> Knitting</a>
+    <a class="sb-link" href="dyeing.html"><span class="sb-icon">🎨</span> Dyeing</a>
+    <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
+    <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
+    <a class="sb-link" href="sewing.html"><span class="sb-icon">🪡</span> Sewing</a>
+    <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
+    <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
+    <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
+    <div class="sb-label">— Management —</div>
+    <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
+    <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
+  </nav>
+  <div class="sb-foot">
+    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
+  </div>
 </div>
 
-<div id="orderList"></div>
+<div class="main-wrap">
+  <div class="topbar">
+    <div class="tb-title">👔 Merchandising Department</div>
+    <span class="tb-user">👤 Admin</span>
+  </div>
 
-</div>
+  <div class="content">
+    <div class="page-title">👔 Merchandising</div>
+    <div class="page-sub">Order-wise TNA tracking per merchandiser</div>
 
-<!-- RIGHT -->
+    <div class="merch-kpi">
+      <div class="mkpi"><h3>Total Merchandisers</h3><h1 id="mTotal">—</h1></div>
+      <div class="mkpi"><h3>Total Orders</h3><h1 id="mOrders">—</h1></div>
+      <div class="mkpi"><h3>Total Qty (PCS)</h3><h1 id="mQty">—</h1></div>
+      <div class="mkpi"><h3>Running Orders</h3><h1 id="mRunning">—</h1></div>
+    </div>
 
-<div class="content">
+    <div class="card">
+      <h2>👔 Merchandiser Performance Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Merchandiser</th><th>Total Orders</th><th>Total Qty</th>
+            <th>Running</th><th>Completed</th><th>Delayed</th><th>Completion %</th>
+          </tr>
+        </thead>
+        <tbody id="mSummary"></tbody>
+      </table>
+    </div>
 
-<div class="card">
+    <div class="card">
+      <h2>📦 Order Details by Merchandiser</h2>
+      <table style="min-width:1200px;">
+        <thead>
+          <tr>
+            <th>Merchandiser</th><th>Buyer</th><th>IKL No</th>
+            <th>Style No</th><th>Total Qty</th>
+            <th>Order Date</th><th>Shipment Date</th><th>Lead Time</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="mDetails"></tbody>
+      </table>
+    </div>
 
-<h2>📋 Selected Order Information</h2>
-
-<div class="info-grid">
-
-<div class="info-box">
-<span>Buyer</span>
-<b id="showBuyer">-</b>
-</div>
-
-<div class="info-box">
-<span>IKL No</span>
-<b id="showIKL">-</b>
-</div>
-
-<div class="info-box">
-<span>Style</span>
-<b id="showStyle">-</b>
-</div>
-
-<div class="info-box">
-<span>Merchandiser</span>
-<b id="showMerch">-</b>
-</div>
-
-<div class="info-box">
-<span>Total Qty</span>
-<b id="showQty">-</b>
-</div>
-
-<div class="info-box">
-<span>Shipment Date</span>
-<b id="showShip">-</b>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h2>🎨 Color Wise Merchandising Update</h2>
-
-<div style="overflow:auto;">
-
-<table id="colorTable">
-
-<thead>
-
-<tr>
-
-<th>Color</th>
-<th>Qty</th>
-
-<th>Fabric Booking</th>
-<th>Status</th>
-
-<th>Color Swatch</th>
-<th>Status</th>
-
-<th>Lab Dip Submit</th>
-<th>Status</th>
-
-<th>Lab Dip Approval</th>
-<th>Status</th>
-
-<th>G2 Receive</th>
-<th>Status</th>
-
-<th>Strike Off Send</th>
-<th>Status</th>
-
-<th>Strike Off Approval</th>
-<th>Status</th>
-
-<th>Trims Approval</th>
-<th>Status</th>
-
-<th>Sewing Trims Inhouse</th>
-<th>Status</th>
-
-<th>PP Meeting</th>
-<th>Status</th>
-
-<th>Packing Trims Inhouse</th>
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody id="colorTableBody">
-
-</tbody>
-
-</table>
-
-</div>
-
-<br>
-
-<label>Delay Note</label>
-
-<textarea
-id="delayNote"
-placeholder="Write delay reason"></textarea>
-
-<br><br>
-
-<button id="saveBtn">
-
-💾 Save Merchandising Update
-
-</button>
-
-</div>
-
-</div>
-
+  </div>
 </div>
 
 <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-getDocs,
-updateDoc,
-doc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* FIREBASE */
-
-const firebaseConfig = {
-
-apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-authDomain: "smart-tna-bd.firebaseapp.com",
-projectId: "smart-tna-bd",
-storageBucket: "smart-tna-bd.firebasestorage.app",
-messagingSenderId: "372049573207",
-appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-
+const cfg = {
+  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain:"smart-tna-bd.firebaseapp.com",
+  projectId:"smart-tna-bd",
+  storageBucket:"smart-tna-bd.firebasestorage.app",
+  messagingSenderId:"372049573207",
+  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
 };
+const fbApp = initializeApp(cfg);
+const db = getFirestore(fbApp);
+const auth = getAuth(fbApp);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+function getQty(d) {
+  const raw = d.totalQty ?? d.qty ?? d.quantity ?? d.Qty ?? 0;
+  const n = parseFloat(String(raw).replace(/,/g,""));
+  return isNaN(n) ? 0 : n;
+}
+function getShipTxt(d) {
+  return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||"";
+}
+function badge(s) {
+  if (!s||s==="Pending") return `<span class="b b-pend">Pending</span>`;
+  if (s==="Completed")   return `<span class="b b-done">Completed</span>`;
+  if (s==="Running")     return `<span class="b b-run">Running</span>`;
+  return `<span class="b b-pend">${s}</span>`;
+}
 
-let allOrders = [];
-let selectedDocId = null;
-let selectedColors = [];
+async function load() {
+  const snap = await getDocs(collection(db,"orders"));
+  if (snap.empty) return;
 
-/* =========================
-   LOAD ORDERS
-========================= */
+  const now = new Date();
+  const merch = {};
+  let totalOrders=0, totalQty=0, totalRunning=0;
+  const detailBody = document.getElementById("mDetails");
 
-async function loadOrders(){
+  snap.forEach(doc => {
+    const d = doc.data();
+    const mn = d.merchandiser || "Unknown";
+    const qty = getQty(d);
+    const sdTxt = getShipTxt(d);
+    let days=0;
+    if (d.orderDate && sdTxt) {
+      const a=new Date(d.orderDate), b=new Date(sdTxt);
+      if (!isNaN(a)&&!isNaN(b)) days=Math.ceil((b-a)/864e5);
+    }
+    const isDone = d.shipmentStatus==="Completed";
+    const sd = sdTxt ? new Date(sdTxt) : null;
+    const isLate = sd && !isNaN(sd) && sd < now && !isDone;
 
-const querySnapshot =
-await getDocs(collection(db,"orders"));
+    if (!merch[mn]) merch[mn]={o:0,q:0,r:0,done:0,late:0};
+    merch[mn].o++; merch[mn].q+=qty;
+    if (isDone) merch[mn].done++; else merch[mn].r++;
+    if (isLate) merch[mn].late++;
 
-const orderList =
-document.getElementById("orderList");
+    totalOrders++; totalQty+=qty;
+    if (!isDone) totalRunning++;
 
-orderList.innerHTML = "";
+    detailBody.innerHTML += `
+    <tr>
+      <td><b>${mn}</b></td>
+      <td>${d.buyer||""}</td><td>${d.ikl||d.iklNo||""}</td>
+      <td>${d.style||d.styleNo||""}</td>
+      <td><b>${qty>0?qty.toLocaleString():"—"}</b></td>
+      <td>${d.orderDate||""}</td><td>${sdTxt||"No Date"}</td>
+      <td>${days} Days</td>
+      <td>${badge(d.shipmentStatus)}</td>
+    </tr>`;
+  });
 
-allOrders = [];
+  const $ = id => document.getElementById(id);
+  $("mTotal").textContent   = Object.keys(merch).length;
+  $("mOrders").textContent  = totalOrders;
+  $("mQty").textContent     = totalQty.toLocaleString();
+  $("mRunning").textContent = totalRunning;
 
-querySnapshot.forEach((docItem)=>{
-
-const data = docItem.data();
-
-allOrders.push({
-id: docItem.id,
-...data
+  const sb = document.getElementById("mSummary");
+  for (const [name,v] of Object.entries(merch)) {
+    const c = Math.round((v.done/v.o)*100);
+    sb.innerHTML += `
+    <tr>
+      <td><b>${name}</b></td><td>${v.o}</td>
+      <td>${v.q.toLocaleString()}</td><td>${v.r}</td>
+      <td>${v.done}</td>
+      <td style="color:${v.late>0?'#f87171':'#4ade80'}">${v.late}</td>
+      <td><span class="b ${c>=70?'b-done':c>=40?'b-run':'b-pend'}">${c}%</span></td>
+    </tr>`;
+  }
+}
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+  load();
 });
-
-orderList.innerHTML += `
-
-<div
-class="order-card"
-data-search="
-${data.style || ""}
-${data.merchandiser || ""}
-${data.ikl || ""}
-">
-
-<h3>${data.style || "-"}</h3>
-
-<p><b>IKL:</b> ${data.ikl || "-"}</p>
-
-<p><b>Merch:</b> ${data.merchandiser || "-"}</p>
-
-<button
-onclick="selectOrder('${docItem.id}')">
-
-Open
-
-</button>
-
-</div>
-
-`;
-
-});
-
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-document
-.getElementById("searchInput")
-.addEventListener("keyup",function(){
-
-const value =
-this.value.toLowerCase();
-
-const cards =
-document.querySelectorAll(".order-card");
-
-cards.forEach(card=>{
-
-const txt =
-card.dataset.search.toLowerCase();
-
-card.style.display =
-txt.includes(value)
-? "block"
-: "none";
-
-});
-
-});
-
-/* =========================
-   SELECT ORDER
-========================= */
-
-window.selectOrder = function(id){
-
-selectedDocId = id;
-
-const data =
-allOrders.find(o=>o.id===id);
-
-if(!data) return;
-
-document.getElementById("showBuyer").innerText =
-data.buyer || "-";
-
-document.getElementById("showIKL").innerText =
-data.ikl || "-";
-
-document.getElementById("showStyle").innerText =
-data.style || "-";
-
-document.getElementById("showMerch").innerText =
-data.merchandiser || "-";
-
-document.getElementById("showQty").innerText =
-(data.totalQty || 0) + " PCS";
-
-document.getElementById("showShip").innerText =
-data.shipdate || "-";
-
-selectedColors =
-data.colors || [];
-
-loadColorTable(selectedColors);
-
-console.log("Selected Order:",data);
-
-};
-
-/* =========================
-   COLOR TABLE LOAD
-========================= */
-
-function loadColorTable(colors){
-
-const table =
-document.getElementById("colorTable");
-
-if(!table) return;
-
-table.innerHTML = `
-
-<tr>
-<th>Color</th>
-<th>Qty</th>
-
-<th>Lab Dip Date</th>
-<th>Lab Dip Status</th>
-
-<th>Strike Off Date</th>
-<th>Strike Off Status</th>
-
-<th>Trims Approval Date</th>
-<th>Trims Status</th>
-
-<th>Sewing Acc Date</th>
-<th>Sewing Acc Status</th>
-
-<th>Finishing Acc Date</th>
-<th>Finishing Acc Status</th>
-</tr>
-
-`;
-
-colors.forEach((c,index)=>{
-
-table.innerHTML += `
-
-<tr>
-
-<td>${c.color || ""}</td>
-
-<td>${c.qty || 0}</td>
-
-<td>
-<input
-type="date"
-id="labdip_${index}"
-value="${c.labdip || ""}">
-</td>
-
-<td>
-<select id="labdipstatus_${index}">
-<option ${c.labdipStatus==="Pending"?"selected":""}>Pending</option>
-<option ${c.labdipStatus==="Running"?"selected":""}>Running</option>
-<option ${c.labdipStatus==="Complete"?"selected":""}>Complete</option>
-<option ${c.labdipStatus==="Delay"?"selected":""}>Delay</option>
-</select>
-</td>
-
-<td>
-<input
-type="date"
-id="strike_${index}"
-value="${c.strike || ""}">
-</td>
-
-<td>
-<select id="strikestatus_${index}">
-<option ${c.strikeStatus==="Pending"?"selected":""}>Pending</option>
-<option ${c.strikeStatus==="Running"?"selected":""}>Running</option>
-<option ${c.strikeStatus==="Complete"?"selected":""}>Complete</option>
-<option ${c.strikeStatus==="Delay"?"selected":""}>Delay</option>
-</select>
-</td>
-
-<td>
-<input
-type="date"
-id="trims_${index}"
-value="${c.trims || ""}">
-</td>
-
-<td>
-<select id="trimsstatus_${index}">
-<option ${c.trimsStatus==="Pending"?"selected":""}>Pending</option>
-<option ${c.trimsStatus==="Running"?"selected":""}>Running</option>
-<option ${c.trimsStatus==="Complete"?"selected":""}>Complete</option>
-<option ${c.trimsStatus==="Delay"?"selected":""}>Delay</option>
-</select>
-</td>
-
-<td>
-<input
-type="date"
-id="sewingacc_${index}"
-value="${c.sewingacc || ""}">
-</td>
-
-<td>
-<select id="sewingstatus_${index}">
-<option ${c.sewingStatus==="Pending"?"selected":""}>Pending</option>
-<option ${c.sewingStatus==="Running"?"selected":""}>Running</option>
-<option ${c.sewingStatus==="Complete"?"selected":""}>Complete</option>
-<option ${c.sewingStatus==="Delay"?"selected":""}>Delay</option>
-</select>
-</td>
-
-<td>
-<input
-type="date"
-id="finishacc_${index}"
-value="${c.finishacc || ""}">
-</td>
-
-<td>
-<select id="finishstatus_${index}">
-<option ${c.finishStatus==="Pending"?"selected":""}>Pending</option>
-<option ${c.finishStatus==="Running"?"selected":""}>Running</option>
-<option ${c.finishStatus==="Complete"?"selected":""}>Complete</option>
-<option ${c.finishStatus==="Delay"?"selected":""}>Delay</option>
-</select>
-</td>
-
-</tr>
-
-`;
-
-});
-
-}
-
-/* =========================
-   PROGRESS
-========================= */
-
-function calculateProgress(){
-
-const stages = [
-
-document.getElementById("fabricBookingStatus").value,
-document.getElementById("colorSwatchStatus").value,
-document.getElementById("labDipSubmitStatus").value,
-document.getElementById("labDipApprovalStatus").value,
-document.getElementById("g2Status").value,
-document.getElementById("strikeSendStatus").value,
-document.getElementById("strikeApprovalStatus").value,
-document.getElementById("trimsStatus").value,
-document.getElementById("sewingTrimsStatus").value,
-document.getElementById("ppMeetingStatus").value,
-document.getElementById("packingTrimsStatus").value
-
-];
-
-let complete = 0;
-
-stages.forEach(stage=>{
-
-if(stage==="Complete"){
-complete++;
-}
-
-});
-
-const progress =
-Math.round(
-(complete/stages.length)*100
-);
-
-document.getElementById("showProgress").innerText =
-progress + "%";
-
-return progress;
-
-}
-
-/* =========================
-   SAVE UPDATE
-========================= */
-
-document
-.getElementById("saveBtn")
-.addEventListener("click",saveUpdates);
-
-async function saveUpdates(){
-
-if(!selectedDocId){
-
-alert("Select Order First");
-return;
-
-}
-
-try{
-
-let updatedColors = [];
-
-selectedColors.forEach((c,index)=>{
-
-updatedColors.push({
-
-...c,
-
-labdip:
-document.getElementById(`labdip_${index}`)?.value || "",
-
-labdipStatus:
-document.getElementById(`labdipstatus_${index}`)?.value || "Pending",
-
-strike:
-document.getElementById(`strike_${index}`)?.value || "",
-
-strikeStatus:
-document.getElementById(`strikestatus_${index}`)?.value || "Pending",
-
-trims:
-document.getElementById(`trims_${index}`)?.value || "",
-
-trimsStatus:
-document.getElementById(`trimsstatus_${index}`)?.value || "Pending",
-
-sewingacc:
-document.getElementById(`sewingacc_${index}`)?.value || "",
-
-sewingStatus:
-document.getElementById(`sewingstatus_${index}`)?.value || "Pending",
-
-finishacc:
-document.getElementById(`finishacc_${index}`)?.value || "",
-
-finishStatus:
-document.getElementById(`finishstatus_${index}`)?.value || "Pending"
-
-});
-
-});
-
-const progress =
-calculateProgress();
-
-await updateDoc(
-
-doc(db,"orders",selectedDocId),
-
-{
-
-colors: updatedColors,
-
-merchProgress: progress,
-
-merchDelayNote:
-document.getElementById("delayNote").value,
-
-Merchandising:
-progress >= 100
-? "Completed"
-: "Running"
-
-}
-
-);
-
-alert("Merchandising Updated Successfully");
-
-}
-catch(error){
-
-console.log(error);
-
-alert("Save Failed");
-
-}
-
-}
-
-/* =========================
-   INITIAL LOAD
-========================= */
-
-loadOrders();
-
 </script>
-
 </body>
 </html>
