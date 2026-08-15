@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART TNA BD ERP - PRINT DEPARTMENT</title>
+<title>SMART TNA BD ERP - PRINT & EMBROIDERY DEPARTMENT</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
@@ -43,11 +43,7 @@ body { background:#0f172a; color:white; }
   font-family:Arial,sans-serif;
   transition:all .2s;
 }
-.back-btn:hover {
-  background:#00ff9920;
-  color:#00ff99;
-  border-color:#00ff99;
-}
+.back-btn:hover { background:#00ff9920; color:#00ff99; border-color:#00ff99; }
 
 .page-title { font-size:16px; font-weight:bold; color:#fff; }
 
@@ -66,17 +62,16 @@ body { background:#0f172a; color:white; }
   font-family:Arial,sans-serif;
 }
 #installBtn:hover { background:#00ff9940; }
-
 .tb-date { font-size:11px; color:#64748b; font-family:monospace; }
 
 header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
 .company { font-size:28px; font-weight:bold; color:#00ff99; }
 .system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
 
-.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px; padding:20px; }
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:15px; padding:20px; }
 .kpi-card { background:#1e293b; padding:20px; border-radius:15px; text-align:center; }
-.kpi-card h2 { color:#00ff99; font-size:30px; margin-bottom:10px; }
-.kpi-card p  { color:#cbd5e1; }
+.kpi-card h2 { color:#00ff99; font-size:28px; margin-bottom:10px; }
+.kpi-card p  { color:#cbd5e1; font-size:13px; }
 
 .search-section { padding:20px; }
 .search-box { width:100%; padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:16px; }
@@ -104,9 +99,35 @@ td {
 .st-running  { color:#3b82f6; font-weight:bold; }
 .st-delay    { color:#ef4444; font-weight:bold; }
 .st-complete { color:#00ff99; font-weight:bold; }
+.st-na       { color:#64748b; }
 
 .edit-btn { background:#00aa66; color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:12px; }
 .edit-btn:hover { background:#008844; }
+
+/* TAB SWITCHER */
+.tab-bar {
+  display:flex;
+  gap:10px;
+  padding:0 20px 0;
+  margin-bottom:-1px;
+}
+.tab-btn {
+  padding:10px 24px;
+  border:2px solid #334155;
+  border-bottom:none;
+  border-radius:10px 10px 0 0;
+  background:#111827;
+  color:#64748b;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.tab-btn.active {
+  background:#1e293b;
+  color:#00ff99;
+  border-color:#00ff99;
+}
 
 .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
   background:rgba(0,0,0,.75); z-index:999; justify-content:center;
@@ -161,10 +182,8 @@ input[type="date"]:focus, select:focus, textarea:focus { outline:none; border-co
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-left">
-    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">
-      🏠 Dashboard
-    </a>
-    <span class="page-title">🖨️ Print Department</span>
+    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">🏠 Dashboard</a>
+    <span class="page-title">🖨️ Print & Embroidery Department</span>
   </div>
   <div class="topbar-right">
     <button id="installBtn" onclick="installPWA()">📲 Install App</button>
@@ -176,17 +195,17 @@ input[type="date"]:focus, select:focus, textarea:focus { outline:none; border-co
 <header>
   <div style="font-size:24px;margin-bottom:10px;">﷽</div>
   <div class="company">INNOVATIVE KNITEX LTD</div>
-  <div class="system">SMART TNA BD ERP - PRINT DEPARTMENT</div>
+  <div class="system">SMART TNA BD ERP - PRINT & EMBROIDERY DEPARTMENT</div>
 </header>
 
 <!-- KPI -->
 <div class="kpi-grid">
   <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
   <div class="kpi-card"><h2 id="kQty">0</h2><p>Total Qty (PCS)</p></div>
-  <div class="kpi-card"><h2 id="kRcvPend">0</h2><p>Panel Pending</p></div>
-  <div class="kpi-card"><h2 id="kRcvDone">0</h2><p>Panel Received</p></div>
-  <div class="kpi-card"><h2 id="kStartRun">0</h2><p>Print Running</p></div>
-  <div class="kpi-card"><h2 id="kCompDone">0</h2><p>Print Done</p></div>
+  <div class="kpi-card"><h2 id="kPrintRun">0</h2><p>Print Running</p></div>
+  <div class="kpi-card"><h2 id="kPrintDone">0</h2><p>Print Done</p></div>
+  <div class="kpi-card"><h2 id="kEmbRun">0</h2><p>Embroidery Running</p></div>
+  <div class="kpi-card"><h2 id="kEmbDone">0</h2><p>Embroidery Done</p></div>
   <div class="kpi-card"><h2 id="kDelayed">0</h2><p>Delayed</p></div>
   <div class="kpi-card"><h2 id="kAvg">0%</h2><p>Avg Progress</p></div>
 </div>
@@ -197,36 +216,17 @@ input[type="date"]:focus, select:focus, textarea:focus { outline:none; border-co
     placeholder="Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
 </div>
 
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tabPrint" onclick="switchTab('print')">🖨️ Print</button>
+  <button class="tab-btn"        id="tabEmb"   onclick="switchTab('emb')">🪡 Embroidery</button>
+</div>
+
 <!-- TABLE -->
 <div class="table-wrapper">
   <table>
     <thead>
-      <tr>
-        <th>SL</th>
-        <th>Buyer</th>
-        <th>IKL No</th>
-        <th>Style No</th>
-        <th>Total Qty</th>
-        <th>Fabrication</th>
-        <th>Color</th>
-        <th>Color Qty</th>
-        <th>Print Qty</th>
-        <th>Print Qty %</th>
-        <th>Merchandiser</th>
-        <th>Order Date</th>
-        <th>Ship Date</th>
-        <th>Panel Rcv Target</th>
-        <th>Panel Rcv Actual</th>
-        <th>Panel Rcv Status</th>
-        <th>Print Start Target</th>
-        <th>Print Start Actual</th>
-        <th>Print Start Status</th>
-        <th>Print Complete Target</th>
-        <th>Print Complete Actual</th>
-        <th>Print Complete Status</th>
-        <th>Progress</th>
-        <th>Action</th>
-      </tr>
+      <tr id="tableHead"></tr>
     </thead>
     <tbody id="orderTableBody"></tbody>
   </table>
@@ -235,7 +235,7 @@ input[type="date"]:focus, select:focus, textarea:focus { outline:none; border-co
 <!-- MODAL -->
 <div class="modal" id="editModal">
   <div class="modal-content">
-    <h2>🖨️ Print Department Update</h2>
+    <h2 id="modalTitle">✏️ Update</h2>
     <div id="modalFormArea"></div>
     <div class="btn-group">
       <button class="save-btn"  id="saveBtn">💾 Save</button>
@@ -262,11 +262,7 @@ window.addEventListener("beforeunload", function(e){
 function confirmBack(e){
   if(hasUnsavedData){
     e.preventDefault();
-    var go = confirm(
-      "⚠️ Unsaved data আছে!\n\n" +
-      "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
-      "তবুও কি Dashboard এ যাবেন?"
-    );
+    var go = confirm("⚠️ Unsaved data আছে!\n\nDashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\nতবুও কি Dashboard এ যাবেন?");
     if(go){ hasUnsavedData = false; window.location.href = "dashboard.html"; }
     return false;
   }
@@ -274,9 +270,16 @@ function confirmBack(e){
 }
 
 document.getElementById("dateEl").textContent =
-  new Date().toLocaleDateString("en-BD",{
-    weekday:"short", year:"numeric", month:"short", day:"numeric"
-  });
+  new Date().toLocaleDateString("en-BD",{ weekday:"short", year:"numeric", month:"short", day:"numeric" });
+
+// Tab state
+var currentTab = "print";
+window.switchTab = function(tab){
+  currentTab = tab;
+  document.getElementById("tabPrint").className = "tab-btn" + (tab==="print"?" active":"");
+  document.getElementById("tabEmb").className   = "tab-btn" + (tab==="emb"  ?" active":"");
+  if(window._renderOrderList) window._renderOrderList(window._currentOrders||[]);
+};
 </script>
 
 <!-- FIREBASE -->
@@ -301,6 +304,7 @@ const db  = getFirestore(app);
 let allOrders          = [];
 let selectedDocId      = null;
 let selectedColorIndex = null;
+let selectedTab        = "print"; // tracks which tab modal was opened from
 
 const STATUS_OPTIONS = [
   { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
@@ -309,6 +313,7 @@ const STATUS_OPTIONS = [
   { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
 ];
 
+/* ── Helpers ── */
 function getQty(d){
   const f=[d.totalQty,d.qty,d.quantity,d.Qty,d.TotalQty,d.pcs,d.pieces];
   for(const v of f){
@@ -329,30 +334,25 @@ function autoTarget(orderDate, offsetDays){
   d.setDate(d.getDate()+offsetDays);
   return d.toISOString().split("T")[0];
 }
-
 function statusBadge(val){
-  if(!val||val==="-") return "-";
+  if(!val||val==="-") return `<span class="st-na">-</span>`;
   if(val==="Running")  return `<span class="st-running">● Running</span>`;
   if(val==="Delay")    return `<span class="st-delay">● Delay</span>`;
   if(val==="Complete") return `<span class="st-complete">● Complete</span>`;
   return `<span class="st-pending">● Pending</span>`;
 }
-
 function statusBtns(field, current){
   return STATUS_OPTIONS.map(opt => {
     const active = (current===opt.val) ? opt.cls : "";
     return `<button type="button" class="status-btn ${active}"
-      onclick="selectStatus('${field}','${opt.val}','${opt.cls}',this)">
-      ${opt.label}</button>`;
+      onclick="selectStatus('${field}','${opt.val}','${opt.cls}',this)">${opt.label}</button>`;
   }).join("");
 }
-
 window.selectStatus = function(field, value, activeCls, btn){
   document.getElementById("f_"+field).value = value;
   btn.parentElement.querySelectorAll(".status-btn").forEach(b=>{ b.className="status-btn"; });
   btn.classList.add(activeCls);
 };
-
 function progressBar(pct){
   const c=pct>=100?"#00ff99":pct>=60?"#fbbf24":pct>=30?"#f97316":"#f87171";
   return `<div style="display:flex;align-items:center;gap:6px;min-width:110px;">
@@ -363,11 +363,79 @@ function progressBar(pct){
   </div>`;
 }
 
+/* ── Column configs per tab ── */
+const TABS = {
+  print: {
+    label: "🖨️ Print",
+    cols: [
+      { head:"Panel Rcv Target",    tKey:"prtPanelRcvTarget",   aKey:"prtPanelRcvActual",   sKey:"prtPanelRcvStatus",   offset:55 },
+      { head:"Panel Rcv Actual",    tKey:null },
+      { head:"Panel Rcv Status",    tKey:null },
+      { head:"Print Start Target",  tKey:"prtStartTarget",      aKey:"prtStartActual",      sKey:"prtStartStatus",      offset:57 },
+      { head:"Print Start Actual",  tKey:null },
+      { head:"Print Start Status",  tKey:null },
+      { head:"Print Complete Target",tKey:"prtCompleteTarget",  aKey:"prtCompleteActual",   sKey:"prtCompleteStatus",   offset:62 },
+      { head:"Print Complete Actual",tKey:null },
+      { head:"Print Complete Status",tKey:null },
+    ],
+    steps: [
+      { label:"📦 Panel Receive",  tField:"prtPanelRcvTarget",  aField:"prtPanelRcvActual",  sField:"prtPanelRcvStatus",  offset:55 },
+      { label:"🖨️ Print Start",    tField:"prtStartTarget",     aField:"prtStartActual",     sField:"prtStartStatus",     offset:57 },
+      { label:"✅ Print Complete", tField:"prtCompleteTarget",  aField:"prtCompleteActual",  sField:"prtCompleteStatus",  offset:62 },
+    ],
+    kpiRun:"kPrintRun", kpiDone:"kPrintDone",
+    modalTitle:"🖨️ Print Department Update",
+  },
+  emb: {
+    label: "🪡 Embroidery",
+    cols: [
+      { head:"Panel Rcv Target",       tKey:"embPanelRcvTarget",    aKey:"embPanelRcvActual",    sKey:"embPanelRcvStatus",    offset:55 },
+      { head:"Panel Rcv Actual",       tKey:null },
+      { head:"Panel Rcv Status",       tKey:null },
+      { head:"Design Approval Target", tKey:"embDesignApprTarget",  aKey:"embDesignApprActual",  sKey:"embDesignApprStatus",  offset:53 },
+      { head:"Design Approval Actual", tKey:null },
+      { head:"Design Approval Status", tKey:null },
+      { head:"Emb Start Target",       tKey:"embStartTarget",       aKey:"embStartActual",       sKey:"embStartStatus",       offset:57 },
+      { head:"Emb Start Actual",       tKey:null },
+      { head:"Emb Start Status",       tKey:null },
+      { head:"Emb Complete Target",    tKey:"embCompleteTarget",    aKey:"embCompleteActual",    sKey:"embCompleteStatus",    offset:63 },
+      { head:"Emb Complete Actual",    tKey:null },
+      { head:"Emb Complete Status",    tKey:null },
+    ],
+    steps: [
+      { label:"📦 Panel Receive",      tField:"embPanelRcvTarget",   aField:"embPanelRcvActual",   sField:"embPanelRcvStatus",   offset:55 },
+      { label:"✏️ Design Approval",   tField:"embDesignApprTarget", aField:"embDesignApprActual", sField:"embDesignApprStatus", offset:53 },
+      { label:"🪡 Emb Start",         tField:"embStartTarget",      aField:"embStartActual",      sField:"embStartStatus",      offset:57 },
+      { label:"✅ Emb Complete",      tField:"embCompleteTarget",   aField:"embCompleteActual",   sField:"embCompleteStatus",   offset:63 },
+    ],
+    kpiRun:"kEmbRun", kpiDone:"kEmbDone",
+    modalTitle:"🪡 Embroidery Department Update",
+  }
+};
+
+/* ── Build table headers ── */
+function buildHeaders(tab){
+  const cfg = TABS[tab];
+  const baseHeaders = ["SL","Buyer","IKL No","Style No","Total Qty","Fabrication","Color","Color Qty","Merchandiser","Order Date","Ship Date"];
+  let html = baseHeaders.map(h=>`<th>${h}</th>`).join("");
+
+  // Only unique step headers (Target / Actual / Status per step)
+  cfg.steps.forEach(s=>{
+    html += `<th>${s.label}<br><small style="color:#64748b;font-weight:normal;">Target</small></th>`;
+    html += `<th>${s.label}<br><small style="color:#64748b;font-weight:normal;">Actual</small></th>`;
+    html += `<th>${s.label}<br><small style="color:#64748b;font-weight:normal;">Status</small></th>`;
+  });
+  html += `<th>Progress</th><th>Action</th>`;
+  document.getElementById("tableHead").innerHTML = html;
+}
+
+/* ── Load ── */
 async function loadOrders(){
   const snap = await getDocs(collection(db,"orders"));
   allOrders  = [];
   snap.forEach(d => allOrders.push({ id:d.id, ...d.data() }));
   renderKPI();
+  buildHeaders(currentTab);
   renderOrderList(allOrders);
 }
 
@@ -375,170 +443,99 @@ window.filterOrders = function(){
   const kw = document.getElementById("searchInput").value.toLowerCase();
   if(!kw){ renderOrderList(allOrders); return; }
   renderOrderList(allOrders.filter(o =>
-    (o.buyer||"").toLowerCase().includes(kw)       ||
-    (o.ikl||o.iklNo||"").toLowerCase().includes(kw)||
-    (o.style||o.styleNo||"").toLowerCase().includes(kw)||
+    (o.buyer||"").toLowerCase().includes(kw)        ||
+    (o.ikl||o.iklNo||"").toLowerCase().includes(kw) ||
+    (o.style||o.styleNo||"").toLowerCase().includes(kw) ||
     (o.merchandiser||"").toLowerCase().includes(kw)
   ));
 };
 
-window.openOrder = function(docId, colorIndex){
+/* ── Tab switch hook ── */
+window._renderOrderList = function(orders){
+  window._currentOrders = orders;
+  buildHeaders(currentTab);
+  renderOrderList(orders);
+};
+window._currentOrders = allOrders;
+
+/* ── Open Modal ── */
+window.openOrder = function(docId, colorIndex, tab){
   selectedDocId      = docId;
   selectedColorIndex = colorIndex;
+  selectedTab        = tab;
   const order = allOrders.find(o=>o.id===docId);
   if(!order) return;
 
   const c         = order.colors ? order.colors[colorIndex] : null;
   const orderDate = order.orderDate||"";
   const shipDate  = getShip(order);
+  const cfg       = TABS[tab];
 
-  // Print offsets: Panel Rcv +60, Print Start +64, Print Complete +68
-  const fabT  = (c&&c.printRcvTarget)    || autoTarget(orderDate,60);
-  const fabA  = (c&&c.printRcvActual)    || "";
-  const fabS  = (c&&c.printRcvStatus)    || "Pending";
-  const cutST = (c&&c.printStartTarget)     || autoTarget(orderDate,64);
-  const cutSA = (c&&c.printStartActual)     || "";
-  const cutSS = (c&&c.printStartStatus)     || "Pending";
-  const cutCT = (c&&c.printCompleteTarget)  || autoTarget(orderDate,68);
-  const cutCA = (c&&c.printCompleteActual)  || "";
-  const cutCS = (c&&c.printCompleteStatus)  || "Pending";
-  const remark = (c&&c.printRemark)||"";
-  const colorQty = c ? Number(c.qty||c.colorQty||0) : 0;
-  const printQty   = (c&&c.printQty!==undefined&&c.printQty!==null&&c.printQty!=="") ? c.printQty : "";
+  document.getElementById("modalTitle").textContent = cfg.modalTitle;
 
-  document.getElementById("modalFormArea").innerHTML = `
+  let formHtml = `
     <div class="modal-info-box">
       <p><span>Style     :</span> ${order.style||order.styleNo||"-"}</p>
       <p><span>Color     :</span> ${c?c.color||"-":"-"}</p>
       <p><span>Buyer     :</span> ${order.buyer||"-"}</p>
       <p><span>Ship Date :</span> ${shipDate||"-"}</p>
-    </div>
-
-    <div class="section-title">📥 Panel Receive</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Panel Rcv Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_printRcvTarget" value="${fabT}">
-      </div>
-      <div class="form-row">
-        <label>Panel Rcv Actual</label>
-        <input type="date" id="f_printRcvActual" value="${fabA}">
-      </div>
-      <div class="form-row">
-        <label>Panel Rcv Status</label>
-        <div class="status-group">${statusBtns("printRcvStatus",fabS)}</div>
-        <input type="hidden" id="f_printRcvStatus" value="${fabS}">
-      </div>
-    </div>
-
-    <div class="section-title">🖨️ Print Start</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Print Start Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_printStartTarget" value="${cutST}">
-      </div>
-      <div class="form-row">
-        <label>Print Start Actual</label>
-        <input type="date" id="f_printStartActual" value="${cutSA}">
-      </div>
-      <div class="form-row">
-        <label>Print Start Status</label>
-        <div class="status-group">${statusBtns("printStartStatus",cutSS)}</div>
-        <input type="hidden" id="f_printStartStatus" value="${cutSS}">
-      </div>
-    </div>
-
-    <div class="section-title">✅ Print Complete</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Print Complete Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_printCompleteTarget" value="${cutCT}">
-      </div>
-      <div class="form-row">
-        <label>Print Complete Actual</label>
-        <input type="date" id="f_printCompleteActual" value="${cutCA}">
-      </div>
-      <div class="form-row">
-        <label>Print Complete Status</label>
-        <div class="status-group">${statusBtns("printCompleteStatus",cutCS)}</div>
-        <input type="hidden" id="f_printCompleteStatus" value="${cutCS}">
-      </div>
-    </div>
-
-    <div class="section-title">🧮 Print Quantity</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Color Qty (Order)</label>
-        <input type="number" id="f_colorQtyRef" value="${colorQty}" readonly style="opacity:.7;">
-      </div>
-      <div class="form-row">
-        <label>Print Qty (Actual)</label>
-        <input type="number" id="f_printQty" value="${printQty}" oninput="updatePrintPct()">
-      </div>
-      <div class="form-row">
-        <label>Print Qty %  (+ / −)</label>
-        <input type="text" id="f_printQtyPctDisplay" value="" readonly style="font-weight:bold;">
-        <input type="hidden" id="f_printQtyPct" value="">
-      </div>
-    </div>
-
-    <div class="section-title">📝 Remark</div>
-    <div class="form-row">
-      <textarea id="f_printRemark" rows="3">${remark}</textarea>
     </div>`;
 
-  updatePrintPct();
+  cfg.steps.forEach(s=>{
+    const tVal = (c&&c[s.tField]) || autoTarget(orderDate, s.offset);
+    const aVal = (c&&c[s.aField]) || "";
+    const sVal = (c&&c[s.sField]) || "Pending";
+    formHtml += `
+      <div class="section-title">${s.label}</div>
+      <div class="form-grid-3">
+        <div class="form-row">
+          <label>Target <small style="color:#64748b;">(auto·editable)</small></label>
+          <input type="date" id="f_${s.tField}" value="${tVal}">
+        </div>
+        <div class="form-row">
+          <label>Actual</label>
+          <input type="date" id="f_${s.aField}" value="${aVal}">
+        </div>
+        <div class="form-row">
+          <label>Status</label>
+          <div class="status-group">${statusBtns(s.sField, sVal)}</div>
+          <input type="hidden" id="f_${s.sField}" value="${sVal}">
+        </div>
+      </div>`;
+  });
+
+  const remarkKey = tab==="print" ? "prtRemark" : "embRemark";
+  const remarkVal = (c&&c[remarkKey])||"";
+  formHtml += `
+    <div class="section-title">📝 Remark</div>
+    <div class="form-row">
+      <textarea id="f_${remarkKey}" rows="3">${remarkVal}</textarea>
+    </div>`;
+
+  document.getElementById("modalFormArea").innerHTML = formHtml;
   document.getElementById("editModal").style.display = "flex";
-};
-
-window.updatePrintPct = function(){
-  const colorQtyEl = document.getElementById("f_colorQtyRef");
-  const printQtyEl    = document.getElementById("f_printQty");
-  const dispEl      = document.getElementById("f_printQtyPctDisplay");
-  const hiddenEl    = document.getElementById("f_printQtyPct");
-  if(!colorQtyEl||!printQtyEl||!dispEl||!hiddenEl) return;
-
-  const colorQty = Number(colorQtyEl.value)||0;
-  const printQty   = printQtyEl.value===""?null:Number(printQtyEl.value);
-
-  if(printQty===null||colorQty<=0){
-    dispEl.value = "-";
-    dispEl.style.color = "#64748b";
-    hiddenEl.value = "";
-    return;
-  }
-
-  const diff = printQty - colorQty;
-  const pct  = (diff/colorQty)*100;
-  const sign = diff>0 ? "+" : (diff<0 ? "" : "");
-  dispEl.value = `${sign}${pct.toFixed(1)}%  (${diff>0?"+":""}${diff} pcs)`;
-  dispEl.style.color = diff===0 ? "#00ff99" : (diff>0 ? "#3b82f6" : "#ef4444");
-  hiddenEl.value = pct.toFixed(1);
 };
 
 document.getElementById("closeBtn").onclick = function(){
   document.getElementById("editModal").style.display = "none";
 };
 
+/* ── Save ── */
 document.getElementById("saveBtn").onclick = async function(){
   if(selectedDocId===null) return;
   const order = allOrders.find(o=>o.id===selectedDocId);
   if(!order) return;
 
-  const fields = {
-    printRcvTarget:   document.getElementById("f_printRcvTarget").value,
-    printRcvActual:   document.getElementById("f_printRcvActual").value,
-    printRcvStatus:   document.getElementById("f_printRcvStatus").value,
-    printStartTarget:    document.getElementById("f_printStartTarget").value,
-    printStartActual:    document.getElementById("f_printStartActual").value,
-    printStartStatus:    document.getElementById("f_printStartStatus").value,
-    printCompleteTarget: document.getElementById("f_printCompleteTarget").value,
-    printCompleteActual: document.getElementById("f_printCompleteActual").value,
-    printCompleteStatus: document.getElementById("f_printCompleteStatus").value,
-    printQty:            document.getElementById("f_printQty").value===""?"":Number(document.getElementById("f_printQty").value),
-    printQtyPct:         document.getElementById("f_printQtyPct").value,
-    printRemark:         document.getElementById("f_printRemark").value,
-  };
+  const cfg = TABS[selectedTab];
+  const remarkKey = selectedTab==="print" ? "prtRemark" : "embRemark";
+  const fields = {};
+  cfg.steps.forEach(s=>{
+    fields[s.tField] = document.getElementById("f_"+s.tField).value;
+    fields[s.aField] = document.getElementById("f_"+s.aField).value;
+    fields[s.sField] = document.getElementById("f_"+s.sField).value;
+  });
+  const remarkEl = document.getElementById("f_"+remarkKey);
+  if(remarkEl) fields[remarkKey] = remarkEl.value;
 
   if(order.colors && order.colors.length){
     const updatedColors = order.colors.map((c,idx)=>{
@@ -563,98 +560,95 @@ document.getElementById("saveBtn").onclick = async function(){
   }
 };
 
+/* ── KPI ── */
 function renderKPI(){
-  let tot=0,totalQty=0,fabPend=0,fabDone=0,cutRun=0,cutDone=0,delayed=0,pctSum=0;
+  let tot=0,totalQty=0,prtRun=0,prtDone=0,embRun=0,embDone=0,delayed=0,pctSum=0;
   const today=new Date();
   allOrders.forEach(order=>{
     tot++;
-    const qty=getQty(order);
-    totalQty+=qty;
+    totalQty+=getQty(order);
+    const c0=(order.colors&&order.colors[0])||{};
     const orderDate=order.orderDate||"";
 
-    const getStatus=(saved,target,fallback)=>{
-      const s=saved||fallback;
-      if(s==="Complete"||s==="Completed") return s;
-      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
+    const gs=(saved,target,offset)=>{
+      const t=saved||autoTarget(orderDate,offset);
+      const s=target||"Pending";
+      if(s==="Complete") return s;
+      if(t&&new Date(t)<today&&(!s||s==="Pending")) return "Delayed";
       return s||"Pending";
     };
 
-    const c0=(order.colors&&order.colors[0])||{};
-    const fabT  = c0.printRcvTarget   || autoTarget(orderDate,60);
-    const fabS  = getStatus(c0.printRcvStatus,   fabT,  "Pending");
-    const cutST = c0.printStartTarget    || autoTarget(orderDate,64);
-    const cutSS = getStatus(c0.printStartStatus,    cutST, "Pending");
-    const cutCT = c0.printCompleteTarget || autoTarget(orderDate,68);
-    const cutCS = getStatus(c0.printCompleteStatus, cutCT, "Pending");
+    const prtS1=gs(c0.prtPanelRcvTarget, c0.prtPanelRcvStatus, 55);
+    const prtS2=gs(c0.prtStartTarget,    c0.prtStartStatus,    57);
+    const prtS3=gs(c0.prtCompleteTarget, c0.prtCompleteStatus, 62);
+    const embS1=gs(c0.embPanelRcvTarget,   c0.embPanelRcvStatus,   55);
+    const embS2=gs(c0.embDesignApprTarget, c0.embDesignApprStatus, 53);
+    const embS3=gs(c0.embStartTarget,      c0.embStartStatus,      57);
+    const embS4=gs(c0.embCompleteTarget,   c0.embCompleteStatus,   63);
 
-    if(fabS==="Complete"||fabS==="Completed") fabDone++; else fabPend++;
-    if(cutSS==="Running") cutRun++;
-    if(cutCS==="Complete"||cutCS==="Completed") cutDone++;
-    if(fabS==="Delayed"||cutSS==="Delayed"||cutCS==="Delayed") delayed++;
+    if(prtS2==="Running") prtRun++;
+    if(prtS3==="Complete") prtDone++;
+    if(embS3==="Running") embRun++;
+    if(embS4==="Complete") embDone++;
+    if([prtS1,prtS2,prtS3,embS1,embS2,embS3,embS4].some(s=>s==="Delayed")) delayed++;
 
-    const steps=[fabS,cutSS,cutCS];
-    const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
-    pctSum+=Math.round((done/3)*100);
+    const allSteps=[prtS1,prtS2,prtS3,embS1,embS2,embS3,embS4];
+    const done=allSteps.filter(s=>s==="Complete").length;
+    pctSum+=Math.round((done/allSteps.length)*100);
   });
 
-  document.getElementById("kTotal").innerText   = tot;
-  document.getElementById("kQty").innerText     = totalQty.toLocaleString();
-  document.getElementById("kRcvPend").innerText = fabPend;
-  document.getElementById("kRcvDone").innerText = fabDone;
-  document.getElementById("kStartRun").innerText  = cutRun;
-  document.getElementById("kCompDone").innerText = cutDone;
-  document.getElementById("kDelayed").innerText = delayed;
-  document.getElementById("kAvg").innerText     = Math.round(pctSum/(tot||1))+"%";
+  document.getElementById("kTotal").innerText    = tot;
+  document.getElementById("kQty").innerText      = totalQty.toLocaleString();
+  document.getElementById("kPrintRun").innerText = prtRun;
+  document.getElementById("kPrintDone").innerText= prtDone;
+  document.getElementById("kEmbRun").innerText   = embRun;
+  document.getElementById("kEmbDone").innerText  = embDone;
+  document.getElementById("kDelayed").innerText  = delayed;
+  document.getElementById("kAvg").innerText      = Math.round(pctSum/(tot||1))+"%";
 }
 
-function printQtyPctBadge(printQty, colorQty){
-  if(printQty===undefined||printQty===null||printQty===""||!colorQty) return "-";
-  const diff = Number(printQty)-Number(colorQty);
-  const pct  = (diff/colorQty)*100;
-  const color = diff===0 ? "#00ff99" : (diff>0 ? "#3b82f6" : "#ef4444");
-  const sign  = diff>0 ? "+" : "";
-  return `<span style="color:${color};font-weight:bold;">${sign}${pct.toFixed(1)}%</span>`;
-}
-
+/* ── Render Table ── */
 function renderOrderList(orders){
+  window._currentOrders = orders;
   const body=document.getElementById("orderTableBody");
   body.innerHTML="";
   let serial=1;
   const today=new Date();
+  const tab = currentTab;
+  const cfg = TABS[tab];
+
+  const getStatus=(saved,target,fallback)=>{
+    const s=saved||fallback;
+    if(s==="Complete") return "Complete";
+    if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
+    return s||"Pending";
+  };
 
   orders.forEach(order=>{
     const orderDate = order.orderDate||"";
     const shipDate  = getShip(order)||"-";
     const totalQty  = getQty(order);
 
-    const getStatus=(saved,target,fallback)=>{
-      const s=saved||fallback;
-      if(s==="Complete"||s==="Completed") return "Complete";
-      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
-      return s||"Pending";
-    };
-
     const colors = order.colors&&order.colors.length
       ? order.colors
       : [{ fabrication:order.fabrication||"-", color:order.color||"-", qty:totalQty }];
 
     colors.forEach((c,index)=>{
-      const fabT  = c.printRcvTarget   || autoTarget(orderDate,60);
-      const fabA  = c.printRcvActual   || "-";
-      const fabS  = getStatus(c.printRcvStatus,   fabT,  "Pending");
-      const cutST = c.printStartTarget    || autoTarget(orderDate,64);
-      const cutSA = c.printStartActual    || "-";
-      const cutSS = getStatus(c.printStartStatus,    cutST, "Pending");
-      const cutCT = c.printCompleteTarget || autoTarget(orderDate,68);
-      const cutCA = c.printCompleteActual || "-";
-      const cutCS = getStatus(c.printCompleteStatus, cutCT, "Pending");
+      const stepStatuses = cfg.steps.map(s=>{
+        const t = c[s.tField] || autoTarget(orderDate, s.offset);
+        return getStatus(c[s.sField], t, "Pending");
+      });
 
-      const steps=[fabS,cutSS,cutCS];
-      const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
-      const pct=Math.round((done/3)*100);
+      const done = stepStatuses.filter(s=>s==="Complete").length;
+      const pct  = Math.round((done/cfg.steps.length)*100);
 
-      const colorQty = Number(c.qty||c.colorQty||0);
-      const printQty   = (c.printQty!==undefined&&c.printQty!==null) ? c.printQty : "";
+      let stageCells = "";
+      cfg.steps.forEach((s,i)=>{
+        const t = c[s.tField] || autoTarget(orderDate, s.offset);
+        const a = c[s.aField] || "-";
+        const st= stepStatuses[i];
+        stageCells += `<td>${t}</td><td>${a}</td><td>${statusBadge(st)}</td>`;
+      });
 
       body.innerHTML+=`<tr>
         <td>${index===0?serial:""}</td>
@@ -665,22 +659,12 @@ function renderOrderList(orders){
         <td style="text-align:left;">${c.fabrication||order.fabrication||"-"}</td>
         <td>${c.color||c.colorName||"-"}</td>
         <td>${Number(c.qty||c.colorQty||0).toLocaleString()}</td>
-        <td>${printQty===""?"-":Number(printQty).toLocaleString()}</td>
-        <td>${printQtyPctBadge(printQty,colorQty)}</td>
         <td>${index===0?(order.merchandiser||"-"):""}</td>
         <td>${index===0?(orderDate||"-"):""}</td>
         <td>${index===0?shipDate:""}</td>
-        <td>${fabT}</td>
-        <td>${fabA}</td>
-        <td>${statusBadge(fabS)}</td>
-        <td>${cutST}</td>
-        <td>${cutSA}</td>
-        <td>${statusBadge(cutSS)}</td>
-        <td>${cutCT}</td>
-        <td>${cutCA}</td>
-        <td>${statusBadge(cutCS)}</td>
+        ${stageCells}
         <td>${progressBar(pct)}</td>
-        <td><button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button></td>
+        <td><button class="edit-btn" onclick="openOrder('${order.id}',${index},'${tab}')">✏️ Edit</button></td>
       </tr>`;
     });
     serial++;
