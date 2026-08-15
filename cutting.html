@@ -210,6 +210,8 @@ input[type="date"]:focus, select:focus, textarea:focus { outline:none; border-co
         <th>Fabrication</th>
         <th>Color</th>
         <th>Color Qty</th>
+        <th>Cut Qty</th>
+        <th>Cut Qty %</th>
         <th>Merchandiser</th>
         <th>Order Date</th>
         <th>Ship Date</th>
@@ -401,6 +403,8 @@ window.openOrder = function(docId, colorIndex){
   const cutCA = (c&&c.cutCompleteActual)  || "";
   const cutCS = (c&&c.cutCompleteStatus)  || "Pending";
   const remark = (c&&c.cutRemark)||"";
+  const colorQty = c ? Number(c.qty||c.colorQty||0) : 0;
+  const cutQty   = (c&&c.cutQty!==undefined&&c.cutQty!==null&&c.cutQty!=="") ? c.cutQty : "";
 
   document.getElementById("modalFormArea").innerHTML = `
     <div class="modal-info-box">
@@ -461,12 +465,55 @@ window.openOrder = function(docId, colorIndex){
       </div>
     </div>
 
+    <div class="section-title">🧮 Cutting Quantity</div>
+    <div class="form-grid-3">
+      <div class="form-row">
+        <label>Color Qty (Order)</label>
+        <input type="number" id="f_colorQtyRef" value="${colorQty}" readonly style="opacity:.7;">
+      </div>
+      <div class="form-row">
+        <label>Cutting Qty (Actual)</label>
+        <input type="number" id="f_cutQty" value="${cutQty}" oninput="updateCutPct()">
+      </div>
+      <div class="form-row">
+        <label>Cut Qty %  (+ / −)</label>
+        <input type="text" id="f_cutQtyPctDisplay" value="" readonly style="font-weight:bold;">
+        <input type="hidden" id="f_cutQtyPct" value="">
+      </div>
+    </div>
+
     <div class="section-title">📝 Remark</div>
     <div class="form-row">
       <textarea id="f_cutRemark" rows="3">${remark}</textarea>
     </div>`;
 
+  updateCutPct();
   document.getElementById("editModal").style.display = "flex";
+};
+
+window.updateCutPct = function(){
+  const colorQtyEl = document.getElementById("f_colorQtyRef");
+  const cutQtyEl    = document.getElementById("f_cutQty");
+  const dispEl      = document.getElementById("f_cutQtyPctDisplay");
+  const hiddenEl    = document.getElementById("f_cutQtyPct");
+  if(!colorQtyEl||!cutQtyEl||!dispEl||!hiddenEl) return;
+
+  const colorQty = Number(colorQtyEl.value)||0;
+  const cutQty   = cutQtyEl.value===""?null:Number(cutQtyEl.value);
+
+  if(cutQty===null||colorQty<=0){
+    dispEl.value = "-";
+    dispEl.style.color = "#64748b";
+    hiddenEl.value = "";
+    return;
+  }
+
+  const diff = cutQty - colorQty;
+  const pct  = (diff/colorQty)*100;
+  const sign = diff>0 ? "+" : (diff<0 ? "" : "");
+  dispEl.value = `${sign}${pct.toFixed(1)}%  (${diff>0?"+":""}${diff} pcs)`;
+  dispEl.style.color = diff===0 ? "#00ff99" : (diff>0 ? "#3b82f6" : "#ef4444");
+  hiddenEl.value = pct.toFixed(1);
 };
 
 document.getElementById("closeBtn").onclick = function(){
@@ -488,6 +535,8 @@ document.getElementById("saveBtn").onclick = async function(){
     cutCompleteTarget: document.getElementById("f_cutCompleteTarget").value,
     cutCompleteActual: document.getElementById("f_cutCompleteActual").value,
     cutCompleteStatus: document.getElementById("f_cutCompleteStatus").value,
+    cutQty:            document.getElementById("f_cutQty").value===""?"":Number(document.getElementById("f_cutQty").value),
+    cutQtyPct:         document.getElementById("f_cutQtyPct").value,
     cutRemark:         document.getElementById("f_cutRemark").value,
   };
 
@@ -558,6 +607,15 @@ function renderKPI(){
   document.getElementById("kAvg").innerText     = Math.round(pctSum/(tot||1))+"%";
 }
 
+function cutQtyPctBadge(cutQty, colorQty){
+  if(cutQty===undefined||cutQty===null||cutQty===""||!colorQty) return "-";
+  const diff = Number(cutQty)-Number(colorQty);
+  const pct  = (diff/colorQty)*100;
+  const color = diff===0 ? "#00ff99" : (diff>0 ? "#3b82f6" : "#ef4444");
+  const sign  = diff>0 ? "+" : "";
+  return `<span style="color:${color};font-weight:bold;">${sign}${pct.toFixed(1)}%</span>`;
+}
+
 function renderOrderList(orders){
   const body=document.getElementById("orderTableBody");
   body.innerHTML="";
@@ -595,6 +653,9 @@ function renderOrderList(orders){
       const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
       const pct=Math.round((done/3)*100);
 
+      const colorQty = Number(c.qty||c.colorQty||0);
+      const cutQty   = (c.cutQty!==undefined&&c.cutQty!==null) ? c.cutQty : "";
+
       body.innerHTML+=`<tr>
         <td>${index===0?serial:""}</td>
         <td style="text-align:left;">${index===0?(order.buyer||"-"):""}</td>
@@ -604,6 +665,8 @@ function renderOrderList(orders){
         <td style="text-align:left;">${c.fabrication||order.fabrication||"-"}</td>
         <td>${c.color||c.colorName||"-"}</td>
         <td>${Number(c.qty||c.colorQty||0).toLocaleString()}</td>
+        <td>${cutQty===""?"-":Number(cutQty).toLocaleString()}</td>
+        <td>${cutQtyPctBadge(cutQty,colorQty)}</td>
         <td>${index===0?(order.merchandiser||"-"):""}</td>
         <td>${index===0?(orderDate||"-"):""}</td>
         <td>${index===0?shipDate:""}</td>
