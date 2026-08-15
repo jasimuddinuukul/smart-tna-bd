@@ -3,482 +3,429 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART TNA BD - ORDER ENTRY SYSTEM</title>
-
+<title>Order Entry — SMART TNA BD</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
-<script src="pwa-install.js" defer></script>
-
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
-body { background:#0f172a; color:white; }
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--green:#00ff99;--bg:#0d1117;--card:#161b22;--border:#21262d;--muted:#8b949e;--text:#e6edf3;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:600;min-height:100vh;}
 
-/* ── TOPBAR ── */
-.topbar {
-  background:#111827;
-  padding:12px 20px;
-  border-bottom:2px solid #1e293b;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:900;
-}
-.topbar-left  { display:flex; align-items:center; gap:12px; }
-.topbar-right { display:flex; align-items:center; gap:10px; }
+/* ══ TOPBAR ══ */
+.topbar{background:#161b22;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;}
+.tb-left{display:flex;align-items:center;gap:10px;}
+.back-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#006a4e,#00553e);border:2px solid var(--green);border-radius:8px;color:#fff;padding:7px 14px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Rajdhani',sans-serif;transition:all .2s;box-shadow:0 0 10px #00ff9930;}
+.back-btn:hover{background:linear-gradient(135deg,#00ff99,#00cc77);color:#000;}
+.tb-title{font-size:15px;font-weight:700;color:#fff;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.tb-date{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
+.tb-user{background:var(--green);color:#000;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;}
 
-.back-btn {
-  display:flex;
-  align-items:center;
-  gap:6px;
-  background:#1e293b;
-  border:1px solid #334155;
-  border-radius:8px;
-  color:#cbd5e1;
-  padding:8px 16px;
-  font-size:13px;
-  font-weight:700;
-  cursor:pointer;
-  text-decoration:none;
-  font-family:Arial,sans-serif;
-  transition:all .2s;
-}
-.back-btn:hover {
-  background:#00ff9920;
-  color:#00ff99;
-  border-color:#00ff99;
-}
+/* ══ HERO ══ */
+.hero{background:linear-gradient(135deg,#0a1828,#091522,#0a1828);border-bottom:1px solid var(--border);padding:18px 24px 14px;text-align:center;}
+.hero-arabic{font-family:'Amiri',serif;font-size:32px;color:var(--green);direction:rtl;margin-bottom:6px;text-shadow:0 0 20px #00ff9960;}
+.hero-company{font-size:22px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:3px;}
+.hero-dept{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--green);letter-spacing:3px;}
 
-.page-title {
-  font-size:16px;
-  font-weight:bold;
-  color:#fff;
-}
+/* ══ CONTENT ══ */
+.container{padding:18px;max-width:1900px;margin:auto;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px;}
+.card h2{color:var(--green);font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
 
-#installBtn {
-  display:none;
-  align-items:center;
-  gap:6px;
-  background:#00ff9920;
-  border:1px solid #00ff99;
-  border-radius:8px;
-  color:#00ff99;
-  padding:7px 13px;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-  font-family:Arial,sans-serif;
-}
-#installBtn:hover { background:#00ff9940; }
+/* ══ FORM ══ */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
+.form-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#0d1117;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;box-sizing:border-box;}
+.form-input:focus{border-color:var(--green);}
+.form-input::placeholder{color:var(--muted);}
+.form-input[readonly]{color:var(--muted);cursor:not-allowed;}
 
-.tb-date {
-  font-size:11px;
-  color:#64748b;
-  font-family:monospace;
-}
+/* ══ COLOR ROWS ══ */
+.color-row{display:grid;grid-template-columns:2fr 2fr auto;gap:10px;margin-bottom:8px;align-items:center;}
+.color-row .remove-btn{background:#dc2626;border:1px solid #f87171;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;white-space:nowrap;transition:background .15s;}
+.color-row .remove-btn:hover{background:#b91c1c;}
 
-/* ── REST OF ORIGINAL STYLES ── */
-header {
-  background:#111827;
-  padding:18px;
-  text-align:center;
-  font-size:24px;
-  font-weight:bold;
-  color:#00ff99;
-  border-bottom:2px solid #1e293b;
-}
+/* ══ BUTTONS ══ */
+.btn{width:100%;padding:11px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;font-family:'Rajdhani',sans-serif;transition:all .15s;margin-top:8px;}
+.btn-green{background:#16a34a;color:#fff;border:1px solid var(--green);}
+.btn-green:hover{background:#15803d;}
+.btn-blue{background:#1d4ed8;color:#fff;border:1px solid #3b82f6;}
+.btn-blue:hover{background:#1e40af;}
+.btn-outline{background:transparent;color:var(--green);border:1px solid var(--green);}
+.btn-outline:hover{background:#00ff9915;}
 
-.container {
-  padding:20px;
-  max-width:1900px;
-  margin:auto;
-}
+/* ══ SEARCH ══ */
+.search-box{width:100%;padding:10px 14px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;}
+.search-box:focus{border-color:var(--green);}
+.search-box::placeholder{color:var(--muted);}
 
-.card {
-  background:#1e293b;
-  padding:20px;
-  border-radius:15px;
-  margin-bottom:20px;
-}
+/* ══ TABLE ══ */
+.tbl-wrap{overflow-x:auto;border-radius:8px;}
+.tbl-wrap::-webkit-scrollbar{height:6px;}
+.tbl-wrap::-webkit-scrollbar-track{background:#0d1117;}
+.tbl-wrap::-webkit-scrollbar-thumb{background:#2a4060;border-radius:3px;}
+.tbl-wrap::-webkit-scrollbar-thumb:hover{background:var(--green);}
+table{width:100%;border-collapse:collapse;min-width:1100px;}
+th,td{border:1px solid var(--border);padding:9px 11px;text-align:center;font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:600;color:var(--text);white-space:nowrap;}
+th{background:#0d1117;color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:.7px;}
+tr:hover td{background:#ffffff05;}
 
-h2 { color:#00ff99; margin-bottom:15px; }
+/* ══ ACTION BTNS ══ */
+.act-btn{padding:5px 12px;margin:2px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;border:none;transition:background .15s;}
+.edit-btn{background:#1d4ed8;color:#fff;} .edit-btn:hover{background:#1e40af;}
+.del-btn{background:#dc2626;color:#fff;}  .del-btn:hover{background:#b91c1c;}
 
-.form-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
+/* ══ EDIT MODE BANNER ══ */
+.edit-banner{background:#b4530922;border:1px solid #f59e0b;border-radius:10px;padding:10px 16px;margin-bottom:14px;color:#fbbf24;font-size:13px;font-weight:700;display:none;align-items:center;gap:10px;}
+.edit-banner.show{display:flex;}
+.cancel-edit{background:transparent;border:1px solid #fbbf24;color:#fbbf24;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-left:auto;font-family:'Rajdhani',sans-serif;}
 
-.form-grid label {
-  display:block;
-  margin-bottom:6px;
-  color:#94a3b8;
-  font-size:12px;
-  font-weight:bold;
-  text-transform:uppercase;
-}
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#161b22;border:1px solid var(--green);border-radius:10px;padding:12px 24px;font-size:14px;font-weight:700;z-index:99999;display:none;font-family:'Rajdhani',sans-serif;color:var(--green);}
+.toast.show{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px);}to{opacity:1;transform:translate(-50%,0);}}
 
-input[type="text"],
-input[type="number"],
-input[type="date"] {
-  width:100%;
-  padding:12px;
-  border:1px solid #334155;
-  border-radius:10px;
-  background:#0f172a;
-  color:white;
-  font-size:14px;
-  box-sizing:border-box;
-}
-input:focus { outline:none; border-color:#00ff99; }
-input[readonly] { color:#64748b; cursor:not-allowed; }
+/* ══ UNSAVED WARNING ══ */
+.unsaved-dot{width:8px;height:8px;background:#f87171;border-radius:50%;display:none;margin-left:6px;}
+.unsaved-dot.show{display:inline-block;}
 
-button {
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  box-sizing:border-box;
-  font-weight:bold;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.btn-green  { background:#00aa66; color:white; margin-top:10px; }
-.btn-green:hover { background:#008844; }
-
-.color-row {
-  display:grid;
-  grid-template-columns:2fr 2fr 1fr;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.color-row button {
-  background:#dc2626;
-  color:white;
-  padding:10px;
-}
-.color-row button:hover { background:#b91c1c; }
-
-table { width:100%; border-collapse:collapse; }
-table th, table td {
-  border:1px solid #334155;
-  padding:10px;
-  text-align:center;
-  font-size:13px;
-}
-table th { background:#111827; color:#00ff99; }
-table td { vertical-align:middle; }
-
-.table-container { overflow:auto; }
-
-.search-box input {
-  background:#111827;
-  border:1px solid #334155;
-}
-
-.action-btn {
-  padding:7px 12px;
-  margin:2px;
-  width:auto;
-  font-size:12px;
-  border-radius:8px;
-}
-.edit-btn   { background:#2563eb; color:white; }
-.edit-btn:hover { background:#1d4ed8; }
-.delete-btn { background:#dc2626; color:white; }
-.delete-btn:hover { background:#b91c1c; }
+/* ══ RESPONSIVE ══ */
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}.color-row{grid-template-columns:1fr 1fr;}.tb-date{display:none;}.container{padding:10px;}}
 </style>
 </head>
 <body>
 
-<!-- ✅ TOPBAR WITH DASHBOARD BACK BUTTON -->
+<div class="toast" id="toast"></div>
+
+<!-- ══ TOPBAR ══ -->
 <div class="topbar">
-  <div class="topbar-left">
-    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">
+  <div class="tb-left">
+    <!-- ✅ DASHBOARD BACK BUTTON — Green style, same as all dept pages -->
+    <a class="back-btn" href="dashboard.html" id="backBtn" onclick="return confirmBack(event)">
       🏠 Dashboard
     </a>
-    <span class="page-title">📦 Order Entry System</span>
+    <span class="unsaved-dot" id="unsavedDot" title="Unsaved changes"></span>
+    <span class="tb-title">📦 Order Entry System</span>
   </div>
-  <div class="topbar-right">
-    <button id="installBtn" onclick="installPWA()">📲 Install App</button>
+  <div class="tb-right">
     <span class="tb-date" id="dateEl"></span>
+    <span class="tb-user" id="userBadge">👤 Admin</span>
   </div>
 </div>
 
-<!-- HEADER -->
-<header>
-  <div style="font-size:20px;margin-bottom:6px;">﷽</div>
-  INNOVATIVE KNITEX LTD<br>
-  <span style="font-size:16px;font-weight:normal;color:#cbd5e1;">SMART TNA BD - ORDER ENTRY SYSTEM</span>
-</header>
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+  <div class="hero-company">INNOVATIVE KNITEX LTD</div>
+  <div class="hero-dept">📦 SMART TNA BD ERP — ORDER ENTRY SYSTEM</div>
+</div>
 
 <div class="container">
 
-  <!-- NEW ORDER FORM -->
+  <!-- FORM -->
   <div class="card">
-    <h2>➕ New Order Entry</h2>
+    <h2>➕ <span id="formTitle">New Order Entry</span></h2>
+
+    <!-- Edit mode banner -->
+    <div class="edit-banner" id="editBanner">
+      ✏️ Edit Mode — Editing existing order
+      <button class="cancel-edit" onclick="cancelEdit()">✕ Cancel</button>
+    </div>
+
     <div class="form-grid">
-      <div><label>Buyer</label><input type="text" id="buyer" placeholder="Buyer Name"></div>
-      <div><label>IKL No</label><input type="text" id="ikl" placeholder="IKL Number"></div>
-      <div><label>Style</label><input type="text" id="style" placeholder="Style Number"></div>
-      <div><label>Item</label><input type="text" id="item" placeholder="Item Name"></div>
-      <div><label>Merchandiser</label><input type="text" id="merchandiser" placeholder="Merchandiser Name"></div>
-      <div><label>Fabrication</label><input type="text" id="fabrication" placeholder="Fabrication Details"></div>
-      <div><label>Order Date</label><input type="date" id="orderDate"></div>
-      <div><label>Shipment Date</label><input type="date" id="shipdate"></div>
-      <div><label>Lead Time</label><input type="number" id="leadtime" placeholder="Auto Lead Time" readonly></div>
-      <div><label>Order Qty</label><input type="number" id="orderQty" placeholder="Auto From Colors" readonly></div>
+      <div class="form-group"><label>Buyer *</label><input class="form-input" type="text" id="buyer" placeholder="e.g. AEON / KAWAGUCHI SAN"></div>
+      <div class="form-group"><label>IKL No *</label><input class="form-input" type="text" id="ikl" placeholder="e.g. MHJ-145/2025"></div>
+      <div class="form-group"><label>Style No *</label><input class="form-input" type="text" id="style" placeholder="e.g. 260082014"></div>
+      <div class="form-group"><label>Item</label><input class="form-input" type="text" id="item" placeholder="e.g. GIRLS LEGGINGS"></div>
+      <div class="form-group"><label>Merchandiser *</label><input class="form-input" type="text" id="merchandiser" placeholder="e.g. MR.MARUF"></div>
+      <div class="form-group"><label>Fabrication</label><input class="form-input" type="text" id="fabrication" placeholder="e.g. 95% CTN 5% LYCRA S/J 180 GSM"></div>
+      <div class="form-group"><label>Order Date *</label><input class="form-input" type="date" id="orderDate"></div>
+      <div class="form-group"><label>Shipment Date *</label><input class="form-input" type="date" id="shipdate"></div>
+      <div class="form-group"><label>Lead Time (auto)</label><input class="form-input" type="number" id="leadtime" readonly placeholder="Auto calculated"></div>
+      <div class="form-group"><label>Total Qty (auto)</label><input class="form-input" type="number" id="orderQty" readonly placeholder="Auto from colors"></div>
     </div>
 
     <br>
     <h2>🎨 Color Breakdown</h2>
     <div id="colorContainer"></div>
-    <button class="btn-green" onclick="addColorRow()">➕ Add Color</button>
+    <button class="btn btn-outline" onclick="addColorRow()" style="margin-top:8px;width:auto;padding:8px 20px;">➕ Add Color</button>
     <br><br>
-    <button class="btn-green" onclick="saveOrder()">💾 Save Order</button>
+    <button class="btn btn-green" onclick="saveOrder()" id="saveBtn">💾 Save Order to Firebase</button>
   </div>
 
   <!-- SEARCH -->
   <div class="card">
     <h2>🔍 Search Orders</h2>
-    <div class="search-box">
-      <input type="text" id="searchInput"
-        placeholder="Search Buyer / IKL / Style / Item / Merchandiser"
-        onkeyup="filterOrders()">
-    </div>
+    <input class="search-box" type="text" id="searchInput" placeholder="Search Buyer / IKL / Style / Item / Merchandiser..." onkeyup="filterOrders()">
   </div>
 
   <!-- ORDER LIST -->
   <div class="card">
-    <h2>📋 Order List</h2>
-    <div class="table-container">
+    <h2>📋 Order List <span id="orderCount" style="font-size:12px;color:var(--muted);font-weight:500;"></span></h2>
+    <div class="tbl-wrap">
       <table id="orderTable">
-        <tr>
-          <th>Buyer</th><th>IKL No</th><th>Style</th><th>Item</th>
-          <th>Merchandiser</th><th>Fabrication</th><th>Order Date</th>
-          <th>Shipment Date</th><th>Lead Time</th><th>Order Qty</th>
-          <th>Color Breakdown</th><th>Action</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>#</th><th>Buyer</th><th>IKL No</th><th>Style</th><th>Item</th>
+            <th>Merchandiser</th><th>Fabrication</th><th>Order Date</th>
+            <th>Shipment Date</th><th>Lead Time</th><th>Total Qty</th>
+            <th>Color Breakdown</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="orderBody">
+          <tr><td colspan="13" style="padding:20px;color:var(--muted);">Loading orders...</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
 
 </div>
 
-<!-- CONFIRM BACK + DATE -->
-<script>
-var hasUnsavedData = false;
-document.addEventListener("change", function(){ hasUnsavedData = true; });
-document.addEventListener("input",  function(){ hasUnsavedData = true; });
-function markSaved(){ hasUnsavedData = false; }
+<!-- ══ FIREBASE ══ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-window.addEventListener("beforeunload", function(e){
-  if(hasUnsavedData){
-    e.preventDefault();
-    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
-    return e.returnValue;
+const cfg={apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",authDomain:"smart-tna-bd.firebaseapp.com",projectId:"smart-tna-bd",storageBucket:"smart-tna-bd.firebasestorage.app",messagingSenderId:"372049573207",appId:"1:372049573207:web:571beae951f9aa4b47fa12"};
+const fbApp=initializeApp(cfg);
+const db=getFirestore(fbApp);
+const auth=getAuth(fbApp);
+let editId=null;
+
+/* Toast */
+function toast(msg,color="#00ff99"){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.style.color=color;t.style.borderColor=color;
+  t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+/* Add Color Row */
+window.addColorRow=function(){
+  const div=document.createElement("div");
+  div.className="color-row";
+  div.innerHTML=`
+    <input class="form-input color" type="text" placeholder="Color Name (e.g. BK-1 BLACK)">
+    <input class="form-input qty" type="number" placeholder="Quantity (PCS)" oninput="calcQty()">
+    <button class="remove-btn" onclick="this.parentElement.remove();calcQty();">❌ Remove</button>`;
+  document.getElementById("colorContainer").appendChild(div);
+  window._hasChanges=true;
+  updateUnsavedDot();
+};
+
+window.calcQty=function(){
+  let total=0;
+  document.querySelectorAll(".qty").forEach(i=>total+=Number(i.value)||0);
+  document.getElementById("orderQty").value=total;
+};
+
+/* Lead time auto */
+function calcLead(){
+  const od=document.getElementById("orderDate").value;
+  const sd=document.getElementById("shipdate").value;
+  if(od&&sd){
+    const days=Math.ceil((new Date(sd)-new Date(od))/(1000*60*60*24));
+    document.getElementById("leadtime").value=days>0?days:0;
   }
-});
+}
+document.getElementById("orderDate").addEventListener("change",calcLead);
+document.getElementById("shipdate").addEventListener("change",calcLead);
 
+/* Save */
+window.saveOrder=async function(){
+  const buyer=document.getElementById("buyer").value.trim();
+  const ikl=document.getElementById("ikl").value.trim();
+  const style=document.getElementById("style").value.trim();
+  const merchandiser=document.getElementById("merchandiser").value.trim();
+  if(!buyer||!ikl||!style||!merchandiser){
+    toast("⚠️ Buyer, IKL, Style & Merchandiser required!","#f87171"); return;
+  }
+  const colors=[];
+  document.querySelectorAll(".color-row").forEach(row=>{
+    const c=row.querySelector(".color").value.trim();
+    const q=Number(row.querySelector(".qty").value);
+    if(c&&q) colors.push({color:c,qty:q});
+  });
+  const data={
+    buyer,ikl,style,
+    item:document.getElementById("item").value.trim(),
+    merchandiser,
+    fabrication:document.getElementById("fabrication").value.trim(),
+    orderDate:document.getElementById("orderDate").value,
+    shipdate:document.getElementById("shipdate").value,
+    leadtime:document.getElementById("leadtime").value,
+    totalQty:Number(document.getElementById("orderQty").value)||0,
+    orderQty:Number(document.getElementById("orderQty").value)||0,
+    colors,
+    updatedAt:new Date().toISOString()
+  };
+  const btn=document.getElementById("saveBtn");
+  btn.textContent="⏳ Saving...";btn.disabled=true;
+  try{
+    if(editId){
+      await updateDoc(doc(db,"orders",editId),data);
+      toast("✅ Order Updated Successfully!","#00ff99");
+      cancelEdit();
+    }else{
+      await addDoc(collection(db,"orders"),data);
+      toast("✅ Order Saved to Firebase!","#00ff99");
+      clearForm();
+    }
+    window._hasChanges=false;
+    updateUnsavedDot();
+    loadOrders();
+  }catch(err){
+    toast("❌ Save Failed: "+err.message,"#f87171");
+  }
+  btn.textContent="💾 Save Order to Firebase";btn.disabled=false;
+};
+
+function clearForm(){
+  ["buyer","ikl","style","item","merchandiser","fabrication","orderDate","shipdate","leadtime","orderQty"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
+  document.getElementById("colorContainer").innerHTML="";
+  addColorRow();
+  window._hasChanges=false;
+  updateUnsavedDot();
+}
+
+window.cancelEdit=function(){
+  editId=null;
+  document.getElementById("formTitle").textContent="New Order Entry";
+  document.getElementById("saveBtn").textContent="💾 Save Order to Firebase";
+  document.getElementById("editBanner").classList.remove("show");
+  clearForm();
+};
+
+/* Load orders */
+async function loadOrders(){
+  const snap=await getDocs(collection(db,"orders"));
+  const body=document.getElementById("orderBody");
+  body.innerHTML="";
+  let sl=0;
+  if(snap.empty){
+    body.innerHTML=`<tr><td colspan="13" style="padding:20px;color:var(--muted);">No orders yet. Add your first order above.</td></tr>`;
+    document.getElementById("orderCount").textContent="";
+    return;
+  }
+  snap.forEach(d=>{
+    const o=d.data();sl++;
+    const colors=(o.colors||[]).map(c=>`<span style="font-size:11px;">${c.color} — ${c.qty} PCS</span>`).join("<br>");
+    const qty=o.totalQty||o.orderQty||0;
+    body.innerHTML+=`<tr
+      data-search="${o.buyer||""} ${o.ikl||""} ${o.style||""} ${o.item||""} ${o.merchandiser||""}">
+      <td style="color:var(--green);font-weight:700;">${sl}</td>
+      <td><b>${o.buyer||""}</b></td>
+      <td>${o.ikl||""}</td>
+      <td>${o.style||""}</td>
+      <td>${o.item||""}</td>
+      <td><b>${o.merchandiser||""}</b></td>
+      <td style="font-size:11px;max-width:160px;white-space:normal;">${o.fabrication||""}</td>
+      <td>${o.orderDate||""}</td>
+      <td>${o.shipdate||""}</td>
+      <td>${o.leadtime||""} Days</td>
+      <td style="color:var(--green);font-weight:700;">${qty>0?Number(qty).toLocaleString()+" PCS":"—"}</td>
+      <td style="text-align:left;min-width:180px;">${colors||"—"}</td>
+      <td>
+        <button class="act-btn edit-btn" onclick="editOrder('${d.id}')">✏️ Edit</button>
+        <button class="act-btn del-btn" onclick="deleteOrder('${d.id}','${o.buyer||""} ${o.ikl||""}')">🗑️ Delete</button>
+      </td>
+    </tr>`;
+  });
+  document.getElementById("orderCount").textContent="("+sl+" orders)";
+}
+
+window.filterOrders=function(){
+  const q=document.getElementById("searchInput").value.toLowerCase();
+  document.querySelectorAll("#orderBody tr").forEach(row=>{
+    row.style.display=(row.dataset.search||"").toLowerCase().includes(q)?"":"none";
+  });
+};
+
+window.deleteOrder=async function(id,name){
+  if(!confirm("Delete order: "+name+"?\n\nThis cannot be undone!"))return;
+  await deleteDoc(doc(db,"orders",id));
+  toast("🗑️ Order Deleted","#f87171");
+  loadOrders();
+};
+
+window.editOrder=async function(id){
+  const snap=await getDocs(collection(db,"orders"));
+  snap.forEach(d=>{
+    if(d.id!==id)return;
+    editId=id;
+    const o=d.data();
+    document.getElementById("buyer").value=o.buyer||"";
+    document.getElementById("ikl").value=o.ikl||"";
+    document.getElementById("style").value=o.style||"";
+    document.getElementById("item").value=o.item||"";
+    document.getElementById("merchandiser").value=o.merchandiser||"";
+    document.getElementById("fabrication").value=o.fabrication||"";
+    document.getElementById("orderDate").value=o.orderDate||"";
+    document.getElementById("shipdate").value=o.shipdate||"";
+    document.getElementById("leadtime").value=o.leadtime||"";
+    document.getElementById("orderQty").value=o.totalQty||o.orderQty||"";
+    document.getElementById("colorContainer").innerHTML="";
+    (o.colors||[]).forEach(c=>{
+      const div=document.createElement("div");
+      div.className="color-row";
+      div.innerHTML=`
+        <input class="form-input color" type="text" value="${c.color}">
+        <input class="form-input qty" type="number" value="${c.qty}" oninput="calcQty()">
+        <button class="remove-btn" onclick="this.parentElement.remove();calcQty();">❌ Remove</button>`;
+      document.getElementById("colorContainer").appendChild(div);
+    });
+    document.getElementById("formTitle").textContent="Edit Order — "+o.buyer;
+    document.getElementById("saveBtn").textContent="✏️ Update Order";
+    document.getElementById("editBanner").classList.add("show");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+};
+
+/* Auth check */
+setPersistence(auth,browserLocalPersistence).then(()=>{
+  onAuthStateChanged(auth,(user)=>{
+    if(!user){window.location.href="login.html";return;}
+    document.getElementById("userBadge").textContent="👤 "+(user.email?user.email.split("@")[0]:"User");
+    loadOrders();
+    addColorRow();
+  });
+}).catch(()=>{
+  onAuthStateChanged(auth,(user)=>{
+    if(!user){window.location.href="login.html";return;}
+    loadOrders();
+    addColorRow();
+  });
+});
+</script>
+
+<!-- ══ UTILS ══ -->
+<script>
+/* Unsaved changes tracking */
+window._hasChanges=false;
+function updateUnsavedDot(){
+  const dot=document.getElementById("unsavedDot");
+  if(dot) dot.classList.toggle("show",window._hasChanges);
+}
+document.addEventListener("input",function(){window._hasChanges=true;updateUnsavedDot();});
+
+/* Back button — warn if unsaved */
 function confirmBack(e){
-  if(hasUnsavedData){
+  if(window._hasChanges){
     e.preventDefault();
-    var go = confirm(
-      "⚠️ Unsaved data আছে!\n\n" +
-      "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
-      "তবুও কি Dashboard এ যাবেন?"
-    );
-    if(go){ hasUnsavedData = false; window.location.href = "dashboard.html"; }
+    const go=confirm("⚠️ Unsaved data আছে!\n\nDashboard-এ গেলে data হারিয়ে যাবে।\n\nতবুও কি যাবেন?");
+    if(go){window._hasChanges=false;window.location.href="dashboard.html";}
     return false;
   }
   return true;
 }
 
-document.getElementById("dateEl").textContent =
-  new Date().toLocaleDateString("en-BD",{
-    weekday:"short", year:"numeric", month:"short", day:"numeric"
-  });
-</script>
-
-<!-- FIREBASE (original, unchanged) -->
-<script type="module">
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain: "smart-tna-bd.firebaseapp.com",
-  projectId: "smart-tna-bd",
-  storageBucket: "smart-tna-bd.firebasestorage.app",
-  messagingSenderId: "372049573207",
-  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
-};
-
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
-let editId = null;
-
-window.addColorRow = function(){
-  let div = document.createElement("div");
-  div.className = "color-row";
-  div.innerHTML = `
-    <input type="text"   class="color" placeholder="Color Name">
-    <input type="number" class="qty"   placeholder="Quantity" oninput="calculateOrderQty()">
-    <button onclick="this.parentElement.remove();calculateOrderQty();">❌ Remove</button>`;
-  document.getElementById("colorContainer").appendChild(div);
-};
-
-addColorRow();
-
-window.calculateOrderQty = function(){
-  let totalQty = 0;
-  document.querySelectorAll(".qty").forEach(input=>{ totalQty += Number(input.value)||0; });
-  document.getElementById("orderQty").value = totalQty;
-};
-
-document.getElementById("orderDate").addEventListener("change", calculateLeadTime);
-document.getElementById("shipdate").addEventListener("change", calculateLeadTime);
-
-function calculateLeadTime(){
-  let orderDate = document.getElementById("orderDate").value;
-  let shipdate  = document.getElementById("shipdate").value;
-  if(orderDate && shipdate){
-    let diffDays = Math.ceil((new Date(shipdate)-new Date(orderDate))/(1000*60*60*24));
-    document.getElementById("leadtime").value = diffDays;
-  }
-}
-
-window.saveOrder = async function(){
-  const buyer        = document.getElementById("buyer").value;
-  const ikl          = document.getElementById("ikl").value;
-  const style        = document.getElementById("style").value;
-  const item         = document.getElementById("item").value;
-  const merchandiser = document.getElementById("merchandiser").value;
-  const fabrication  = document.getElementById("fabrication").value;
-  const orderDate    = document.getElementById("orderDate").value;
-  const shipdate     = document.getElementById("shipdate").value;
-  const leadtime     = document.getElementById("leadtime").value;
-  const orderQty     = document.getElementById("orderQty").value;
-
-  let colors = [];
-  document.querySelectorAll(".color-row").forEach(row=>{
-    const color = row.querySelector(".color").value;
-    const qty   = Number(row.querySelector(".qty").value);
-    if(color && qty) colors.push({ color, qty });
-  });
-
-  const orderData = {
-    buyer, ikl, style, item, merchandiser, fabrication,
-    orderDate, shipdate, leadtime, orderQty, colors,
-    Merchandising:"Pending", Knitting:"Pending", Dyeing:"Pending",
-    Cutting:"Pending", Sewing:"Pending", Finishing:"Pending"
-  };
-
-  if(editId){
-    await updateDoc(doc(db,"orders",editId), orderData);
-    alert("✅ Order Updated Successfully");
-    editId = null;
-  } else {
-    await addDoc(collection(db,"orders"), orderData);
-    alert("✅ Order Saved Successfully");
-  }
-  markSaved();
-  clearForm();
-  loadOrders();
-};
-
-function clearForm(){
-  ["buyer","ikl","style","item","merchandiser","fabrication",
-   "orderDate","shipdate","leadtime","orderQty"].forEach(id=>{
-    document.getElementById(id).value = "";
-  });
-  document.getElementById("colorContainer").innerHTML = "";
-  addColorRow();
-}
-
-async function loadOrders(){
-  const querySnapshot = await getDocs(collection(db,"orders"));
-  let table = document.getElementById("orderTable");
-  table.innerHTML = `<tr>
-    <th>Buyer</th><th>IKL No</th><th>Style</th><th>Item</th>
-    <th>Merchandiser</th><th>Fabrication</th><th>Order Date</th>
-    <th>Shipment Date</th><th>Lead Time</th><th>Order Qty</th>
-    <th>Color Breakdown</th><th>Action</th>
-  </tr>`;
-  querySnapshot.forEach(docItem=>{
-    const data = docItem.data();
-    let colorHtml = "";
-    (data.colors||[]).forEach(c=>{ colorHtml += `${c.color} - ${c.qty} PCS<br>`; });
-    table.innerHTML += `<tr
-      data-search="${data.buyer||""} ${data.ikl||""} ${data.style||""} ${data.item||""} ${data.merchandiser||""} ${data.fabrication||""}">
-      <td>${data.buyer||""}</td>
-      <td>${data.ikl||""}</td>
-      <td>${data.style||""}</td>
-      <td>${data.item||""}</td>
-      <td>${data.merchandiser||""}</td>
-      <td>${data.fabrication||""}</td>
-      <td>${data.orderDate||""}</td>
-      <td>${data.shipdate||""}</td>
-      <td>${data.leadtime||""} Days</td>
-      <td>${data.orderQty||0} PCS</td>
-      <td style="text-align:left;">${colorHtml}</td>
-      <td>
-        <button class="action-btn edit-btn"   onclick="editOrder('${docItem.id}')">✏️ Edit</button>
-        <button class="action-btn delete-btn" onclick="deleteOrder('${docItem.id}')">🗑️ Delete</button>
-      </td>
-    </tr>`;
-  });
-}
-
-window.filterOrders = function(){
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  document.querySelectorAll("#orderTable tr").forEach((row,index)=>{
-    if(index===0) return;
-    row.style.display = (row.dataset.search||"").toLowerCase().includes(input) ? "" : "none";
-  });
-};
-
-window.deleteOrder = async function(id){
-  if(confirm("Delete this order?")){ await deleteDoc(doc(db,"orders",id)); alert("🗑️ Order Deleted"); loadOrders(); }
-};
-
-window.editOrder = async function(id){
-  const querySnapshot = await getDocs(collection(db,"orders"));
-  querySnapshot.forEach(docItem=>{
-    if(docItem.id !== id) return;
-    editId = id;
-    const data = docItem.data();
-    document.getElementById("buyer").value        = data.buyer||"";
-    document.getElementById("ikl").value          = data.ikl||"";
-    document.getElementById("style").value        = data.style||"";
-    document.getElementById("item").value         = data.item||"";
-    document.getElementById("merchandiser").value = data.merchandiser||"";
-    document.getElementById("fabrication").value  = data.fabrication||"";
-    document.getElementById("orderDate").value    = data.orderDate||"";
-    document.getElementById("shipdate").value     = data.shipdate||"";
-    document.getElementById("leadtime").value     = data.leadtime||"";
-    document.getElementById("orderQty").value     = data.orderQty||"";
-    document.getElementById("colorContainer").innerHTML = "";
-    (data.colors||[]).forEach(c=>{
-      let div = document.createElement("div");
-      div.className = "color-row";
-      div.innerHTML = `
-        <input type="text"   class="color" value="${c.color}">
-        <input type="number" class="qty"   value="${c.qty}" oninput="calculateOrderQty()">
-        <button onclick="this.parentElement.remove();calculateOrderQty();">❌ Remove</button>`;
-      document.getElementById("colorContainer").appendChild(div);
-    });
-    window.scrollTo({ top:0, behavior:"smooth" });
-  });
-};
-
-loadOrders();
+/* Date */
+document.getElementById("dateEl").textContent=
+  new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
 </script>
 </body>
 </html>
