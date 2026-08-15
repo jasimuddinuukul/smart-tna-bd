@@ -131,7 +131,7 @@ tr:hover td{background:#ffffff04;}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const cfg = {
   apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
@@ -222,12 +222,26 @@ async function load() {
     </tr>`;
   }
 }
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-  load();
+/* Set persistence so auth survives page navigation */
+setPersistence(auth, browserLocalPersistence).then(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      /* Not logged in — redirect to login */
+      window.location.href = "login.html";
+      return;
+    }
+    /* Logged in — show user email in topbar */
+    const badge = document.querySelector(".tb-user");
+    if(badge) badge.textContent = "👤 " + (user.email ? user.email.split("@")[0] : "User");
+    /* Load data */
+    load();
+  });
+}).catch(err => {
+  console.error("Auth persistence error:", err);
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.href = "login.html"; return; }
+    load();
+  });
 });
 </script>
 </body>
