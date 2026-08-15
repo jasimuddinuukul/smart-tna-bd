@@ -366,7 +366,7 @@ tr:hover td { background:#ffffff04; }
 <script type="module">
 import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const cfg = {
   apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
@@ -673,21 +673,26 @@ function updateKPI(tot,qty,run,done,late,avgLead,mQty){
   $("m3pct").textContent = (mQty[3]||0).toLocaleString()+" PCS";
 }
 
-/* ══ AUTH CHECK — must be logged in to see data ══ */
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    console.warn("[AUTH] No user logged in — redirecting to login.html");
-    window.location.href = "login.html";
-    return;
-  }
-  console.log("[AUTH] Logged in as:", user.email);
+/* ══ AUTH CHECK — persistent login across all pages ══ */
+import { browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  /* Show user email in topbar if element exists */
-  const userBadge = document.querySelector(".tb-user");
-  if (userBadge) userBadge.textContent = "👤 " + (user.email || "Admin");
-
-  /* NOW load data — only after confirming login */
-  load();
+setPersistence(auth, browserLocalPersistence).then(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      console.warn("[AUTH] Not logged in — redirect to login");
+      window.location.href = "login.html";
+      return;
+    }
+    console.log("[AUTH] Logged in:", user.email);
+    const badge = document.querySelector(".tb-user");
+    if(badge) badge.textContent = "👤 " + (user.email ? user.email.split("@")[0] : "Admin");
+    load();
+  });
+}).catch(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.href = "login.html"; return; }
+    load();
+  });
 });
 
 /* Search */
