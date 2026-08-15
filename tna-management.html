@@ -1,3 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART TNA BD ERP - TNA DASHBOARD</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ff99">
+<script src="pwa-install.js" defer></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body { background:#0f172a; color:white; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background:#111827;
+  padding:12px 20px;
+  border-bottom:2px solid #1e293b;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:900;
+}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
+
+.back-btn {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:8px;
+  color:#cbd5e1;
+  padding:8px 16px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  font-family:Arial,sans-serif;
+  transition:all .2s;
+}
+.back-btn:hover {
+  background:#00ff9920;
+  color:#00ff99;
+  border-color:#00ff99;
+}
+
+.page-title {
+  font-size:16px;
+  font-weight:bold;
+  color:#fff;
+}
+
+#installBtn {
+  display:none;
+  align-items:center;
+  gap:6px;
+  background:#00ff9920;
+  border:1px solid #00ff99;
+  border-radius:8px;
+  color:#00ff99;
+  padding:7px 13px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+}
+#installBtn:hover { background:#00ff9940; }
+
+.tb-date {
+  font-size:11px;
+  color:#64748b;
+  font-family:monospace;
+}
+
+/* ── HEADER ── */
+header {
+  background:#111827;
+  padding:20px;
+  text-align:center;
+  border-bottom:2px solid #1e293b;
+}
+.company { font-size:28px; font-weight:bold; color:#00ff99; }
+.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+
+/* ── KPI ── */
+.kpi-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  padding:20px;
+}
+.kpi-card {
+  background:#1e293b;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+.kpi-card h2 { color:#00ff99; font-size:30px; margin-bottom:10px; }
+.kpi-card p  { color:#cbd5e1; }
+
+/* ── SEARCH ── */
+.search-section { padding:20px; }
+.search-box {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#1e293b;
+  color:white;
+  font-size:16px;
+}
+
+/* ── TABLE ── */
+.table-wrapper { padding:20px; overflow-x:auto; }
+table { width:100%; border-collapse:collapse; background:#1e293b; }
+th {
+  background:#111827;
+  color:#00ff99;
+  padding:10px 8px;
+  border:1px solid #334155;
+  white-space:nowrap;
+  font-size:11px;
+  position:sticky;
+  top:54px;
+  z-index:5;
+}
+td {
+  padding:7px 6px;
+  border:1px solid #334155;
+  text-align:center;
+  vertical-align:middle;
+  white-space:nowrap;
+  font-size:11px;
+}
+
+.st-na       { color:#64748b; }
+.st-pending  { color:#f97316; font-weight:bold; }
+.st-running  { color:#3b82f6; font-weight:bold; }
+.st-delay    { color:#ef4444; font-weight:bold; }
+.st-complete { color:#00ff99; font-weight:bold; }
+
+.date-normal { color:#cbd5e1; }
+.date-ok     { color:#00ff99; }
+.date-late   { color:#ef4444; }
+
+.prog-wrap {
+  width:60px;
+  height:6px;
+  background:#1e3048;
+  border-radius:4px;
+  overflow:hidden;
+  margin:4px auto 0;
+}
+.prog-bar {
+  height:100%;
+  background:#00ff99;
+  border-radius:4px;
+}
+
+.edit-btn {
+  background:#00aa66;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:11px;
+}
+.edit-btn:hover { background:#008844; }
+
+/* ── MODAL ── */
+.modal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,.75);
+  z-index:999;
+  justify-content:center;
+  align-items:flex-start;
+  overflow-y:auto;
+}
+.modal-content {
+  background:#1e293b;
+  width:95%;
+  max-width:860px;
+  margin:30px auto;
+  padding:25px;
+  border-radius:15px;
+}
+.modal-content h2 {
+  color:#00ff99;
+  margin-bottom:20px;
+  font-size:20px;
+  border-bottom:1px solid #334155;
+  padding-bottom:12px;
+}
+
+.modal-info-box {
+  background:#111827;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px;
+  border-left:4px solid #00ff99;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+.modal-info-box p    { color:#cbd5e1; font-size:14px; }
+.modal-info-box span { color:white; font-weight:bold; }
+
+.section-title {
+  background:#0f172a;
+  color:#00ff99;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin:18px 0 10px 0;
+  border-left:3px solid #00ff99;
+}
+
+.form-grid-3 {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+}
+
+.form-row label {
+  display:block;
+  margin-bottom:6px;
+  color:#94a3b8;
+  font-size:11px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.auto-note { color:#64748b; font-size:10px; text-transform:none; }
+
+input[type="date"], select, textarea {
+  width:100%;
+  padding:9px;
+  border:1px solid #334155;
+  border-radius:8px;
+  background:#0f172a;
+  color:white;
+  font-size:13px;
+}
+input[type="date"]:focus, select:focus { outline:none; border-color:#00ff99; }
+
+.status-group { display:flex; gap:6px; flex-wrap:wrap; }
+.status-btn {
+  flex:1;
+  min-width:70px;
+  padding:9px 4px;
+  border:2px solid #334155;
+  border-radius:8px;
+  background:#0f172a;
+  color:#64748b;
+  font-weight:bold;
+  font-size:11px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:center;
+}
+.status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
+.status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
+.status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
+.status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
+
+.btn-group { display:flex; gap:10px; margin-top:25px; }
+.save-btn {
+  background:#00aa66;
+  padding:13px 25px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+  flex:1;
+}
+.save-btn:hover  { background:#008844; }
+.close-btn {
+  background:#dc2626;
+  padding:13px 25px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+  flex:1;
+}
+.close-btn:hover { background:#b91c1c; }
+</style>
+</head>
+<body>
+
+<!-- ✅ TOPBAR WITH DASHBOARD BACK BUTTON -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">
+      🏠 Dashboard
+    </a>
+    <span class="page-title">📋 TNA Progress Tracker</span>
+  </div>
+  <div class="topbar-right">
+    <button id="installBtn" onclick="installPWA()">📲 Install App</button>
+    <span class="tb-date" id="dateEl"></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
+  <div class="company">INNOVATIVE KNITEX LTD</div>
+  <div class="system">SMART TNA BD ERP - TNA PROGRESS TRACKER</div>
+</header>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
+  <div class="kpi-card"><h2 id="kTotalQty">0</h2><p>Total Qty</p></div>
+  <div class="kpi-card"><h2 id="kRunning">0</h2><p>Running</p></div>
+  <div class="kpi-card"><h2 id="kCompleted">0</h2><p>Completed</p></div>
+  <div class="kpi-card"><h2 id="kDelay">0</h2><p>Delayed</p></div>
+  <div class="kpi-card"><h2 id="kAvgProg">0%</h2><p>Avg Progress</p></div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <input type="text" id="searchInput" class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser"
+    oninput="filterOrders()">
+</div>
+
+<!-- TABLE -->
+<div class="table-wrapper">
+  <table id="tnaTable">
+    <thead>
+      <tr id="tnaHead">
+        <th>SL</th>
+        <th>Buyer</th>
+        <th>IKL</th>
+        <th>Style</th>
+        <th>Qty</th>
+        <th>Order Date</th>
+        <th>Ship Date</th>
+        <th>Lead Time</th>
+        <th>Merchandiser</th>
+        <th>Progress</th>
+        <!-- Stage headers injected by JS -->
+      </tr>
+    </thead>
+    <tbody id="tnaBody"></tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h2>📋 TNA Update</h2>
+    <div id="modalFormArea"></div>
+    <div class="btn-group">
+      <button class="save-btn" id="saveBtn">💾 Save</button>
+      <button class="close-btn" id="closeBtn">✖ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM BACK + DATE -->
+<script>
+var hasUnsavedData = false;
+document.addEventListener("change", function(){ hasUnsavedData = true; });
+document.addEventListener("input",  function(){ hasUnsavedData = true; });
+function markSaved(){ hasUnsavedData = false; }
+
+window.addEventListener("beforeunload", function(e){
+  if(hasUnsavedData){
+    e.preventDefault();
+    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
+    return e.returnValue;
+  }
+});
+
+function confirmBack(e){
+  if(hasUnsavedData){
+    e.preventDefault();
+    var go = confirm(
+      "⚠️ Unsaved data আছে!\n\n" +
+      "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
+      "তবুও কি Dashboard এ যাবেন?"
+    );
+    if(go){ hasUnsavedData = false; window.location.href = "dashboard.html"; }
+    return false;
+  }
+  return true;
+}
+
+document.getElementById("dateEl").textContent =
+  new Date().toLocaleDateString("en-BD",{
+    weekday:"short", year:"numeric", month:"short", day:"numeric"
+  });
+</script>
+
+<!-- FIREBASE SCRIPT (original, unchanged) -->
 <script type="module">
 import { initializeApp }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -9,11 +425,6 @@ import {
   doc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-/* =========================================================
-   FIREBASE CONFIG
-========================================================= */
 
 const firebaseConfig = {
   apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
@@ -27,1191 +438,286 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-/* =========================================================
-   GLOBAL VARIABLES
-========================================================= */
-
 let allOrders = [];
 let selectedDocId = null;
 
-
-/* =========================================================
-   TNA STAGES
-========================================================= */
-
 const STAGES = [
-  { label:"Fabric Booking",       field:"fabricBooking",      offset:60 },
-  { label:"Yarn Inhouse",         field:"yarnInhouse",        offset:55 },
-  { label:"Color Swatch",         field:"colorSwatch",        offset:55 },
-  { label:"Lab Dip Submit",       field:"labDipSubmit",       offset:50 },
-  { label:"Lab Dip Approval",     field:"labDipApproval",     offset:45 },
-  { label:"G2 Receive",           field:"g2Receive",          offset:45 },
-  { label:"Strike Off Send",      field:"strikeOffSend",      offset:42 },
-  { label:"Strike Off Approval",  field:"strikeOffApproval",  offset:38 },
-
-  { label:"Knitting Start",       field:"knittingStart",      offset:55 },
-  { label:"Knitting Complete",    field:"knittingComplete",   offset:40 },
-
-  { label:"Dyeing Start",        field:"dyeingStart",        offset:38 },
-  { label:"Dyeing Complete",     field:"dyeingComplete",     offset:30 },
-
-  { label:"Sample Fabric",       field:"sampleFabric",       offset:28 },
-  { label:"PP Sample Submit",    field:"ppSampleSubmit",     offset:25 },
-
-  { label:"Sewing Trims",        field:"sewingTrims",        offset:25 },
-  { label:"Fabric Test Start",   field:"fabricTestStart",    offset:25 },
-  { label:"Fabric Test Complete",field:"fabricTestComplete", offset:20 },
-
-  { label:"PP Approval",         field:"ppApproval",         offset:18 },
-  { label:"Size Set",            field:"sizeSet",            offset:18 },
-  { label:"PP Meeting",          field:"ppMeeting",          offset:15 },
-
-  { label:"Cutting Start",       field:"cuttingStart",       offset:14 },
-
-  { label:"Print Start",         field:"printStart",         offset:12 },
-  { label:"Print Complete",      field:"printComplete",      offset:10 },
-
-  { label:"Sewing Input",        field:"sewingInput",        offset:12 },
-  { label:"Sewing Start",        field:"sewingStart",        offset:10 },
-
-  { label:"Inline Inspection",   field:"inlineInspection",   offset:7 },
-
-  { label:"Packing Trims",       field:"packingTrims",       offset:7 },
-
-  { label:"Sewing Complete",     field:"sewingComplete",     offset:5 },
-
-  { label:"Finishing Start",     field:"finishingStart",     offset:5 },
-
-  { label:"Packing Start",       field:"packingStart",       offset:4 },
-
-  { label:"Packing Complete",    field:"packingComplete",    offset:3 },
-
-  { label:"Final Inspection",    field:"finalInspection",    offset:2 },
-
-  { label:"Shipment Approval",   field:"shipmentApproval",   offset:1 }
+  { label:"Fabric Booking",        field:"fabricBooking",       offset:60 },
+  { label:"Yarn Inhouse",          field:"yarnInhouse",         offset:55 },
+  { label:"Color Swatch",          field:"colorSwatch",         offset:55 },
+  { label:"Lab Dip Submit",        field:"labDipSubmit",        offset:50 },
+  { label:"Lab Dip Approval",      field:"labDipApproval",      offset:45 },
+  { label:"G2 Receive",            field:"g2Receive",           offset:45 },
+  { label:"Strike Off Send",       field:"strikeOffSend",       offset:42 },
+  { label:"Strike Off Approval",   field:"strikeOffApproval",   offset:38 },
+  { label:"Knitting Start",        field:"knittingStart",       offset:55 },
+  { label:"Knitting Complete",     field:"knittingComplete",    offset:40 },
+  { label:"Dyeing Start",          field:"dyeingStart",         offset:38 },
+  { label:"Dyeing Complete",       field:"dyeingComplete",      offset:30 },
+  { label:"Sample Fabric",         field:"sampleFabric",        offset:28 },
+  { label:"PP Sample Submit",      field:"ppSampleSubmit",      offset:25 },
+  { label:"Sewing Trims",          field:"sewingTrims",         offset:25 },
+  { label:"Fabric Test Start",     field:"fabricTestStart",     offset:25 },
+  { label:"Fabric Test Complete",  field:"fabricTestComplete",  offset:20 },
+  { label:"PP Approval",           field:"ppApproval",          offset:18 },
+  { label:"Size Set",              field:"sizeSet",             offset:18 },
+  { label:"PP Meeting",            field:"ppMeeting",           offset:15 },
+  { label:"Cutting Start",         field:"cuttingStart",        offset:14 },
+  { label:"Print Start",           field:"printStart",          offset:12 },
+  { label:"Print Complete",        field:"printComplete",       offset:10 },
+  { label:"Sewing Input",          field:"sewingInput",         offset:12 },
+  { label:"Sewing Start",          field:"sewingStart",         offset:10 },
+  { label:"Inline Inspection",     field:"inlineInspection",    offset:7  },
+  { label:"Packing Trims",         field:"packingTrims",        offset:7  },
+  { label:"Sewing Complete",       field:"sewingComplete",      offset:5  },
+  { label:"Finishing Start",       field:"finishingStart",      offset:5  },
+  { label:"Packing Start",         field:"packingStart",        offset:4  },
+  { label:"Packing Complete",      field:"packingComplete",     offset:3  },
+  { label:"Final Inspection",      field:"finalInspection",     offset:2  },
+  { label:"Shipment Approval",     field:"shipmentApproval",    offset:1  }
 ];
-
 
 const ST_OPTS = [
-  {
-    val:"Pending",
-    label:"🟠 Pending",
-    cls:"active-pending"
-  },
-  {
-    val:"Running",
-    label:"🔵 Running",
-    cls:"active-running"
-  },
-  {
-    val:"Delay",
-    label:"🔴 Delay",
-    cls:"active-delay"
-  },
-  {
-    val:"Complete",
-    label:"🟢 Complete",
-    cls:"active-complete"
-  }
+  { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
+  { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
+  { val:"Delay",    label:"🔴 Delay",    cls:"active-delay"    },
+  { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
 ];
 
+// ── Inject stage column headers ──
+(function buildHeaders(){
+  const tr = document.getElementById("tnaHead");
+  STAGES.forEach(s => {
+    tr.innerHTML += `<th>${s.label}<br><small style="color:#64748b;font-weight:normal;">Target</small></th>`;
+    tr.innerHTML += `<th>${s.label}<br><small style="color:#64748b;font-weight:normal;">Actual</small></th>`;
+    tr.innerHTML += `<th>${s.label}<br><small style="color:#64748b;font-weight:normal;">Status</small></th>`;
+  });
+  tr.innerHTML += `<th>Overall Status</th><th>Action</th>`;
+})();
 
-/* =========================================================
-   QTY
-========================================================= */
-
-function getOrderQty(o) {
-
-  let qty = Number(
-    o.totalQty ||
-    o.qty ||
-    o.orderQty ||
-    0
-  );
-
-  if (
-    !qty &&
-    o.colors &&
-    Array.isArray(o.colors)
-  ) {
-
-    qty = o.colors.reduce(
-      (sum, c) =>
-        sum + Number(c.qty || 0),
-      0
-    );
-  }
-
+function getOrderQty(o){
+  let qty = Number(o.totalQty||o.qty||o.orderQty||0);
+  if(!qty && o.colors && Array.isArray(o.colors))
+    qty = o.colors.reduce((s,c)=>s+Number(c.qty||0),0);
   return qty;
 }
 
-
-/* =========================================================
-   DATE
-========================================================= */
-
-function addDays(dateStr, days) {
-
-  if (!dateStr) return "";
-
-  const d =
-    new Date(dateStr + "T00:00:00");
-
-  d.setDate(
-    d.getDate() + days
-  );
-
-  return d
-    .toISOString()
-    .split("T")[0];
+function addDays(dateStr, days){
+  if(!dateStr) return "";
+  const d = new Date(dateStr+"T00:00:00");
+  d.setDate(d.getDate()+days);
+  return d.toISOString().split("T")[0];
 }
 
-
-/* =========================================================
-   STATUS BADGE
-========================================================= */
-
-function statusBadge(val) {
-
-  if (
-    !val ||
-    val === "-" ||
-    val === ""
-  ) {
-
-    return `<span class="st-na">-</span>`;
-  }
-
-  if (val === "Running") {
-
-    return `<span class="st-running">
-      ● Running
-    </span>`;
-  }
-
-  if (val === "Delay") {
-
-    return `<span class="st-delay">
-      ● Delay
-    </span>`;
-  }
-
-  if (val === "Complete") {
-
-    return `<span class="st-complete">
-      ● Complete
-    </span>`;
-  }
-
-  return `<span class="st-pending">
-    ● Pending
-  </span>`;
+function statusBadge(val){
+  if(!val||val==="-"||val==="") return `<span class="st-na">-</span>`;
+  if(val==="Running")  return `<span class="st-running">● Running</span>`;
+  if(val==="Delay")    return `<span class="st-delay">● Delay</span>`;
+  if(val==="Complete") return `<span class="st-complete">● Complete</span>`;
+  return `<span class="st-pending">● Pending</span>`;
 }
 
-
-/* =========================================================
-   DATE CELL
-========================================================= */
-
-function dateCell(target, actual) {
-
-  const t = target || "-";
-  const a = actual || "-";
-
+function dateCell(target, actual){
+  const t = target||"-", a = actual||"-";
   let cls = "date-normal";
-
-  if (actual && target) {
-
-    cls =
-      actual <= target
-        ? "date-ok"
-        : "date-late";
-  }
-
-  return `
-    <td>${t}</td>
-    <td class="${cls}">
-      ${a}
-    </td>
-  `;
+  if(actual && target) cls = actual<=target ? "date-ok" : "date-late";
+  return `<td>${t}</td><td class="${cls}">${a}</td>`;
 }
 
-
-/* =========================================================
-   STATUS BUTTONS
-========================================================= */
-
-function stBtns(field, current) {
-
-  return ST_OPTS.map(o => {
-
-    const active =
-      current === o.val
-        ? o.cls
-        : "";
-
-    return `
-      <button
-        type="button"
-        class="status-btn ${active}"
-        onclick="
-          selStatus(
-            '${field}',
-            '${o.val}',
-            '${o.cls}',
-            this
-          )
-        "
-      >
-        ${o.label}
-      </button>
-    `;
-
+function stBtns(field, current){
+  return ST_OPTS.map(o=>{
+    const active = current===o.val ? o.cls : "";
+    return `<button type="button" class="status-btn ${active}"
+      onclick="selStatus('${field}','${o.val}','${o.cls}',this)">${o.label}</button>`;
   }).join("");
 }
 
-
-window.selStatus =
-function(field, val, cls, btn) {
-
-  const input =
-    document.getElementById(
-      "f_" + field
-    );
-
-  if (input) {
-    input.value = val;
-  }
-
-  btn.parentElement
-    .querySelectorAll(".status-btn")
-    .forEach(b => {
-
-      b.className =
-        "status-btn";
-    });
-
+window.selStatus = function(field, val, cls, btn){
+  const input = document.getElementById("f_"+field);
+  if(input) input.value = val;
+  btn.parentElement.querySelectorAll(".status-btn").forEach(b=>{ b.className="status-btn"; });
   btn.classList.add(cls);
 };
 
-
-/* =========================================================
-   FIREBASE REAL-TIME LOAD
-========================================================= */
-
-function startFirebaseListener() {
-
-  const ordersRef =
-    collection(db, "orders");
-
-  console.log(
-    "🔥 Connecting to Firebase..."
-  );
-
-  onSnapshot(
-    ordersRef,
-
-    snapshot => {
-
-      allOrders = [];
-
-      snapshot.forEach(item => {
-
-        allOrders.push({
-          id: item.id,
-          ...item.data()
-        });
-
-      });
-
-      console.log(
-        "🔥 Firebase Orders:",
-        allOrders.length
-      );
-
-      renderKPI();
-      renderTable(allOrders);
-
-    },
-
-    error => {
-
-      console.error(
-        "🔥 Firebase ERROR:",
-        error
-      );
-
-      const body =
-        document.getElementById(
-          "tnaBody"
-        );
-
-      body.innerHTML = `
-        <tr>
-          <td
-            colspan="110"
-            style="
-              padding:40px;
-              color:#ef4444;
-              font-weight:bold;
-              text-align:center;
-            "
-          >
-            ❌ Firebase Error<br><br>
-            ${error.message}
-          </td>
-        </tr>
-      `;
-    }
-  );
+function startFirebaseListener(){
+  const ordersRef = collection(db,"orders");
+  onSnapshot(ordersRef, snapshot=>{
+    allOrders=[];
+    snapshot.forEach(item=>allOrders.push({id:item.id,...item.data()}));
+    renderKPI();
+    renderTable(allOrders);
+  }, error=>{
+    document.getElementById("tnaBody").innerHTML=`
+      <tr><td colspan="110" style="padding:40px;color:#ef4444;font-weight:bold;text-align:center;">
+        ❌ Firebase Error<br><br>${error.message}
+      </td></tr>`;
+  });
 }
 
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-window.filterOrders =
-function() {
-
-  const kw =
-    document
-      .getElementById("searchInput")
-      .value
-      .toLowerCase()
-      .trim();
-
-  if (!kw) {
-
-    renderTable(allOrders);
-    return;
-  }
-
-  const filtered =
-    allOrders.filter(o => {
-
-      return (
-
-        String(o.buyer || "")
-          .toLowerCase()
-          .includes(kw)
-
-        ||
-
-        String(o.ikl || "")
-          .toLowerCase()
-          .includes(kw)
-
-        ||
-
-        String(o.style || "")
-          .toLowerCase()
-          .includes(kw)
-
-        ||
-
-        String(
-          o.merchandiser ||
-          o.Merchandiser ||
-          ""
-        )
-          .toLowerCase()
-          .includes(kw)
-      );
-
-    });
-
-  renderTable(filtered);
+window.filterOrders = function(){
+  const kw = document.getElementById("searchInput").value.toLowerCase().trim();
+  if(!kw){ renderTable(allOrders); return; }
+  renderTable(allOrders.filter(o=>
+    String(o.buyer||"").toLowerCase().includes(kw)||
+    String(o.ikl||"").toLowerCase().includes(kw)||
+    String(o.style||"").toLowerCase().includes(kw)||
+    String(o.merchandiser||o.Merchandiser||"").toLowerCase().includes(kw)
+  ));
 };
 
-
-/* =========================================================
-   KPI
-========================================================= */
-
-function renderKPI() {
-
-  let running = 0;
-  let completed = 0;
-  let delay = 0;
-  let progSum = 0;
-  let totalQty = 0;
-
-  allOrders.forEach(o => {
-
-    const done =
-      STAGES.filter(
-        s =>
-          o[s.field + "Status"]
-          === "Complete"
-      ).length;
-
-    const prog =
-      Math.round(
-        done /
-        STAGES.length *
-        100
-      );
-
-    progSum += prog;
-
-    totalQty +=
-      getOrderQty(o);
-
-    if (prog === 100) {
-
-      completed++;
-
-    } else if (prog > 0) {
-
-      running++;
-    }
-
-    const hasDelay =
-      STAGES.some(
-        s =>
-          o[s.field + "Status"]
-          === "Delay"
-      );
-
-    if (hasDelay) {
-
-      delay++;
-    }
-
+function renderKPI(){
+  let running=0,completed=0,delay=0,progSum=0,totalQty=0;
+  allOrders.forEach(o=>{
+    const done=STAGES.filter(s=>o[s.field+"Status"]==="Complete").length;
+    const prog=Math.round(done/STAGES.length*100);
+    progSum+=prog;
+    totalQty+=getOrderQty(o);
+    if(prog===100) completed++; else if(prog>0) running++;
+    if(STAGES.some(s=>o[s.field+"Status"]==="Delay")) delay++;
   });
-
-
-  document.getElementById(
-    "kTotal"
-  ).innerText =
-    allOrders.length;
-
-
-  document.getElementById(
-    "kRunning"
-  ).innerText =
-    running;
-
-
-  document.getElementById(
-    "kCompleted"
-  ).innerText =
-    completed;
-
-
-  document.getElementById(
-    "kDelay"
-  ).innerText =
-    delay;
-
-
-  document.getElementById(
-    "kAvgProg"
-  ).innerText =
-    allOrders.length
-      ? Math.round(
-          progSum /
-          allOrders.length
-        ) + "%"
-      : "0%";
-
-
-  document.getElementById(
-    "kTotalQty"
-  ).innerText =
-    totalQty.toLocaleString();
+  document.getElementById("kTotal").innerText    = allOrders.length;
+  document.getElementById("kRunning").innerText  = running;
+  document.getElementById("kCompleted").innerText= completed;
+  document.getElementById("kDelay").innerText    = delay;
+  document.getElementById("kAvgProg").innerText  = allOrders.length ? Math.round(progSum/allOrders.length)+"%" : "0%";
+  document.getElementById("kTotalQty").innerText = totalQty.toLocaleString();
 }
 
-
-/* =========================================================
-   TABLE
-========================================================= */
-
-function renderTable(orders) {
-
-  const body =
-    document.getElementById(
-      "tnaBody"
-    );
-
-  body.innerHTML = "";
-
-  if (!orders.length) {
-
-    body.innerHTML = `
-      <tr>
-        <td
-          colspan="110"
-          style="
-            padding:30px;
-            color:#64748b;
-          "
-        >
-          No Firebase order data found.
-        </td>
-      </tr>
-    `;
-
+function renderTable(orders){
+  const body = document.getElementById("tnaBody");
+  body.innerHTML="";
+  if(!orders.length){
+    body.innerHTML=`<tr><td colspan="110" style="padding:30px;color:#64748b;">No Firebase order data found.</td></tr>`;
     return;
   }
+  let sl=1;
+  orders.forEach(o=>{
+    const shipDate  = o.shipdate||o.shipDate||o.shipmentDate||"";
+    const orderDate = o.orderDate||"";
+    let leadTime="-";
+    if(orderDate&&shipDate)
+      leadTime=Math.max(0,Math.ceil((new Date(shipDate+"T00:00:00")-new Date(orderDate+"T00:00:00"))/86400000))+" Days";
+    const qty=getOrderQty(o);
+    const done=STAGES.filter(s=>o[s.field+"Status"]==="Complete").length;
+    const prog=Math.round(done/STAGES.length*100);
+    const hasDelay=STAGES.some(s=>o[s.field+"Status"]==="Delay");
+    let finalSt="Pending";
+    if(prog===100) finalSt="Complete";
+    else if(hasDelay) finalSt="Delay";
+    else if(prog>0) finalSt="Running";
 
-
-  let sl = 1;
-
-
-  orders.forEach(o => {
-
-    const shipDate =
-      o.shipdate ||
-      o.shipDate ||
-      o.shipmentDate ||
-      "";
-
-    const orderDate =
-      o.orderDate ||
-      "";
-
-
-    let leadTime = "-";
-
-
-    if (
-      orderDate &&
-      shipDate
-    ) {
-
-      leadTime =
-        Math.max(
-          0,
-
-          Math.ceil(
-
-            (
-              new Date(
-                shipDate +
-                "T00:00:00"
-              )
-
-              -
-
-              new Date(
-                orderDate +
-                "T00:00:00"
-              )
-
-            ) / 86400000
-
-          )
-
-        ) + " Days";
-    }
-
-
-    const qty =
-      getOrderQty(o);
-
-
-    const done =
-      STAGES.filter(
-        s =>
-          o[s.field + "Status"]
-          === "Complete"
-      ).length;
-
-
-    const prog =
-      Math.round(
-        done /
-        STAGES.length *
-        100
-      );
-
-
-    const hasDelay =
-      STAGES.some(
-        s =>
-          o[s.field + "Status"]
-          === "Delay"
-      );
-
-
-    let finalSt =
-      "Pending";
-
-
-    if (prog === 100) {
-
-      finalSt =
-        "Complete";
-
-    } else if (hasDelay) {
-
-      finalSt =
-        "Delay";
-
-    } else if (prog > 0) {
-
-      finalSt =
-        "Running";
-    }
-
-
-    let stageCells = "";
-
-
-    STAGES.forEach(s => {
-
-      let target = "-";
-
-
-      if (shipDate) {
-
-        target =
-          addDays(
-            shipDate,
-            -s.offset
-          );
-
-
-        if (
-          o[s.field + "Target"]
-        ) {
-
-          target =
-            o[s.field + "Target"];
-        }
-      }
-
-
-      const actual =
-        o[s.field + "Actual"] ||
-        "-";
-
-
-      const status =
-        o[s.field + "Status"] ||
-        "Pending";
-
-
-      stageCells +=
-        dateCell(
-          target,
-          actual
-        )
-
-        +
-
-        `<td>
-          ${statusBadge(status)}
-        </td>`;
+    let stageCells="";
+    STAGES.forEach(s=>{
+      let target="-";
+      if(shipDate){ target=addDays(shipDate,-s.offset); if(o[s.field+"Target"]) target=o[s.field+"Target"]; }
+      const actual=o[s.field+"Actual"]||"-";
+      const status=o[s.field+"Status"]||"Pending";
+      stageCells+=dateCell(target,actual)+`<td>${statusBadge(status)}</td>`;
     });
 
-
-    body.innerHTML += `
-
-      <tr>
-
-        <td>${sl++}</td>
-
-        <td>
-          ${o.buyer || "-"}
-        </td>
-
-        <td>
-          ${o.ikl || "-"}
-        </td>
-
-        <td>
-          ${o.style || "-"}
-        </td>
-
-        <td
-          style="
-            color:
-              ${qty > 0
-                ? "#00ff99"
-                : "#ef4444"};
-            font-weight:bold;
-          "
-        >
-          ${
-            qty > 0
-              ? qty.toLocaleString()
-              : "⚠ 0"
-          }
-        </td>
-
-        <td>
-          ${orderDate || "-"}
-        </td>
-
-        <td>
-          ${shipDate || "-"}
-        </td>
-
-        <td>
-          ${leadTime}
-        </td>
-
-        <td>
-          ${
-            o.merchandiser ||
-            o.Merchandiser ||
-            "-"
-          }
-        </td>
-
-        <td>
-
-          ${prog}%
-
-          <div class="prog-wrap">
-
-            <div
-              class="prog-bar"
-              style="
-                width:${prog}%
-              "
-            ></div>
-
-          </div>
-
-        </td>
-
-        ${stageCells}
-
-        <td>
-          ${statusBadge(finalSt)}
-        </td>
-
-        <td>
-
-          <button
-            class="edit-btn"
-            onclick="
-              openModal('${o.id}')
-            "
-          >
-            ✏️ Edit
-          </button>
-
-        </td>
-
-      </tr>
-    `;
+    body.innerHTML+=`<tr>
+      <td>${sl++}</td>
+      <td>${o.buyer||"-"}</td>
+      <td>${o.ikl||"-"}</td>
+      <td>${o.style||"-"}</td>
+      <td style="color:${qty>0?"#00ff99":"#ef4444"};font-weight:bold;">${qty>0?qty.toLocaleString():"⚠ 0"}</td>
+      <td>${orderDate||"-"}</td>
+      <td>${shipDate||"-"}</td>
+      <td>${leadTime}</td>
+      <td>${o.merchandiser||o.Merchandiser||"-"}</td>
+      <td>${prog}%<div class="prog-wrap"><div class="prog-bar" style="width:${prog}%"></div></div></td>
+      ${stageCells}
+      <td>${statusBadge(finalSt)}</td>
+      <td><button class="edit-btn" onclick="openModal('${o.id}')">✏️ Edit</button></td>
+    </tr>`;
   });
 }
 
+window.openModal = function(docId){
+  selectedDocId=docId;
+  const o=allOrders.find(x=>x.id===docId);
+  if(!o) return;
+  const shipDate=o.shipdate||o.shipDate||"";
+  const orderDate=o.orderDate||"";
 
-/* =========================================================
-   OPEN EDIT MODAL
-========================================================= */
-
-window.openModal =
-function(docId) {
-
-  selectedDocId =
-    docId;
-
-
-  const o =
-    allOrders.find(
-      x => x.id === docId
-    );
-
-
-  if (!o) return;
-
-
-  const shipDate =
-    o.shipdate ||
-    o.shipDate ||
-    "";
-
-
-  const orderDate =
-    o.orderDate ||
-    "";
-
-
-  const GROUPS = [
-
-    {
-      title:"🎨 Pre-Production",
-      fields:
-        STAGES.slice(0,8)
-    },
-
-    {
-      title:"🧶 Knitting & Dyeing",
-      fields:
-        STAGES.slice(8,12)
-    },
-
-    {
-      title:"🧪 Sample & Testing",
-      fields:
-        STAGES.slice(12,20)
-    },
-
-    {
-      title:"✂️ Cutting & Sewing",
-      fields:
-        STAGES.slice(20,28)
-    },
-
-    {
-      title:"📦 Finishing & Packing",
-      fields:
-        STAGES.slice(28,33)
-    }
-
+  const GROUPS=[
+    { title:"🎨 Pre-Production",      fields:STAGES.slice(0,8)  },
+    { title:"🧶 Knitting & Dyeing",   fields:STAGES.slice(8,12) },
+    { title:"🧪 Sample & Testing",    fields:STAGES.slice(12,20)},
+    { title:"✂️ Cutting & Sewing",    fields:STAGES.slice(20,28)},
+    { title:"📦 Finishing & Packing", fields:STAGES.slice(28,33)}
   ];
 
-
-  let formHtml = `
-
+  let formHtml=`
     <div class="modal-info-box">
+      <p><span>Style :</span> ${o.style||"-"}</p>
+      <p><span>Buyer :</span> ${o.buyer||"-"}</p>
+      <p><span>IKL :</span> ${o.ikl||"-"}</p>
+      <p><span>Order Date :</span> ${orderDate||"-"}</p>
+      <p><span>Ship Date :</span> ${shipDate||"-"}</p>
+      <p><span>Merchandiser :</span> ${o.merchandiser||o.Merchandiser||"-"}</p>
+    </div>`;
 
-      <p>
-        <span>Style :</span>
-        ${o.style || "-"}
-      </p>
-
-      <p>
-        <span>Buyer :</span>
-        ${o.buyer || "-"}
-      </p>
-
-      <p>
-        <span>IKL :</span>
-        ${o.ikl || "-"}
-      </p>
-
-      <p>
-        <span>Order Date :</span>
-        ${orderDate || "-"}
-      </p>
-
-      <p>
-        <span>Ship Date :</span>
-        ${shipDate || "-"}
-      </p>
-
-      <p>
-        <span>Merchandiser :</span>
-        ${
-          o.merchandiser ||
-          o.Merchandiser ||
-          "-"
-        }
-      </p>
-
-    </div>
-  `;
-
-
-  GROUPS.forEach(grp => {
-
-    formHtml += `
-
-      <div class="section-title">
-        ${grp.title}
-      </div>
-    `;
-
-
-    grp.fields.forEach(s => {
-
-      let autoTarget = "";
-
-
-      if (shipDate) {
-
-        autoTarget =
-          addDays(
-            shipDate,
-            -s.offset
-          );
-      }
-
-
-      const savedTarget =
-        o[s.field + "Target"] ||
-        autoTarget;
-
-
-      const actual =
-        o[s.field + "Actual"] ||
-        "";
-
-
-      const status =
-        o[s.field + "Status"] ||
-        "Pending";
-
-
-      formHtml += `
-
-        <div
-          style="
-            background:#111827;
-            border-radius:10px;
-            padding:14px;
-            margin-bottom:10px;
-          "
-        >
-
-          <div
-            style="
-              color:#00ff99;
-              font-size:13px;
-              font-weight:bold;
-              margin-bottom:10px;
-            "
-          >
-            ${s.label}
-          </div>
-
-
+  GROUPS.forEach(grp=>{
+    formHtml+=`<div class="section-title">${grp.title}</div>`;
+    grp.fields.forEach(s=>{
+      let autoTarget="";
+      if(shipDate) autoTarget=addDays(shipDate,-s.offset);
+      const savedTarget=o[s.field+"Target"]||autoTarget;
+      const actual=o[s.field+"Actual"]||"";
+      const status=o[s.field+"Status"]||"Pending";
+      formHtml+=`
+        <div style="background:#111827;border-radius:10px;padding:14px;margin-bottom:10px;">
+          <div style="color:#00ff99;font-size:13px;font-weight:bold;margin-bottom:10px;">${s.label}</div>
           <div class="form-grid-3">
-
             <div class="form-row">
-
-              <label>
-                Target
-                <span class="auto-note">
-                  (auto·editable)
-                </span>
-              </label>
-
-              <input
-                type="date"
-                id="f_${s.field}Target"
-                value="${savedTarget}"
-              >
-
+              <label>Target <span class="auto-note">(auto·editable)</span></label>
+              <input type="date" id="f_${s.field}Target" value="${savedTarget}">
             </div>
-
-
             <div class="form-row">
-
-              <label>
-                Actual
-              </label>
-
-              <input
-                type="date"
-                id="f_${s.field}Actual"
-                value="${actual}"
-              >
-
+              <label>Actual</label>
+              <input type="date" id="f_${s.field}Actual" value="${actual}">
             </div>
-
-
             <div class="form-row">
-
-              <label>
-                Status
-              </label>
-
-              <div class="status-group">
-
-                ${stBtns(
-                  s.field + "Status",
-                  status
-                )}
-
-              </div>
-
-
-              <input
-                type="hidden"
-                id="f_${s.field}Status"
-                value="${status}"
-              >
-
+              <label>Status</label>
+              <div class="status-group">${stBtns(s.field+"Status",status)}</div>
+              <input type="hidden" id="f_${s.field}Status" value="${status}">
             </div>
-
           </div>
-
-        </div>
-      `;
+        </div>`;
     });
-
   });
 
-
-  document.getElementById(
-    "modalFormArea"
-  ).innerHTML =
-    formHtml;
-
-
-  document.getElementById(
-    "editModal"
-  ).style.display =
-    "flex";
+  document.getElementById("modalFormArea").innerHTML=formHtml;
+  document.getElementById("editModal").style.display="flex";
 };
 
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
-
-document.getElementById(
-  "closeBtn"
-).onclick = () => {
-
-  document.getElementById(
-    "editModal"
-  ).style.display =
-    "none";
+document.getElementById("closeBtn").onclick=()=>{
+  document.getElementById("editModal").style.display="none";
 };
 
-
-/* =========================================================
-   SAVE TO FIRESTORE
-========================================================= */
-
-document.getElementById(
-  "saveBtn"
-).onclick =
-async () => {
-
-  if (!selectedDocId) {
-
-    alert(
-      "❌ No order selected."
-    );
-
-    return;
-  }
-
-
-  const updateData = {};
-
-
-  STAGES.forEach(s => {
-
-    const target =
-      document.getElementById(
-        "f_" +
-        s.field +
-        "Target"
-      );
-
-
-    const actual =
-      document.getElementById(
-        "f_" +
-        s.field +
-        "Actual"
-      );
-
-
-    const status =
-      document.getElementById(
-        "f_" +
-        s.field +
-        "Status"
-      );
-
-
-    updateData[
-      s.field + "Target"
-    ] =
-      target
-        ? target.value
-        : "";
-
-
-    updateData[
-      s.field + "Actual"
-    ] =
-      actual
-        ? actual.value
-        : "";
-
-
-    updateData[
-      s.field + "Status"
-    ] =
-      status
-        ? status.value
-        : "Pending";
-
+document.getElementById("saveBtn").onclick=async()=>{
+  if(!selectedDocId){ alert("❌ No order selected."); return; }
+  const updateData={};
+  STAGES.forEach(s=>{
+    const t=document.getElementById("f_"+s.field+"Target");
+    const a=document.getElementById("f_"+s.field+"Actual");
+    const st=document.getElementById("f_"+s.field+"Status");
+    updateData[s.field+"Target"] = t?t.value:"";
+    updateData[s.field+"Actual"] = a?a.value:"";
+    updateData[s.field+"Status"] = st?st.value:"Pending";
   });
-
-
-  try {
-
-    console.log(
-      "💾 Saving:",
-      selectedDocId,
-      updateData
-    );
-
-
-    await updateDoc(
-
-      doc(
-        db,
-        "orders",
-        selectedDocId
-      ),
-
-      updateData
-    );
-
-
-    console.log(
-      "✅ Firestore SAVE successful"
-    );
-
-
-    alert(
-      "✅ Saved Successfully to Firebase!"
-    );
-
-
-    document.getElementById(
-      "editModal"
-    ).style.display =
-      "none";
-
-
-  } catch (err) {
-
-    console.error(
-      "❌ SAVE ERROR:",
-      err
-    );
-
-
-    alert(
-      "❌ Firebase Save Failed!\n\n" +
-      err.message
-    );
+  try{
+    await updateDoc(doc(db,"orders",selectedDocId),updateData);
+    markSaved();
+    alert("✅ Saved Successfully to Firebase!");
+    document.getElementById("editModal").style.display="none";
+  }catch(err){
+    alert("❌ Firebase Save Failed!\n\n"+err.message);
   }
-
 };
-
-
-/* =========================================================
-   START
-========================================================= */
-
-console.log(
-  "🚀 SMART TNA BD started"
-);
-
-console.log(
-  "📁 Firestore collection: orders"
-);
 
 startFirebaseListener();
-
 </script>
+</body>
+</html>
