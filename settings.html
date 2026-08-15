@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART TNA BD ERP - SETTINGS</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ff99">
+<script src="pwa-install.js" defer></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body { background:#0f172a; color:white; }
+
+.topbar {
+  background:#111827; padding:12px 20px; border-bottom:2px solid #1e293b;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:900;
+}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
+
+.back-btn {
+  display:flex; align-items:center; gap:6px;
+  background:#1e293b; border:1px solid #334155; border-radius:8px;
+  color:#cbd5e1; padding:8px 16px; font-size:13px; font-weight:700;
+  cursor:pointer; text-decoration:none; font-family:Arial,sans-serif;
+  transition:all .2s;
+}
+.back-btn:hover { background:#00ff9920; color:#00ff99; border-color:#00ff99; }
+
+.page-title { font-size:16px; font-weight:bold; color:#fff; }
+.tb-date { font-size:11px; color:#64748b; font-family:monospace; }
+
+header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
+.company { font-size:28px; font-weight:bold; color:#00ff99; }
+.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+
+.wrap { max-width:1000px; margin:0 auto; padding:20px; }
+
+.panel {
+  background:#1e293b; border-radius:15px; padding:22px; margin-bottom:20px;
+}
+.panel h3 {
+  color:#00ff99; font-size:15px; text-transform:uppercase; letter-spacing:1px;
+  margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #334155;
+  display:flex; align-items:center; gap:8px;
+}
+.panel .hint { color:#64748b; font-size:12px; margin:-10px 0 16px 0; }
+
+.form-row label { display:block; margin-bottom:6px; color:#94a3b8;
+  font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; }
+input[type="text"], input[type="number"], input[type="date"], select {
+  width:100%; padding:10px; border:1px solid #334155; border-radius:8px;
+  background:#0f172a; color:white; font-size:14px; }
+input:focus, select:focus { outline:none; border-color:#00ff99; }
+
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+
+.dept-row {
+  display:grid; grid-template-columns:140px 1fr 1fr 1fr; gap:12px;
+  align-items:center; padding:12px 0; border-bottom:1px solid #263449;
+}
+.dept-row:last-child { border-bottom:none; }
+.dept-name { font-weight:bold; color:#e2e8f0; display:flex; align-items:center; gap:8px; font-size:13px; }
+.dept-row label { font-size:10px; color:#64748b; margin-bottom:4px; display:block; }
+
+.save-btn { background:#00aa66; padding:12px 22px; border:none; border-radius:10px;
+  color:white; font-weight:bold; cursor:pointer; font-size:14px; margin-top:8px; }
+.save-btn:hover { background:#008844; }
+
+.list-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height:20px; }
+.tag {
+  background:#0f172a; border:1px solid #334155; border-radius:20px;
+  padding:6px 12px; font-size:12px; display:flex; align-items:center; gap:8px;
+}
+.tag button {
+  background:none; border:none; color:#ef4444; cursor:pointer; font-weight:bold; font-size:13px;
+}
+.add-row { display:flex; gap:10px; }
+.add-row input { flex:1; }
+.add-btn { background:#1e40af; border:none; border-radius:8px; color:white;
+  padding:10px 18px; cursor:pointer; font-weight:bold; font-size:13px; white-space:nowrap; }
+.add-btn:hover { background:#1d4ed8; }
+
+.data-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.data-btn {
+  background:#0f172a; border:1px solid #334155; border-radius:10px;
+  color:#cbd5e1; padding:14px 18px; cursor:pointer; font-weight:bold; font-size:13px;
+  display:flex; align-items:center; gap:8px; flex:1; min-width:200px; justify-content:center;
+}
+.data-btn:hover { border-color:#00ff99; color:#00ff99; }
+.data-btn.danger:hover { border-color:#ef4444; color:#ef4444; }
+
+.status-msg { font-size:12px; margin-top:10px; min-height:16px; }
+.status-ok  { color:#00ff99; }
+.status-err { color:#ef4444; }
+
+.app-info { color:#94a3b8; font-size:13px; line-height:1.9; }
+.app-info b { color:#e2e8f0; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-btn" href="dashboard.html">🏠 Dashboard</a>
+    <span class="page-title">⚙️ Settings</span>
+  </div>
+  <div class="topbar-right">
+    <span class="tb-date" id="dateEl"></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
+  <div class="company" id="companyHeader">INNOVATIVE KNITEX LTD</div>
+  <div class="system">SMART TNA BD ERP - SETTINGS</div>
+</header>
+
+<div class="wrap">
+
+  <!-- COMPANY INFO -->
+  <div class="panel">
+    <h3>🏢 Company Info</h3>
+    <div class="grid-2">
+      <div class="form-row">
+        <label>Company Name</label>
+        <input type="text" id="cfgCompanyName" placeholder="INNOVATIVE KNITEX LTD">
+      </div>
+      <div class="form-row">
+        <label>System Subtitle</label>
+        <input type="text" id="cfgSystemName" placeholder="SMART TNA BD ERP">
+      </div>
+    </div>
+    <button class="save-btn" onclick="saveCompany()">💾 Save Company Info</button>
+    <div class="status-msg" id="companyMsg"></div>
+  </div>
+
+  <!-- TNA OFFSET DAYS -->
+  <div class="panel">
+    <h3>📅 TNA Offset Days (from Order Date)</h3>
+    <div class="hint">These control the auto-calculated Target dates shown on each department page. Change a number and Save — it takes effect the next time that department page loads.</div>
+
+    <div class="dept-row" style="border-bottom:2px solid #334155;padding-top:0;">
+      <div></div>
+      <label style="margin:0;">Receive / Input Target (+days)</label>
+      <label style="margin:0;">Start Target (+days)</label>
+      <label style="margin:0;">Complete Target (+days)</label>
+    </div>
+
+    <div id="offsetRows"></div>
+
+    <button class="save-btn" onclick="saveOffsets()">💾 Save Offset Days</button>
+    <div class="status-msg" id="offsetMsg"></div>
+  </div>
+
+  <!-- BUYERS -->
+  <div class="panel">
+    <h3>🧑‍💼 Buyers List</h3>
+    <div class="hint">Manage the buyer names available for order entry across all department pages.</div>
+    <div class="list-tags" id="buyerTags"></div>
+    <div class="add-row">
+      <input type="text" id="newBuyer" placeholder="Add buyer name...">
+      <button class="add-btn" onclick="addItem('buyers')">+ Add Buyer</button>
+    </div>
+    <div class="status-msg" id="buyerMsg"></div>
+  </div>
+
+  <!-- MERCHANDISERS -->
+  <div class="panel">
+    <h3>👤 Merchandisers List</h3>
+    <div class="hint">Manage the merchandiser names available for order entry.</div>
+    <div class="list-tags" id="merchTags"></div>
+    <div class="add-row">
+      <input type="text" id="newMerch" placeholder="Add merchandiser name...">
+      <button class="add-btn" onclick="addItem('merchandisers')">+ Add Merchandiser</button>
+    </div>
+    <div class="status-msg" id="merchMsg"></div>
+  </div>
+
+  <!-- DATA MANAGEMENT -->
+  <div class="panel">
+    <h3>🗄️ Data Management</h3>
+    <div class="hint">Backup or inspect the raw order data stored in Firestore.</div>
+    <div class="data-actions">
+      <button class="data-btn" onclick="backupJSON()">⬇️ Backup All Orders (JSON)</button>
+      <button class="data-btn" onclick="backupCSV()">⬇️ Backup All Orders (CSV)</button>
+      <button class="data-btn" onclick="location.href='reports.html'">📊 Open Reports Page</button>
+    </div>
+    <div class="status-msg" id="dataMsg"></div>
+  </div>
+
+  <!-- APP INFO -->
+  <div class="panel">
+    <h3>ℹ️ App Info</h3>
+    <div class="app-info">
+      <div><b>System:</b> Smart TNA BD ERP</div>
+      <div><b>Firestore Project:</b> smart-tna-bd</div>
+      <div><b>Collection:</b> orders</div>
+      <div><b>Settings Doc:</b> settings/config</div>
+      <div><b>Departments:</b> Cutting → Print → Embroidery → Sewing → Washing → Finishing → Shipment</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.getElementById("dateEl").textContent =
+  new Date().toLocaleDateString("en-BD",{ weekday:"short", year:"numeric", month:"short", day:"numeric" });
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const CONFIG_DOC = doc(db, "settings", "config");
+
+const DEPTS = [
+  { key:"cut",   label:"✂️ Cutting",    prefix:"cut"   },
+  { key:"print", label:"🖨️ Print",      prefix:"print" },
+  { key:"emb",   label:"🧵 Embroidery", prefix:"emb"   },
+  { key:"sew",   label:"🧷 Sewing",     prefix:"sew"   },
+  { key:"wash",  label:"🧼 Washing",    prefix:"wash"  },
+  { key:"fin",   label:"📦 Finishing",  prefix:"fin"   },
+  { key:"ship",  label:"🚢 Shipment",   prefix:"ship"  },
+];
+
+const DEFAULT_OFFSETS = {
+  cut:   { rcv:48,  start:52,  complete:58  },
+  print: { rcv:60,  start:64,  complete:68  },
+  emb:   { rcv:40,  start:44,  complete:48  },
+  sew:   { rcv:70,  start:74,  complete:85  },
+  wash:  { rcv:90,  start:93,  complete:97  },
+  fin:   { rcv:100, start:103, complete:108 },
+  ship:  { rcv:110, start:113, complete:116 },
+};
+
+let cfg = {
+  companyName: "INNOVATIVE KNITEX LTD",
+  systemName: "SMART TNA BD ERP",
+  offsets: JSON.parse(JSON.stringify(DEFAULT_OFFSETS)),
+  buyers: [],
+  merchandisers: []
+};
+
+function buildOffsetRows(){
+  const wrap = document.getElementById("offsetRows");
+  wrap.innerHTML = DEPTS.map(d => `
+    <div class="dept-row">
+      <div class="dept-name">${d.label}</div>
+      <input type="number" id="off_${d.key}_rcv" value="${cfg.offsets[d.key].rcv}">
+      <input type="number" id="off_${d.key}_start" value="${cfg.offsets[d.key].start}">
+      <input type="number" id="off_${d.key}_complete" value="${cfg.offsets[d.key].complete}">
+    </div>`).join("");
+}
+
+function renderTags(){
+  document.getElementById("buyerTags").innerHTML = cfg.buyers.length
+    ? cfg.buyers.map((b,i)=>`<span class="tag">${b}<button onclick="removeItem('buyers',${i})">✖</button></span>`).join("")
+    : `<span style="color:#64748b;font-size:12px;">No buyers added yet.</span>`;
+  document.getElementById("merchTags").innerHTML = cfg.merchandisers.length
+    ? cfg.merchandisers.map((m,i)=>`<span class="tag">${m}<button onclick="removeItem('merchandisers',${i})">✖</button></span>`).join("")
+    : `<span style="color:#64748b;font-size:12px;">No merchandisers added yet.</span>`;
+}
+
+async function loadConfig(){
+  try{
+    const snap = await getDoc(CONFIG_DOC);
+    if(snap.exists()){
+      const data = snap.data();
+      cfg.companyName = data.companyName || cfg.companyName;
+      cfg.systemName  = data.systemName  || cfg.systemName;
+      cfg.offsets     = data.offsets     || cfg.offsets;
+      cfg.buyers      = data.buyers      || [];
+      cfg.merchandisers = data.merchandisers || [];
+    }
+  }catch(err){
+    console.error("Failed to load settings:", err);
+  }
+  document.getElementById("cfgCompanyName").value = cfg.companyName;
+  document.getElementById("cfgSystemName").value  = cfg.systemName;
+  document.getElementById("companyHeader").textContent = cfg.companyName;
+  buildOffsetRows();
+  renderTags();
+}
+
+window.saveCompany = async function(){
+  cfg.companyName = document.getElementById("cfgCompanyName").value.trim() || cfg.companyName;
+  cfg.systemName  = document.getElementById("cfgSystemName").value.trim()  || cfg.systemName;
+  try{
+    await setDoc(CONFIG_DOC, cfg, { merge:true });
+    document.getElementById("companyHeader").textContent = cfg.companyName;
+    flash("companyMsg", "✅ Company info saved.", true);
+  }catch(err){ flash("companyMsg", "❌ Save failed: "+err.message, false); }
+};
+
+window.saveOffsets = async function(){
+  DEPTS.forEach(d=>{
+    cfg.offsets[d.key] = {
+      rcv:      Number(document.getElementById(`off_${d.key}_rcv`).value)||0,
+      start:    Number(document.getElementById(`off_${d.key}_start`).value)||0,
+      complete: Number(document.getElementById(`off_${d.key}_complete`).value)||0,
+    };
+  });
+  try{
+    await setDoc(CONFIG_DOC, { offsets: cfg.offsets }, { merge:true });
+    flash("offsetMsg", "✅ Offset days saved. Reload department pages to apply.", true);
+  }catch(err){ flash("offsetMsg", "❌ Save failed: "+err.message, false); }
+};
+
+window.addItem = async function(field){
+  const inputId = field==="buyers" ? "newBuyer" : "newMerch";
+  const val = document.getElementById(inputId).value.trim();
+  const msgId = field==="buyers" ? "buyerMsg" : "merchMsg";
+  if(!val){ flash(msgId, "⚠️ Enter a name first.", false); return; }
+  if(cfg[field].includes(val)){ flash(msgId, "⚠️ Already in the list.", false); return; }
+  cfg[field].push(val);
+  try{
+    await setDoc(CONFIG_DOC, { [field]: cfg[field] }, { merge:true });
+    document.getElementById(inputId).value = "";
+    renderTags();
+    flash(msgId, "✅ Added.", true);
+  }catch(err){ flash(msgId, "❌ Save failed: "+err.message, false); }
+};
+
+window.removeItem = async function(field, idx){
+  cfg[field].splice(idx,1);
+  const msgId = field==="buyers" ? "buyerMsg" : "merchMsg";
+  try{
+    await setDoc(CONFIG_DOC, { [field]: cfg[field] }, { merge:true });
+    renderTags();
+    flash(msgId, "✅ Removed.", true);
+  }catch(err){ flash(msgId, "❌ Save failed: "+err.message, false); }
+};
+
+window.backupJSON = async function(){
+  try{
+    const snap = await getDocs(collection(db,"orders"));
+    const orders = [];
+    snap.forEach(d => orders.push({ id:d.id, ...d.data() }));
+    downloadFile(JSON.stringify(orders, null, 2), `orders_backup_${todayStr()}.json`, "application/json");
+    flash("dataMsg", `✅ Backed up ${orders.length} orders as JSON.`, true);
+  }catch(err){ flash("dataMsg", "❌ Backup failed: "+err.message, false); }
+};
+
+window.backupCSV = async function(){
+  try{
+    const snap = await getDocs(collection(db,"orders"));
+    const orders = [];
+    snap.forEach(d => orders.push({ id:d.id, ...d.data() }));
+    const headers = ["id","buyer","ikl","style","orderDate","shipDate","merchandiser","totalQty"];
+    const rows = [headers, ...orders.map(o=>[
+      o.id, o.buyer||"", o.ikl||o.iklNo||"", o.style||o.styleNo||"",
+      o.orderDate||"", o.shipdate||o.shipmentDate||o.shipDate||"",
+      o.merchandiser||"", o.totalQty||o.qty||""
+    ])];
+    const csv = rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+    downloadFile(csv, `orders_backup_${todayStr()}.csv`, "text/csv;charset=utf-8;");
+    flash("dataMsg", `✅ Backed up ${orders.length} orders as CSV.`, true);
+  }catch(err){ flash("dataMsg", "❌ Backup failed: "+err.message, false); }
+};
+
+function downloadFile(content, filename, mime){
+  const blob = new Blob([content], { type:mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function todayStr(){ return new Date().toISOString().split("T")[0]; }
+
+function flash(id, text, ok){
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = "status-msg " + (ok ? "status-ok" : "status-err");
+  setTimeout(()=>{ el.textContent=""; }, 4000);
+}
+
+loadConfig();
+</script>
+</body>
+</html>
