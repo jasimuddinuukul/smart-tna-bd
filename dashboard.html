@@ -3,23 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SMART TNA BD — INNOVATIVE KNITEX LTD</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
 :root{
   --green:#00ff99;
+  --green2:#00cc77;
   --bg:#080e1a;
   --sidebar:#060c17;
   --card:#0e1829;
   --card2:#111e30;
   --border:#1e3048;
-  --muted:#4a6080;
+  --muted:#607895;
   --text:#ffffff;
+  --red:#f87171;
+  --amber:#fbbf24;
+  --blue:#60a5fa;
+  --purple:#c084fc;
   --sidebar-w:270px;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
@@ -27,26 +41,32 @@ body{
   color:#fff;
   font-family:'Rajdhani',sans-serif;
   font-weight:600;
-  display:flex;
   min-height:100vh;
-  overflow-x:clip;
+  overflow-x:hidden;
 }
 
-/* SIDEBAR */
+/* =========================
+   SIDEBAR
+========================= */
+
 .sidebar{
   width:var(--sidebar-w);
   min-width:var(--sidebar-w);
-  background:var(--sidebar);
   height:100vh;
   position:fixed;
-  top:0;
   left:0;
+  top:0;
   z-index:1100;
+
+  background:var(--sidebar);
+  border-right:1px solid var(--border);
+
   display:flex;
   flex-direction:column;
-  border-right:1px solid var(--border);
+
   transform:translateX(0);
-  transition:transform .32s cubic-bezier(.4,0,.2,1);
+  transition:transform .3s ease;
+
   overflow-y:auto;
   overflow-x:hidden;
 }
@@ -56,7 +76,7 @@ body{
 }
 
 .sb-head{
-  padding:20px 16px 14px;
+  padding:18px 16px 14px;
   border-bottom:1px solid var(--border);
   text-align:center;
 }
@@ -64,46 +84,46 @@ body{
 .sb-logo{
   width:62px;
   height:62px;
+  margin:auto;
+  margin-bottom:9px;
+
   border-radius:50%;
   border:2px solid var(--green);
-  background:#0e1829;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:0 auto 10px;
-  font-size:10px;
-  font-weight:700;
+
   color:var(--green);
-  box-shadow:0 0 14px #00ff9930;
+  font-size:10px;
+
+  box-shadow:0 0 18px #00ff9935;
 }
 
 .sb-company{
   font-size:12px;
   font-weight:700;
-  color:#fff;
-  letter-spacing:.4px;
-  line-height:1.4;
+  letter-spacing:.5px;
 }
 
 .sb-erp{
-  font-size:10px;
-  color:var(--green);
-  letter-spacing:1.5px;
   margin-top:3px;
+  color:var(--green);
+  font-size:10px;
+  letter-spacing:1.4px;
   font-family:'Share Tech Mono',monospace;
 }
 
 .sb-nav{
-  padding:8px 8px 16px;
+  padding:8px;
   flex:1;
 }
 
 .sb-label{
+  padding:12px 10px 5px;
+  color:var(--muted);
   font-size:9px;
   letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  padding:12px 10px 4px;
   font-family:'Share Tech Mono',monospace;
 }
 
@@ -111,16 +131,20 @@ body{
   display:flex;
   align-items:center;
   gap:10px;
+
   padding:9px 12px;
+  margin-bottom:2px;
+
+  border:1px solid transparent;
   border-radius:8px;
+
   color:#7a9abf;
   text-decoration:none;
+
   font-size:13px;
   font-weight:600;
-  margin-bottom:2px;
-  transition:all .18s;
-  border:1px solid transparent;
-  cursor:pointer;
+
+  transition:.18s;
 }
 
 .sb-link:hover{
@@ -130,244 +154,366 @@ body{
 }
 
 .sb-link.active{
-  background:linear-gradient(135deg,#00ff991a,#00ff9908);
+  background:#00ff9914;
+  border-color:#00ff9935;
   color:var(--green);
-  border-color:#00ff9930;
 }
 
 .sb-icon{
-  font-size:16px;
   width:20px;
   text-align:center;
-  flex-shrink:0;
+  font-size:16px;
 }
 
 .sb-badge{
   margin-left:auto;
-  font-size:9px;
-  padding:1px 6px;
+  padding:2px 6px;
   border-radius:10px;
-  font-weight:700;
   color:#fff;
+  font-size:8px;
 }
 
-.sb-badge.g{background:#16a34a}
-.sb-badge.bl{background:#2563eb}
+.sb-badge.g{
+  background:#16a34a;
+}
+
+.sb-badge.bl{
+  background:#2563eb;
+}
 
 .sb-foot{
   padding:10px 8px;
   border-top:1px solid var(--border);
 }
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
+
 .main-wrap{
-  flex:1;
   margin-left:var(--sidebar-w);
-  transition:margin-left .32s cubic-bezier(.4,0,.2,1);
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  overflow-x:hidden;
+  transition:margin-left .3s ease;
 }
 
 .overlay{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.65);
+  background:#000b;
   z-index:1050;
-  backdrop-filter:blur(2px);
 }
 
 .overlay.show{
   display:block;
 }
 
-/* TOPBAR */
+/* =========================
+   TOPBAR
+========================= */
+
 .topbar{
-  background:#090f1c;
-  border-bottom:1px solid var(--border);
-  padding:0 20px;
-  height:52px;
+  height:56px;
+
+  padding:0 18px;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   position:sticky;
   top:0;
   z-index:900;
-  flex-shrink:0;
+
+  background:#090f1c;
+  border-bottom:1px solid var(--border);
 }
 
-.tb-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.toggle-btn{
-  width:44px;
-  height:44px;
-  background:#16a34a;
-  border:2px solid var(--green);
-  border-radius:10px;
-  color:#fff;
-  font-size:22px;
-  font-weight:900;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:background .15s,transform .15s;
-  flex-shrink:0;
-  box-shadow:0 0 10px #00ff9940;
-  line-height:1;
-}
-
-.toggle-btn:hover{
-  background:#15803d;
-  transform:scale(1.08);
-}
-
-.tb-title{
-  font-size:15px;
-  font-weight:700;
-  color:#fff;
-  letter-spacing:.4px;
-}
-
+.tb-left,
 .tb-right{
   display:flex;
   align-items:center;
   gap:10px;
 }
 
+.toggle-btn{
+  width:42px;
+  height:42px;
+
+  border:2px solid var(--green);
+  border-radius:9px;
+
+  background:#16a34a;
+  color:#fff;
+
+  font-size:20px;
+  font-weight:900;
+
+  cursor:pointer;
+
+  box-shadow:0 0 10px #00ff9940;
+}
+
+.toggle-btn:hover{
+  background:#15803d;
+}
+
+.tb-title{
+  font-size:15px;
+  font-weight:700;
+}
+
 .tb-date{
-  font-family:'Share Tech Mono',monospace;
-  font-size:11px;
   color:var(--muted);
+  font-size:11px;
+  font-family:'Share Tech Mono',monospace;
 }
 
 .tb-user{
-  background:var(--green);
-  color:#000;
   padding:5px 12px;
   border-radius:20px;
+
+  background:var(--green);
+  color:#000;
+
   font-size:12px;
-  font-weight:700;
 }
 
-/* CONTENT */
+/* =========================
+   CONTENT
+========================= */
+
 .content{
-  padding:18px;
-  flex:1;
-  max-width:1400px;
   width:100%;
-  box-sizing:border-box;
-  overflow-x:hidden;
+  max-width:1500px;
+  padding:18px;
+  margin:auto;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
+
 .hero-header{
-  background:linear-gradient(135deg,#0a1828 0%,#091522 50%,#0a1828 100%);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:28px 24px 22px;
-  text-align:center;
-  margin-bottom:18px;
   position:relative;
   overflow:hidden;
-}
 
-.hero-header::before{
-  content:'';
-  position:absolute;
-  top:-60px;
-  left:50%;
-  transform:translateX(-50%);
-  width:320px;
-  height:320px;
-  background:radial-gradient(circle,#00ff9910 0%,transparent 70%);
-  pointer-events:none;
+  padding:27px 20px 23px;
+  margin-bottom:18px;
+
+  text-align:center;
+
+  border:1px solid var(--border);
+  border-radius:16px;
+
+  background:
+    radial-gradient(circle at 50% 0%,#00ff9912,transparent 50%),
+    linear-gradient(135deg,#0a1828,#091522,#0a1828);
 }
 
 .hero-arabic{
-  font-family:'Amiri',serif;
-  font-size:52px;
-  color:var(--green);
-  line-height:1.1;
-  margin-bottom:16px;
-  text-shadow:0 0 30px #00ff9960,0 0 60px #00ff9930;
-  direction:rtl;
   display:block;
+
+  color:var(--green);
+
+  font-family:'Amiri',serif;
+  font-size:48px;
+  line-height:1.15;
+
+  text-shadow:
+    0 0 30px #00ff9960,
+    0 0 60px #00ff9930;
+
+  direction:rtl;
 }
 
 .hero-divider{
-  width:140px;
+  width:150px;
   height:1px;
-  background:linear-gradient(90deg,transparent,var(--green),transparent);
-  margin:0 auto 16px;
+
+  margin:13px auto;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    var(--green),
+    transparent
+  );
 }
 
 .hero-company{
-  font-size:34px;
+  font-size:32px;
   font-weight:700;
-  color:#fff;
   letter-spacing:2px;
   text-transform:uppercase;
-  margin-bottom:5px;
 }
 
 .hero-erp{
-  font-family:'Share Tech Mono',monospace;
-  font-size:17px;
+  margin-top:4px;
+
   color:var(--green);
-  letter-spacing:4px;
-  text-transform:uppercase;
+
+  font-family:'Share Tech Mono',monospace;
+  font-size:15px;
+  letter-spacing:3px;
 }
 
-/* KPI */
+/* =========================
+   LOADING / ERROR
+========================= */
+
+#loadingBox,
+#errorBox{
+  display:none;
+
+  padding:16px;
+  margin-bottom:18px;
+
+  border-radius:12px;
+}
+
+#loadingBox{
+  color:var(--green);
+  background:#0a1828;
+  border:1px solid #00ff9940;
+
+  text-align:center;
+  font-family:'Share Tech Mono',monospace;
+}
+
+#errorBox{
+  color:var(--red);
+  background:#2a0f15;
+  border:1px solid #dc2626;
+}
+
+.loading-spinner{
+  display:inline-block;
+
+  width:18px;
+  height:18px;
+
+  margin-right:7px;
+
+  vertical-align:middle;
+
+  border:3px solid #1e3048;
+  border-top-color:var(--green);
+
+  border-radius:50%;
+
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.retry-btn{
+  margin-top:10px;
+
+  padding:8px 18px;
+
+  border:2px solid var(--green);
+  border-radius:8px;
+
+  background:#16a34a;
+  color:#fff;
+
+  cursor:pointer;
+  font-weight:700;
+}
+
+/* =========================
+   KPI
+========================= */
+
 .kpi-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
-  gap:12px;
+  grid-template-columns:repeat(8,1fr);
+  gap:10px;
   margin-bottom:18px;
 }
 
 .kpi-card{
+  padding:15px 10px;
+
+  text-align:center;
+
   background:var(--card);
   border:1px solid var(--border);
   border-radius:12px;
-  padding:16px 12px;
-  text-align:center;
-  transition:border-color .2s,transform .2s;
+
+  transition:.2s;
 }
 
 .kpi-card:hover{
-  border-color:#00ff9940;
   transform:translateY(-2px);
+  border-color:#00ff9950;
 }
 
 .kpi-card h3{
-  font-size:10px;
+  margin-bottom:7px;
+
   color:var(--muted);
+
+  font-size:9px;
+  letter-spacing:.7px;
   text-transform:uppercase;
-  letter-spacing:.8px;
-  margin-bottom:8px;
-  font-weight:600;
 }
 
 .kpi-card h1{
-  font-size:22px;
   color:var(--green);
+
   font-family:'Share Tech Mono',monospace;
+  font-size:21px;
   font-weight:400;
 }
 
-.kpi-card.red h1{color:#f87171}
-.kpi-card.amber h1{color:#fbbf24}
-.kpi-card.blue h1{color:#60a5fa}
+.kpi-card.blue h1{
+  color:var(--blue);
+}
 
-/* TOP GRID */
+.kpi-card.amber h1{
+  color:var(--amber);
+}
+
+.kpi-card.red h1{
+  color:var(--red);
+}
+
+.kpi-card.purple h1{
+  color:var(--purple);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+  padding:18px;
+  margin-bottom:18px;
+
+  background:var(--card);
+
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+
+.card h2{
+  margin-bottom:14px;
+
+  color:var(--green);
+
+  font-size:14px;
+}
+
+/* =========================
+   TOP GRID
+========================= */
+
 .top-grid{
   display:grid;
   grid-template-columns:280px 1fr;
@@ -375,56 +521,7 @@ body{
   margin-bottom:18px;
 }
 
-.circle-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px 16px;
-  text-align:center;
-}
-
-.circle-card h2{
-  color:var(--green);
-  font-size:14px;
-  font-weight:700;
-  margin-bottom:4px;
-}
-
-.circle-card h3{
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:12px;
-  font-weight:500;
-}
-
-.prog-ring{
-  width:155px;
-  height:155px;
-  border-radius:50%;
-  border:14px solid var(--green);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:36px;
-  font-weight:700;
-  color:var(--green);
-  margin:0 auto 12px;
-  box-shadow:0 0 24px #00ff9940,0 0 48px #00ff9920;
-  font-family:'Share Tech Mono',monospace;
-}
-
-.prog-stat{
-  font-size:13px;
-  color:var(--muted);
-  margin-top:4px;
-  font-weight:500;
-}
-
-.prog-stat b{
-  color:#fff;
-  font-weight:700;
-}
-
+.circle-card,
 .month-card{
   background:var(--card);
   border:1px solid var(--border);
@@ -432,142 +529,206 @@ body{
   padding:20px;
 }
 
+.circle-card{
+  text-align:center;
+}
+
+.circle-card h2,
 .month-card h2{
   color:var(--green);
   font-size:14px;
-  font-weight:700;
-  margin-bottom:14px;
 }
 
+.circle-card h3{
+  color:var(--muted);
+  font-size:11px;
+  margin:5px 0 12px;
+}
+
+.prog-ring{
+  width:155px;
+  height:155px;
+
+  margin:auto;
+  margin-bottom:13px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+  border:14px solid var(--green);
+
+  color:var(--green);
+
+  font-size:34px;
+
+  font-family:'Share Tech Mono',monospace;
+
+  box-shadow:
+    0 0 24px #00ff9940,
+    0 0 48px #00ff9920;
+}
+
+.prog-stat{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.prog-stat b{
+  color:#fff;
+}
+
+/* =========================
+   MONTH BAR
+========================= */
+
 .mbar{
-  padding:12px 16px;
-  border-radius:9px;
-  font-size:14px;
-  font-weight:700;
-  margin-bottom:10px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+
+  padding:12px 15px;
+  margin-bottom:9px;
+
+  border-radius:9px;
+
+  font-size:13px;
 }
 
 .mbar .pct{
   font-family:'Share Tech Mono',monospace;
-  font-size:15px;
-  font-weight:400;
 }
 
 .mbar.g{
+  color:#4ade80;
   background:#16a34a18;
   border:1px solid #16a34a44;
-  color:#4ade80;
 }
 
 .mbar.o{
+  color:#fbbf24;
   background:#f59e0b18;
   border:1px solid #f59e0b44;
-  color:#fbbf24;
 }
 
 .mbar.s{
+  color:#94a3b8;
   background:#64748b18;
   border:1px solid #64748b44;
-  color:#94a3b8;
 }
 
 .mbar.r{
+  color:#f87171;
   background:#dc262618;
   border:1px solid #dc262644;
-  color:#f87171;
 }
 
-/* CARD */
-.card{
-  background:var(--card);
+/* =========================
+   ORDER STATUS OVERVIEW
+========================= */
+
+.status-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.status-box{
+  padding:15px;
+
+  background:#0a1422;
+
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  margin-bottom:18px;
-  overflow:visible;
-  min-width:0;
-}
+  border-radius:10px;
 
-.card h2{
-  color:var(--green);
-  font-size:14px;
-  font-weight:700;
-  margin-bottom:14px;
-}
-
-/* LOADING */
-#loadingBox{
-  display:none;
-  background:#0a1828;
-  border:1px solid #00ff9940;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:18px;
   text-align:center;
-  color:var(--green);
-  font-family:'Share Tech Mono',monospace;
-  font-size:13px;
 }
 
-.loading-spinner{
-  display:inline-block;
-  width:18px;
-  height:18px;
-  border:3px solid #1e3048;
-  border-top-color:var(--green);
-  border-radius:50%;
-  vertical-align:middle;
-  margin-right:8px;
-  animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-/* ERROR */
-#errorBox{
-  display:none;
-  background:#2a0f15;
-  border:1px solid #dc2626;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:18px;
-  color:#f87171;
-  font-size:13px;
-}
-
-.retry-btn{
-  margin-top:12px;
-  background:#16a34a;
-  border:2px solid var(--green);
-  color:#fff;
-  border-radius:8px;
-  padding:8px 18px;
-  font-family:'Rajdhani',sans-serif;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.retry-btn:hover{
-  background:#15803d;
-}
-
-/* TABLE */
-.tbl-wrap{
-  position:relative;
-  width:100%;
-  max-width:100%;
-  overflow-x:scroll;
-  overflow-y:visible;
-  -webkit-overflow-scrolling:touch;
-  scroll-behavior:smooth;
-  border-radius:8px;
+.status-box .num{
   display:block;
-  box-sizing:border-box;
+
+  margin-top:5px;
+
+  font-size:27px;
+  font-family:'Share Tech Mono',monospace;
+}
+
+.status-box.green .num{
+  color:var(--green);
+}
+
+.status-box.amber .num{
+  color:var(--amber);
+}
+
+.status-box.red .num{
+  color:var(--red);
+}
+
+.status-box.blue .num{
+  color:var(--blue);
+}
+
+.status-box span:first-child{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+}
+
+/* =========================
+   SEARCH / FILTER
+========================= */
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:10px;
+}
+
+.search-box,
+.filter-select{
+  width:100%;
+
+  padding:11px 14px;
+
+  border:1px solid var(--border);
+  border-radius:9px;
+
+  outline:none;
+
+  background:#060e1a;
+  color:#fff;
+
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+}
+
+.search-box:focus,
+.filter-select:focus{
+  border-color:var(--green);
+}
+
+.search-box::placeholder{
+  color:var(--muted);
+}
+
+.filter-select option{
+  background:#0e1829;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.tbl-wrap{
+  width:100%;
+  overflow-x:auto;
+
+  border-radius:8px;
+
+  -webkit-overflow-scrolling:touch;
 }
 
 .tbl-wrap::-webkit-scrollbar{
@@ -576,7 +737,6 @@ body{
 
 .tbl-wrap::-webkit-scrollbar-track{
   background:#0a1220;
-  border-radius:4px;
 }
 
 .tbl-wrap::-webkit-scrollbar-thumb{
@@ -588,71 +748,8 @@ body{
   background:var(--green);
 }
 
-.scroll-bar{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  margin-top:10px;
-}
-
-.scr-btn{
-  background:#16a34a;
-  border:2px solid var(--green);
-  border-radius:10px;
-  color:#fff;
-  padding:10px 28px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
-  transition:background .15s,transform .1s;
-  font-family:'Rajdhani',sans-serif;
-  letter-spacing:.5px;
-  user-select:none;
-  box-shadow:0 0 8px #00ff9930;
-}
-
-.scr-btn:hover{
-  background:#15803d;
-  transform:scale(1.04);
-}
-
-.scr-btn:active{
-  transform:scale(.97);
-}
-
-.scr-hint{
-  font-size:11px;
-  color:var(--muted);
-  font-family:'Share Tech Mono',monospace;
-}
-
 table{
   border-collapse:collapse;
-}
-
-th,td{
-  border:1px solid var(--border);
-  padding:9px 12px;
-  text-align:center;
-  font-size:13px;
-  font-family:'Rajdhani',sans-serif;
-  font-weight:600;
-  white-space:nowrap;
-  color:#fff;
-}
-
-th{
-  background:#090f1c;
-  color:var(--green);
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.7px;
-  font-weight:700;
-}
-
-tr:hover td{
-  background:#ffffff04;
 }
 
 .full-tbl{
@@ -660,93 +757,197 @@ tr:hover td{
 }
 
 .wide-tbl{
-  min-width:1600px;
+  min-width:1700px;
 }
 
-/* SEARCH */
-.search-box{
-  width:100%;
-  padding:11px 16px;
-  background:#060e1a;
+th,
+td{
+  padding:9px 11px;
+
   border:1px solid var(--border);
-  border-radius:10px;
+
+  text-align:center;
+
+  white-space:nowrap;
+
+  font-size:12px;
+}
+
+th{
+  background:#090f1c;
+
+  color:var(--green);
+
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+}
+
+td{
   color:#fff;
-  font-size:14px;
-  font-family:'Rajdhani',sans-serif;
-  font-weight:500;
-  outline:none;
-  transition:border-color .2s;
 }
 
-.search-box:focus{
-  border-color:var(--green);
+tr:hover td{
+  background:#ffffff05;
 }
 
-.search-box::placeholder{
-  color:var(--muted);
-}
+/* =========================
+   BADGES
+========================= */
 
-/* BADGES */
 .b{
   display:inline-block;
+
   padding:3px 9px;
+
   border-radius:20px;
-  font-size:11px;
+
+  font-size:10px;
   font-weight:700;
-  letter-spacing:.2px;
 }
 
 .b-done{
-  background:#16a34a22;
   color:#4ade80;
+  background:#16a34a22;
   border:1px solid #16a34a55;
 }
 
 .b-run{
-  background:#f59e0b22;
   color:#fbbf24;
+  background:#f59e0b22;
   border:1px solid #f59e0b55;
 }
 
 .b-pend{
-  background:#64748b22;
   color:#94a3b8;
+  background:#64748b22;
   border:1px solid #64748b55;
 }
 
 .b-del{
-  background:#dc262622;
   color:#f87171;
+  background:#dc262622;
   border:1px solid #dc262655;
 }
 
-/* DEBUG */
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.progress-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:150px;
+}
+
+.progress-bg{
+  flex:1;
+  height:8px;
+
+  overflow:hidden;
+
+  background:#1e3048;
+  border-radius:5px;
+}
+
+.progress-fill{
+  height:100%;
+  border-radius:5px;
+  transition:width .4s;
+}
+
+.progress-text{
+  min-width:38px;
+
+  font-family:'Share Tech Mono',monospace;
+  font-size:11px;
+}
+
+/* =========================
+   SCROLL BUTTON
+========================= */
+
+.scroll-bar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:14px;
+
+  margin:10px 0;
+}
+
+.scr-btn{
+  padding:8px 22px;
+
+  border:2px solid var(--green);
+  border-radius:9px;
+
+  background:#16a34a;
+  color:#fff;
+
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+.scr-btn:hover{
+  background:#15803d;
+}
+
+.scr-hint{
+  color:var(--muted);
+
+  font-size:10px;
+
+  font-family:'Share Tech Mono',monospace;
+}
+
+/* =========================
+   DEBUG
+========================= */
+
 #debugBox{
   display:none;
+
+  padding:14px;
+  margin-bottom:16px;
+
+  color:var(--red);
+
   background:#0a1525;
   border:1px solid #dc2626;
   border-radius:10px;
-  padding:14px;
-  margin-bottom:16px;
+
   font-family:'Share Tech Mono',monospace;
-  font-size:11px;
-  color:#f87171;
+  font-size:10px;
+
   max-height:200px;
-  overflow-y:auto;
+  overflow:auto;
 }
 
-/* RESPONSIVE */
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1200px){
+
+  .kpi-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+}
+
 @media(max-width:960px){
+
   .sidebar{
     transform:translateX(calc(-1 * var(--sidebar-w)));
   }
 
   .sidebar.open{
     transform:translateX(0);
-  }
-
-  .sidebar.closed{
-    transform:translateX(calc(-1 * var(--sidebar-w)));
   }
 
   .main-wrap{
@@ -756,15 +957,21 @@ tr:hover td{
   .top-grid{
     grid-template-columns:1fr;
   }
+
+  .filter-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
 }
 
-@media(max-width:600px){
-  .kpi-grid{
-    grid-template-columns:repeat(2,1fr);
+@media(max-width:650px){
+
+  .content{
+    padding:10px;
   }
 
   .hero-arabic{
-    font-size:32px;
+    font-size:30px;
   }
 
   .hero-company{
@@ -772,17 +979,34 @@ tr:hover td{
   }
 
   .hero-erp{
-    font-size:12px;
-    letter-spacing:2px;
+    font-size:10px;
+    letter-spacing:1.5px;
+  }
+
+  .tb-title{
+    display:none;
   }
 
   .tb-date{
     display:none;
   }
 
-  .content{
+  .kpi-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .filter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .status-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .card{
     padding:12px;
   }
+
 }
 </style>
 </head>
@@ -791,13 +1015,26 @@ tr:hover td{
 
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<!-- SIDEBAR -->
+<!-- =========================
+     SIDEBAR
+========================= -->
+
 <div class="sidebar" id="sidebar">
 
   <div class="sb-head">
-    <div class="sb-logo">LOGO</div>
-    <div class="sb-company">INNOVATIVE KNITEX LTD</div>
-    <div class="sb-erp">SMART TNA BD ERP</div>
+
+    <div class="sb-logo">
+      LOGO
+    </div>
+
+    <div class="sb-company">
+      INNOVATIVE KNITEX LTD
+    </div>
+
+    <div class="sb-erp">
+      SMART TNA BD ERP
+    </div>
+
   </div>
 
   <nav class="sb-nav">
@@ -805,117 +1042,181 @@ tr:hover td{
     <div class="sb-label">— Main —</div>
 
     <a class="sb-link active" href="dashboard.html">
-      <span class="sb-icon">🏠</span> Dashboard
+      <span class="sb-icon">🏠</span>
+      Dashboard
     </a>
 
     <a class="sb-link" href="orders.html">
-      <span class="sb-icon">📦</span> Order Entry
+      <span class="sb-icon">📦</span>
+      Order Entry
       <span class="sb-badge g">NEW</span>
     </a>
 
     <a class="sb-link" href="tna-management.html">
-      <span class="sb-icon">📋</span> TNA Management
+      <span class="sb-icon">📋</span>
+      TNA Management
     </a>
 
     <div class="sb-label">— Admin —</div>
 
     <a class="sb-link" href="admin.html">
-      <span class="sb-icon">👑</span> Admin Panel
+      <span class="sb-icon">👑</span>
+      Admin Panel
       <span class="sb-badge bl">ADMIN</span>
     </a>
 
     <a class="sb-link" href="admin-user-management.html">
-      <span class="sb-icon">👥</span> User Management
+      <span class="sb-icon">👥</span>
+      User Management
     </a>
 
     <a class="sb-link" href="merchandising.html">
-      <span class="sb-icon">👔</span> Merchandising
+      <span class="sb-icon">👔</span>
+      Merchandising
     </a>
 
     <div class="sb-label">— Production —</div>
 
     <a class="sb-link" href="sample.html">
-      <span class="sb-icon">🧵</span> Sample
+      <span class="sb-icon">🧵</span>
+      Sample
     </a>
 
     <a class="sb-link" href="knitting.html">
-      <span class="sb-icon">🧶</span> Knitting
+      <span class="sb-icon">🧶</span>
+      Knitting
     </a>
 
     <a class="sb-link" href="dyeing.html">
-      <span class="sb-icon">🎨</span> Dyeing
+      <span class="sb-icon">🎨</span>
+      Dyeing
     </a>
 
     <a class="sb-link" href="laboratory.html">
-      <span class="sb-icon">🔬</span> Laboratory
+      <span class="sb-icon">🔬</span>
+      Laboratory
     </a>
 
     <a class="sb-link" href="cutting.html">
-      <span class="sb-icon">✂️</span> Cutting
+      <span class="sb-icon">✂️</span>
+      Cutting
     </a>
 
     <a class="sb-link" href="print-emb.html">
-      <span class="sb-icon">🖨️</span> Print & Embroidery
+      <span class="sb-icon">🖨️</span>
+      Print & Embroidery
     </a>
 
     <a class="sb-link" href="sewing.html">
-      <span class="sb-icon">🪡</span> Sewing
+      <span class="sb-icon">🪡</span>
+      Sewing
     </a>
 
     <a class="sb-link" href="washing.html">
-      <span class="sb-icon">💧</span> Washing
+      <span class="sb-icon">💧</span>
+      Washing
     </a>
 
     <a class="sb-link" href="finishing.html">
-      <span class="sb-icon">📦</span> Finishing
+      <span class="sb-icon">📦</span>
+      Finishing
     </a>
 
     <a class="sb-link" href="shipment.html">
-      <span class="sb-icon">🚢</span> Shipment
+      <span class="sb-icon">🚢</span>
+      Shipment
     </a>
 
     <div class="sb-label">— Management —</div>
 
     <a class="sb-link" href="reports.html">
-      <span class="sb-icon">📊</span> Reports
+      <span class="sb-icon">📊</span>
+      Reports
     </a>
 
     <a class="sb-link" href="settings.html">
-      <span class="sb-icon">⚙️</span> Settings
+      <span class="sb-icon">⚙️</span>
+      Settings
     </a>
 
   </nav>
 
-  <div style="padding:10px 8px 6px;border-top:1px solid #1e3048;">
-    <a href="dashboard.html"
-       style="display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#006a4e,#00553e);border:2px solid #00ff99;border-radius:10px;color:#fff;padding:11px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Rajdhani',sans-serif;transition:all .18s;box-shadow:0 0 12px #00ff9930;"
-       onmouseover="this.style.background='linear-gradient(135deg,#00ff99,#00cc77)';this.style.color='#000';"
-       onmouseout="this.style.background='linear-gradient(135deg,#006a4e,#00553e)';this.style.color='#fff';">
+  <div style="padding:8px;border-top:1px solid #1e3048;">
+
+    <a
+      href="dashboard.html"
+      style="
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      padding:10px;
+      border:2px solid #00ff99;
+      border-radius:9px;
+      background:#006a4e;
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      "
+    >
       🏠 Dashboard
     </a>
+
   </div>
 
   <div class="sb-foot">
-    <a class="sb-link" href="login.html" style="color:#f87171;">
-      <span class="sb-icon">🚪</span> Logout
+
+    <a
+      class="sb-link"
+      href="login.html"
+      style="color:#f87171;"
+    >
+      <span class="sb-icon">🚪</span>
+      Logout
     </a>
+
   </div>
 
 </div>
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN
+========================= -->
+
 <div class="main-wrap" id="mainWrap">
 
   <div class="topbar">
 
     <div class="tb-left">
-      <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
-      <span class="tb-title">📊 ERP Dashboard</span>
+
+      <button
+        class="toggle-btn"
+        id="toggleBtn"
+        onclick="toggleSidebar()"
+      >
+        ☰
+      </button>
+
+      <span class="tb-title">
+        📊 ERP Dashboard
+      </span>
+
     </div>
 
     <div class="tb-right">
-      <span class="tb-date" id="dateEl"></span>
-      <span class="tb-user">👤 Loading...</span>
+
+      <span
+        class="tb-date"
+        id="dateEl"
+      ></span>
+
+      <span
+        class="tb-user"
+        id="userBadge"
+      >
+        👤 Loading...
+      </span>
+
     </div>
 
   </div>
@@ -923,6 +1224,7 @@ tr:hover td{
   <div class="content">
 
     <!-- HERO -->
+
     <div class="hero-header">
 
       <span class="hero-arabic">
@@ -942,115 +1244,253 @@ tr:hover td{
     </div>
 
     <!-- LOADING -->
+
     <div id="loadingBox">
+
       <span class="loading-spinner"></span>
+
       Loading latest order data from Firebase...
+
     </div>
 
     <!-- ERROR -->
+
     <div id="errorBox">
+
       <div id="errorMessage"></div>
-      <button class="retry-btn" id="retryBtn">
+
+      <button
+        class="retry-btn"
+        id="retryBtn"
+      >
         🔄 Retry Loading
       </button>
+
     </div>
 
-    <!-- DEBUG -->
-    <div id="debugBox"></div>
-
     <!-- KPI -->
+
     <div class="kpi-grid">
 
       <div class="kpi-card">
         <h3>Total Orders</h3>
-        <h1 id="kTotalOrders">…</h1>
+        <h1 id="kTotalOrders">0</h1>
       </div>
 
       <div class="kpi-card blue">
-        <h3>Total Qty (PCS)</h3>
-        <h1 id="kTotalQty">…</h1>
+        <h3>Total Qty PCS</h3>
+        <h1 id="kTotalQty">0</h1>
       </div>
 
       <div class="kpi-card amber">
-        <h3>Running Orders</h3>
-        <h1 id="kRunning">…</h1>
+        <h3>Running</h3>
+        <h1 id="kRunning">0</h1>
       </div>
 
       <div class="kpi-card">
-        <h3>Completed Orders</h3>
-        <h1 id="kCompleted">…</h1>
+        <h3>Completed</h3>
+        <h1 id="kCompleted">0</h1>
       </div>
 
       <div class="kpi-card red">
-        <h3>Delayed Orders</h3>
-        <h1 id="kDelayed">…</h1>
-      </div>
-
-      <div class="kpi-card amber">
-        <h3>This Month Ship</h3>
-        <h1 id="kThisMonth">…</h1>
+        <h3>Delayed</h3>
+        <h1 id="kDelayed">0</h1>
       </div>
 
       <div class="kpi-card blue">
+        <h3>This Month Ship</h3>
+        <h1 id="kThisMonth">0</h1>
+      </div>
+
+      <div class="kpi-card purple">
         <h3>Next Month Book</h3>
-        <h1 id="kNextMonth">…</h1>
+        <h1 id="kNextMonth">0</h1>
       </div>
 
       <div class="kpi-card">
         <h3>Avg Lead Time</h3>
-        <h1 id="kAvgLead">…</h1>
+        <h1 id="kAvgLead">0 D</h1>
       </div>
 
     </div>
 
-    <!-- PROGRESS + MONTHLY -->
+    <!-- PROGRESS -->
+
     <div class="top-grid">
 
       <div class="circle-card">
 
         <h2>📦 Total Order Progress</h2>
-        <h3>Running Factory Progress</h3>
 
-        <div class="prog-ring" id="progressCircle">
+        <h3>
+          Factory TNA Completion
+        </h3>
+
+        <div
+          class="prog-ring"
+          id="progressCircle"
+        >
           0%
         </div>
 
         <p class="prog-stat">
-          Completed : <b id="completedCount">0</b>
+          Completed :
+          <b id="completedCount">0</b>
         </p>
 
         <p class="prog-stat">
-          Running : <b id="runningCount">0</b>
+          Running :
+          <b id="runningCount">0</b>
         </p>
 
         <p class="prog-stat">
-          Delayed : <b id="delayedCount" style="color:#f87171;">0</b>
+          Delayed :
+          <b
+            id="delayedCount"
+            style="color:#f87171;"
+          >
+            0
+          </b>
         </p>
 
       </div>
 
       <div class="month-card">
 
-        <h2>📅 Monthly Shipment Progress</h2>
+        <h2>
+          📅 Monthly Shipment Progress
+        </h2>
 
         <div class="mbar g">
-          <span>✅ THIS MONTH (Shipment)</span>
-          <span class="pct" id="m0pct">0 PCS</span>
+          <span>
+            ✅ THIS MONTH
+          </span>
+
+          <span
+            class="pct"
+            id="m0pct"
+          >
+            0 PCS
+          </span>
         </div>
 
         <div class="mbar o">
-          <span>🔄 NEXT MONTH (Booked)</span>
-          <span class="pct" id="m1pct">0 PCS</span>
+
+          <span>
+            🔄 NEXT MONTH
+          </span>
+
+          <span
+            class="pct"
+            id="m1pct"
+          >
+            0 PCS
+          </span>
+
         </div>
 
         <div class="mbar s">
-          <span>📌 NEXT +1 MONTH</span>
-          <span class="pct" id="m2pct">0 PCS</span>
+
+          <span>
+            📌 NEXT +1 MONTH
+          </span>
+
+          <span
+            class="pct"
+            id="m2pct"
+          >
+            0 PCS
+          </span>
+
         </div>
 
         <div class="mbar r">
-          <span>⚠️ NEXT +2 MONTH</span>
-          <span class="pct" id="m3pct">0 PCS</span>
+
+          <span>
+            ⚠️ NEXT +2 MONTH
+          </span>
+
+          <span
+            class="pct"
+            id="m3pct"
+          >
+            0 PCS
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ORDER STATUS -->
+
+    <div class="card">
+
+      <h2>
+        📊 Order Status Overview
+      </h2>
+
+      <div class="status-grid">
+
+        <div class="status-box green">
+
+          <span>
+            Completed
+          </span>
+
+          <span
+            class="num"
+            id="statusCompleted"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="status-box amber">
+
+          <span>
+            Running
+          </span>
+
+          <span
+            class="num"
+            id="statusRunning"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="status-box red">
+
+          <span>
+            Delayed
+          </span>
+
+          <span
+            class="num"
+            id="statusDelayed"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="status-box blue">
+
+          <span>
+            Total PCS
+          </span>
+
+          <span
+            class="num"
+            id="statusQty"
+          >
+            0
+          </span>
+
         </div>
 
       </div>
@@ -1058,29 +1498,101 @@ tr:hover td{
     </div>
 
     <!-- SEARCH -->
+
     <div class="card">
 
-      <h2>🔍 Smart Search</h2>
+      <h2>
+        🔍 Smart Search & Filter
+      </h2>
 
-      <input
-        class="search-box"
-        type="text"
-        id="searchInput"
-        placeholder="Search Buyer / IKL No / Style / Merchandiser..."
-      >
+      <div class="filter-grid">
+
+        <input
+          class="search-box"
+          id="searchInput"
+          type="text"
+          placeholder="Search Buyer / IKL / Style / Merchandiser..."
+        >
+
+        <select
+          class="filter-select"
+          id="statusFilter"
+        >
+
+          <option value="">
+            All Status
+          </option>
+
+          <option value="Completed">
+            Completed
+          </option>
+
+          <option value="Running">
+            Running
+          </option>
+
+          <option value="Delayed">
+            Delayed
+          </option>
+
+        </select>
+
+        <select
+          class="filter-select"
+          id="merchFilter"
+        >
+
+          <option value="">
+            All Merchandisers
+          </option>
+
+        </select>
+
+        <select
+          class="filter-select"
+          id="monthFilter"
+        >
+
+          <option value="">
+            All Shipment Months
+          </option>
+
+          <option value="0">
+            This Month
+          </option>
+
+          <option value="1">
+            Next Month
+          </option>
+
+          <option value="2">
+            Next +1 Month
+          </option>
+
+          <option value="3">
+            Next +2 Month
+          </option>
+
+        </select>
+
+      </div>
 
     </div>
 
     <!-- DAILY PRODUCTION -->
+
     <div class="card">
 
-      <h2>🎯 Daily Production</h2>
+      <h2>
+        🎯 Daily Production
+      </h2>
 
       <div class="tbl-wrap">
 
         <table class="full-tbl">
 
           <thead>
+
             <tr>
               <th>Department</th>
               <th>Target</th>
@@ -1088,57 +1600,10 @@ tr:hover td{
               <th>Balance</th>
               <th>Efficiency</th>
             </tr>
+
           </thead>
 
-          <tbody>
-
-            <tr>
-              <td><b>Knitting</b></td>
-              <td>20,000 KG</td>
-              <td>18,500 KG</td>
-              <td>1,500 KG</td>
-              <td><span class="b b-run">92%</span></td>
-            </tr>
-
-            <tr>
-              <td><b>Dyeing</b></td>
-              <td>18,000 KG</td>
-              <td>17,200 KG</td>
-              <td>800 KG</td>
-              <td><span class="b b-done">95%</span></td>
-            </tr>
-
-            <tr>
-              <td><b>Cutting</b></td>
-              <td>25,000 PCS</td>
-              <td>24,300 PCS</td>
-              <td>700 PCS</td>
-              <td><span class="b b-done">97%</span></td>
-            </tr>
-
-            <tr>
-              <td><b>Print & Emb</b></td>
-              <td>15,000 PCS</td>
-              <td>14,000 PCS</td>
-              <td>1,000 PCS</td>
-              <td><span class="b b-run">93%</span></td>
-            </tr>
-
-            <tr>
-              <td><b>Sewing</b></td>
-              <td>30,000 PCS</td>
-              <td>28,000 PCS</td>
-              <td>2,000 PCS</td>
-              <td><span class="b b-run">93%</span></td>
-            </tr>
-
-            <tr>
-              <td><b>Finishing</b></td>
-              <td>27,000 PCS</td>
-              <td>25,500 PCS</td>
-              <td>1,500 PCS</td>
-              <td><span class="b b-run">94%</span></td>
-            </tr>
+          <tbody id="productionBody">
 
           </tbody>
 
@@ -1149,26 +1614,56 @@ tr:hover td{
     </div>
 
     <!-- MERCHANDISER -->
+
     <div class="card">
 
-      <h2>👔 Merchandiser Performance</h2>
+      <h2>
+        👔 Merchandiser Performance
+      </h2>
 
       <div class="tbl-wrap">
 
         <table class="full-tbl">
 
           <thead>
+
             <tr>
-              <th>Merchandiser</th>
-              <th>Total Orders</th>
-              <th>Total Qty</th>
-              <th>Running</th>
-              <th>Avg TNA Progress</th>
-              <th>Completion %</th>
+
+              <th>
+                Merchandiser
+              </th>
+
+              <th>
+                Total Orders
+              </th>
+
+              <th>
+                Total Qty
+              </th>
+
+              <th>
+                Running
+              </th>
+
+              <th>
+                Delayed
+              </th>
+
+              <th>
+                Avg TNA Progress
+              </th>
+
+              <th>
+                Completion %
+              </th>
+
             </tr>
+
           </thead>
 
-          <tbody id="merchTable"></tbody>
+          <tbody id="merchTable">
+
+          </tbody>
 
         </table>
 
@@ -1177,26 +1672,38 @@ tr:hover td{
     </div>
 
     <!-- IKL TRACKER -->
+
     <div class="card">
 
-      <h2>📦 IKL Wise Progress Tracker</h2>
+      <h2>
+        📦 IKL Wise Progress Tracker
+      </h2>
 
-      <div class="scroll-bar" style="margin-bottom:10px;">
+      <div class="scroll-bar">
 
-        <button class="scr-btn" id="btnL1">◀ LEFT</button>
+        <button
+          class="scr-btn"
+          id="btnL1"
+        >
+          ◀ LEFT
+        </button>
 
         <span class="scr-hint">
           ← Scroll Table Left / Right →
         </span>
 
-        <button class="scr-btn" id="btnR1">RIGHT ▶</button>
+        <button
+          class="scr-btn"
+          id="btnR1"
+        >
+          RIGHT ▶
+        </button>
 
       </div>
 
       <div
         class="tbl-wrap"
         id="tnaScroll"
-        style="overflow-x:scroll!important;width:100%;max-width:100%;"
       >
 
         <table class="wide-tbl">
@@ -1204,6 +1711,7 @@ tr:hover td{
           <thead>
 
             <tr>
+
               <th>Buyer</th>
               <th>IKL No</th>
               <th>Style No</th>
@@ -1213,6 +1721,7 @@ tr:hover td{
               <th>Lead Time</th>
               <th>Merchandiser</th>
               <th>TNA Progress</th>
+
               <th>Merchandising</th>
               <th>Knitting</th>
               <th>Dyeing</th>
@@ -1224,161 +1733,127 @@ tr:hover td{
               <th>Washing</th>
               <th>Finishing</th>
               <th>Shipment</th>
+
+              <th>Order Status</th>
+
             </tr>
 
           </thead>
 
-          <tbody id="tnaBody"></tbody>
+          <tbody id="tnaBody">
+
+          </tbody>
 
         </table>
 
       </div>
 
-      <div class="scroll-bar" style="margin-top:10px;">
+      <div class="scroll-bar">
 
-        <button class="scr-btn" id="btnL2">◀ LEFT</button>
+        <button
+          class="scr-btn"
+          id="btnL2"
+        >
+          ◀ LEFT
+        </button>
 
         <span class="scr-hint">
           ← Scroll Table Left / Right →
         </span>
 
-        <button class="scr-btn" id="btnR2">RIGHT ▶</button>
+        <button
+          class="scr-btn"
+          id="btnR2"
+        >
+          RIGHT ▶
+        </button>
 
       </div>
 
     </div>
 
+    <!-- DEBUG -->
+
+    <div id="debugBox"></div>
+
   </div>
 
 </div>
 
-<!-- FIREBASE -->
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+/* =========================
+   FIREBASE
+========================= */
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
   collection,
   getDocs
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
   getAuth,
   onAuthStateChanged,
   browserLocalPersistence,
   setPersistence
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-
-/* FIREBASE CONFIG */
 
 const cfg = {
-  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain:"smart-tna-bd.firebaseapp.com",
-  projectId:"smart-tna-bd",
-  storageBucket:"smart-tna-bd.firebasestorage.app",
-  messagingSenderId:"372049573207",
-  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+
+  apiKey:
+  "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+  authDomain:
+  "smart-tna-bd.firebaseapp.com",
+
+  projectId:
+  "smart-tna-bd",
+
+  storageBucket:
+  "smart-tna-bd.firebasestorage.app",
+
+  messagingSenderId:
+  "372049573207",
+
+  appId:
+  "1:372049573207:web:571beae951f9aa4b47fa12"
+
 };
 
 
-const fbApp = initializeApp(cfg);
-const db = getFirestore(fbApp);
-const auth = getAuth(fbApp);
+const fbApp =
+  initializeApp(cfg);
+
+const db =
+  getFirestore(fbApp);
+
+const auth =
+  getAuth(fbApp);
 
 
-/* STATE */
+/* =========================
+   STATE
+========================= */
 
 let currentOrders = [];
+
 let isLoading = false;
+
 let lastSuccessfulLoad = 0;
 
 
-/* HELPERS */
-
-function getQty(d){
-
-  const candidates = [
-    d.totalQty,
-    d.total_qty,
-    d.TotalQty,
-    d.TOTALQTY,
-    d.qty,
-    d.Qty,
-    d.QTY,
-    d.quantity,
-    d.Quantity,
-    d.QUANTITY,
-    d.orderQty,
-    d.order_qty,
-    d.OrderQty,
-    d.pcs,
-    d.PCS,
-    d.pieces
-  ];
-
-  for(const v of candidates){
-
-    if(v !== undefined && v !== null && v !== ""){
-
-      const n = parseFloat(
-        String(v).replace(/,/g,"").trim()
-      );
-
-      if(!isNaN(n) && n > 0){
-        return n;
-      }
-
-    }
-
-  }
-
-  return 0;
-}
-
-
-function getShipTxt(d){
-
-  return d.shipdate ||
-         d.shipmentDate ||
-         d.shipmentdate ||
-         d.ShipmentDate ||
-         d.shipDate ||
-         d.ship_date ||
-         d.deliveryDate ||
-         d.delivery_date ||
-         "";
-
-}
-
-
-function badge(s){
-
-  if(!s || s === "Pending"){
-    return `<span class="b b-pend">Pending</span>`;
-  }
-
-  if(s === "Completed" || s === "Complete"){
-    return `<span class="b b-done">Completed</span>`;
-  }
-
-  if(s === "Running"){
-    return `<span class="b b-run">Running</span>`;
-  }
-
-  if(s === "Delayed"){
-    return `<span class="b b-del">Delayed</span>`;
-  }
-
-  return `<span class="b b-pend">${s}</span>`;
-}
-
-
-/* TNA STEPS */
+/* =========================
+   TNA STEPS
+========================= */
 
 const TNA_STEPS = [
 
@@ -1430,6 +1905,123 @@ const TNA_STEPS = [
 ];
 
 
+/* =========================
+   HELPERS
+========================= */
+
+function getQty(d){
+
+  const candidates = [
+
+    d.totalQty,
+    d.total_qty,
+    d.TotalQty,
+    d.TOTALQTY,
+
+    d.qty,
+    d.Qty,
+    d.QTY,
+
+    d.quantity,
+    d.Quantity,
+
+    d.orderQty,
+    d.order_qty,
+    d.OrderQty,
+
+    d.pcs,
+    d.PCS,
+    d.pieces
+
+  ];
+
+  for(const v of candidates){
+
+    if(
+      v !== undefined &&
+      v !== null &&
+      v !== ""
+    ){
+
+      const n =
+        parseFloat(
+          String(v)
+            .replace(/,/g,"")
+            .trim()
+        );
+
+      if(
+        !isNaN(n) &&
+        n > 0
+      ){
+        return n;
+      }
+
+    }
+
+  }
+
+  return 0;
+
+}
+
+
+function getShipTxt(d){
+
+  return (
+    d.shipdate ||
+    d.shipmentDate ||
+    d.shipmentdate ||
+    d.ShipmentDate ||
+    d.shipDate ||
+    d.ship_date ||
+    d.deliveryDate ||
+    d.delivery_date ||
+    ""
+  );
+
+}
+
+
+function parseDate(value){
+
+  if(!value){
+    return null;
+  }
+
+  if(
+    typeof value === "object" &&
+    value?.toDate
+  ){
+    return value.toDate();
+  }
+
+  const d =
+    new Date(value);
+
+  return isNaN(d)
+    ? null
+    : d;
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   TNA PROGRESS
+========================= */
+
 function calcTnaProgress(d){
 
   let total = 0;
@@ -1437,15 +2029,19 @@ function calcTnaProgress(d){
 
   TNA_STEPS.forEach(step => {
 
-    const key = step + "Status";
+    const status =
+      d[step+"Status"] ??
+      d[step] ??
+      "";
 
-    const val = d[key] || d[step] || "";
-
-    if(val !== ""){
+    if(status !== ""){
       total++;
     }
 
-    if(val === "Complete" || val === "Completed"){
+    if(
+      status === "Complete" ||
+      status === "Completed"
+    ){
       completed++;
     }
 
@@ -1471,13 +2067,17 @@ function calcTnaProgress(d){
 
   simpleSteps.forEach(key => {
 
-    const val = d[key] || "";
+    const status =
+      d[key] ?? "";
 
-    if(val !== ""){
+    if(status !== ""){
       total++;
     }
 
-    if(val === "Completed" || val === "Complete"){
+    if(
+      status === "Complete" ||
+      status === "Completed"
+    ){
       completed++;
     }
 
@@ -1485,91 +2085,173 @@ function calcTnaProgress(d){
 
 
   if(total === 0){
+
     return 0;
+
   }
 
-  return Math.round((completed / total) * 100);
+
+  return Math.min(
+    100,
+    Math.round(
+      (completed / total) * 100
+    )
+  );
 
 }
 
+
+/* =========================
+   ORDER STATUS
+========================= */
 
 function isOrderCompleted(d){
 
   if(
     d.shipmentStatus === "Completed" ||
-    d.finalStatus === "Complete" ||
-    d.finalStatus === "Completed"
+    d.shipmentStatus === "Complete" ||
+
+    d.finalStatus === "Completed" ||
+    d.finalStatus === "Complete"
   ){
     return true;
   }
 
-  return calcTnaProgress(d) === 100;
+  return calcTnaProgress(d) >= 100;
 
 }
 
 
-function progressBar(pct){
+function isOrderDelayed(d){
 
-  const color =
-    pct >= 100 ? "#00ff99" :
-    pct >= 60 ? "#fbbf24" :
-    pct >= 30 ? "#f97316" :
-    "#f87171";
+  if(isOrderCompleted(d)){
+    return false;
+  }
 
+  const shipDate =
+    parseDate(getShipTxt(d));
+
+  if(!shipDate){
+    return false;
+  }
+
+  const today =
+    new Date();
+
+  today.setHours(
+    0,0,0,0
+  );
+
+  shipDate.setHours(
+    0,0,0,0
+  );
+
+  return shipDate < today;
+
+}
+
+
+function getOrderStatus(d){
+
+  if(isOrderCompleted(d)){
+    return "Completed";
+  }
+
+  if(isOrderDelayed(d)){
+    return "Delayed";
+  }
+
+  return "Running";
+
+}
+
+
+/* =========================
+   BADGE
+========================= */
+
+function badge(status){
+
+  if(status === "Completed"){
+
+    return `
+      <span class="b b-done">
+        Completed
+      </span>
+    `;
+
+  }
+
+  if(status === "Running"){
+
+    return `
+      <span class="b b-run">
+        Running
+      </span>
+    `;
+
+  }
+
+  if(status === "Delayed"){
+
+    return `
+      <span class="b b-del">
+        Delayed
+      </span>
+    `;
+
+  }
+
+  if(
+    status === "Complete"
+  ){
+
+    return `
+      <span class="b b-done">
+        Completed
+      </span>
+    `;
+
+  }
 
   return `
-
-  <div style="display:flex;align-items:center;gap:8px;">
-
-    <div style="flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;">
-
-      <div
-        style="
-        width:${pct}%;
-        height:100%;
-        background:${color};
-        border-radius:4px;
-        transition:width .5s;
-        ">
-      </div>
-
-    </div>
-
-    <span
-      style="
-      font-size:12px;
-      font-weight:700;
-      color:${color};
-      font-family:'Share Tech Mono',monospace;
-      min-width:36px;
-      ">
-      ${pct}%
+    <span class="b b-pend">
+      Pending
     </span>
-
-  </div>
-
   `;
 
 }
 
 
-/* STATUS GROUP */
+/* =========================
+   TNA GROUP
+========================= */
 
 function tnaGrp(d,keys){
 
-  const vals = keys
-    .map(k => d[k+"Status"] || d[k] || "")
-    .filter(v => v !== "");
+  const vals =
+    keys
+      .map(
+        k =>
+          d[k+"Status"] ??
+          d[k] ??
+          ""
+      )
+      .filter(
+        v => v !== ""
+      );
 
 
-  if(vals.length === 0){
+  if(!vals.length){
     return "";
   }
 
 
   if(
     vals.every(
-      v => v === "Complete" || v === "Completed"
+      v =>
+        v === "Complete" ||
+        v === "Completed"
     )
   ){
     return "Completed";
@@ -1578,7 +2260,9 @@ function tnaGrp(d,keys){
 
   if(
     vals.some(
-      v => v === "Complete" || v === "Completed"
+      v =>
+        v === "Complete" ||
+        v === "Completed"
     )
   ){
     return "Running";
@@ -1590,20 +2274,76 @@ function tnaGrp(d,keys){
 }
 
 
-/* UI STATE */
+/* =========================
+   PROGRESS BAR
+========================= */
+
+function progressBar(pct){
+
+  let cls = "#f87171";
+
+  if(pct >= 100){
+    cls = "#00ff99";
+  }
+  else if(pct >= 60){
+    cls = "#fbbf24";
+  }
+  else if(pct >= 30){
+    cls = "#f97316";
+  }
+
+  return `
+
+    <div class="progress-wrap">
+
+      <div class="progress-bg">
+
+        <div
+          class="progress-fill"
+          style="
+            width:${pct}%;
+            background:${cls};
+          "
+        ></div>
+
+      </div>
+
+      <span
+        class="progress-text"
+        style="color:${cls}"
+      >
+        ${pct}%
+      </span>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   UI
+========================= */
 
 function showLoading(){
 
-  document.getElementById("loadingBox").style.display = "block";
+  document
+    .getElementById("loadingBox")
+    .style.display = "block";
 
-  document.getElementById("errorBox").style.display = "none";
+  document
+    .getElementById("errorBox")
+    .style.display = "none";
 
 }
 
 
 function hideLoading(){
 
-  document.getElementById("loadingBox").style.display = "none";
+  document
+    .getElementById("loadingBox")
+    .style.display = "none";
 
 }
 
@@ -1612,40 +2352,37 @@ function showError(message){
 
   hideLoading();
 
-  const box = document.getElementById("errorBox");
-  const msg = document.getElementById("errorMessage");
+  document
+    .getElementById("errorMessage")
+    .innerHTML = `
+      ⚠️ <b>Dashboard data load failed.</b>
+      <br><br>
+      ${message}
+    `;
 
-  msg.innerHTML = `
-    ⚠️ <b>Dashboard data load failed.</b><br><br>
-    ${message}
-  `;
-
-  box.style.display = "block";
-
-}
-
-
-function clearError(){
-
-  document.getElementById("errorBox").style.display = "none";
+  document
+    .getElementById("errorBox")
+    .style.display = "block";
 
 }
 
 
-/* RESET TABLES */
+function clearTables(){
 
-function clearDashboardTables(){
+  document
+    .getElementById("tnaBody")
+    .innerHTML = "";
 
-  document.getElementById("tnaBody").innerHTML = "";
-
-  document.getElementById("merchTable").innerHTML = "";
-
-  document.getElementById("debugBox").style.display = "none";
+  document
+    .getElementById("merchTable")
+    .innerHTML = "";
 
 }
 
 
-/* MAIN LOAD */
+/* =========================
+   LOAD FIREBASE
+========================= */
 
 async function load(){
 
@@ -1653,117 +2390,81 @@ async function load(){
     return;
   }
 
-
   isLoading = true;
 
   showLoading();
-  clearError();
-
 
   try{
 
-    console.log("[DASHBOARD] Loading orders...");
-
-    const snap = await getDocs(
-      collection(db,"orders")
-    );
-
-
-    console.log(
-      "[DASHBOARD] Firebase orders:",
-      snap.size
-    );
+    const snap =
+      await getDocs(
+        collection(
+          db,
+          "orders"
+        )
+      );
 
 
     currentOrders = [];
 
+    snap.forEach(
+      docSnap => {
 
-    snap.forEach(docSnap => {
+        currentOrders.push({
 
-      currentOrders.push({
-        id: docSnap.id,
-        ...docSnap.data()
-      });
+          id:docSnap.id,
 
-    });
+          ...docSnap.data()
 
+        });
 
-    clearDashboardTables();
-
-
-    if(currentOrders.length === 0){
-
-      document.getElementById("tnaBody").innerHTML = `
-
-        <tr>
-
-          <td
-            colspan="20"
-            style="
-            padding:30px;
-            color:#4a6080;
-            font-size:14px;
-            "
-          >
-            📭 No Orders Found in Firebase
-          </td>
-
-        </tr>
-
-      `;
+      }
+    );
 
 
-      updateKPI(
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        [0,0,0,0]
-      );
+    clearTables();
+
+    processOrders(
+      currentOrders
+    );
 
 
-      lastSuccessfulLoad = Date.now();
-
-      hideLoading();
-
-      isLoading = false;
-
-      return;
-
-    }
-
-
-    processOrders(currentOrders);
-
-
-    lastSuccessfulLoad = Date.now();
+    lastSuccessfulLoad =
+      Date.now();
 
     hideLoading();
 
+    document
+      .getElementById("errorBox")
+      .style.display = "none";
+
     console.log(
-      "[DASHBOARD] Load successful."
+      "[DASHBOARD]",
+      "Orders loaded:",
+      currentOrders.length
     );
 
+  }
+  catch(err){
 
-  }catch(err){
-
-    console.error(
-      "[DASHBOARD] FIRESTORE ERROR:",
-      err
-    );
-
+    console.error(err);
 
     showError(`
-      ${err.message || "Unknown Firebase error"}<br><br>
-      <span style="color:#94a3b8;">
-      Please check your Firebase connection and Firestore Rules.
+      ${escapeHTML(
+        err.message ||
+        "Unknown Firebase error"
+      )}
+
+      <br><br>
+
+      <span style="color:#94a3b8">
+        Check Firebase Authentication,
+        Firestore Rules and internet connection.
       </span>
     `);
 
-
-  }finally{
+  }
+  finally{
 
     isLoading = false;
 
@@ -1772,367 +2473,394 @@ async function load(){
 }
 
 
-/* PROCESS ORDERS */
+/* =========================
+   PROCESS ORDERS
+========================= */
 
 function processOrders(orders){
 
-  const now = new Date();
+  const now =
+    new Date();
 
-  const cm = now.getMonth();
-  const cy = now.getFullYear();
+  const cm =
+    now.getMonth();
 
-
-  const months = [0,1,2,3].map(i => {
-
-    const m = (cm+i)%12;
-
-    const y =
-      cy +
-      Math.floor((cm+i)/12);
-
-    return {m,y};
-
-  });
+  const cy =
+    now.getFullYear();
 
 
-  let tot = 0;
+  const months =
+    [0,1,2,3].map(i => {
+
+      const total =
+        cm + i;
+
+      return {
+
+        m:
+          total % 12,
+
+        y:
+          cy +
+          Math.floor(
+            total / 12
+          )
+
+      };
+
+    });
+
+
   let totalQty = 0;
-  let run = 0;
-  let done = 0;
-  let late = 0;
+  let running = 0;
+  let completed = 0;
+  let delayed = 0;
+
   let leadSum = 0;
+  let leadCount = 0;
 
-
-  const mQty = [0,0,0,0];
+  const monthlyQty =
+    [0,0,0,0];
 
   const merch = {};
 
-  const zeroQtyOrders = [];
+  const merchSet =
+    new Set();
+
+
+  const body =
+    document.getElementById(
+      "tnaBody"
+    );
 
 
   orders.forEach(d => {
 
-    tot++;
-
-
-    const qty = getQty(d);
+    const qty =
+      getQty(d);
 
     totalQty += qty;
 
 
-    if(qty === 0){
+    const status =
+      getOrderStatus(d);
 
-      const allKeys =
-        Object.keys(d).join(", ");
+    const pct =
+      calcTnaProgress(d);
 
-      zeroQtyOrders.push(
-        `IKL:${d.ikl || d.iklNo || "?"} | Fields: ${allKeys}`
-      );
 
+    if(status === "Completed"){
+      completed++;
+    }
+
+    else if(status === "Delayed"){
+      delayed++;
+    }
+
+    else{
+      running++;
     }
 
 
-    const sdTxt = getShipTxt(d);
+    const orderDate =
+      parseDate(
+        d.orderDate
+      );
+
+    const shipDate =
+      parseDate(
+        getShipTxt(d)
+      );
 
 
-    let days = 0;
+    let leadDays = 0;
 
 
-    if(d.orderDate && sdTxt){
+    if(
+      orderDate &&
+      shipDate
+    ){
 
-      const a = new Date(d.orderDate);
-      const b = new Date(sdTxt);
-
-
-      if(!isNaN(a) && !isNaN(b)){
-
-        days = Math.ceil(
-          (b-a)/864e5
+      leadDays =
+        Math.ceil(
+          (
+            shipDate -
+            orderDate
+          ) /
+          86400000
         );
+
+      if(leadDays > 0){
+
+        leadSum += leadDays;
+
+        leadCount++;
 
       }
 
     }
 
 
-    leadSum += days;
+    /* MONTH */
 
+    if(shipDate){
 
-    const tnaPct =
-      calcTnaProgress(d);
+      months.forEach(
+        (mo,index) => {
 
+          if(
+            shipDate.getMonth()
+              === mo.m &&
+            shipDate.getFullYear()
+              === mo.y
+          ){
 
-    const isDone =
-      isOrderCompleted(d);
+            monthlyQty[index]
+              += qty;
 
-
-    if(isDone){
-      done++;
-    }else{
-      run++;
-    }
-
-
-    const sd =
-      sdTxt ? new Date(sdTxt) : null;
-
-
-    if(
-      sd &&
-      !isNaN(sd) &&
-      sd < now &&
-      !isDone
-    ){
-      late++;
-    }
-
-
-    if(sd && !isNaN(sd)){
-
-      months.forEach((mo,i) => {
-
-        if(
-          sd.getMonth() === mo.m &&
-          sd.getFullYear() === mo.y
-        ){
-
-          mQty[i] += qty;
+          }
 
         }
-
-      });
+      );
 
     }
 
 
-    const mn =
-      d.merchandiser || "Unknown";
+    /* MERCHANDISER */
+
+    const merchName =
+      (
+        d.merchandiser ||
+        "Unknown"
+      ).trim();
 
 
-    if(!merch[mn]){
+    merchSet.add(
+      merchName
+    );
 
-      merch[mn] = {
-        o:0,
-        q:0,
-        r:0,
-        pctSum:0
+
+    if(!merch[merchName]){
+
+      merch[merchName] = {
+
+        orders:0,
+        qty:0,
+        running:0,
+        delayed:0,
+        progress:0,
+        completed:0
+
       };
 
     }
 
 
-    merch[mn].o++;
-
-    merch[mn].q += qty;
-
-    merch[mn].pctSum += tnaPct;
+    merch[merchName].orders++;
+    merch[merchName].qty += qty;
+    merch[merchName].progress += pct;
 
 
-    if(!isDone){
-      merch[mn].r++;
+    if(status === "Running"){
+      merch[merchName].running++;
+    }
+
+    if(status === "Delayed"){
+      merch[merchName].delayed++;
+    }
+
+    if(status === "Completed"){
+      merch[merchName].completed++;
     }
 
 
-    /* DEPARTMENT STATUS */
-
-    const mStatus = tnaGrp(d,[
-      "fabricBooking",
-      "yarnInhouse",
-      "colorSwatch",
-      "labDipSubmit",
-      "labDipApproval",
-      "g2Receive",
-      "strikeOffSend",
-      "strikeOffApproval"
-    ]);
-
-
-    const knStatus =
-      tnaGrp(d,[
-        "knittingStart",
-        "knittingComplete"
-      ]);
-
-
-    const dyStatus =
-      tnaGrp(d,[
-        "dyeingStart",
-        "dyeingComplete"
-      ]);
-
-
-    const smStatus =
-      tnaGrp(d,[
-        "sampleFabric",
-        "ppSampleSubmit"
-      ]);
-
-
-    const lbStatus =
-      tnaGrp(d,[
-        "fabricTestStart",
-        "fabricTestComplete"
-      ]);
-
-
-    const ctStatus =
-      tnaGrp(d,[
-        "cuttingStart"
-      ]);
-
-
-    const prStatus =
-      tnaGrp(d,[
-        "printStart",
-        "printComplete"
-      ]);
-
-
-    const swStatus =
-      tnaGrp(d,[
-        "sewingInput",
-        "sewingStart",
-        "sewingComplete"
-      ]);
-
-
-    const wsStatus =
-      tnaGrp(d,[
-        "ppMeeting"
-      ]);
-
-
-    const fnStatus =
-      tnaGrp(d,[
-        "finishingStart",
-        "packingStart",
-        "packingComplete"
-      ]);
-
-
-    const shStatus =
-      tnaGrp(d,[
-        "finalInspection",
-        "shipmentApproval"
-      ]);
-
+    /* DEPARTMENTS */
 
     const ms =
-      mStatus ||
+      tnaGrp(d,[
+        "fabricBooking",
+        "yarnInhouse",
+        "colorSwatch",
+        "labDipSubmit",
+        "labDipApproval",
+        "g2Receive",
+        "strikeOffSend",
+        "strikeOffApproval"
+      ]) ||
       d.merchandisingStatus ||
       "";
 
 
     const ks =
-      knStatus ||
+      tnaGrp(d,[
+        "knittingStart",
+        "knittingComplete"
+      ]) ||
       d.knittingStatus ||
       "";
 
 
     const ds =
-      dyStatus ||
+      tnaGrp(d,[
+        "dyeingStart",
+        "dyeingComplete"
+      ]) ||
       d.dyeingStatus ||
       "";
 
 
     const ss =
-      smStatus ||
+      tnaGrp(d,[
+        "sampleFabric",
+        "ppSampleSubmit"
+      ]) ||
       d.sampleStatus ||
       "";
 
 
     const ls =
-      lbStatus ||
+      tnaGrp(d,[
+        "fabricTestStart",
+        "fabricTestComplete"
+      ]) ||
       d.laboratoryStatus ||
       "";
 
 
     const cs =
-      ctStatus ||
+      tnaGrp(d,[
+        "cuttingStart"
+      ]) ||
       d.cuttingStatus ||
       "";
 
 
     const ps =
-      prStatus ||
+      tnaGrp(d,[
+        "printStart",
+        "printComplete"
+      ]) ||
       d.printEmbStatus ||
       "";
 
 
-    const ws =
-      swStatus ||
+    const sew =
+      tnaGrp(d,[
+        "sewingInput",
+        "sewingStart",
+        "sewingComplete"
+      ]) ||
       d.sewingStatus ||
       "";
 
 
-    const ww =
-      wsStatus ||
+    const wash =
       d.washingStatus ||
       "";
 
 
-    const fs =
-      fnStatus ||
+    const fin =
+      tnaGrp(d,[
+        "finishingStart",
+        "packingStart",
+        "packingComplete"
+      ]) ||
       d.finishingStatus ||
       "";
 
 
-    const xs =
-      shStatus ||
+    const ship =
+      tnaGrp(d,[
+        "finalInspection",
+        "shipmentApproval"
+      ]) ||
       d.shipmentStatus ||
       "";
-
-
-    /* TABLE */
-
-    const body =
-      document.getElementById("tnaBody");
 
 
     body.insertAdjacentHTML(
       "beforeend",
       `
 
-      <tr>
+      <tr
+        data-status="${status}"
+        data-merch="${escapeHTML(merchName)}"
+        data-month="${getMonthIndex(shipDate,months)}"
+      >
 
         <td>
-          <b>${escapeHTML(d.buyer || "")}</b>
-        </td>
-
-        <td>
-          ${escapeHTML(d.ikl || d.iklNo || "")}
-        </td>
-
-        <td>
-          ${escapeHTML(d.style || d.styleNo || "")}
-        </td>
-
-        <td>
-          <b style="color:${qty>0?'#00ff99':'#f87171'}">
-            ${qty>0 ? qty.toLocaleString() : "⚠ 0"}
+          <b>
+            ${escapeHTML(
+              d.buyer || ""
+            )}
           </b>
         </td>
 
         <td>
-          ${escapeHTML(d.orderDate || "")}
+          ${escapeHTML(
+            d.ikl ||
+            d.iklNo ||
+            ""
+          )}
         </td>
 
         <td>
-          ${escapeHTML(sdTxt || "No Date")}
+          ${escapeHTML(
+            d.style ||
+            d.styleNo ||
+            ""
+          )}
         </td>
 
         <td>
-          ${days ? days+" Days" : "—"}
+          <b
+            style="
+              color:
+              ${qty > 0
+                ? "#00ff99"
+                : "#f87171"
+              };
+            "
+          >
+            ${
+              qty > 0
+              ? qty.toLocaleString()
+              : "⚠ 0"
+            }
+          </b>
+        </td>
+
+        <td>
+          ${escapeHTML(
+            d.orderDate || ""
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            getShipTxt(d) ||
+            "No Date"
+          )}
+        </td>
+
+        <td>
+          ${
+            leadDays > 0
+            ? leadDays + " Days"
+            : "—"
+          }
         </td>
 
         <td>
           <b>
-            ${escapeHTML(d.merchandiser || "")}
+            ${escapeHTML(
+              merchName
+            )}
           </b>
         </td>
 
-        <td style="min-width:160px;">
-          ${progressBar(tnaPct)}
+        <td>
+          ${progressBar(pct)}
         </td>
 
         <td>${badge(ms)}</td>
@@ -2142,10 +2870,14 @@ function processOrders(orders){
         <td>${badge(ls)}</td>
         <td>${badge(cs)}</td>
         <td>${badge(ps)}</td>
-        <td>${badge(ws)}</td>
-        <td>${badge(ww)}</td>
-        <td>${badge(fs)}</td>
-        <td>${badge(xs)}</td>
+        <td>${badge(sew)}</td>
+        <td>${badge(wash)}</td>
+        <td>${badge(fin)}</td>
+        <td>${badge(ship)}</td>
+
+        <td>
+          ${badge(status)}
+        </td>
 
       </tr>
 
@@ -2155,183 +2887,258 @@ function processOrders(orders){
   });
 
 
-  /* ZERO QTY DEBUG */
+  /* =========================
+     KPI
+  ========================= */
 
-  if(zeroQtyOrders.length > 0){
+  updateKPI({
 
-    const dbx =
-      document.getElementById("debugBox");
+    totalOrders:
+      orders.length,
 
-
-    dbx.style.display = "block";
-
-
-    dbx.innerHTML = `
-
-      ⚠️ ${zeroQtyOrders.length}
-      order(s) Qty = 0
-
-      <br><br>
-
-      ${zeroQtyOrders.join("<br>")}
-
-    `;
-
-  }
-
-
-  updateKPI(
-    tot,
     totalQty,
-    run,
-    done,
-    late,
-    Math.round(
-      leadSum/(tot || 1)
-    ),
-    mQty
-  );
+
+    running,
+
+    completed,
+
+    delayed,
+
+    avgLead:
+      leadCount
+      ? Math.round(
+          leadSum /
+          leadCount
+        )
+      : 0,
+
+    monthlyQty
+
+  });
 
 
-  /* MERCHANDISER */
+  /* =========================
+     MERCHANDISER TABLE
+  ========================= */
 
   const mt =
-    document.getElementById("merchTable");
+    document.getElementById(
+      "merchTable"
+    );
 
 
-  Object.entries(merch).forEach(
-    ([name,v]) => {
+  Object.entries(merch)
+    .sort(
+      (a,b) =>
+        b[1].orders -
+        a[1].orders
+    )
+    .forEach(
+      ([name,v]) => {
 
-      const avgPct =
-        Math.round(
-          v.pctSum/v.o
+        const avg =
+          Math.round(
+            v.progress /
+            v.orders
+          );
+
+
+        const completion =
+          Math.round(
+            (
+              v.completed /
+              v.orders
+            ) * 100
+          );
+
+
+        mt.insertAdjacentHTML(
+          "beforeend",
+          `
+
+          <tr>
+
+            <td>
+              <b>
+                ${escapeHTML(name)}
+              </b>
+            </td>
+
+            <td>
+              ${v.orders}
+            </td>
+
+            <td>
+              ${v.qty.toLocaleString()}
+            </td>
+
+            <td>
+              ${v.running}
+            </td>
+
+            <td>
+              <span
+                class="b ${
+                  v.delayed > 0
+                  ? "b-del"
+                  : "b-pend"
+                }"
+              >
+                ${v.delayed}
+              </span>
+            </td>
+
+            <td>
+              ${progressBar(avg)}
+            </td>
+
+            <td>
+
+              <span
+                class="b ${
+                  completion >= 70
+                  ? "b-done"
+                  : completion >= 40
+                  ? "b-run"
+                  : "b-pend"
+                }"
+              >
+                ${completion}%
+              </span>
+
+            </td>
+
+          </tr>
+
+          `
         );
 
-
-      const compPct =
-        Math.round(
-          ((v.o-v.r)/v.o)*100
-        );
+      }
+    );
 
 
-      mt.insertAdjacentHTML(
+  /* =========================
+     MERCH FILTER
+  ========================= */
+
+  const merchFilter =
+    document.getElementById(
+      "merchFilter"
+    );
+
+
+  merchFilter.innerHTML =
+    `<option value="">
+      All Merchandisers
+    </option>`;
+
+
+  [...merchSet]
+    .sort()
+    .forEach(name => {
+
+      merchFilter.insertAdjacentHTML(
         "beforeend",
         `
-
-        <tr>
-
-          <td>
-            <b>${escapeHTML(name)}</b>
-          </td>
-
-          <td>${v.o}</td>
-
-          <td>
-            ${v.q.toLocaleString()}
-          </td>
-
-          <td>${v.r}</td>
-
-          <td style="min-width:140px;">
-            ${progressBar(avgPct)}
-          </td>
-
-          <td>
-
-            <span class="b ${
-              compPct>=70
-              ? "b-done"
-              : compPct>=40
-              ? "b-run"
-              : "b-pend"
-            }">
-
-              ${compPct}%
-
-            </span>
-
-          </td>
-
-        </tr>
-
+        <option value="${escapeHTML(name)}">
+          ${escapeHTML(name)}
+        </option>
         `
       );
 
-    }
-  );
+    });
+
+
+  /* =========================
+     DAILY PRODUCTION
+  ========================= */
+
+  renderProduction();
 
 }
 
 
-/* SAFE HTML */
+/* =========================
+   MONTH INDEX
+========================= */
 
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* KPI */
-
-function updateKPI(
-  tot,
-  qty,
-  run,
-  done,
-  late,
-  avgLead,
-  mQty
+function getMonthIndex(
+  date,
+  months
 ){
 
+  if(!date){
+    return "";
+  }
+
+  const index =
+    months.findIndex(
+      mo =>
+        mo.m === date.getMonth() &&
+        mo.y === date.getFullYear()
+    );
+
+  return index >= 0
+    ? index
+    : "";
+
+}
+
+
+/* =========================
+   KPI UPDATE
+========================= */
+
+function updateKPI(data){
+
   const $ =
-    id => document.getElementById(id);
+    id =>
+      document.getElementById(id);
 
 
   $("kTotalOrders").textContent =
-    tot;
+    data.totalOrders;
 
 
   $("kTotalQty").textContent =
-    qty > 0
-      ? qty.toLocaleString()
-      : "0";
+    data.totalQty.toLocaleString();
 
 
   $("kRunning").textContent =
-    run;
+    data.running;
 
 
   $("kCompleted").textContent =
-    done;
+    data.completed;
 
 
   $("kDelayed").textContent =
-    late;
+    data.delayed;
 
 
   $("kThisMonth").textContent =
-    (mQty[0]||0).toLocaleString()
-    + " PCS";
+    data.monthlyQty[0]
+      .toLocaleString();
 
 
   $("kNextMonth").textContent =
-    (mQty[1]||0).toLocaleString()
-    + " PCS";
+    data.monthlyQty[1]
+      .toLocaleString();
 
 
   $("kAvgLead").textContent =
-    avgLead + " D";
+    data.avgLead +
+    " D";
 
 
   const pct =
-    tot > 0
-      ? Math.round((done/tot)*100)
+    data.totalOrders
+      ? Math.round(
+          (
+            data.completed /
+            data.totalOrders
+          ) * 100
+        )
       : 0;
 
 
@@ -2340,40 +3147,304 @@ function updateKPI(
 
 
   $("completedCount").textContent =
-    done;
+    data.completed;
 
 
   $("runningCount").textContent =
-    run;
+    data.running;
 
 
   $("delayedCount").textContent =
-    late;
+    data.delayed;
 
 
   $("m0pct").textContent =
-    (mQty[0]||0).toLocaleString()
-    + " PCS";
+    data.monthlyQty[0]
+      .toLocaleString() +
+    " PCS";
 
 
   $("m1pct").textContent =
-    (mQty[1]||0).toLocaleString()
-    + " PCS";
+    data.monthlyQty[1]
+      .toLocaleString() +
+    " PCS";
 
 
   $("m2pct").textContent =
-    (mQty[2]||0).toLocaleString()
-    + " PCS";
+    data.monthlyQty[2]
+      .toLocaleString() +
+    " PCS";
 
 
   $("m3pct").textContent =
-    (mQty[3]||0).toLocaleString()
-    + " PCS";
+    data.monthlyQty[3]
+      .toLocaleString() +
+    " PCS";
+
+
+  $("statusCompleted").textContent =
+    data.completed;
+
+
+  $("statusRunning").textContent =
+    data.running;
+
+
+  $("statusDelayed").textContent =
+    data.delayed;
+
+
+  $("statusQty").textContent =
+    data.totalQty.toLocaleString();
 
 }
 
 
-/* AUTH */
+/* =========================
+   DAILY PRODUCTION
+========================= */
+
+/*
+  CURRENT VERSION
+
+  Uses your existing production
+  values as fallback.
+
+  Later these can be loaded from
+  Firestore "dailyProduction".
+*/
+
+function renderProduction(){
+
+  const rows = [
+
+    {
+      department:"Knitting",
+      target:20000,
+      actual:18500,
+      unit:"KG"
+    },
+
+    {
+      department:"Dyeing",
+      target:18000,
+      actual:17200,
+      unit:"KG"
+    },
+
+    {
+      department:"Cutting",
+      target:25000,
+      actual:24300,
+      unit:"PCS"
+    },
+
+    {
+      department:"Print & Emb",
+      target:15000,
+      actual:14000,
+      unit:"PCS"
+    },
+
+    {
+      department:"Sewing",
+      target:30000,
+      actual:28000,
+      unit:"PCS"
+    },
+
+    {
+      department:"Finishing",
+      target:27000,
+      actual:25500,
+      unit:"PCS"
+    }
+
+  ];
+
+
+  const body =
+    document.getElementById(
+      "productionBody"
+    );
+
+
+  body.innerHTML = "";
+
+
+  rows.forEach(row => {
+
+    const balance =
+      Math.max(
+        row.target -
+        row.actual,
+        0
+      );
+
+
+    const efficiency =
+      row.target
+      ? Math.round(
+          (
+            row.actual /
+            row.target
+          ) * 100
+        )
+      : 0;
+
+
+    body.insertAdjacentHTML(
+      "beforeend",
+      `
+
+      <tr>
+
+        <td>
+          <b>
+            ${row.department}
+          </b>
+        </td>
+
+        <td>
+          ${row.target.toLocaleString()}
+          ${row.unit}
+        </td>
+
+        <td>
+          ${row.actual.toLocaleString()}
+          ${row.unit}
+        </td>
+
+        <td>
+          ${balance.toLocaleString()}
+          ${row.unit}
+        </td>
+
+        <td>
+
+          <span
+            class="b ${
+              efficiency >= 95
+              ? "b-done"
+              : efficiency >= 85
+              ? "b-run"
+              : "b-del"
+            }"
+          >
+            ${efficiency}%
+          </span>
+
+        </td>
+
+      </tr>
+
+      `
+    );
+
+  });
+
+}
+
+
+/* =========================
+   SEARCH FILTER
+========================= */
+
+function applyFilters(){
+
+  const q =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const status =
+    document
+      .getElementById(
+        "statusFilter"
+      )
+      .value;
+
+
+  const merch =
+    document
+      .getElementById(
+        "merchFilter"
+      )
+      .value;
+
+
+  const month =
+    document
+      .getElementById(
+        "monthFilter"
+      )
+      .value;
+
+
+  document
+    .querySelectorAll(
+      "#tnaBody tr"
+    )
+    .forEach(row => {
+
+      const text =
+        row.innerText
+          .toLowerCase();
+
+
+      const rowStatus =
+        row.dataset.status;
+
+
+      const rowMerch =
+        row.dataset.merch;
+
+
+      const rowMonth =
+        row.dataset.month;
+
+
+      const searchOK =
+        !q ||
+        text.includes(q);
+
+
+      const statusOK =
+        !status ||
+        rowStatus === status;
+
+
+      const merchOK =
+        !merch ||
+        rowMerch === merch;
+
+
+      const monthOK =
+        !month ||
+        rowMonth === month;
+
+
+      row.style.display =
+        searchOK &&
+        statusOK &&
+        merchOK &&
+        monthOK
+        ? ""
+        : "none";
+
+    });
+
+}
+
+
+/* =========================
+   AUTH
+========================= */
 
 async function startAuth(){
 
@@ -2384,10 +3455,11 @@ async function startAuth(){
       browserLocalPersistence
     );
 
-  }catch(err){
+  }
+  catch(err){
 
     console.warn(
-      "[AUTH] Persistence warning:",
+      "Auth persistence:",
       err
     );
 
@@ -2400,10 +3472,6 @@ async function startAuth(){
 
       if(!user){
 
-        console.warn(
-          "[AUTH] Not logged in"
-        );
-
         window.location.href =
           "login.html";
 
@@ -2412,30 +3480,20 @@ async function startAuth(){
       }
 
 
-      console.log(
-        "[AUTH] Logged in:",
-        user.email
-      );
+      const badge =
+        document.getElementById(
+          "userBadge"
+        );
 
 
-      const userBadge =
-        document.querySelector(".tb-user");
+      badge.textContent =
+        "👤 " +
+        (
+          user.email
+          ? user.email.split("@")[0]
+          : "Admin"
+        );
 
-
-      if(userBadge){
-
-        userBadge.textContent =
-          "👤 " +
-          (
-            user.email
-            ? user.email.split("@")[0]
-            : "Admin"
-          );
-
-      }
-
-
-      /* FIRST LOAD */
 
       load();
 
@@ -2448,95 +3506,66 @@ async function startAuth(){
 startAuth();
 
 
-/* RETRY BUTTON */
+/* =========================
+   FILTER EVENTS
+========================= */
 
-document
-  .getElementById("retryBtn")
-  .addEventListener(
-    "click",
-    () => {
+[
+  "searchInput",
+  "statusFilter",
+  "merchFilter",
+  "monthFilter"
+]
+.forEach(id => {
 
-      load();
-
-    }
-  );
-
-
-/* SEARCH */
-
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    function(){
-
-      const q =
-        this.value
-          .toLowerCase()
-          .trim();
-
-
-      document
-        .querySelectorAll("#tnaBody tr")
-        .forEach(row => {
-
-          row.style.display =
-            !q ||
-            row.innerText
-              .toLowerCase()
-              .includes(q)
-              ? ""
-              : "none";
-
-        });
-
-    }
-  );
-
-
-/* IMPORTANT:
-   When returning from another department/page */
-
-window.addEventListener(
-  "pageshow",
-  event => {
-
-    console.log(
-      "[DASHBOARD] pageshow",
-      event.persisted
+  document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      applyFilters
     );
 
+  document
+    .getElementById(id)
+    .addEventListener(
+      "change",
+      applyFilters
+    );
 
-    if(
-      event.persisted ||
-      Date.now()-lastSuccessfulLoad > 3000
-    ){
-
-      setTimeout(
-        () => load(),
-        150
-      );
-
-    }
-
-  }
-);
+});
 
 
-/* Browser/tab becomes visible again */
+/* =========================
+   RETRY
+========================= */
+
+document
+  .getElementById(
+    "retryBtn"
+  )
+  .addEventListener(
+    "click",
+    load
+  );
+
+
+/* =========================
+   AUTO REFRESH
+========================= */
 
 document.addEventListener(
   "visibilitychange",
   () => {
 
     if(
-      document.visibilityState === "visible" &&
+      document.visibilityState ===
+      "visible" &&
       !isLoading
     ){
 
       setTimeout(
-        () => load(),
-        200
+        load,
+        300
       );
 
     }
@@ -2545,87 +3574,117 @@ document.addEventListener(
 );
 
 
-/* Date */
+/* =========================
+   DATE
+========================= */
 
-document.getElementById("dateEl").textContent =
-  new Date().toLocaleDateString(
-    "en-BD",
-    {
-      weekday:"short",
-      year:"numeric",
-      month:"short",
-      day:"numeric"
-    }
-  );
+document
+  .getElementById(
+    "dateEl"
+  )
+  .textContent =
+    new Date()
+      .toLocaleDateString(
+        "en-BD",
+        {
+          weekday:"short",
+          year:"numeric",
+          month:"short",
+          day:"numeric"
+        }
+      );
+
+
+/* =========================
+   EXPOSE REFRESH
+========================= */
+
+window.refreshDashboard =
+  load;
 
 </script>
 
 
-<!-- SIDEBAR + SCROLL -->
 <script>
 
-let sidebarOpen = true;
+/* =========================
+   SIDEBAR
+========================= */
+
+let sidebarOpen =
+  window.innerWidth > 960;
 
 
 function toggleSidebar(){
 
-  const sb =
-    document.getElementById("sidebar");
+  const sidebar =
+    document.getElementById(
+      "sidebar"
+    );
 
-  const mw =
-    document.getElementById("mainWrap");
+  const main =
+    document.getElementById(
+      "mainWrap"
+    );
 
-  const ov =
-    document.getElementById("overlay");
+  const overlay =
+    document.getElementById(
+      "overlay"
+    );
 
   const btn =
-    document.getElementById("toggleBtn");
+    document.getElementById(
+      "toggleBtn"
+    );
+
 
   const mobile =
     window.innerWidth <= 960;
 
 
+  sidebarOpen =
+    !sidebarOpen;
+
+
   if(sidebarOpen){
 
-    sb.classList.add("closed");
-
+    sidebar.classList.remove(
+      "closed"
+    );
 
     if(mobile){
 
-      ov.classList.remove("show");
-
-    }else{
-
-      mw.style.marginLeft = "0";
+      overlay.classList.add(
+        "show"
+      );
 
     }
+    else{
 
-
-    btn.textContent = "☰";
-
-    sidebarOpen = false;
-
-
-  }else{
-
-    sb.classList.remove("closed");
-
-
-    if(mobile){
-
-      ov.classList.add("show");
-
-    }else{
-
-      mw.style.marginLeft =
+      main.style.marginLeft =
         "var(--sidebar-w)";
 
     }
 
+    btn.textContent =
+      "✕";
 
-    btn.textContent = "✕";
+  }
+  else{
 
-    sidebarOpen = true;
+    sidebar.classList.add(
+      "closed"
+    );
+
+    overlay.classList.remove(
+      "show"
+    );
+
+    main.style.marginLeft =
+      "0";
+
+    btn.textContent =
+      "☰";
 
   }
 
@@ -2635,45 +3694,77 @@ function toggleSidebar(){
 function closeSidebar(){
 
   if(sidebarOpen){
+
     toggleSidebar();
+
   }
 
 }
 
 
+/* =========================
+   RESPONSIVE
+========================= */
+
 function initLayout(){
 
+  const sidebar =
+    document.getElementById(
+      "sidebar"
+    );
+
+  const main =
+    document.getElementById(
+      "mainWrap"
+    );
+
+  const overlay =
+    document.getElementById(
+      "overlay"
+    );
+
   const btn =
-    document.getElementById("toggleBtn");
+    document.getElementById(
+      "toggleBtn"
+    );
 
-  if(window.innerWidth <= 960){
 
-    document
-      .getElementById("sidebar")
-      .classList.add("closed");
+  if(
+    window.innerWidth <= 960
+  ){
 
-    document
-      .getElementById("mainWrap")
-      .style.marginLeft = "0";
+    sidebar.classList.add(
+      "closed"
+    );
 
-    sidebarOpen = false;
+    main.style.marginLeft =
+      "0";
 
-    btn.textContent = "☰";
+    overlay.classList.remove(
+      "show"
+    );
 
-  }else{
+    sidebarOpen =
+      false;
 
-    document
-      .getElementById("sidebar")
-      .classList.remove("closed");
+    btn.textContent =
+      "☰";
 
-    document
-      .getElementById("mainWrap")
-      .style.marginLeft =
-        "var(--sidebar-w)";
+  }
+  else{
 
-    sidebarOpen = true;
+    sidebar.classList.remove(
+      "closed"
+    );
 
-    btn.textContent = "✕";
+    main.style.marginLeft =
+      "var(--sidebar-w)";
+
+    sidebarOpen =
+      true;
+
+    btn.textContent =
+      "✕";
 
   }
 
@@ -2682,70 +3773,38 @@ function initLayout(){
 
 initLayout();
 
+
 window.addEventListener(
   "resize",
   initLayout
 );
 
 
-/* TABLE SCROLL */
+/* =========================
+   TNA TABLE SCROLL
+========================= */
 
 function scrollTNA(direction){
 
-  const tbl =
-    document.getElementById("tnaScroll");
+  const table =
+    document.getElementById(
+      "tnaScroll"
+    );
 
 
-  if(!tbl){
+  if(!table){
     return;
   }
 
 
-  const amount =
-    direction * 450;
+  table.scrollBy({
 
+    left:
+      direction * 500,
 
-  const start =
-    tbl.scrollLeft;
+    behavior:"smooth"
 
-
-  let startTime = null;
-
-
-  function step(timestamp){
-
-    if(!startTime){
-      startTime = timestamp;
-    }
-
-
-    const progress =
-      Math.min(
-        (timestamp-startTime)/300,
-        1
-      );
-
-
-    const ease =
-      progress < .5
-      ? 2*progress*progress
-      : -1+(4-2*progress)*progress;
-
-
-    tbl.scrollLeft =
-      start + amount*ease;
-
-
-    if(progress < 1){
-
-      requestAnimationFrame(step);
-
-    }
-
-  }
-
-
-  requestAnimationFrame(step);
+  });
 
 }
 
@@ -2753,25 +3812,25 @@ function scrollTNA(direction){
 document
   .getElementById("btnL1")
   .onclick =
-  () => scrollTNA(-1);
+    () => scrollTNA(-1);
 
 
 document
   .getElementById("btnR1")
   .onclick =
-  () => scrollTNA(1);
+    () => scrollTNA(1);
 
 
 document
   .getElementById("btnL2")
   .onclick =
-  () => scrollTNA(-1);
+    () => scrollTNA(-1);
 
 
 document
   .getElementById("btnR2")
   .onclick =
-  () => scrollTNA(1);
+    () => scrollTNA(1);
 
 </script>
 
