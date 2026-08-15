@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART TNA BD ERP - REPORTS</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ff99">
+<script src="pwa-install.js" defer></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body { background:#0f172a; color:white; }
+
+.topbar {
+  background:#111827;
+  padding:12px 20px;
+  border-bottom:2px solid #1e293b;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:900;
+}
+.topbar-left  { display:flex; align-items:center; gap:12px; }
+.topbar-right { display:flex; align-items:center; gap:10px; }
+
+.back-btn {
+  display:flex; align-items:center; gap:6px;
+  background:#1e293b; border:1px solid #334155; border-radius:8px;
+  color:#cbd5e1; padding:8px 16px; font-size:13px; font-weight:700;
+  cursor:pointer; text-decoration:none; font-family:Arial,sans-serif;
+  transition:all .2s;
+}
+.back-btn:hover { background:#00ff9920; color:#00ff99; border-color:#00ff99; }
+
+.page-title { font-size:16px; font-weight:bold; color:#fff; }
+.tb-date { font-size:11px; color:#64748b; font-family:monospace; }
+
+.export-btn {
+  display:flex; align-items:center; gap:6px;
+  background:#00ff9920; border:1px solid #00ff99; border-radius:8px;
+  color:#00ff99; padding:8px 14px; font-size:12px; font-weight:700;
+  cursor:pointer; font-family:Arial,sans-serif;
+}
+.export-btn:hover { background:#00ff9940; }
+
+header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
+.company { font-size:28px; font-weight:bold; color:#00ff99; }
+.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:15px; padding:20px; }
+.kpi-card { background:#1e293b; padding:20px; border-radius:15px; text-align:center; }
+.kpi-card h2 { color:#00ff99; font-size:28px; margin-bottom:10px; }
+.kpi-card p  { color:#cbd5e1; font-size:13px; }
+.kpi-card.warn h2 { color:#ef4444; }
+.kpi-card.blue h2 { color:#3b82f6; }
+
+.filter-section { padding:0 20px 20px 20px; display:flex; gap:12px; flex-wrap:wrap; }
+.search-box { flex:1; min-width:220px; padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:15px; }
+.filter-select { padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:14px; min-width:170px; }
+
+.dept-legend { display:flex; flex-wrap:wrap; gap:14px; padding:0 20px 15px 20px; font-size:12px; color:#94a3b8; }
+.dept-legend span { display:inline-flex; align-items:center; gap:5px; }
+.dept-legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+.table-wrapper { padding:0 20px 30px 20px; overflow-x:auto; }
+table { width:100%; border-collapse:collapse; background:#1e293b; }
+th {
+  background:#111827; color:#00ff99; padding:10px 8px; border:1px solid #334155;
+  white-space:nowrap; font-size:12px; position:sticky; top:0; z-index:5;
+}
+td {
+  padding:8px 6px; border:1px solid #334155; text-align:center;
+  vertical-align:middle; white-space:nowrap; font-size:12px;
+}
+tr:hover td { background:#243348; }
+
+.dept-dot { width:14px; height:14px; border-radius:50%; display:inline-block; margin:0 2px; cursor:default; }
+.dot-pending   { background:#f97316; }
+.dot-running   { background:#3b82f6; }
+.dot-delayed   { background:#ef4444; }
+.dot-complete  { background:#00ff99; }
+.dot-na        { background:#334155; }
+
+.dept-row-cell { display:flex; align-items:center; justify-content:center; gap:3px; }
+
+.overall-badge { font-weight:bold; padding:4px 10px; border-radius:8px; font-size:11px; }
+.ob-ontime  { background:#052e16; color:#00ff99; border:1px solid #00ff99; }
+.ob-atrisk  { background:#431407; color:#f97316; border:1px solid #f97316; }
+.ob-delayed { background:#450a0a; color:#ef4444; border:1px solid #ef4444; }
+.ob-shipped { background:#1e3a5f; color:#3b82f6; border:1px solid #3b82f6; }
+
+.days-left { font-weight:bold; }
+.days-red    { color:#ef4444; }
+.days-orange { color:#f97316; }
+.days-green  { color:#00ff99; }
+
+.no-data { text-align:center; padding:40px; color:#64748b; font-size:14px; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back-btn" href="dashboard.html">🏠 Dashboard</a>
+    <span class="page-title">📊 TNA Reports</span>
+  </div>
+  <div class="topbar-right">
+    <button class="export-btn" onclick="exportCSV()">⬇️ Export CSV</button>
+    <span class="tb-date" id="dateEl"></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
+  <div class="company">INNOVATIVE KNITEX LTD</div>
+  <div class="system">SMART TNA BD ERP - CROSS-DEPARTMENT REPORT</div>
+</header>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
+  <div class="kpi-card"><h2 id="kQty">0</h2><p>Total Qty (PCS)</p></div>
+  <div class="kpi-card blue"><h2 id="kShipped">0</h2><p>Shipped</p></div>
+  <div class="kpi-card warn"><h2 id="kDelayed">0</h2><p>Orders with Delay</p></div>
+  <div class="kpi-card"><h2 id="kOnTime">0%</h2><p>On-Time Orders</p></div>
+  <div class="kpi-card"><h2 id="kAvg">0%</h2><p>Avg TNA Progress</p></div>
+</div>
+
+<!-- FILTERS -->
+<div class="filter-section">
+  <input type="text" id="searchInput" class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser" oninput="renderTable()">
+  <select id="filterStatus" class="filter-select" onchange="renderTable()">
+    <option value="">All Orders</option>
+    <option value="delayed">⚠️ Delayed Only</option>
+    <option value="ontime">🟢 On-Time Only</option>
+    <option value="shipped">🔵 Shipped Only</option>
+  </select>
+</div>
+
+<!-- LEGEND -->
+<div class="dept-legend">
+  <span><i class="dept-dot dot-pending"></i> Pending</span>
+  <span><i class="dept-dot dot-running"></i> Running</span>
+  <span><i class="dept-dot dot-delayed"></i> Delayed</span>
+  <span><i class="dept-dot dot-complete"></i> Complete</span>
+  <span><i class="dept-dot dot-na"></i> N/A</span>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrapper">
+  <table id="reportTable">
+    <thead>
+      <tr>
+        <th>SL</th>
+        <th>Buyer</th>
+        <th>IKL No</th>
+        <th>Style No</th>
+        <th>Total Qty</th>
+        <th>Merchandiser</th>
+        <th>Order Date</th>
+        <th>Ship Date</th>
+        <th>Days Left</th>
+        <th>✂️ Cutting</th>
+        <th>🖨️ Print</th>
+        <th>🧵 Embroidery</th>
+        <th>🧷 Sewing</th>
+        <th>🧼 Washing</th>
+        <th>📦 Finishing</th>
+        <th>🚢 Shipment</th>
+        <th>Progress</th>
+        <th>Overall</th>
+      </tr>
+    </thead>
+    <tbody id="reportBody"></tbody>
+  </table>
+  <div class="no-data" id="noData" style="display:none;">No orders match your search/filter.</div>
+</div>
+
+<script>
+document.getElementById("dateEl").textContent =
+  new Date().toLocaleDateString("en-BD",{ weekday:"short", year:"numeric", month:"short", day:"numeric" });
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  authDomain: "smart-tna-bd.firebaseapp.com",
+  projectId: "smart-tna-bd",
+  storageBucket: "smart-tna-bd.firebasestorage.app",
+  messagingSenderId: "372049573207",
+  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+let allOrders = [];
+
+// Department config: prefix used in Firestore fields + offset days from Order Date
+const DEPTS = [
+  { key:"cut",  label:"Cutting",     prefix:"cut",   rcvField:"cutFabRcv",  offC:58 }, // uses cutCompleteTarget
+  { key:"print",label:"Print",       prefix:"print", rcvField:"printRcv",   offC:68 },
+  { key:"emb",  label:"Embroidery",  prefix:"emb",   rcvField:"embRcv",     offC:48 },
+  { key:"sew",  label:"Sewing",      prefix:"sew",   rcvField:"sewRcv",     offC:85 },
+  { key:"wash", label:"Washing",     prefix:"wash",  rcvField:"washRcv",    offC:97 },
+  { key:"fin",  label:"Finishing",   prefix:"fin",   rcvField:"finRcv",     offC:108 },
+  { key:"ship", label:"Shipment",    prefix:"ship",  rcvField:"shipRcv",    offC:116 },
+];
+
+function getQty(d){
+  const f=[d.totalQty,d.qty,d.quantity,d.Qty,d.TotalQty,d.pcs,d.pieces];
+  for(const v of f){
+    if(v!==undefined&&v!==null&&v!==""){
+      const n=parseFloat(String(v).replace(/,/g,""));
+      if(!isNaN(n)&&n>0) return n;
+    }
+  }
+  return 0;
+}
+function getShip(d){
+  return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||d.shipDate||"";
+}
+function autoTarget(orderDate, offsetDays){
+  if(!orderDate) return "";
+  const d=new Date(orderDate);
+  if(isNaN(d)) return "";
+  d.setDate(d.getDate()+offsetDays);
+  return d.toISOString().split("T")[0];
+}
+
+// Complete-stage status for a given department, based on first color entry
+function deptCompleteStatus(order, dept){
+  const c0 = (order.colors && order.colors[0]) || {};
+  const targetField = dept.prefix + "CompleteTarget";
+  const statusField  = dept.prefix + "CompleteStatus";
+  const target = c0[targetField] || autoTarget(order.orderDate||"", dept.offC);
+  const saved  = c0[statusField];
+  const today  = new Date();
+
+  if(saved==="Complete"||saved==="Completed") return "Complete";
+  if(target && new Date(target) < today && (!saved || saved==="Pending")) return "Delayed";
+  if(saved==="Running") return "Running";
+  if(saved==="Delay") return "Delayed";
+  if(!target) return "na";
+  return "Pending";
+}
+
+function dotClass(status){
+  if(status==="Complete") return "dot-complete";
+  if(status==="Running")  return "dot-running";
+  if(status==="Delayed")  return "dot-delayed";
+  if(status==="na")       return "dot-na";
+  return "dot-pending";
+}
+
+function daysLeftInfo(shipDate){
+  if(!shipDate) return { text:"-", cls:"" };
+  const today = new Date();
+  const sd = new Date(shipDate);
+  if(isNaN(sd)) return { text:"-", cls:"" };
+  const diff = Math.ceil((sd - today) / 86400000);
+  if(diff < 0)  return { text:`${Math.abs(diff)}d overdue`, cls:"days-red" };
+  if(diff <= 5) return { text:`${diff}d left`, cls:"days-orange" };
+  return { text:`${diff}d left`, cls:"days-green" };
+}
+
+async function loadOrders(){
+  const snap = await getDocs(collection(db,"orders"));
+  allOrders = [];
+  snap.forEach(d => allOrders.push({ id:d.id, ...d.data() }));
+  renderKPI();
+  renderTable();
+}
+
+function computeOrderStats(order){
+  const statuses = DEPTS.map(dep => deptCompleteStatus(order, dep));
+  const applicable = statuses.filter(s => s!=="na");
+  const doneCount  = applicable.filter(s => s==="Complete").length;
+  const delayedCount = applicable.filter(s => s==="Delayed").length;
+  const progress = applicable.length ? Math.round((doneCount/applicable.length)*100) : 0;
+  const shipped  = statuses[statuses.length-1] === "Complete"; // Shipment complete
+  let overall = "ontime";
+  if(shipped) overall = "shipped";
+  else if(delayedCount > 0) overall = "delayed";
+  return { statuses, progress, delayedCount, shipped, overall };
+}
+
+function renderKPI(){
+  let tot=0, totalQty=0, shippedCount=0, delayedOrders=0, onTimeSum=0, progSum=0;
+  allOrders.forEach(order=>{
+    tot++;
+    totalQty += getQty(order);
+    const stats = computeOrderStats(order);
+    progSum += stats.progress;
+    if(stats.shipped) shippedCount++;
+    if(stats.delayedCount>0) delayedOrders++;
+    if(stats.overall==="ontime"||stats.overall==="shipped") onTimeSum++;
+  });
+  document.getElementById("kTotal").innerText   = tot;
+  document.getElementById("kQty").innerText     = totalQty.toLocaleString();
+  document.getElementById("kShipped").innerText = shippedCount;
+  document.getElementById("kDelayed").innerText = delayedOrders;
+  document.getElementById("kOnTime").innerText  = tot ? Math.round((onTimeSum/tot)*100)+"%" : "0%";
+  document.getElementById("kAvg").innerText     = tot ? Math.round(progSum/tot)+"%" : "0%";
+}
+
+function progressBar(pct){
+  const c=pct>=100?"#00ff99":pct>=60?"#fbbf24":pct>=30?"#f97316":"#f87171";
+  return `<div style="display:flex;align-items:center;gap:6px;min-width:100px;">
+    <div style="flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;">
+      <div style="width:${pct}%;height:100%;background:${c};border-radius:4px;"></div>
+    </div>
+    <span style="font-size:11px;font-weight:700;color:${c};min-width:30px;">${pct}%</span>
+  </div>`;
+}
+
+function overallBadge(stats){
+  if(stats.overall==="shipped") return `<span class="overall-badge ob-shipped">🔵 Shipped</span>`;
+  if(stats.overall==="delayed") return `<span class="overall-badge ob-delayed">🔴 Delayed</span>`;
+  return `<span class="overall-badge ob-ontime">🟢 On-Time</span>`;
+}
+
+function matchesFilter(order, stats, kw, statusFilter){
+  const searchable = [
+    order.buyer, order.ikl||order.iklNo, order.style||order.styleNo, order.merchandiser
+  ].join(" ").toLowerCase();
+  if(kw && !searchable.includes(kw)) return false;
+
+  if(statusFilter==="delayed" && stats.overall!=="delayed") return false;
+  if(statusFilter==="ontime"  && stats.overall!=="ontime")  return false;
+  if(statusFilter==="shipped" && stats.overall!=="shipped") return false;
+  return true;
+}
+
+window.renderTable = function(){
+  const kw = document.getElementById("searchInput").value.toLowerCase();
+  const statusFilter = document.getElementById("filterStatus").value;
+  const body = document.getElementById("reportBody");
+  body.innerHTML = "";
+
+  let serial = 1;
+  let shown = 0;
+
+  allOrders.forEach(order=>{
+    const stats = computeOrderStats(order);
+    if(!matchesFilter(order, stats, kw, statusFilter)) return;
+    shown++;
+
+    const totalQty  = getQty(order);
+    const shipDate  = getShip(order) || "-";
+    const dleft     = daysLeftInfo(getShip(order));
+
+    const deptCells = stats.statuses.map((s,i)=>{
+      const label = DEPTS[i].label;
+      const text  = s==="na" ? "N/A" : s;
+      return `<td title="${label}: ${text}"><span class="dept-dot ${dotClass(s)}"></span></td>`;
+    }).join("");
+
+    body.innerHTML += `<tr>
+      <td>${serial}</td>
+      <td style="text-align:left;">${order.buyer||"-"}</td>
+      <td>${order.ikl||order.iklNo||"-"}</td>
+      <td>${order.style||order.styleNo||"-"}</td>
+      <td>${totalQty.toLocaleString()}</td>
+      <td>${order.merchandiser||"-"}</td>
+      <td>${order.orderDate||"-"}</td>
+      <td>${shipDate}</td>
+      <td class="days-left ${dleft.cls}">${dleft.text}</td>
+      ${deptCells}
+      <td>${progressBar(stats.progress)}</td>
+      <td>${overallBadge(stats)}</td>
+    </tr>`;
+    serial++;
+  });
+
+  document.getElementById("noData").style.display = shown ? "none" : "block";
+};
+
+window.exportCSV = function(){
+  const headers = ["SL","Buyer","IKL No","Style No","Total Qty","Merchandiser","Order Date","Ship Date","Days Left",
+    "Cutting","Print","Embroidery","Sewing","Washing","Finishing","Shipment","Progress %","Overall"];
+  const rows = [headers];
+
+  let serial = 1;
+  allOrders.forEach(order=>{
+    const stats = computeOrderStats(order);
+    const totalQty = getQty(order);
+    const shipDate = getShip(order) || "-";
+    const dleft = daysLeftInfo(getShip(order));
+    rows.push([
+      serial, order.buyer||"-", order.ikl||order.iklNo||"-", order.style||order.styleNo||"-",
+      totalQty, order.merchandiser||"-", order.orderDate||"-", shipDate, dleft.text,
+      ...stats.statuses.map(s=> s==="na"?"N/A":s),
+      stats.progress+"%", stats.overall
+    ]);
+    serial++;
+  });
+
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type:"text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `TNA_Report_${new Date().toISOString().split("T")[0]}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+loadOrders();
+</script>
+</body>
+</html>
