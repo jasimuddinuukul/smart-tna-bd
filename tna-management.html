@@ -1,245 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMART TNA BD - TNA MANAGEMENT</title>
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
-body { background:#0f172a; color:white; }
-
-header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
-.company { font-size:26px; font-weight:bold; color:#00ff99; }
-.system  { font-size:17px; margin-top:6px; color:#cbd5e1; }
-
-.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; padding:20px; }
-.kpi-card { background:#1e293b; padding:18px; border-radius:15px; text-align:center; }
-.kpi-card h2 { color:#00ff99; font-size:28px; margin-bottom:8px; }
-.kpi-card p  { color:#cbd5e1; font-size:13px; }
-
-.search-section { padding:0 20px 20px; }
-.search-box { width:100%; padding:13px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:15px; }
-
-/* ✅ TABLE SCROLL FIX */
-.table-wrapper {
-  padding:0 20px 30px;
-  overflow-x:auto;
-  overflow-y:visible;
-  width:100%;
-  display:block;
-}
-table { border-collapse:collapse; min-width:12000px; background:#1e293b; }
-th { background:#111827; color:#00ff99; padding:10px 8px; border:1px solid #334155; font-size:12px; white-space:nowrap; position:sticky; top:0; z-index:10; }
-td { padding:8px; border:1px solid #334155; font-size:12px; text-align:center; white-space:nowrap; }
-tr:nth-child(even) { background:#1a2540; }
-
-.th-fabric   { background:#1a3a2a !important; }
-.th-yarn     { background:#1a2a3a !important; }
-.th-labdip   { background:#2a1a3a !important; }
-.th-knitting { background:#3a2a1a !important; }
-.th-dyeing   { background:#2a3a1a !important; }
-.th-sample   { background:#3a1a2a !important; }
-.th-cutting  { background:#1a3a3a !important; }
-.th-sewing   { background:#3a3a1a !important; }
-.th-packing  { background:#1a1a3a !important; }
-
-.st-pending  { color:#f97316; font-weight:bold; font-size:11px; }
-.st-running  { color:#3b82f6; font-weight:bold; font-size:11px; }
-.st-delay    { color:#ef4444; font-weight:bold; font-size:11px; }
-.st-complete { color:#00ff99; font-weight:bold; font-size:11px; }
-.st-na       { color:#475569; font-size:11px; }
-
-.date-ok     { color:#00ff99; }
-.date-late   { color:#ef4444; }
-.date-normal { color:#cbd5e1; }
-
-.prog-wrap { background:#0f172a; border-radius:20px; height:14px; width:100px; display:inline-block; vertical-align:middle; margin-left:6px; }
-.prog-bar  { height:14px; border-radius:20px; background:#00ff99; }
-
-.edit-btn { background:#00aa66; color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px; }
-.edit-btn:hover { background:#008844; }
-
-/* SCROLL BUTTONS */
-.scroll-bar { display:flex; align-items:center; justify-content:center; gap:14px; padding:10px 20px; }
-.scr-btn { background:#16a34a; border:2px solid #00ff99; border-radius:10px; color:#fff; padding:10px 28px; font-size:15px; font-weight:700; cursor:pointer; }
-.scr-btn:hover { background:#15803d; }
-.scr-hint { font-size:12px; color:#64748b; }
-
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:flex-start; overflow-y:auto; }
-.modal-content { background:#1e293b; width:95%; max-width:900px; margin:25px auto; padding:25px; border-radius:15px; }
-.modal-content h2 { color:#00ff99; margin-bottom:18px; font-size:19px; border-bottom:1px solid #334155; padding-bottom:10px; }
-
-.modal-info-box { background:#111827; padding:14px; border-radius:10px; margin-bottom:18px; border-left:4px solid #00ff99; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; }
-.modal-info-box p    { color:#cbd5e1; font-size:13px; }
-.modal-info-box span { color:white; font-weight:bold; }
-
-.section-title { background:#0f172a; color:#00ff99; padding:7px 12px; border-radius:8px; font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin:16px 0 10px; border-left:3px solid #00ff99; }
-
-.form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-.form-row label { display:block; margin-bottom:5px; color:#94a3b8; font-size:11px; font-weight:bold; text-transform:uppercase; }
-input[type="date"], select, textarea { width:100%; padding:9px; border:1px solid #334155; border-radius:7px; background:#0f172a; color:white; font-size:13px; }
-input[type="date"]:focus { outline:none; border-color:#00ff99; }
-
-.status-group { display:flex; gap:6px; flex-wrap:wrap; }
-.status-btn { flex:1; min-width:70px; padding:9px 4px; border:2px solid #334155; border-radius:7px; background:#0f172a; color:#64748b; font-weight:bold; font-size:12px; cursor:pointer; text-align:center; transition:all .2s; }
-.status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
-.status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
-.status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
-.status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
-
-.btn-group { display:flex; gap:10px; margin-top:22px; }
-.save-btn  { background:#00aa66; padding:12px 20px; border:none; border-radius:9px; color:white; font-weight:bold; cursor:pointer; flex:1; }
-.close-btn { background:#dc2626; padding:12px 20px; border:none; border-radius:9px; color:white; font-weight:bold; cursor:pointer; flex:1; }
-.save-btn:hover  { background:#008844; }
-.close-btn:hover { background:#b91c1c; }
-.auto-note { color:#64748b; font-size:10px; font-style:italic; margin-left:4px; }
-</style>
-</head>
-<body>
-
-<header>
-  <div style="font-size:22px;margin-bottom:8px;">﷽</div>
-  <div class="company">INNOVATIVE KNITEX LTD</div>
-  <div class="system">📋 SMART TNA BD - TNA MANAGEMENT</div>
-</header>
-
-<div class="kpi-grid">
-  <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
-  <div class="kpi-card"><h2 id="kRunning">0</h2><p>Running</p></div>
-  <div class="kpi-card"><h2 id="kCompleted">0</h2><p>Completed</p></div>
-  <div class="kpi-card"><h2 id="kDelay">0</h2><p>Delayed</p></div>
-  <div class="kpi-card"><h2 id="kAvgProg">0%</h2><p>Avg Progress</p></div>
-  <div class="kpi-card"><h2 id="kTotalQty">0</h2><p>Total Qty</p></div>
-</div>
-
-<div class="search-section">
-  <input type="text" id="searchInput" class="search-box"
-    placeholder="🔍  Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
-</div>
-
-<!-- ✅ SCROLL BUTTONS TOP -->
-<div class="scroll-bar">
-  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft -= 400">◀ Left</button>
-  <span class="scr-hint">← Scroll Table →</span>
-  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft += 400">Right ▶</button>
-</div>
-
-<!-- ✅ TABLE WRAPPER WITH ID -->
-<div class="table-wrapper" id="tblWrap">
-<table>
-<thead>
-<tr>
-  <th rowspan="2">SL</th>
-  <th rowspan="2">Buyer</th>
-  <th rowspan="2">IKL</th>
-  <th rowspan="2">Style</th>
-  <th rowspan="2">Qty</th>
-  <th rowspan="2">Order Date</th>
-  <th rowspan="2">Ship Date</th>
-  <th rowspan="2">Lead Time</th>
-  <th rowspan="2">Merchandiser</th>
-  <th rowspan="2">Progress</th>
-  <th colspan="3" class="th-fabric">Fabric Booking</th>
-  <th colspan="3" class="th-yarn">Yarn Inhouse</th>
-  <th colspan="3" class="th-labdip">Color Swatch</th>
-  <th colspan="3" class="th-labdip">Lab Dip Submit</th>
-  <th colspan="3" class="th-labdip">Lab Dip Approval</th>
-  <th colspan="3" class="th-fabric">G2 Receive</th>
-  <th colspan="3" class="th-fabric">Strike Off Send</th>
-  <th colspan="3" class="th-fabric">Strike Off Approval</th>
-  <th colspan="3" class="th-knitting">Knitting Start</th>
-  <th colspan="3" class="th-knitting">Knitting Complete</th>
-  <th colspan="3" class="th-dyeing">Dyeing Start</th>
-  <th colspan="3" class="th-dyeing">Dyeing Complete</th>
-  <th colspan="3" class="th-sample">Sample Fabric</th>
-  <th colspan="3" class="th-sample">PP Sample Submit</th>
-  <th colspan="3" class="th-cutting">Sewing Trims</th>
-  <th colspan="3" class="th-cutting">Fabric Test Start</th>
-  <th colspan="3" class="th-cutting">Fabric Test Complete</th>
-  <th colspan="3" class="th-sample">PP Approval</th>
-  <th colspan="3" class="th-sample">Size Set</th>
-  <th colspan="3" class="th-sample">PP Meeting</th>
-  <th colspan="3" class="th-cutting">Cutting Start</th>
-  <th colspan="3" class="th-sewing">Print Start</th>
-  <th colspan="3" class="th-sewing">Print Complete</th>
-  <th colspan="3" class="th-sewing">Sewing Input</th>
-  <th colspan="3" class="th-sewing">Sewing Start</th>
-  <th colspan="3" class="th-sewing">Inline Inspection</th>
-  <th colspan="3" class="th-packing">Packing Trims</th>
-  <th colspan="3" class="th-sewing">Sewing Complete</th>
-  <th colspan="3" class="th-packing">Finishing Start</th>
-  <th colspan="3" class="th-packing">Packing Start</th>
-  <th colspan="3" class="th-packing">Packing Complete</th>
-  <th colspan="3" class="th-packing">Final Inspection</th>
-  <th colspan="3" class="th-packing">Shipment Approval</th>
-  <th rowspan="2">Final Status</th>
-  <th rowspan="2">Action</th>
-</tr>
-<tr>
-  <th class="th-fabric">Target</th><th class="th-fabric">Actual</th><th class="th-fabric">Status</th>
-  <th class="th-yarn">Target</th><th class="th-yarn">Actual</th><th class="th-yarn">Status</th>
-  <th class="th-labdip">Target</th><th class="th-labdip">Actual</th><th class="th-labdip">Status</th>
-  <th class="th-labdip">Target</th><th class="th-labdip">Actual</th><th class="th-labdip">Status</th>
-  <th class="th-labdip">Target</th><th class="th-labdip">Actual</th><th class="th-labdip">Status</th>
-  <th class="th-fabric">Target</th><th class="th-fabric">Actual</th><th class="th-fabric">Status</th>
-  <th class="th-fabric">Target</th><th class="th-fabric">Actual</th><th class="th-fabric">Status</th>
-  <th class="th-fabric">Target</th><th class="th-fabric">Actual</th><th class="th-fabric">Status</th>
-  <th class="th-knitting">Target</th><th class="th-knitting">Actual</th><th class="th-knitting">Status</th>
-  <th class="th-knitting">Target</th><th class="th-knitting">Actual</th><th class="th-knitting">Status</th>
-  <th class="th-dyeing">Target</th><th class="th-dyeing">Actual</th><th class="th-dyeing">Status</th>
-  <th class="th-dyeing">Target</th><th class="th-dyeing">Actual</th><th class="th-dyeing">Status</th>
-  <th class="th-sample">Target</th><th class="th-sample">Actual</th><th class="th-sample">Status</th>
-  <th class="th-sample">Target</th><th class="th-sample">Actual</th><th class="th-sample">Status</th>
-  <th class="th-cutting">Target</th><th class="th-cutting">Actual</th><th class="th-cutting">Status</th>
-  <th class="th-cutting">Target</th><th class="th-cutting">Actual</th><th class="th-cutting">Status</th>
-  <th class="th-cutting">Target</th><th class="th-cutting">Actual</th><th class="th-cutting">Status</th>
-  <th class="th-sample">Target</th><th class="th-sample">Actual</th><th class="th-sample">Status</th>
-  <th class="th-sample">Target</th><th class="th-sample">Actual</th><th class="th-sample">Status</th>
-  <th class="th-sample">Target</th><th class="th-sample">Actual</th><th class="th-sample">Status</th>
-  <th class="th-cutting">Target</th><th class="th-cutting">Actual</th><th class="th-cutting">Status</th>
-  <th class="th-sewing">Target</th><th class="th-sewing">Actual</th><th class="th-sewing">Status</th>
-  <th class="th-sewing">Target</th><th class="th-sewing">Actual</th><th class="th-sewing">Status</th>
-  <th class="th-sewing">Target</th><th class="th-sewing">Actual</th><th class="th-sewing">Status</th>
-  <th class="th-sewing">Target</th><th class="th-sewing">Actual</th><th class="th-sewing">Status</th>
-  <th class="th-sewing">Target</th><th class="th-sewing">Actual</th><th class="th-sewing">Status</th>
-  <th class="th-packing">Target</th><th class="th-packing">Actual</th><th class="th-packing">Status</th>
-  <th class="th-sewing">Target</th><th class="th-sewing">Actual</th><th class="th-sewing">Status</th>
-  <th class="th-packing">Target</th><th class="th-packing">Actual</th><th class="th-packing">Status</th>
-  <th class="th-packing">Target</th><th class="th-packing">Actual</th><th class="th-packing">Status</th>
-  <th class="th-packing">Target</th><th class="th-packing">Actual</th><th class="th-packing">Status</th>
-  <th class="th-packing">Target</th><th class="th-packing">Actual</th><th class="th-packing">Status</th>
-  <th class="th-packing">Target</th><th class="th-packing">Actual</th><th class="th-packing">Status</th>
-</tr>
-</thead>
-<tbody id="tnaBody">
-  <tr><td colspan="110" style="padding:30px;color:#64748b;">Loading TNA Data...</td></tr>
-</tbody>
-</table>
-</div>
-
-<!-- ✅ SCROLL BUTTONS BOTTOM -->
-<div class="scroll-bar">
-  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft -= 400">◀ Left</button>
-  <span class="scr-hint">← Scroll Table →</span>
-  <button class="scr-btn" onclick="document.getElementById('tblWrap').scrollLeft += 400">Right ▶</button>
-</div>
-
-<div class="modal" id="editModal">
-  <div class="modal-content">
-    <h2>✏️ TNA Update</h2>
-    <div id="modalFormArea"></div>
-    <div class="btn-group">
-      <button class="save-btn"  id="saveBtn">💾 Save</button>
-      <button class="close-btn" id="closeBtn">✖ Close</button>
-    </div>
-  </div>
-</div>
-
 <script type="module">
 import { initializeApp }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, updateDoc }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
 
 const firebaseConfig = {
   apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
@@ -249,11 +23,22 @@ const firebaseConfig = {
   messagingSenderId: "372049573207",
   appId: "1:372049573207:web:571beae951f9aa4b47fa12"
 };
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
 
-let allOrders     = [];
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
+let allOrders = [];
 let selectedDocId = null;
+
+
+/* =========================================================
+   TNA STAGES
+========================================================= */
 
 const STAGES = [
   { label:"Fabric Booking",       field:"fabricBooking",      offset:60 },
@@ -264,278 +49,1169 @@ const STAGES = [
   { label:"G2 Receive",           field:"g2Receive",          offset:45 },
   { label:"Strike Off Send",      field:"strikeOffSend",      offset:42 },
   { label:"Strike Off Approval",  field:"strikeOffApproval",  offset:38 },
+
   { label:"Knitting Start",       field:"knittingStart",      offset:55 },
   { label:"Knitting Complete",    field:"knittingComplete",   offset:40 },
-  { label:"Dyeing Start",         field:"dyeingStart",        offset:38 },
-  { label:"Dyeing Complete",      field:"dyeingComplete",     offset:30 },
-  { label:"Sample Fabric",        field:"sampleFabric",       offset:28 },
-  { label:"PP Sample Submit",     field:"ppSampleSubmit",     offset:25 },
-  { label:"Sewing Trims",         field:"sewingTrims",        offset:25 },
-  { label:"Fabric Test Start",    field:"fabricTestStart",    offset:25 },
-  { label:"Fabric Test Complete", field:"fabricTestComplete", offset:20 },
-  { label:"PP Approval",          field:"ppApproval",         offset:18 },
-  { label:"Size Set",             field:"sizeSet",            offset:18 },
-  { label:"PP Meeting",           field:"ppMeeting",          offset:15 },
-  { label:"Cutting Start",        field:"cuttingStart",       offset:14 },
-  { label:"Print Start",          field:"printStart",         offset:12 },
-  { label:"Print Complete",       field:"printComplete",      offset:10 },
-  { label:"Sewing Input",         field:"sewingInput",        offset:12 },
-  { label:"Sewing Start",         field:"sewingStart",        offset:10 },
-  { label:"Inline Inspection",    field:"inlineInspection",   offset:7  },
-  { label:"Packing Trims",        field:"packingTrims",       offset:7  },
-  { label:"Sewing Complete",      field:"sewingComplete",     offset:5  },
-  { label:"Finishing Start",      field:"finishingStart",     offset:5  },
-  { label:"Packing Start",        field:"packingStart",       offset:4  },
-  { label:"Packing Complete",     field:"packingComplete",    offset:3  },
-  { label:"Final Inspection",     field:"finalInspection",    offset:2  },
-  { label:"Shipment Approval",    field:"shipmentApproval",   offset:1  },
+
+  { label:"Dyeing Start",        field:"dyeingStart",        offset:38 },
+  { label:"Dyeing Complete",     field:"dyeingComplete",     offset:30 },
+
+  { label:"Sample Fabric",       field:"sampleFabric",       offset:28 },
+  { label:"PP Sample Submit",    field:"ppSampleSubmit",     offset:25 },
+
+  { label:"Sewing Trims",        field:"sewingTrims",        offset:25 },
+  { label:"Fabric Test Start",   field:"fabricTestStart",    offset:25 },
+  { label:"Fabric Test Complete",field:"fabricTestComplete", offset:20 },
+
+  { label:"PP Approval",         field:"ppApproval",         offset:18 },
+  { label:"Size Set",            field:"sizeSet",            offset:18 },
+  { label:"PP Meeting",          field:"ppMeeting",          offset:15 },
+
+  { label:"Cutting Start",       field:"cuttingStart",       offset:14 },
+
+  { label:"Print Start",         field:"printStart",         offset:12 },
+  { label:"Print Complete",      field:"printComplete",      offset:10 },
+
+  { label:"Sewing Input",        field:"sewingInput",        offset:12 },
+  { label:"Sewing Start",        field:"sewingStart",        offset:10 },
+
+  { label:"Inline Inspection",   field:"inlineInspection",   offset:7 },
+
+  { label:"Packing Trims",       field:"packingTrims",       offset:7 },
+
+  { label:"Sewing Complete",     field:"sewingComplete",     offset:5 },
+
+  { label:"Finishing Start",     field:"finishingStart",     offset:5 },
+
+  { label:"Packing Start",       field:"packingStart",       offset:4 },
+
+  { label:"Packing Complete",    field:"packingComplete",    offset:3 },
+
+  { label:"Final Inspection",    field:"finalInspection",    offset:2 },
+
+  { label:"Shipment Approval",   field:"shipmentApproval",   offset:1 }
 ];
+
 
 const ST_OPTS = [
-  { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
-  { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
-  { val:"Delay",    label:"🔴 Delay",    cls:"active-delay"    },
-  { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
+  {
+    val:"Pending",
+    label:"🟠 Pending",
+    cls:"active-pending"
+  },
+  {
+    val:"Running",
+    label:"🔵 Running",
+    cls:"active-running"
+  },
+  {
+    val:"Delay",
+    label:"🔴 Delay",
+    cls:"active-delay"
+  },
+  {
+    val:"Complete",
+    label:"🟢 Complete",
+    cls:"active-complete"
+  }
 ];
 
-// ✅ QTY HELPER — colors array থেকেও নেয়
+
+/* =========================================================
+   QTY
+========================================================= */
+
 function getOrderQty(o) {
-  let qty = Number(o.totalQty || o.qty || o.orderQty || 0);
-  if (!qty && o.colors && Array.isArray(o.colors)) {
-    qty = o.colors.reduce((sum, c) => sum + Number(c.qty || 0), 0);
+
+  let qty = Number(
+    o.totalQty ||
+    o.qty ||
+    o.orderQty ||
+    0
+  );
+
+  if (
+    !qty &&
+    o.colors &&
+    Array.isArray(o.colors)
+  ) {
+
+    qty = o.colors.reduce(
+      (sum, c) =>
+        sum + Number(c.qty || 0),
+      0
+    );
   }
+
   return qty;
 }
 
+
+/* =========================================================
+   DATE
+========================================================= */
+
 function addDays(dateStr, days) {
-  const d = new Date(dateStr + "T00:00:00");
-  d.setDate(d.getDate() + days);
-  return d.toISOString().split("T")[0];
+
+  if (!dateStr) return "";
+
+  const d =
+    new Date(dateStr + "T00:00:00");
+
+  d.setDate(
+    d.getDate() + days
+  );
+
+  return d
+    .toISOString()
+    .split("T")[0];
 }
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
 
 function statusBadge(val) {
-  if (!val || val==="-" || val==="") return `<span class="st-na">-</span>`;
-  if (val==="Running")  return `<span class="st-running">● Running</span>`;
-  if (val==="Delay")    return `<span class="st-delay">● Delay</span>`;
-  if (val==="Complete") return `<span class="st-complete">● Complete</span>`;
-  return `<span class="st-pending">● Pending</span>`;
+
+  if (
+    !val ||
+    val === "-" ||
+    val === ""
+  ) {
+
+    return `<span class="st-na">-</span>`;
+  }
+
+  if (val === "Running") {
+
+    return `<span class="st-running">
+      ● Running
+    </span>`;
+  }
+
+  if (val === "Delay") {
+
+    return `<span class="st-delay">
+      ● Delay
+    </span>`;
+  }
+
+  if (val === "Complete") {
+
+    return `<span class="st-complete">
+      ● Complete
+    </span>`;
+  }
+
+  return `<span class="st-pending">
+    ● Pending
+  </span>`;
 }
+
+
+/* =========================================================
+   DATE CELL
+========================================================= */
 
 function dateCell(target, actual) {
+
   const t = target || "-";
   const a = actual || "-";
+
   let cls = "date-normal";
+
   if (actual && target) {
-    cls = actual <= target ? "date-ok" : "date-late";
+
+    cls =
+      actual <= target
+        ? "date-ok"
+        : "date-late";
   }
-  return `<td class="date-normal">${t}</td><td class="${cls}">${a}</td>`;
+
+  return `
+    <td>${t}</td>
+    <td class="${cls}">
+      ${a}
+    </td>
+  `;
 }
 
+
+/* =========================================================
+   STATUS BUTTONS
+========================================================= */
+
 function stBtns(field, current) {
+
   return ST_OPTS.map(o => {
-    const act = (current===o.val) ? o.cls : "";
-    return `<button type="button" class="status-btn ${act}"
-      onclick="selStatus('${field}','${o.val}','${o.cls}',this)">${o.label}</button>`;
+
+    const active =
+      current === o.val
+        ? o.cls
+        : "";
+
+    return `
+      <button
+        type="button"
+        class="status-btn ${active}"
+        onclick="
+          selStatus(
+            '${field}',
+            '${o.val}',
+            '${o.cls}',
+            this
+          )
+        "
+      >
+        ${o.label}
+      </button>
+    `;
+
   }).join("");
 }
 
-window.selStatus = function(field, val, cls, btn) {
-  document.getElementById("f_"+field).value = val;
-  btn.parentElement.querySelectorAll(".status-btn").forEach(b => b.className="status-btn");
+
+window.selStatus =
+function(field, val, cls, btn) {
+
+  const input =
+    document.getElementById(
+      "f_" + field
+    );
+
+  if (input) {
+    input.value = val;
+  }
+
+  btn.parentElement
+    .querySelectorAll(".status-btn")
+    .forEach(b => {
+
+      b.className =
+        "status-btn";
+    });
+
   btn.classList.add(cls);
 };
 
-async function loadOrders() {
-  const snap = await getDocs(collection(db,"orders"));
-  allOrders  = [];
-  snap.forEach(d => allOrders.push({id:d.id,...d.data()}));
-  renderKPI();
-  renderTable(allOrders);
+
+/* =========================================================
+   FIREBASE REAL-TIME LOAD
+========================================================= */
+
+function startFirebaseListener() {
+
+  const ordersRef =
+    collection(db, "orders");
+
+  console.log(
+    "🔥 Connecting to Firebase..."
+  );
+
+  onSnapshot(
+    ordersRef,
+
+    snapshot => {
+
+      allOrders = [];
+
+      snapshot.forEach(item => {
+
+        allOrders.push({
+          id: item.id,
+          ...item.data()
+        });
+
+      });
+
+      console.log(
+        "🔥 Firebase Orders:",
+        allOrders.length
+      );
+
+      renderKPI();
+      renderTable(allOrders);
+
+    },
+
+    error => {
+
+      console.error(
+        "🔥 Firebase ERROR:",
+        error
+      );
+
+      const body =
+        document.getElementById(
+          "tnaBody"
+        );
+
+      body.innerHTML = `
+        <tr>
+          <td
+            colspan="110"
+            style="
+              padding:40px;
+              color:#ef4444;
+              font-weight:bold;
+              text-align:center;
+            "
+          >
+            ❌ Firebase Error<br><br>
+            ${error.message}
+          </td>
+        </tr>
+      `;
+    }
+  );
 }
 
-window.filterOrders = function() {
-  const kw = document.getElementById("searchInput").value.toLowerCase();
-  renderTable(kw ? allOrders.filter(o =>
-    (o.buyer||"").toLowerCase().includes(kw)||
-    (o.ikl||"").toLowerCase().includes(kw)||
-    (o.style||"").toLowerCase().includes(kw)||
-    (o.merchandiser||"").toLowerCase().includes(kw)
-  ) : allOrders);
-};
 
-function renderKPI() {
-  let running=0, completed=0, delay=0, progSum=0, totalQty=0;
-  allOrders.forEach(o => {
-    // ✅ Status দিয়ে progress count
-    const done = STAGES.filter(s => o[s.field+"Status"]==="Complete").length;
-    const prog = Math.round(done/STAGES.length*100);
-    progSum += prog;
-    // ✅ colors array থেকেও qty নেওয়া হচ্ছে
-    totalQty += getOrderQty(o);
-    if (prog===100) completed++;
-    else if (prog>0) running++;
-    const hasDelay = STAGES.some(s => o[s.field+"Status"]==="Delay");
-    if (hasDelay) delay++;
-  });
-  document.getElementById("kTotal").innerText     = allOrders.length;
-  document.getElementById("kRunning").innerText   = running;
-  document.getElementById("kCompleted").innerText = completed;
-  document.getElementById("kDelay").innerText     = delay;
-  document.getElementById("kAvgProg").innerText   = allOrders.length ? Math.round(progSum/allOrders.length)+"%" : "0%";
-  document.getElementById("kTotalQty").innerText  = totalQty.toLocaleString();
-}
+/* =========================================================
+   SEARCH
+========================================================= */
 
-function renderTable(orders) {
-  const body = document.getElementById("tnaBody");
-  body.innerHTML = "";
-  if (!orders.length) {
-    body.innerHTML = `<tr><td colspan="110" style="padding:30px;color:#64748b;">No data found</td></tr>`;
+window.filterOrders =
+function() {
+
+  const kw =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  if (!kw) {
+
+    renderTable(allOrders);
     return;
   }
-  let sl = 1;
 
-  orders.forEach(o => {
-    const shipDate  = o.shipdate||o.shipDate||o.shipmentDate||"";
-    const orderDate = o.orderDate||"";
-    let leadTime = "-";
-    if (orderDate && shipDate) {
-      leadTime = Math.max(0, Math.ceil(
-        (new Date(shipDate+"T00:00:00") - new Date(orderDate+"T00:00:00")) / 86400000
-      )) + " Days";
-    }
+  const filtered =
+    allOrders.filter(o => {
 
-    // ✅ colors array থেকেও qty নেওয়া হচ্ছে
-    const qty = getOrderQty(o);
+      return (
 
-    // ✅ Status দিয়ে progress count
-    const done = STAGES.filter(s => o[s.field+"Status"]==="Complete").length;
-    const prog = Math.round(done/STAGES.length*100);
+        String(o.buyer || "")
+          .toLowerCase()
+          .includes(kw)
 
-    const hasDelay = STAGES.some(s => o[s.field+"Status"]==="Delay");
-    let finalSt = "Pending";
-    if (prog===100)    finalSt = "Complete";
-    else if (hasDelay) finalSt = "Delay";
-    else if (prog>0)   finalSt = "Running";
+        ||
 
-    let stageCells = "";
-    STAGES.forEach(s => {
-      let target = "-";
-      if (shipDate) {
-        target = addDays(shipDate, -s.offset);
-        if (o[s.field+"Target"]) target = o[s.field+"Target"];
-      }
-      const actual = o[s.field+"Actual"] || "-";
-      const status = o[s.field+"Status"] || "Pending";
-      stageCells += dateCell(target, actual) + `<td>${statusBadge(status)}</td>`;
+        String(o.ikl || "")
+          .toLowerCase()
+          .includes(kw)
+
+        ||
+
+        String(o.style || "")
+          .toLowerCase()
+          .includes(kw)
+
+        ||
+
+        String(
+          o.merchandiser ||
+          o.Merchandiser ||
+          ""
+        )
+          .toLowerCase()
+          .includes(kw)
+      );
+
     });
 
-    body.innerHTML += `
+  renderTable(filtered);
+};
+
+
+/* =========================================================
+   KPI
+========================================================= */
+
+function renderKPI() {
+
+  let running = 0;
+  let completed = 0;
+  let delay = 0;
+  let progSum = 0;
+  let totalQty = 0;
+
+  allOrders.forEach(o => {
+
+    const done =
+      STAGES.filter(
+        s =>
+          o[s.field + "Status"]
+          === "Complete"
+      ).length;
+
+    const prog =
+      Math.round(
+        done /
+        STAGES.length *
+        100
+      );
+
+    progSum += prog;
+
+    totalQty +=
+      getOrderQty(o);
+
+    if (prog === 100) {
+
+      completed++;
+
+    } else if (prog > 0) {
+
+      running++;
+    }
+
+    const hasDelay =
+      STAGES.some(
+        s =>
+          o[s.field + "Status"]
+          === "Delay"
+      );
+
+    if (hasDelay) {
+
+      delay++;
+    }
+
+  });
+
+
+  document.getElementById(
+    "kTotal"
+  ).innerText =
+    allOrders.length;
+
+
+  document.getElementById(
+    "kRunning"
+  ).innerText =
+    running;
+
+
+  document.getElementById(
+    "kCompleted"
+  ).innerText =
+    completed;
+
+
+  document.getElementById(
+    "kDelay"
+  ).innerText =
+    delay;
+
+
+  document.getElementById(
+    "kAvgProg"
+  ).innerText =
+    allOrders.length
+      ? Math.round(
+          progSum /
+          allOrders.length
+        ) + "%"
+      : "0%";
+
+
+  document.getElementById(
+    "kTotalQty"
+  ).innerText =
+    totalQty.toLocaleString();
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function renderTable(orders) {
+
+  const body =
+    document.getElementById(
+      "tnaBody"
+    );
+
+  body.innerHTML = "";
+
+  if (!orders.length) {
+
+    body.innerHTML = `
       <tr>
+        <td
+          colspan="110"
+          style="
+            padding:30px;
+            color:#64748b;
+          "
+        >
+          No Firebase order data found.
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  let sl = 1;
+
+
+  orders.forEach(o => {
+
+    const shipDate =
+      o.shipdate ||
+      o.shipDate ||
+      o.shipmentDate ||
+      "";
+
+    const orderDate =
+      o.orderDate ||
+      "";
+
+
+    let leadTime = "-";
+
+
+    if (
+      orderDate &&
+      shipDate
+    ) {
+
+      leadTime =
+        Math.max(
+          0,
+
+          Math.ceil(
+
+            (
+              new Date(
+                shipDate +
+                "T00:00:00"
+              )
+
+              -
+
+              new Date(
+                orderDate +
+                "T00:00:00"
+              )
+
+            ) / 86400000
+
+          )
+
+        ) + " Days";
+    }
+
+
+    const qty =
+      getOrderQty(o);
+
+
+    const done =
+      STAGES.filter(
+        s =>
+          o[s.field + "Status"]
+          === "Complete"
+      ).length;
+
+
+    const prog =
+      Math.round(
+        done /
+        STAGES.length *
+        100
+      );
+
+
+    const hasDelay =
+      STAGES.some(
+        s =>
+          o[s.field + "Status"]
+          === "Delay"
+      );
+
+
+    let finalSt =
+      "Pending";
+
+
+    if (prog === 100) {
+
+      finalSt =
+        "Complete";
+
+    } else if (hasDelay) {
+
+      finalSt =
+        "Delay";
+
+    } else if (prog > 0) {
+
+      finalSt =
+        "Running";
+    }
+
+
+    let stageCells = "";
+
+
+    STAGES.forEach(s => {
+
+      let target = "-";
+
+
+      if (shipDate) {
+
+        target =
+          addDays(
+            shipDate,
+            -s.offset
+          );
+
+
+        if (
+          o[s.field + "Target"]
+        ) {
+
+          target =
+            o[s.field + "Target"];
+        }
+      }
+
+
+      const actual =
+        o[s.field + "Actual"] ||
+        "-";
+
+
+      const status =
+        o[s.field + "Status"] ||
+        "Pending";
+
+
+      stageCells +=
+        dateCell(
+          target,
+          actual
+        )
+
+        +
+
+        `<td>
+          ${statusBadge(status)}
+        </td>`;
+    });
+
+
+    body.innerHTML += `
+
+      <tr>
+
         <td>${sl++}</td>
-        <td>${o.buyer||"-"}</td>
-        <td>${o.ikl||"-"}</td>
-        <td>${o.style||"-"}</td>
-        <td style="color:${qty>0?'#00ff99':'#ef4444'};font-weight:bold;">
-          ${qty>0 ? qty.toLocaleString() : "⚠ 0"}
-        </td>
-        <td>${orderDate||"-"}</td>
-        <td>${shipDate||"-"}</td>
-        <td>${leadTime}</td>
-        <td>${o.merchandiser||o.Merchandiser||"-"}</td>
+
         <td>
-          ${prog}%
-          <div class="prog-wrap"><div class="prog-bar" style="width:${prog}%"></div></div>
+          ${o.buyer || "-"}
         </td>
+
+        <td>
+          ${o.ikl || "-"}
+        </td>
+
+        <td>
+          ${o.style || "-"}
+        </td>
+
+        <td
+          style="
+            color:
+              ${qty > 0
+                ? "#00ff99"
+                : "#ef4444"};
+            font-weight:bold;
+          "
+        >
+          ${
+            qty > 0
+              ? qty.toLocaleString()
+              : "⚠ 0"
+          }
+        </td>
+
+        <td>
+          ${orderDate || "-"}
+        </td>
+
+        <td>
+          ${shipDate || "-"}
+        </td>
+
+        <td>
+          ${leadTime}
+        </td>
+
+        <td>
+          ${
+            o.merchandiser ||
+            o.Merchandiser ||
+            "-"
+          }
+        </td>
+
+        <td>
+
+          ${prog}%
+
+          <div class="prog-wrap">
+
+            <div
+              class="prog-bar"
+              style="
+                width:${prog}%
+              "
+            ></div>
+
+          </div>
+
+        </td>
+
         ${stageCells}
-        <td>${statusBadge(finalSt)}</td>
-        <td><button class="edit-btn" onclick="openModal('${o.id}')">✏️ Edit</button></td>
-      </tr>`;
+
+        <td>
+          ${statusBadge(finalSt)}
+        </td>
+
+        <td>
+
+          <button
+            class="edit-btn"
+            onclick="
+              openModal('${o.id}')
+            "
+          >
+            ✏️ Edit
+          </button>
+
+        </td>
+
+      </tr>
+    `;
   });
 }
 
-window.openModal = function(docId) {
-  selectedDocId = docId;
-  const o = allOrders.find(x => x.id===docId);
+
+/* =========================================================
+   OPEN EDIT MODAL
+========================================================= */
+
+window.openModal =
+function(docId) {
+
+  selectedDocId =
+    docId;
+
+
+  const o =
+    allOrders.find(
+      x => x.id === docId
+    );
+
+
   if (!o) return;
 
-  const shipDate  = o.shipdate||o.shipDate||"";
-  const orderDate = o.orderDate||"";
+
+  const shipDate =
+    o.shipdate ||
+    o.shipDate ||
+    "";
+
+
+  const orderDate =
+    o.orderDate ||
+    "";
+
 
   const GROUPS = [
-    { title:"🎨 Pre-Production",    fields: STAGES.slice(0,8)   },
-    { title:"🧶 Knitting & Dyeing", fields: STAGES.slice(8,12)  },
-    { title:"🧪 Sample & Testing",  fields: STAGES.slice(12,20) },
-    { title:"✂️ Cutting & Sewing",  fields: STAGES.slice(20,28) },
-    { title:"📦 Finishing & Packing",fields: STAGES.slice(28,33)},
+
+    {
+      title:"🎨 Pre-Production",
+      fields:
+        STAGES.slice(0,8)
+    },
+
+    {
+      title:"🧶 Knitting & Dyeing",
+      fields:
+        STAGES.slice(8,12)
+    },
+
+    {
+      title:"🧪 Sample & Testing",
+      fields:
+        STAGES.slice(12,20)
+    },
+
+    {
+      title:"✂️ Cutting & Sewing",
+      fields:
+        STAGES.slice(20,28)
+    },
+
+    {
+      title:"📦 Finishing & Packing",
+      fields:
+        STAGES.slice(28,33)
+    }
+
   ];
 
+
   let formHtml = `
+
     <div class="modal-info-box">
-      <p><span>Style       :</span> ${o.style||"-"}</p>
-      <p><span>Buyer       :</span> ${o.buyer||"-"}</p>
-      <p><span>IKL         :</span> ${o.ikl||"-"}</p>
-      <p><span>Order Date  :</span> ${orderDate||"-"}</p>
-      <p><span>Ship Date   :</span> ${shipDate||"-"}</p>
-      <p><span>Merchandiser:</span> ${o.merchandiser||o.Merchandiser||"-"}</p>
-    </div>`;
+
+      <p>
+        <span>Style :</span>
+        ${o.style || "-"}
+      </p>
+
+      <p>
+        <span>Buyer :</span>
+        ${o.buyer || "-"}
+      </p>
+
+      <p>
+        <span>IKL :</span>
+        ${o.ikl || "-"}
+      </p>
+
+      <p>
+        <span>Order Date :</span>
+        ${orderDate || "-"}
+      </p>
+
+      <p>
+        <span>Ship Date :</span>
+        ${shipDate || "-"}
+      </p>
+
+      <p>
+        <span>Merchandiser :</span>
+        ${
+          o.merchandiser ||
+          o.Merchandiser ||
+          "-"
+        }
+      </p>
+
+    </div>
+  `;
+
 
   GROUPS.forEach(grp => {
-    formHtml += `<div class="section-title">${grp.title}</div>`;
+
+    formHtml += `
+
+      <div class="section-title">
+        ${grp.title}
+      </div>
+    `;
+
+
     grp.fields.forEach(s => {
+
       let autoTarget = "";
-      if (shipDate) autoTarget = addDays(shipDate, -s.offset);
-      const savedTarget = o[s.field+"Target"] || autoTarget;
-      const actual      = o[s.field+"Actual"] || "";
-      const status      = o[s.field+"Status"] || "Pending";
+
+
+      if (shipDate) {
+
+        autoTarget =
+          addDays(
+            shipDate,
+            -s.offset
+          );
+      }
+
+
+      const savedTarget =
+        o[s.field + "Target"] ||
+        autoTarget;
+
+
+      const actual =
+        o[s.field + "Actual"] ||
+        "";
+
+
+      const status =
+        o[s.field + "Status"] ||
+        "Pending";
+
+
       formHtml += `
-        <div style="background:#111827;border-radius:10px;padding:14px;margin-bottom:10px;">
-          <div style="color:#00ff99;font-size:13px;font-weight:bold;margin-bottom:10px;">${s.label}</div>
-          <div class="form-grid-3">
-            <div class="form-row">
-              <label>Target <span class="auto-note">(auto·editable)</span></label>
-              <input type="date" id="f_${s.field}Target" value="${savedTarget}">
-            </div>
-            <div class="form-row">
-              <label>Actual</label>
-              <input type="date" id="f_${s.field}Actual" value="${actual}">
-            </div>
-            <div class="form-row">
-              <label>Status</label>
-              <div class="status-group">${stBtns(s.field+"Status", status)}</div>
-              <input type="hidden" id="f_${s.field}Status" value="${status}">
-            </div>
+
+        <div
+          style="
+            background:#111827;
+            border-radius:10px;
+            padding:14px;
+            margin-bottom:10px;
+          "
+        >
+
+          <div
+            style="
+              color:#00ff99;
+              font-size:13px;
+              font-weight:bold;
+              margin-bottom:10px;
+            "
+          >
+            ${s.label}
           </div>
-        </div>`;
+
+
+          <div class="form-grid-3">
+
+            <div class="form-row">
+
+              <label>
+                Target
+                <span class="auto-note">
+                  (auto·editable)
+                </span>
+              </label>
+
+              <input
+                type="date"
+                id="f_${s.field}Target"
+                value="${savedTarget}"
+              >
+
+            </div>
+
+
+            <div class="form-row">
+
+              <label>
+                Actual
+              </label>
+
+              <input
+                type="date"
+                id="f_${s.field}Actual"
+                value="${actual}"
+              >
+
+            </div>
+
+
+            <div class="form-row">
+
+              <label>
+                Status
+              </label>
+
+              <div class="status-group">
+
+                ${stBtns(
+                  s.field + "Status",
+                  status
+                )}
+
+              </div>
+
+
+              <input
+                type="hidden"
+                id="f_${s.field}Status"
+                value="${status}"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+      `;
     });
+
   });
 
-  document.getElementById("modalFormArea").innerHTML = formHtml;
-  document.getElementById("editModal").style.display = "flex";
+
+  document.getElementById(
+    "modalFormArea"
+  ).innerHTML =
+    formHtml;
+
+
+  document.getElementById(
+    "editModal"
+  ).style.display =
+    "flex";
 };
 
-document.getElementById("closeBtn").onclick = () => {
-  document.getElementById("editModal").style.display = "none";
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+document.getElementById(
+  "closeBtn"
+).onclick = () => {
+
+  document.getElementById(
+    "editModal"
+  ).style.display =
+    "none";
 };
 
-document.getElementById("saveBtn").onclick = async () => {
-  if (!selectedDocId) return;
-  const updateData = {};
-  STAGES.forEach(s => {
-    updateData[s.field+"Target"] = document.getElementById("f_"+s.field+"Target").value;
-    updateData[s.field+"Actual"] = document.getElementById("f_"+s.field+"Actual").value;
-    updateData[s.field+"Status"] = document.getElementById("f_"+s.field+"Status").value;
-  });
-  try {
-    await updateDoc(doc(db,"orders",selectedDocId), updateData);
-    alert("✅ Saved Successfully!");
-    document.getElementById("editModal").style.display = "none";
-    loadOrders();
-  } catch(err) {
-    alert("❌ Save Failed! "+err.message);
+
+/* =========================================================
+   SAVE TO FIRESTORE
+========================================================= */
+
+document.getElementById(
+  "saveBtn"
+).onclick =
+async () => {
+
+  if (!selectedDocId) {
+
+    alert(
+      "❌ No order selected."
+    );
+
+    return;
   }
+
+
+  const updateData = {};
+
+
+  STAGES.forEach(s => {
+
+    const target =
+      document.getElementById(
+        "f_" +
+        s.field +
+        "Target"
+      );
+
+
+    const actual =
+      document.getElementById(
+        "f_" +
+        s.field +
+        "Actual"
+      );
+
+
+    const status =
+      document.getElementById(
+        "f_" +
+        s.field +
+        "Status"
+      );
+
+
+    updateData[
+      s.field + "Target"
+    ] =
+      target
+        ? target.value
+        : "";
+
+
+    updateData[
+      s.field + "Actual"
+    ] =
+      actual
+        ? actual.value
+        : "";
+
+
+    updateData[
+      s.field + "Status"
+    ] =
+      status
+        ? status.value
+        : "Pending";
+
+  });
+
+
+  try {
+
+    console.log(
+      "💾 Saving:",
+      selectedDocId,
+      updateData
+    );
+
+
+    await updateDoc(
+
+      doc(
+        db,
+        "orders",
+        selectedDocId
+      ),
+
+      updateData
+    );
+
+
+    console.log(
+      "✅ Firestore SAVE successful"
+    );
+
+
+    alert(
+      "✅ Saved Successfully to Firebase!"
+    );
+
+
+    document.getElementById(
+      "editModal"
+    ).style.display =
+      "none";
+
+
+  } catch (err) {
+
+    console.error(
+      "❌ SAVE ERROR:",
+      err
+    );
+
+
+    alert(
+      "❌ Firebase Save Failed!\n\n" +
+      err.message
+    );
+  }
+
 };
 
-loadOrders();
+
+/* =========================================================
+   START
+========================================================= */
+
+console.log(
+  "🚀 SMART TNA BD started"
+);
+
+console.log(
+  "📁 Firestore collection: orders"
+);
+
+startFirebaseListener();
+
 </script>
-</body>
-</html>
