@@ -207,6 +207,31 @@ window.addEventListener("offline", updateOnlineStatus);
 
 /* ══ SERVICE WORKER CONTROLLER CHANGE ══ */
 
+function updateServiceWorker() {
+
+  if (!navigator.serviceWorker) {
+    window.location.reload();
+    return;
+  }
+
+  navigator.serviceWorker.ready.then(reg => {
+
+    if (reg.waiting) {
+
+      reg.waiting.postMessage({
+        type: "SKIP_WAITING"
+      });
+
+    } else {
+
+      window.location.reload();
+
+    }
+
+  });
+
+}
+
 let refreshing = false;
 
 navigator.serviceWorker.addEventListener(
