@@ -3,17 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SMART TNA BD ERP - DYEING DEPARTMENT</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
+
 <script src="pwa-install.js" defer></script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
-body { background:#0f172a; color:white; }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-.topbar {
+body{
+  background:#0f172a;
+  color:white;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
   background:#111827;
   padding:12px 20px;
   border-bottom:2px solid #1e293b;
@@ -24,10 +37,20 @@ body { background:#0f172a; color:white; }
   top:0;
   z-index:900;
 }
-.topbar-left  { display:flex; align-items:center; gap:12px; }
-.topbar-right { display:flex; align-items:center; gap:10px; }
 
-.back-btn {
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn{
   display:flex;
   align-items:center;
   gap:6px;
@@ -40,601 +63,2804 @@ body { background:#0f172a; color:white; }
   font-weight:700;
   cursor:pointer;
   text-decoration:none;
-  font-family:Arial,sans-serif;
   transition:all .2s;
 }
-.back-btn:hover {
+
+.back-btn:hover{
   background:#00ff9920;
   color:#00ff99;
   border-color:#00ff99;
 }
 
-.page-title {
+.page-title{
   font-size:16px;
   font-weight:bold;
   color:#fff;
 }
 
-#installBtn {
-  display:none;
-  align-items:center;
-  gap:6px;
-  background:#00ff9920;
-  border:1px solid #00ff99;
-  border-radius:8px;
-  color:#00ff99;
-  padding:7px 13px;
-  font-size:12px;
-  font-weight:700;
-  cursor:pointer;
-  font-family:Arial,sans-serif;
-}
-#installBtn:hover { background:#00ff9940; }
-
-.tb-date {
+.tb-date{
   font-size:11px;
   color:#64748b;
   font-family:monospace;
 }
 
-header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
-.company { font-size:28px; font-weight:bold; color:#00ff99; }
-.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
+/* ================= HEADER ================= */
 
-.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px; padding:20px; }
-.kpi-card { background:#1e293b; padding:20px; border-radius:15px; text-align:center; }
-.kpi-card h2 { color:#00ff99; font-size:30px; margin-bottom:10px; }
-.kpi-card p  { color:#cbd5e1; }
-
-.search-section { padding:20px; }
-.search-box { width:100%; padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:16px; }
-
-.table-wrapper { padding:20px; overflow-x:auto; }
-table { width:100%; border-collapse:collapse; background:#1e293b; }
-th {
+header{
   background:#111827;
+  padding:20px;
+  text-align:center;
+  border-bottom:2px solid #1e293b;
+}
+
+.company{
+  font-size:28px;
+  font-weight:bold;
   color:#00ff99;
-  padding:10px 8px;
+}
+
+.system{
+  font-size:18px;
+  margin-top:8px;
+  color:#cbd5e1;
+}
+
+/* ================= KPI ================= */
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+  padding:20px;
+}
+
+.kpi-card{
+  background:#1e293b;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+
+.kpi-card h2{
+  color:#00ff99;
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.kpi-card p{
+  color:#cbd5e1;
+}
+
+/* ================= SEARCH ================= */
+
+.search-section{
+  padding:20px;
+}
+
+.search-box{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#1e293b;
+  color:white;
+  font-size:16px;
+}
+
+.search-box:focus{
+  outline:1px solid #00ff99;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper{
+  padding:20px;
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:5200px;
+  background:#1e293b;
+}
+
+th{
+  background:#111827;
+  color:#60a5fa;
+  padding:12px;
   border:1px solid #334155;
   white-space:nowrap;
-  font-size:12px;
 }
-td {
-  padding:8px 6px;
+
+td{
+  padding:10px;
   border:1px solid #334155;
   text-align:center;
   vertical-align:middle;
   white-space:nowrap;
-  font-size:12px;
 }
 
-.st-pending  { color:#f97316; font-weight:bold; }
-.st-running  { color:#3b82f6; font-weight:bold; }
-.st-delay    { color:#ef4444; font-weight:bold; }
-.st-complete { color:#00ff99; font-weight:bold; }
+/* Dyeing quantity headers */
 
-.edit-btn { background:#00aa66; color:white; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:12px; }
-.edit-btn:hover { background:#008844; }
+.qty-head{
+  background:#1c1405 !important;
+  color:#fbbf24 !important;
+}
 
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,.75); z-index:999; justify-content:center;
-  align-items:flex-start; overflow-y:auto; }
-.modal-content { background:#1e293b; width:95%; max-width:820px;
-  margin:30px auto; padding:25px; border-radius:15px; }
-.modal-content h2 { color:#00ff99; margin-bottom:20px; font-size:20px;
-  border-bottom:1px solid #334155; padding-bottom:12px; }
+.dye-head{
+  background:#12091f !important;
+  color:#c084fc !important;
+}
 
-.modal-info-box { background:#111827; padding:15px; border-radius:10px;
-  margin-bottom:20px; border-left:4px solid #00ff99;
-  display:grid; grid-template-columns:1fr 1fr; gap:6px; }
-.modal-info-box p    { color:#cbd5e1; font-size:14px; }
-.modal-info-box span { color:white; font-weight:bold; }
+.st-pending{
+  color:#f97316;
+  font-weight:bold;
+}
 
-.section-title { background:#0f172a; color:#00ff99; padding:8px 12px;
-  border-radius:8px; font-size:13px; font-weight:bold;
-  text-transform:uppercase; letter-spacing:1px;
-  margin:18px 0 12px 0; border-left:3px solid #00ff99; }
+.st-running{
+  color:#3b82f6;
+  font-weight:bold;
+}
 
-.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
-.form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; }
+.st-delay{
+  color:#ef4444;
+  font-weight:bold;
+}
 
-.form-row label { display:block; margin-bottom:6px; color:#94a3b8;
-  font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; }
+.st-complete{
+  color:#00ff99;
+  font-weight:bold;
+}
 
-input[type="date"], input[type="number"], select, textarea {
-  width:100%; padding:10px; border:1px solid #334155; border-radius:8px;
-  background:#0f172a; color:white; font-size:14px; }
-input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:focus {
-  outline:none; border-color:#00ff99; }
+/* Difference */
 
-.status-group { display:flex; gap:8px; }
-.status-btn {
-  flex:1; padding:11px 6px; border:2px solid #334155; border-radius:8px;
-  background:#0f172a; color:#64748b; font-weight:bold; font-size:13px;
-  cursor:pointer; transition:all 0.2s; text-align:center; }
-.status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
-.status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
-.status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
-.status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
+.diff-positive{
+  color:#00ff99;
+  font-weight:bold;
+}
 
-.btn-group { display:flex; gap:10px; margin-top:25px; }
-.save-btn  { background:#00aa66; padding:13px 25px; border:none; border-radius:10px;
-  color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
-.save-btn:hover  { background:#008844; }
-.close-btn { background:#dc2626; padding:13px 25px; border:none; border-radius:10px;
-  color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
-.close-btn:hover { background:#b91c1c; }
+.diff-negative{
+  color:#ef4444;
+  font-weight:bold;
+}
+
+.diff-zero{
+  color:#94a3b8;
+  font-weight:bold;
+}
+
+.edit-btn{
+  background:#1d4ed8;
+  color:white;
+  border:none;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.edit-btn:hover{
+  background:#1e40af;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.75);
+  z-index:999;
+  justify-content:center;
+  align-items:flex-start;
+  overflow-y:auto;
+}
+
+.modal-content{
+  background:#1e293b;
+  width:95%;
+  max-width:850px;
+  margin:30px auto;
+  padding:25px;
+  border-radius:15px;
+}
+
+.modal-content h2{
+  color:#60a5fa;
+  margin-bottom:20px;
+  font-size:20px;
+  border-bottom:1px solid #334155;
+  padding-bottom:12px;
+}
+
+.modal-info-box{
+  background:#111827;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px;
+  border-left:4px solid #60a5fa;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.modal-info-box p{
+  color:#cbd5e1;
+  font-size:14px;
+}
+
+.modal-info-box span{
+  color:white;
+  font-weight:bold;
+}
+
+.section-title{
+  background:#0f172a;
+  color:#60a5fa;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin:18px 0 12px 0;
+  border-left:3px solid #60a5fa;
+}
+
+.form-grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.form-grid-3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:15px;
+}
+
+.form-row label{
+  display:block;
+  margin-bottom:6px;
+  color:#94a3b8;
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+input[type="date"],
+input[type="number"],
+select,
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #334155;
+  border-radius:8px;
+  background:#0f172a;
+  color:white;
+  font-size:14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#60a5fa;
+}
+
+/* ================= STATUS ================= */
+
+.status-group{
+  display:flex;
+  gap:8px;
+}
+
+.status-btn{
+  flex:1;
+  padding:11px 6px;
+  border:2px solid #334155;
+  border-radius:8px;
+  background:#0f172a;
+  color:#64748b;
+  font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
+  transition:all .2s;
+  text-align:center;
+}
+
+.status-btn.active-pending{
+  border-color:#f97316;
+  background:#431407;
+  color:#f97316;
+}
+
+.status-btn.active-running{
+  border-color:#3b82f6;
+  background:#1e3a5f;
+  color:#3b82f6;
+}
+
+.status-btn.active-delay{
+  border-color:#ef4444;
+  background:#450a0a;
+  color:#ef4444;
+}
+
+.status-btn.active-complete{
+  border-color:#00ff99;
+  background:#052e16;
+  color:#00ff99;
+}
+
+/* ================= AUTO DIFFERENCE ================= */
+
+.auto-box{
+  background:#0f172a;
+  border:1px solid #334155;
+  border-radius:8px;
+  padding:10px;
+  font-size:15px;
+  font-weight:bold;
+  min-height:40px;
+  display:flex;
+  align-items:center;
+}
+
+.auto-positive{
+  color:#00ff99;
+}
+
+.auto-negative{
+  color:#ef4444;
+}
+
+.auto-zero{
+  color:#94a3b8;
+}
+
+/* ================= BUTTON ================= */
+
+.btn-group{
+  display:flex;
+  gap:10px;
+  margin-top:25px;
+}
+
+.save-btn{
+  background:#1d4ed8;
+  padding:13px 25px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+  flex:1;
+}
+
+.save-btn:hover{
+  background:#1e40af;
+}
+
+.close-btn{
+  background:#dc2626;
+  padding:13px 25px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+  flex:1;
+}
+
+.close-btn:hover{
+  background:#b91c1c;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+  .topbar{
+    padding:10px;
+  }
+
+  .page-title{
+    font-size:12px;
+  }
+
+  .back-btn{
+    padding:7px 10px;
+    font-size:11px;
+  }
+
+  .company{
+    font-size:21px;
+  }
+
+  .system{
+    font-size:14px;
+  }
+
+  .modal-info-box,
+  .form-grid-2,
+  .form-grid-3{
+    grid-template-columns:1fr;
+  }
+
+  .status-group{
+    flex-wrap:wrap;
+  }
+
+  .status-btn{
+    min-width:45%;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<!-- TOPBAR -->
+<!-- ================= TOPBAR ================= -->
+
 <div class="topbar">
+
   <div class="topbar-left">
-    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">
+
+    <a
+      class="back-btn"
+      href="dashboard.html"
+      onclick="return confirmBack(event)"
+    >
       🏠 Dashboard
     </a>
-    <span class="page-title">🎨 Dyeing Department</span>
+
+    <span class="page-title">
+      🎨 Dyeing Department
+    </span>
+
   </div>
+
   <div class="topbar-right">
-    <button id="installBtn" onclick="installPWA()">📲 Install App</button>
+
     <span class="tb-date" id="dateEl"></span>
+
   </div>
+
 </div>
 
-<!-- HEADER -->
+
+<!-- ================= HEADER ================= -->
+
 <header>
-  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
-  <div class="company">INNOVATIVE KNITEX LTD</div>
-  <div class="system">SMART TNA BD ERP - DYEING DEPARTMENT</div>
+
+  <div style="font-size:24px;margin-bottom:10px;">
+    ﷽
+  </div>
+
+  <div class="company">
+    INNOVATIVE KNITEX LTD
+  </div>
+
+  <div class="system">
+    SMART TNA BD ERP - DYEING DEPARTMENT
+  </div>
+
 </header>
 
-<!-- KPI -->
+
+<!-- ================= KPI ================= -->
+
 <div class="kpi-grid">
-  <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
-  <div class="kpi-card"><h2 id="kQty">0</h2><p>Total Qty (PCS)</p></div>
-  <div class="kpi-card"><h2 id="kFabPend">0</h2><p>Fabric Pending</p></div>
-  <div class="kpi-card"><h2 id="kFabDone">0</h2><p>Fabric Received</p></div>
-  <div class="kpi-card"><h2 id="kDyeRun">0</h2><p>Dyeing Running</p></div>
-  <div class="kpi-card"><h2 id="kDyeDone">0</h2><p>Dyeing Done</p></div>
-  <div class="kpi-card"><h2 id="kDelayed">0</h2><p>Delayed</p></div>
-  <div class="kpi-card"><h2 id="kAvg">0%</h2><p>Avg Progress</p></div>
-</div>
 
-<!-- SEARCH -->
-<div class="search-section">
-  <input type="text" id="searchInput" class="search-box"
-    placeholder="Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
-</div>
-
-<!-- TABLE -->
-<div class="table-wrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>SL</th>
-        <th>Buyer</th>
-        <th>IKL No</th>
-        <th>Style No</th>
-        <th>Total Qty</th>
-        <th>Fabrication</th>
-        <th>Color</th>
-        <th>Color Qty</th>
-        <th>Merchandiser</th>
-        <th>Order Date</th>
-        <th>Ship Date</th>
-        <th>Fabric Rcv Target</th>
-        <th>Fabric Rcv Actual</th>
-        <th>Fabric Rcv Status</th>
-        <th>Dyeing Start Target</th>
-        <th>Dyeing Start Actual</th>
-        <th>Dyeing Start Status</th>
-        <th>Dyeing Complete Target</th>
-        <th>Dyeing Complete Actual</th>
-        <th>Dyeing Complete Status</th>
-        <th>Progress</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="orderTableBody"></tbody>
-  </table>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="editModal">
-  <div class="modal-content">
-    <h2>🎨 Dyeing Department Update</h2>
-    <div id="modalFormArea"></div>
-    <div class="btn-group">
-      <button class="save-btn"  id="saveBtn">💾 Save</button>
-      <button class="close-btn" id="closeBtn">✖ Close</button>
-    </div>
+  <div class="kpi-card">
+    <h2 id="kTotal">0</h2>
+    <p>Total Orders</p>
   </div>
+
+  <div class="kpi-card">
+    <h2 id="kQty">0</h2>
+    <p>Total Qty (PCS)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kBooking">0</h2>
+    <p>Booking Qty (KG)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kInput">0</h2>
+    <p>Dyeing Input (KG)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kOutput">0</h2>
+    <p>Dyeing Output (KG)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kRunning">0</h2>
+    <p>Dyeing Running</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kDone">0</h2>
+    <p>Dyeing Done</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kDelayed">0</h2>
+    <p>Delayed</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kAvg">0%</h2>
+    <p>Avg Progress</p>
+  </div>
+
 </div>
 
-<!-- CONFIRM BACK + DATE -->
-<script>
-var hasUnsavedData = false;
-document.addEventListener("change", function(){ hasUnsavedData = true; });
-document.addEventListener("input",  function(){ hasUnsavedData = true; });
-function markSaved(){ hasUnsavedData = false; }
 
-window.addEventListener("beforeunload", function(e){
-  if(hasUnsavedData){
-    e.preventDefault();
-    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
-    return e.returnValue;
+<!-- ================= SEARCH ================= -->
+
+<div class="search-section">
+
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser"
+    oninput="filterOrders()"
+  >
+
+</div>
+
+
+<!-- ================= TABLE ================= -->
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>SL</th>
+<th>Buyer</th>
+<th>IKL No</th>
+<th>Style No</th>
+
+<th>Total Qty</th>
+
+<th>Fabrication</th>
+
+<th>Color</th>
+
+<th>Color Qty</th>
+
+<!-- NEW DYEING QTY -->
+
+<th class="qty-head">
+Dyeing Booking<br>Qty (KG)
+</th>
+
+<th class="qty-head">
+Dyeing Input<br>Qty (KG)
+</th>
+
+<th class="qty-head">
+Dyeing Output<br>Qty (KG)
+</th>
+
+<th class="qty-head">
+± Difference %
+</th>
+
+<th>Merchandiser</th>
+<th>Order Date</th>
+<th>Ship Date</th>
+
+<!-- DYEING -->
+
+<th class="dye-head">
+Dyeing Target
+</th>
+
+<th class="dye-head">
+Dyeing Actual
+</th>
+
+<th class="dye-head">
+Dyeing Status
+</th>
+
+<th>
+Progress
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="orderTableBody"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="editModal">
+
+<div class="modal-content">
+
+<h2>
+🎨 Dyeing Department Update
+</h2>
+
+<div id="modalFormArea"></div>
+
+<div class="btn-group">
+
+<button
+  class="save-btn"
+  id="saveBtn"
+>
+💾 Save
+</button>
+
+<button
+  class="close-btn"
+  id="closeBtn"
+>
+✖ Close
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= BASIC SCRIPT ================= -->
+
+<script>
+
+var hasUnsavedData = false;
+
+document.addEventListener(
+  "change",
+  function(){
+    hasUnsavedData = true;
   }
-});
+);
+
+document.addEventListener(
+  "input",
+  function(){
+    hasUnsavedData = true;
+  }
+);
+
+function markSaved(){
+  hasUnsavedData = false;
+}
+
+window.addEventListener(
+  "beforeunload",
+  function(e){
+
+    if(hasUnsavedData){
+
+      e.preventDefault();
+
+      e.returnValue =
+        "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
+
+      return e.returnValue;
+    }
+
+  }
+);
+
 
 function confirmBack(e){
+
   if(hasUnsavedData){
+
     e.preventDefault();
+
     var go = confirm(
       "⚠️ Unsaved data আছে!\n\n" +
-      "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
+      "Dashboard এ ফিরে গেলে data হারিয়ে যেতে পারে।\n\n" +
       "তবুও কি Dashboard এ যাবেন?"
     );
-    if(go){ hasUnsavedData = false; window.location.href = "dashboard.html"; }
+
+    if(go){
+
+      hasUnsavedData = false;
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
     return false;
   }
+
   return true;
 }
 
+
 document.getElementById("dateEl").textContent =
-  new Date().toLocaleDateString("en-BD",{
-    weekday:"short", year:"numeric", month:"short", day:"numeric"
-  });
+  new Date().toLocaleDateString(
+    "en-BD",
+    {
+      weekday:"short",
+      year:"numeric",
+      month:"short",
+      day:"numeric"
+    }
+  );
+
 </script>
 
-<!-- FIREBASE -->
+
+<!-- ================= FIREBASE ================= -->
+
 <script type="module">
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, updateDoc }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* ================= FIREBASE CONFIG ================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain: "smart-tna-bd.firebaseapp.com",
-  projectId: "smart-tna-bd",
-  storageBucket: "smart-tna-bd.firebasestorage.app",
-  messagingSenderId: "372049573207",
-  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+  apiKey:
+    "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+  authDomain:
+    "smart-tna-bd.firebaseapp.com",
+
+  projectId:
+    "smart-tna-bd",
+
+  storageBucket:
+    "smart-tna-bd.firebasestorage.app",
+
+  messagingSenderId:
+    "372049573207",
+
+  appId:
+    "1:372049573207:web:571beae951f9aa4b47fa12"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
 
-let allOrders          = [];
-let selectedDocId      = null;
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getFirestore(app);
+
+
+/* ================= VARIABLES ================= */
+
+let allOrders = [];
+
+let selectedDocId = null;
+
 let selectedColorIndex = null;
 
+
+/* ================= STATUS ================= */
+
 const STATUS_OPTIONS = [
-  { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
-  { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
-  { val:"Delay",    label:"🔴 Delay",    cls:"active-delay"    },
-  { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
+
+  {
+    val:"Pending",
+    label:"🟠 Pending",
+    cls:"active-pending"
+  },
+
+  {
+    val:"Running",
+    label:"🔵 Running",
+    cls:"active-running"
+  },
+
+  {
+    val:"Delay",
+    label:"🔴 Delay",
+    cls:"active-delay"
+  },
+
+  {
+    val:"Complete",
+    label:"🟢 Complete",
+    cls:"active-complete"
+  }
+
 ];
 
+
+/* ================= HELPERS ================= */
+
 function getQty(d){
-  const f=[d.totalQty,d.qty,d.quantity,d.Qty,d.TotalQty,d.pcs,d.pieces];
-  for(const v of f){
-    if(v!==undefined&&v!==null&&v!==""){
-      const n=parseFloat(String(v).replace(/,/g,""));
-      if(!isNaN(n)&&n>0) return n;
+
+  const fields = [
+
+    d.totalQty,
+    d.qty,
+    d.quantity,
+    d.Qty,
+    d.TotalQty,
+    d.pcs,
+    d.pieces
+
+  ];
+
+  for(const v of fields){
+
+    if(
+      v !== undefined &&
+      v !== null &&
+      v !== ""
+    ){
+
+      const n =
+        parseFloat(
+          String(v).replace(/,/g,"")
+        );
+
+      if(!isNaN(n) && n > 0)
+        return n;
+
     }
+
   }
+
   return 0;
 }
+
+
+/* ================= SHIP DATE ================= */
+
 function getShip(d){
-  return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||d.shipDate||"";
+
+  return (
+    d.shipdate ||
+    d.shipmentDate ||
+    d.shipmentdate ||
+    d.ShipmentDate ||
+    d.shipDate ||
+    ""
+  );
+
 }
-function autoTarget(orderDate, offsetDays){
-  if(!orderDate) return "";
-  const d=new Date(orderDate);
-  if(isNaN(d)) return "";
-  d.setDate(d.getDate()+offsetDays);
-  return d.toISOString().split("T")[0];
+
+
+/* ================= AUTO TARGET ================= */
+
+function autoTarget(
+  orderDate,
+  offsetDays
+){
+
+  if(!orderDate)
+    return "";
+
+  const d =
+    new Date(orderDate);
+
+  if(isNaN(d))
+    return "";
+
+  d.setDate(
+    d.getDate() + offsetDays
+  );
+
+  return d
+    .toISOString()
+    .split("T")[0];
+
 }
+
+
+/* ================= NUMBER ================= */
+
+function num(v){
+
+  const n =
+    parseFloat(
+      String(v ?? "")
+        .replace(/,/g,"")
+    );
+
+  return isNaN(n) ? 0 : n;
+
+}
+
+
+/* ================= DIFFERENCE % ================= */
+
+function differencePercent(
+  booking,
+  output
+){
+
+  booking = num(booking);
+
+  output = num(output);
+
+  if(booking <= 0)
+    return null;
+
+  return (
+    ((output - booking) / booking) * 100
+  );
+
+}
+
+
+/* ================= DIFFERENCE HTML ================= */
+
+function differenceHTML(
+  booking,
+  output
+){
+
+  const diff =
+    differencePercent(
+      booking,
+      output
+    );
+
+  if(diff === null){
+
+    return `
+      <span class="diff-zero">
+        -
+      </span>
+    `;
+
+  }
+
+  const rounded =
+    diff.toFixed(2);
+
+  if(diff > 0){
+
+    return `
+      <span class="diff-positive">
+        +${rounded}%
+      </span>
+    `;
+
+  }
+
+  if(diff < 0){
+
+    return `
+      <span class="diff-negative">
+        ${rounded}%
+      </span>
+    `;
+
+  }
+
+  return `
+    <span class="diff-zero">
+      0.00%
+    </span>
+  `;
+
+}
+
+
+/* ================= STATUS BADGE ================= */
 
 function statusBadge(val){
-  if(!val||val==="-") return "-";
-  if(val==="Running")  return `<span class="st-running">● Running</span>`;
-  if(val==="Delay")    return `<span class="st-delay">● Delay</span>`;
-  if(val==="Complete") return `<span class="st-complete">● Complete</span>`;
-  return `<span class="st-pending">● Pending</span>`;
+
+  if(
+    !val ||
+    val === "-" ||
+    val === "Pending"
+  ){
+
+    return `
+      <span class="st-pending">
+        ● Pending
+      </span>
+    `;
+
+  }
+
+  if(val === "Running"){
+
+    return `
+      <span class="st-running">
+        ● Running
+      </span>
+    `;
+
+  }
+
+  if(
+    val === "Delay" ||
+    val === "Delayed"
+  ){
+
+    return `
+      <span class="st-delay">
+        ● Delay
+      </span>
+    `;
+
+  }
+
+  if(
+    val === "Complete" ||
+    val === "Completed"
+  ){
+
+    return `
+      <span class="st-complete">
+        ● Complete
+      </span>
+    `;
+
+  }
+
+  return `
+    <span class="st-pending">
+      ● ${val}
+    </span>
+  `;
+
 }
 
-function statusBtns(field, current){
-  return STATUS_OPTIONS.map(opt => {
-    const active = (current===opt.val) ? opt.cls : "";
-    return `<button type="button" class="status-btn ${active}"
-      onclick="selectStatus('${field}','${opt.val}','${opt.cls}',this)">
-      ${opt.label}</button>`;
-  }).join("");
+
+/* ================= STATUS BUTTONS ================= */
+
+function statusBtns(
+  field,
+  current
+){
+
+  return STATUS_OPTIONS
+    .map(opt => {
+
+      const active =
+        current === opt.val
+          ? opt.cls
+          : "";
+
+      return `
+
+        <button
+          type="button"
+          class="status-btn ${active}"
+          onclick="
+            selectStatus(
+              '${field}',
+              '${opt.val}',
+              '${opt.cls}',
+              this
+            )
+          "
+        >
+
+          ${opt.label}
+
+        </button>
+
+      `;
+
+    })
+    .join("");
+
 }
 
-window.selectStatus = function(field, value, activeCls, btn){
-  document.getElementById("f_"+field).value = value;
-  btn.parentElement.querySelectorAll(".status-btn").forEach(b=>{ b.className="status-btn"; });
-  btn.classList.add(activeCls);
+
+/* ================= STATUS SELECT ================= */
+
+window.selectStatus =
+function(
+  field,
+  value,
+  activeCls,
+  btn
+){
+
+  document
+    .getElementById(
+      "f_" + field
+    )
+    .value = value;
+
+
+  btn
+    .parentElement
+    .querySelectorAll(
+      ".status-btn"
+    )
+    .forEach(
+      b => {
+        b.className =
+          "status-btn";
+      }
+    );
+
+
+  btn.classList.add(
+    activeCls
+  );
+
 };
+
+
+/* ================= PROGRESS ================= */
 
 function progressBar(pct){
-  const c=pct>=100?"#00ff99":pct>=60?"#fbbf24":pct>=30?"#f97316":"#f87171";
-  return `<div style="display:flex;align-items:center;gap:6px;min-width:110px;">
-    <div style="flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;">
-      <div style="width:${pct}%;height:100%;background:${c};border-radius:4px;"></div>
+
+  const c =
+    pct >= 100
+      ? "#00ff99"
+      : pct >= 60
+        ? "#fbbf24"
+        : pct >= 30
+          ? "#f97316"
+          : "#f87171";
+
+
+  return `
+
+    <div
+      style="
+        display:flex;
+        align-items:center;
+        gap:6px;
+        min-width:120px;
+      "
+    >
+
+      <div
+        style="
+          flex:1;
+          height:8px;
+          background:#1e3048;
+          border-radius:4px;
+          overflow:hidden;
+        "
+      >
+
+        <div
+          style="
+            width:${pct}%;
+            height:100%;
+            background:${c};
+            border-radius:4px;
+          "
+        ></div>
+
+      </div>
+
+      <span
+        style="
+          font-size:11px;
+          font-weight:700;
+          color:${c};
+          min-width:34px;
+        "
+      >
+        ${pct}%
+      </span>
+
     </div>
-    <span style="font-size:11px;font-weight:700;color:${c};min-width:30px;">${pct}%</span>
-  </div>`;
+
+  `;
+
 }
+
+
+/* ================= LOAD ================= */
 
 async function loadOrders(){
-  const snap = await getDocs(collection(db,"orders"));
-  allOrders  = [];
-  snap.forEach(d => allOrders.push({ id:d.id, ...d.data() }));
-  renderKPI();
-  renderOrderList(allOrders);
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(
+          db,
+          "orders"
+        )
+      );
+
+
+    allOrders = [];
+
+
+    snap.forEach(d => {
+
+      allOrders.push({
+        id:d.id,
+        ...d.data()
+      });
+
+    });
+
+
+    renderKPI();
+
+    renderOrderList(
+      allOrders
+    );
+
+
+  }catch(err){
+
+    console.error(err);
+
+    alert(
+      "❌ Firebase Load Failed!\n\n" +
+      err.message
+    );
+
+  }
+
 }
 
-window.filterOrders = function(){
-  const kw = document.getElementById("searchInput").value.toLowerCase();
-  if(!kw){ renderOrderList(allOrders); return; }
-  renderOrderList(allOrders.filter(o =>
-    (o.buyer||"").toLowerCase().includes(kw)       ||
-    (o.ikl||o.iklNo||"").toLowerCase().includes(kw)||
-    (o.style||o.styleNo||"").toLowerCase().includes(kw)||
-    (o.merchandiser||"").toLowerCase().includes(kw)
-  ));
+
+/* ================= SEARCH ================= */
+
+window.filterOrders =
+function(){
+
+  const kw =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  if(!kw){
+
+    renderOrderList(
+      allOrders
+    );
+
+    return;
+  }
+
+
+  renderOrderList(
+
+    allOrders.filter(o =>
+
+      String(
+        o.buyer || ""
+      )
+      .toLowerCase()
+      .includes(kw)
+
+      ||
+
+      String(
+        o.ikl ||
+        o.iklNo ||
+        ""
+      )
+      .toLowerCase()
+      .includes(kw)
+
+      ||
+
+      String(
+        o.style ||
+        o.styleNo ||
+        ""
+      )
+      .toLowerCase()
+      .includes(kw)
+
+      ||
+
+      String(
+        o.merchandiser ||
+        ""
+      )
+      .toLowerCase()
+      .includes(kw)
+
+    )
+
+  );
+
 };
 
-window.openOrder = function(docId, colorIndex){
-  selectedDocId      = docId;
-  selectedColorIndex = colorIndex;
-  const order = allOrders.find(o=>o.id===docId);
-  if(!order) return;
 
-  const c         = order.colors ? order.colors[colorIndex] : null;
-  const orderDate = order.orderDate||"";
-  const shipDate  = getShip(order);
+/* ================= OPEN ORDER ================= */
 
-  // Dyeing offsets: Fabric Rcv +30 days, Dyeing Start +37 days, Dyeing Complete +45 days
-  const fabT  = (c&&c.dyeFabRcvTarget)      || autoTarget(orderDate,30);
-  const fabA  = (c&&c.dyeFabRcvActual)      || "";
-  const fabS  = (c&&c.dyeFabRcvStatus)      || "Pending";
-  const dyeST = (c&&c.dyeStartTarget)       || autoTarget(orderDate,37);
-  const dyeSA = (c&&c.dyeStartActual)       || "";
-  const dyeSS = (c&&c.dyeStartStatus)       || "Pending";
-  const dyeCT = (c&&c.dyeCompleteTarget)    || autoTarget(orderDate,45);
-  const dyeCA = (c&&c.dyeCompleteActual)    || "";
-  const dyeCS = (c&&c.dyeCompleteStatus)    || "Pending";
-  const remark = (c&&c.dyeRemark)||"";
+window.openOrder =
+function(
+  docId,
+  colorIndex
+){
 
-  document.getElementById("modalFormArea").innerHTML = `
-    <div class="modal-info-box">
-      <p><span>Style     :</span> ${order.style||order.styleNo||"-"}</p>
-      <p><span>Color     :</span> ${c?c.color||"-":"-"}</p>
-      <p><span>Buyer     :</span> ${order.buyer||"-"}</p>
-      <p><span>Ship Date :</span> ${shipDate||"-"}</p>
-    </div>
+  selectedDocId =
+    docId;
 
-    <div class="section-title">🧵 Fabric Receive</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Fabric Rcv Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_dyeFabRcvTarget" value="${fabT}">
-      </div>
-      <div class="form-row">
-        <label>Fabric Rcv Actual</label>
-        <input type="date" id="f_dyeFabRcvActual" value="${fabA}">
-      </div>
-      <div class="form-row">
-        <label>Fabric Rcv Status</label>
-        <div class="status-group">${statusBtns("dyeFabRcvStatus",fabS)}</div>
-        <input type="hidden" id="f_dyeFabRcvStatus" value="${fabS}">
-      </div>
-    </div>
+  selectedColorIndex =
+    colorIndex;
 
-    <div class="section-title">🎨 Dyeing Start</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Dyeing Start Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_dyeStartTarget" value="${dyeST}">
-      </div>
-      <div class="form-row">
-        <label>Dyeing Start Actual</label>
-        <input type="date" id="f_dyeStartActual" value="${dyeSA}">
-      </div>
-      <div class="form-row">
-        <label>Dyeing Start Status</label>
-        <div class="status-group">${statusBtns("dyeStartStatus",dyeSS)}</div>
-        <input type="hidden" id="f_dyeStartStatus" value="${dyeSS}">
-      </div>
-    </div>
 
-    <div class="section-title">✅ Dyeing Complete</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Dyeing Complete Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_dyeCompleteTarget" value="${dyeCT}">
-      </div>
-      <div class="form-row">
-        <label>Dyeing Complete Actual</label>
-        <input type="date" id="f_dyeCompleteActual" value="${dyeCA}">
-      </div>
-      <div class="form-row">
-        <label>Dyeing Complete Status</label>
-        <div class="status-group">${statusBtns("dyeCompleteStatus",dyeCS)}</div>
-        <input type="hidden" id="f_dyeCompleteStatus" value="${dyeCS}">
-      </div>
-    </div>
+  const order =
+    allOrders.find(
+      o => o.id === docId
+    );
 
-    <div class="section-title">📝 Remark</div>
-    <div class="form-row">
-      <textarea id="f_dyeRemark" rows="3">${remark}</textarea>
-    </div>`;
 
-  document.getElementById("editModal").style.display = "flex";
+  if(!order)
+    return;
+
+
+  const c =
+    order.colors
+      ? order.colors[colorIndex]
+      : null;
+
+
+  const orderDate =
+    order.orderDate || "";
+
+
+  const shipDate =
+    getShip(order);
+
+
+  /*
+   * Dyeing target:
+   * Order Date + 35 days
+   */
+
+  const dyeTarget =
+    (c && c.dyeingTarget)
+    ||
+    autoTarget(
+      orderDate,
+      35
+    );
+
+
+  const dyeActual =
+    (c && c.dyeingActual)
+    || "";
+
+
+  const dyeStatus =
+    (c && c.dyeingStatus)
+    || "Pending";
+
+
+  /* ================= QTY ================= */
+
+  const bookingQty =
+    c
+      ? num(
+          c.dyeingBookingQty
+        )
+      : 0;
+
+
+  const inputQty =
+    c
+      ? num(
+          c.dyeingInputQty
+        )
+      : 0;
+
+
+  const outputQty =
+    c
+      ? num(
+          c.dyeingOutputQty
+        )
+      : 0;
+
+
+  const diff =
+    differencePercent(
+      bookingQty,
+      outputQty
+    );
+
+
+  const remark =
+    (c && c.dyeingRemark)
+    || "";
+
+
+  /* ================= MODAL ================= */
+
+  document
+    .getElementById(
+      "modalFormArea"
+    )
+    .innerHTML = `
+
+      <div class="modal-info-box">
+
+        <p>
+          <span>Style :</span>
+          ${order.style ||
+            order.styleNo ||
+            "-"}
+        </p>
+
+        <p>
+          <span>Color :</span>
+          ${c
+            ? c.color ||
+              c.colorName ||
+              "-"
+            : "-"}
+        </p>
+
+        <p>
+          <span>Buyer :</span>
+          ${order.buyer || "-"}
+        </p>
+
+        <p>
+          <span>Color Qty :</span>
+          ${c
+            ? num(
+                c.qty ||
+                c.colorQty
+              ).toLocaleString()
+            : 0}
+          PCS
+        </p>
+
+        <p>
+          <span>Ship Date :</span>
+          ${shipDate || "-"}
+        </p>
+
+      </div>
+
+
+      <!-- ================= DYEING QTY ================= -->
+
+      <div class="section-title">
+        ⚖️ Dyeing Quantity
+      </div>
+
+
+      <div class="form-grid-3">
+
+        <div class="form-row">
+
+          <label>
+            Dyeing Booking Qty (KG)
+          </label>
+
+          <input
+            type="number"
+            id="f_dyeingBookingQty"
+            value="${bookingQty || ""}"
+            step="0.01"
+            min="0"
+            oninput="calculateDifference()"
+          >
+
+        </div>
+
+
+        <div class="form-row">
+
+          <label>
+            Dyeing Input Qty (KG)
+          </label>
+
+          <input
+            type="number"
+            id="f_dyeingInputQty"
+            value="${inputQty || ""}"
+            step="0.01"
+            min="0"
+          >
+
+        </div>
+
+
+        <div class="form-row">
+
+          <label>
+            Dyeing Output Qty (KG)
+          </label>
+
+          <input
+            type="number"
+            id="f_dyeingOutputQty"
+            value="${outputQty || ""}"
+            step="0.01"
+            min="0"
+            oninput="calculateDifference()"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid-2">
+
+        <div class="form-row">
+
+          <label>
+            Automatic ± Difference %
+          </label>
+
+          <div
+            class="auto-box"
+            id="differenceDisplay"
+          >
+            -
+          </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+          <label>
+            Difference KG
+          </label>
+
+          <div
+            class="auto-box"
+            id="differenceKgDisplay"
+          >
+            -
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= DYEING ================= -->
+
+      <div class="section-title">
+        🎨 Dyeing Process
+      </div>
+
+
+      <div class="form-grid-3">
+
+        <div class="form-row">
+
+          <label>
+            Dyeing Target
+          </label>
+
+          <input
+            type="date"
+            id="f_dyeingTarget"
+            value="${dyeTarget}"
+          >
+
+        </div>
+
+
+        <div class="form-row">
+
+          <label>
+            Dyeing Actual
+          </label>
+
+          <input
+            type="date"
+            id="f_dyeingActual"
+            value="${dyeActual}"
+          >
+
+        </div>
+
+
+        <div class="form-row">
+
+          <label>
+            Dyeing Status
+          </label>
+
+          <div class="status-group">
+
+            ${statusBtns(
+              "dyeingStatus",
+              dyeStatus
+            )}
+
+          </div>
+
+          <input
+            type="hidden"
+            id="f_dyeingStatus"
+            value="${dyeStatus}"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= REMARK ================= -->
+
+      <div class="section-title">
+        📝 Remark
+      </div>
+
+
+      <div class="form-row">
+
+        <textarea
+          id="f_dyeingRemark"
+          rows="3"
+          placeholder="Dyeing remark..."
+        >${remark}</textarea>
+
+      </div>
+
+    `;
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .style.display =
+      "flex";
+
+
+  calculateDifference();
+
 };
 
-document.getElementById("closeBtn").onclick = function(){
-  document.getElementById("editModal").style.display = "none";
+
+/* ================= DIFFERENCE CALCULATOR ================= */
+
+window.calculateDifference =
+function(){
+
+  const bookingEl =
+    document.getElementById(
+      "f_dyeingBookingQty"
+    );
+
+
+  const outputEl =
+    document.getElementById(
+      "f_dyeingOutputQty"
+    );
+
+
+  const display =
+    document.getElementById(
+      "differenceDisplay"
+    );
+
+
+  const kgDisplay =
+    document.getElementById(
+      "differenceKgDisplay"
+    );
+
+
+  if(
+    !bookingEl ||
+    !outputEl ||
+    !display ||
+    !kgDisplay
+  )
+    return;
+
+
+  const booking =
+    num(
+      bookingEl.value
+    );
+
+
+  const output =
+    num(
+      outputEl.value
+    );
+
+
+  if(booking <= 0){
+
+    display.innerHTML = "-";
+
+    kgDisplay.innerHTML = "-";
+
+    return;
+
+  }
+
+
+  const diff =
+    output - booking;
+
+
+  const pct =
+    (diff / booking) * 100;
+
+
+  const sign =
+    pct > 0
+      ? "+"
+      : "";
+
+
+  let cls =
+    "auto-zero";
+
+
+  if(pct > 0)
+    cls = "auto-positive";
+
+  if(pct < 0)
+    cls = "auto-negative";
+
+
+  display.innerHTML = `
+
+    <span class="${cls}">
+      ${sign}${pct.toFixed(2)}%
+    </span>
+
+  `;
+
+
+  const kgSign =
+    diff > 0
+      ? "+"
+      : "";
+
+
+  kgDisplay.innerHTML = `
+
+    <span class="${cls}">
+      ${kgSign}${diff.toFixed(2)} KG
+    </span>
+
+  `;
+
 };
 
-document.getElementById("saveBtn").onclick = async function(){
-  if(selectedDocId===null) return;
-  const order = allOrders.find(o=>o.id===selectedDocId);
-  if(!order) return;
 
-  const fields = {
-    dyeFabRcvTarget:   document.getElementById("f_dyeFabRcvTarget").value,
-    dyeFabRcvActual:   document.getElementById("f_dyeFabRcvActual").value,
-    dyeFabRcvStatus:   document.getElementById("f_dyeFabRcvStatus").value,
-    dyeStartTarget:    document.getElementById("f_dyeStartTarget").value,
-    dyeStartActual:    document.getElementById("f_dyeStartActual").value,
-    dyeStartStatus:    document.getElementById("f_dyeStartStatus").value,
-    dyeCompleteTarget: document.getElementById("f_dyeCompleteTarget").value,
-    dyeCompleteActual: document.getElementById("f_dyeCompleteActual").value,
-    dyeCompleteStatus: document.getElementById("f_dyeCompleteStatus").value,
-    dyeRemark:         document.getElementById("f_dyeRemark").value,
+/* ================= CLOSE ================= */
+
+document
+  .getElementById(
+    "closeBtn"
+  )
+  .onclick =
+function(){
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .style.display =
+      "none";
+
+};
+
+
+/* ================= SAVE ================= */
+
+document
+  .getElementById(
+    "saveBtn"
+  )
+  .onclick =
+async function(){
+
+  if(
+    selectedDocId === null
+  )
+    return;
+
+
+  const order =
+    allOrders.find(
+      o =>
+        o.id ===
+        selectedDocId
+    );
+
+
+  if(!order)
+    return;
+
+
+  const bookingQty =
+    num(
+      document
+        .getElementById(
+          "f_dyeingBookingQty"
+        )
+        .value
+    );
+
+
+  const inputQty =
+    num(
+      document
+        .getElementById(
+          "f_dyeingInputQty"
+        )
+        .value
+    );
+
+
+  const outputQty =
+    num(
+      document
+        .getElementById(
+          "f_dyeingOutputQty"
+        )
+        .value
+    );
+
+
+  const diffPct =
+    differencePercent(
+      bookingQty,
+      outputQty
+    );
+
+
+  const saveData = {
+
+    dyeingBookingQty:
+      bookingQty,
+
+    dyeingInputQty:
+      inputQty,
+
+    dyeingOutputQty:
+      outputQty,
+
+    dyeingDifferencePct:
+      diffPct === null
+        ? 0
+        : Number(
+            diffPct.toFixed(2)
+          ),
+
+    dyeingDifferenceKg:
+      Number(
+        (
+          outputQty -
+          bookingQty
+        ).toFixed(2)
+      ),
+
+    dyeingTarget:
+      document
+        .getElementById(
+          "f_dyeingTarget"
+        ).value,
+
+    dyeingActual:
+      document
+        .getElementById(
+          "f_dyeingActual"
+        ).value,
+
+    dyeingStatus:
+      document
+        .getElementById(
+          "f_dyeingStatus"
+        ).value,
+
+    dyeingRemark:
+      document
+        .getElementById(
+          "f_dyeingRemark"
+        ).value
+
   };
 
-  if(order.colors && order.colors.length){
-    const updatedColors = order.colors.map((c,idx)=>{
-      if(idx!==selectedColorIndex) return c;
-      return { ...c, ...fields };
-    });
+
+  /* ================= COLORS ================= */
+
+  if(
+    order.colors &&
+    order.colors.length
+  ){
+
+    const updatedColors =
+      order.colors.map(
+        (c,idx) => {
+
+          if(
+            idx !==
+            selectedColorIndex
+          ){
+
+            return c;
+
+          }
+
+
+          return {
+
+            ...c,
+
+            ...saveData
+
+          };
+
+        }
+      );
+
+
     try{
-      await updateDoc(doc(db,"orders",selectedDocId),{ colors:updatedColors });
+
+      await updateDoc(
+
+        doc(
+          db,
+          "orders",
+          selectedDocId
+        ),
+
+        {
+          colors:
+            updatedColors
+        }
+
+      );
+
+
       markSaved();
-      alert("✅ Saved Successfully!");
-      document.getElementById("editModal").style.display="none";
-      loadOrders();
-    }catch(err){ alert("❌ Save Failed! "+err.message); }
-  } else {
+
+
+      alert(
+        "✅ Dyeing data saved successfully!"
+      );
+
+
+      document
+        .getElementById(
+          "editModal"
+        )
+        .style.display =
+          "none";
+
+
+      await loadOrders();
+
+
+    }catch(err){
+
+      console.error(err);
+
+      alert(
+        "❌ Save Failed!\n\n" +
+        err.message
+      );
+
+    }
+
+
+  }else{
+
+    /* ================= ROOT DOCUMENT ================= */
+
     try{
-      await updateDoc(doc(db,"orders",selectedDocId), fields);
+
+      await updateDoc(
+
+        doc(
+          db,
+          "orders",
+          selectedDocId
+        ),
+
+        saveData
+
+      );
+
+
       markSaved();
-      alert("✅ Saved Successfully!");
-      document.getElementById("editModal").style.display="none";
-      loadOrders();
-    }catch(err){ alert("❌ Save Failed! "+err.message); }
+
+
+      alert(
+        "✅ Dyeing data saved successfully!"
+      );
+
+
+      document
+        .getElementById(
+          "editModal"
+        )
+        .style.display =
+          "none";
+
+
+      await loadOrders();
+
+
+    }catch(err){
+
+      console.error(err);
+
+      alert(
+        "❌ Save Failed!\n\n" +
+        err.message
+      );
+
+    }
+
   }
+
 };
 
+
+/* ================= KPI ================= */
+
 function renderKPI(){
-  let tot=0,totalQty=0,fabPend=0,fabDone=0,dyeRun=0,dyeDone=0,delayed=0,pctSum=0;
-  const today=new Date();
-  allOrders.forEach(order=>{
-    tot++;
-    const qty=getQty(order);
-    totalQty+=qty;
-    const orderDate=order.orderDate||"";
 
-    const getStatus=(saved,target,fallback)=>{
-      const s=saved||fallback;
-      if(s==="Complete"||s==="Completed") return s;
-      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
-      return s||"Pending";
-    };
+  let totalOrders = 0;
 
-    const c0=(order.colors&&order.colors[0])||{};
-    const fabT  = c0.dyeFabRcvTarget   || autoTarget(orderDate,30);
-    const fabS  = getStatus(c0.dyeFabRcvStatus,   fabT,  "Pending");
-    const dyeST = c0.dyeStartTarget    || autoTarget(orderDate,37);
-    const dyeSS = getStatus(c0.dyeStartStatus,    dyeST, "Pending");
-    const dyeCT = c0.dyeCompleteTarget || autoTarget(orderDate,45);
-    const dyeCS = getStatus(c0.dyeCompleteStatus, dyeCT, "Pending");
+  let totalPCS = 0;
 
-    if(fabS==="Complete"||fabS==="Completed") fabDone++; else fabPend++;
-    if(dyeSS==="Running") dyeRun++;
-    if(dyeCS==="Complete"||dyeCS==="Completed") dyeDone++;
-    if(fabS==="Delayed"||dyeSS==="Delayed"||dyeCS==="Delayed") delayed++;
+  let totalBooking = 0;
 
-    const steps=[fabS,dyeSS,dyeCS];
-    const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
-    pctSum+=Math.round((done/3)*100);
-  });
+  let totalInput = 0;
 
-  document.getElementById("kTotal").innerText   = tot;
-  document.getElementById("kQty").innerText     = totalQty.toLocaleString();
-  document.getElementById("kFabPend").innerText = fabPend;
-  document.getElementById("kFabDone").innerText = fabDone;
-  document.getElementById("kDyeRun").innerText  = dyeRun;
-  document.getElementById("kDyeDone").innerText = dyeDone;
-  document.getElementById("kDelayed").innerText = delayed;
-  document.getElementById("kAvg").innerText     = Math.round(pctSum/(tot||1))+"%";
+  let totalOutput = 0;
+
+  let running = 0;
+
+  let done = 0;
+
+  let delayed = 0;
+
+  let progressSum = 0;
+
+
+  const today =
+    new Date();
+
+
+  allOrders.forEach(
+    order => {
+
+      totalOrders++;
+
+
+      totalPCS +=
+        getQty(order);
+
+
+      const colors =
+        order.colors &&
+        order.colors.length
+          ? order.colors
+          : [
+              {
+                dyeingBookingQty:
+                  order.dyeingBookingQty,
+
+                dyeingInputQty:
+                  order.dyeingInputQty,
+
+                dyeingOutputQty:
+                  order.dyeingOutputQty,
+
+                dyeingStatus:
+                  order.dyeingStatus
+              }
+            ];
+
+
+      let orderProgress = 0;
+
+
+      colors.forEach(
+        c => {
+
+          totalBooking +=
+            num(
+              c.dyeingBookingQty
+            );
+
+
+          totalInput +=
+            num(
+              c.dyeingInputQty
+            );
+
+
+          totalOutput +=
+            num(
+              c.dyeingOutputQty
+            );
+
+
+          const target =
+            c.dyeingTarget ||
+            autoTarget(
+              order.orderDate ||
+              "",
+              35
+            );
+
+
+          let status =
+            c.dyeingStatus ||
+            "Pending";
+
+
+          if(
+            status === "Complete" ||
+            status === "Completed"
+          ){
+
+            done++;
+
+            orderProgress = 100;
+
+          }else{
+
+            if(
+              status === "Running"
+            ){
+
+              running++;
+
+              orderProgress = 50;
+
+            }
+
+
+            if(
+              target &&
+              new Date(target) <
+              today &&
+              (
+                !status ||
+                status === "Pending"
+              )
+            ){
+
+              delayed++;
+
+              status = "Delayed";
+
+              orderProgress = 0;
+
+            }
+
+          }
+
+        }
+      );
+
+
+      progressSum +=
+        orderProgress;
+
+    }
+  );
+
+
+  document
+    .getElementById(
+      "kTotal"
+    )
+    .innerText =
+      totalOrders;
+
+
+  document
+    .getElementById(
+      "kQty"
+    )
+    .innerText =
+      totalPCS.toLocaleString();
+
+
+  document
+    .getElementById(
+      "kBooking"
+    )
+    .innerText =
+      totalBooking.toFixed(2);
+
+
+  document
+    .getElementById(
+      "kInput"
+    )
+    .innerText =
+      totalInput.toFixed(2);
+
+
+  document
+    .getElementById(
+      "kOutput"
+    )
+    .innerText =
+      totalOutput.toFixed(2);
+
+
+  document
+    .getElementById(
+      "kRunning"
+    )
+    .innerText =
+      running;
+
+
+  document
+    .getElementById(
+      "kDone"
+    )
+    .innerText =
+      done;
+
+
+  document
+    .getElementById(
+      "kDelayed"
+    )
+    .innerText =
+      delayed;
+
+
+  document
+    .getElementById(
+      "kAvg"
+    )
+    .innerText =
+      Math.round(
+        progressSum /
+        (totalOrders || 1)
+      ) +
+      "%";
+
 }
 
-function renderOrderList(orders){
-  const body=document.getElementById("orderTableBody");
-  body.innerHTML="";
-  let serial=1;
-  const today=new Date();
 
-  orders.forEach(order=>{
-    const orderDate = order.orderDate||"";
-    const shipDate  = getShip(order)||"-";
-    const totalQty  = getQty(order);
+/* ================= RENDER TABLE ================= */
 
-    const getStatus=(saved,target,fallback)=>{
-      const s=saved||fallback;
-      if(s==="Complete"||s==="Completed") return "Complete";
-      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
-      return s||"Pending";
-    };
+function renderOrderList(
+  orders
+){
 
-    const colors = order.colors&&order.colors.length
-      ? order.colors
-      : [{ fabrication:order.fabrication||"-", color:order.color||"-", qty:totalQty }];
+  const body =
+    document.getElementById(
+      "orderTableBody"
+    );
 
-    colors.forEach((c,index)=>{
-      const fabT  = c.dyeFabRcvTarget   || autoTarget(orderDate,30);
-      const fabA  = c.dyeFabRcvActual   || "-";
-      const fabS  = getStatus(c.dyeFabRcvStatus,   fabT,  "Pending");
-      const dyeST = c.dyeStartTarget    || autoTarget(orderDate,37);
-      const dyeSA = c.dyeStartActual    || "-";
-      const dyeSS = getStatus(c.dyeStartStatus,    dyeST, "Pending");
-      const dyeCT = c.dyeCompleteTarget || autoTarget(orderDate,45);
-      const dyeCA = c.dyeCompleteActual || "-";
-      const dyeCS = getStatus(c.dyeCompleteStatus, dyeCT, "Pending");
 
-      const steps=[fabS,dyeSS,dyeCS];
-      const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
-      const pct=Math.round((done/3)*100);
+  body.innerHTML = "";
 
-      body.innerHTML+=`<tr>
-        <td>${index===0?serial:""}</td>
-        <td style="text-align:left;">${index===0?(order.buyer||"-"):""}</td>
-        <td>${index===0?(order.ikl||order.iklNo||"-"):""}</td>
-        <td>${index===0?(order.style||order.styleNo||"-"):""}</td>
-        <td>${index===0?totalQty.toLocaleString():""}</td>
-        <td style="text-align:left;">${c.fabrication||order.fabrication||"-"}</td>
-        <td>${c.color||c.colorName||"-"}</td>
-        <td>${Number(c.qty||c.colorQty||0).toLocaleString()}</td>
-        <td>${index===0?(order.merchandiser||"-"):""}</td>
-        <td>${index===0?(orderDate||"-"):""}</td>
-        <td>${index===0?shipDate:""}</td>
-        <td>${fabT}</td>
-        <td>${fabA}</td>
-        <td>${statusBadge(fabS)}</td>
-        <td>${dyeST}</td>
-        <td>${dyeSA}</td>
-        <td>${statusBadge(dyeSS)}</td>
-        <td>${dyeCT}</td>
-        <td>${dyeCA}</td>
-        <td>${statusBadge(dyeCS)}</td>
-        <td>${progressBar(pct)}</td>
-        <td><button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button></td>
-      </tr>`;
-    });
-    serial++;
-  });
+
+  let serial = 1;
+
+
+  const today =
+    new Date();
+
+
+  orders.forEach(
+    order => {
+
+      const orderDate =
+        order.orderDate ||
+        "";
+
+
+      const shipDate =
+        getShip(order) ||
+        "-";
+
+
+      const totalQty =
+        getQty(order);
+
+
+      const colors =
+        order.colors &&
+        order.colors.length
+          ? order.colors
+          : [
+              {
+                fabrication:
+                  order.fabrication ||
+                  "-",
+
+                color:
+                  order.color ||
+                  "-",
+
+                qty:
+                  totalQty,
+
+                dyeingBookingQty:
+                  order.dyeingBookingQty ||
+                  0,
+
+                dyeingInputQty:
+                  order.dyeingInputQty ||
+                  0,
+
+                dyeingOutputQty:
+                  order.dyeingOutputQty ||
+                  0,
+
+                dyeingTarget:
+                  order.dyeingTarget ||
+                  "",
+
+                dyeingActual:
+                  order.dyeingActual ||
+                  "",
+
+                dyeingStatus:
+                  order.dyeingStatus ||
+                  "Pending"
+
+              }
+            ];
+
+
+      colors.forEach(
+        (c,index) => {
+
+          const booking =
+            num(
+              c.dyeingBookingQty
+            );
+
+
+          const input =
+            num(
+              c.dyeingInputQty
+            );
+
+
+          const output =
+            num(
+              c.dyeingOutputQty
+            );
+
+
+          const target =
+            c.dyeingTarget ||
+            autoTarget(
+              orderDate,
+              35
+            );
+
+
+          const actual =
+            c.dyeingActual ||
+            "-";
+
+
+          let status =
+            c.dyeingStatus ||
+            "Pending";
+
+
+          if(
+            status ===
+              "Completed"
+          ){
+
+            status =
+              "Complete";
+
+          }
+
+
+          if(
+            target &&
+            new Date(target) <
+            today &&
+            status === "Pending"
+          ){
+
+            status =
+              "Delayed";
+
+          }
+
+
+          /* ================= PROGRESS ================= */
+
+          let pct = 0;
+
+
+          if(
+            status ===
+              "Complete"
+          ){
+
+            pct = 100;
+
+          }else if(
+            status ===
+              "Running"
+          ){
+
+            pct = 50;
+
+          }else if(
+            status ===
+              "Delayed"
+          ){
+
+            pct = 0;
+
+          }
+
+
+          body.innerHTML += `
+
+            <tr>
+
+              <td>
+                ${
+                  index === 0
+                    ? serial
+                    : ""
+                }
+              </td>
+
+
+              <td>
+                ${
+                  index === 0
+                    ? (
+                        order.buyer ||
+                        "-"
+                      )
+                    : ""
+                }
+              </td>
+
+
+              <td>
+                ${
+                  index === 0
+                    ? (
+                        order.ikl ||
+                        order.iklNo ||
+                        "-"
+                      )
+                    : ""
+                }
+              </td>
+
+
+              <td>
+                ${
+                  index === 0
+                    ? (
+                        order.style ||
+                        order.styleNo ||
+                        "-"
+                      )
+                    : ""
+                }
+              </td>
+
+
+              <td>
+                ${
+                  index === 0
+                    ? totalQty
+                        .toLocaleString()
+                    : ""
+                }
+              </td>
+
+
+              <td style="text-align:left;">
+
+                ${
+                  c.fabrication ||
+                  order.fabrication ||
+                  "-"
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  c.color ||
+                  c.colorName ||
+                  "-"
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  num(
+                    c.qty ||
+                    c.colorQty ||
+                    0
+                  ).toLocaleString()
+                }
+
+              </td>
+
+
+              <!-- BOOKING -->
+
+              <td
+                style="
+                  background:#1c1405;
+                  color:#fbbf24;
+                  font-weight:bold;
+                "
+              >
+
+                ${
+                  booking
+                    ? booking.toFixed(2)
+                    : "-"
+                }
+
+              </td>
+
+
+              <!-- INPUT -->
+
+              <td
+                style="
+                  background:#1c1405;
+                  color:#fbbf24;
+                  font-weight:bold;
+                "
+              >
+
+                ${
+                  input
+                    ? input.toFixed(2)
+                    : "-"
+                }
+
+              </td>
+
+
+              <!-- OUTPUT -->
+
+              <td
+                style="
+                  background:#1c1405;
+                  color:#fbbf24;
+                  font-weight:bold;
+                "
+              >
+
+                ${
+                  output
+                    ? output.toFixed(2)
+                    : "-"
+                }
+
+              </td>
+
+
+              <!-- DIFFERENCE -->
+
+              <td
+                style="
+                  background:#1c1405;
+                  font-weight:bold;
+                "
+              >
+
+                ${
+                  differenceHTML(
+                    booking,
+                    output
+                  )
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  index === 0
+                    ? (
+                        order.merchandiser ||
+                        "-"
+                      )
+                    : ""
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  index === 0
+                    ? (
+                        orderDate ||
+                        "-"
+                      )
+                    : ""
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  index === 0
+                    ? shipDate
+                    : ""
+                }
+
+              </td>
+
+
+              <!-- TARGET -->
+
+              <td
+                style="
+                  background:#12091f;
+                  color:#c084fc;
+                "
+              >
+
+                ${target}
+
+              </td>
+
+
+              <!-- ACTUAL -->
+
+              <td
+                style="
+                  background:#12091f;
+                  color:#c084fc;
+                "
+              >
+
+                ${actual}
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td
+                style="
+                  background:#12091f;
+                "
+              >
+
+                ${
+                  statusBadge(
+                    status
+                  )
+                }
+
+              </td>
+
+
+              <!-- PROGRESS -->
+
+              <td>
+
+                ${
+                  progressBar(
+                    pct
+                  )
+                }
+
+              </td>
+
+
+              <!-- ACTION -->
+
+              <td>
+
+                <button
+                  class="edit-btn"
+                  onclick="
+                    openOrder(
+                      '${order.id}',
+                      ${index}
+                    )
+                  "
+                >
+
+                  ✏️ Edit
+
+                </button>
+
+              </td>
+
+
+            </tr>
+
+          `;
+
+        }
+      );
+
+
+      serial++;
+
+    }
+  );
+
 }
+
+
+/* ================= START ================= */
 
 loadOrders();
+
 </script>
+
 </body>
 </html>
