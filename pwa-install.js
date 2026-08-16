@@ -16,14 +16,26 @@ if ("serviceWorker" in navigator) {
         /* Check for updates every 60 seconds */
         setInterval(() => reg.update(), 60000);
 
-        reg.addEventListener("updatefound", () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener("statechange", () => {
-            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-              showUpdateBanner();
-            }
-          });
-        });
+reg.addEventListener("updatefound", () => {
+
+  const newWorker = reg.installing;
+
+  if (!newWorker) return;
+
+  newWorker.addEventListener("statechange", () => {
+
+    if (
+      newWorker.state === "installed" &&
+      navigator.serviceWorker.controller
+    ) {
+
+      showUpdateBanner();
+
+    }
+
+  });
+
+});
       })
       .catch(err => console.warn("[PWA] SW registration failed:", err));
   });
