@@ -204,3 +204,24 @@ function updateOnlineStatus() {
 
 window.addEventListener("online",  updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);
+
+/* ══ SERVICE WORKER CONTROLLER CHANGE ══ */
+
+let refreshing = false;
+
+navigator.serviceWorker.addEventListener(
+  "controllerchange",
+  () => {
+
+    if (refreshing) return;
+
+    refreshing = true;
+
+    console.log(
+      "[PWA] New version activated — reloading..."
+    );
+
+    window.location.reload();
+
+  }
+);
