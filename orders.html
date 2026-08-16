@@ -6,6 +6,7 @@
 <title>Order Entry — SMART TNA BD</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
 
@@ -203,101 +204,62 @@ body{
   cursor:not-allowed;
 }
 
-/* PRODUCTION OPTIONS */
-.requirement-box{
-  margin-top:18px;
-  padding:16px;
+/* DEPARTMENT OPTIONS */
+.dept-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.dept-box{
   background:#0d1117;
   border:1px solid var(--border);
   border-radius:12px;
+  padding:15px;
 }
 
-.requirement-title{
-  color:var(--green);
-  font-size:13px;
+.dept-title{
+  font-size:12px;
   font-weight:700;
-  margin-bottom:12px;
-  text-transform:uppercase;
-  letter-spacing:.8px;
+  color:var(--green);
+  margin-bottom:10px;
 }
 
-.requirement-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:10px;
+.dept-icon{
+  font-size:20px;
+  margin-right:5px;
 }
 
-.req-option{
-  position:relative;
-}
-
-.req-option input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
-}
-
-.req-label{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:12px 14px;
+.dept-select{
+  width:100%;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:8px;
   background:#161b22;
-  border:1px solid #30363d;
-  border-radius:9px;
-  color:#c9d1d9;
-  cursor:pointer;
+  color:#fff;
   font-size:13px;
+  font-family:'Rajdhani',sans-serif;
   font-weight:700;
-  transition:all .2s;
+  outline:none;
+  cursor:pointer;
 }
 
-.req-label:hover{
-  border-color:#00ff99;
-  background:#00ff9910;
-}
-
-.req-check{
-  width:18px;
-  height:18px;
-  border:2px solid #64748b;
-  border-radius:5px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  flex-shrink:0;
-}
-
-.req-option input:checked + .req-label{
+.dept-select:focus{
   border-color:var(--green);
-  background:#00ff9915;
-  color:var(--green);
-  box-shadow:0 0 10px #00ff9915;
 }
 
-.req-option input:checked + .req-label .req-check{
-  background:var(--green);
-  border-color:var(--green);
-  color:#000;
-}
-
-.routing-note{
-  margin-top:12px;
-  padding:10px 12px;
-  border-left:3px solid #60a5fa;
-  background:#60a5fa0d;
-  color:#94a3b8;
+.route-info{
+  margin-top:15px;
+  padding:12px 15px;
+  border-radius:9px;
+  background:#071b14;
+  border:1px solid #00ff9940;
+  color:#a7f3d0;
   font-size:12px;
-  line-height:1.5;
-  border-radius:5px;
+  line-height:1.7;
 }
 
-.routing-note strong{
-  color:#60a5fa;
-}
-
-/* COLOR */
+/* COLOR ROWS */
 .color-row{
   display:grid;
   grid-template-columns:2fr 2fr auto;
@@ -317,7 +279,6 @@ body{
   cursor:pointer;
   font-family:'Rajdhani',sans-serif;
   white-space:nowrap;
-  transition:background .15s;
 }
 
 .color-row .remove-btn:hover{
@@ -348,16 +309,6 @@ body{
   background:#15803d;
 }
 
-.btn-blue{
-  background:#1d4ed8;
-  color:#fff;
-  border:1px solid #3b82f6;
-}
-
-.btn-blue:hover{
-  background:#1e40af;
-}
-
 .btn-outline{
   background:transparent;
   color:var(--green);
@@ -380,7 +331,6 @@ body{
   font-family:'Rajdhani',sans-serif;
   font-weight:600;
   outline:none;
-  transition:border-color .2s;
 }
 
 .search-box:focus{
@@ -410,14 +360,10 @@ body{
   border-radius:3px;
 }
 
-.tbl-wrap::-webkit-scrollbar-thumb:hover{
-  background:var(--green);
-}
-
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:1450px;
+  min-width:1800px;
 }
 
 th,td{
@@ -443,38 +389,37 @@ tr:hover td{
   background:#ffffff05;
 }
 
-/* REQUIREMENT BADGES */
-.req-badge{
+/* BADGES */
+.badge{
   display:inline-block;
-  padding:4px 8px;
-  margin:2px;
-  border-radius:6px;
+  padding:4px 9px;
+  border-radius:20px;
   font-size:10px;
   font-weight:700;
 }
 
-.req-regular{
-  color:#94a3b8;
-  border:1px solid #475569;
-  background:#47556915;
+.badge-yes{
+  background:#064e3b;
+  color:#6ee7b7;
+  border:1px solid #10b981;
 }
 
-.req-print{
-  color:#f59e0b;
+.badge-no{
+  background:#374151;
+  color:#d1d5db;
+  border:1px solid #6b7280;
+}
+
+.badge-imported{
+  background:#451a03;
+  color:#fbbf24;
   border:1px solid #f59e0b;
-  background:#f59e0b12;
 }
 
-.req-embroidery{
-  color:#c084fc;
-  border:1px solid #c084fc;
-  background:#c084fc12;
-}
-
-.req-imported{
-  color:#38bdf8;
-  border:1px solid #38bdf8;
-  background:#38bdf812;
+.badge-local{
+  background:#172554;
+  color:#93c5fd;
+  border:1px solid #3b82f6;
 }
 
 /* ACTION */
@@ -487,7 +432,6 @@ tr:hover td{
   cursor:pointer;
   font-family:'Rajdhani',sans-serif;
   border:none;
-  transition:background .15s;
 }
 
 .edit-btn{
@@ -508,7 +452,7 @@ tr:hover td{
   background:#b91c1c;
 }
 
-/* EDIT */
+/* EDIT BANNER */
 .edit-banner{
   background:#b4530922;
   border:1px solid #f59e0b;
@@ -560,18 +504,6 @@ tr:hover td{
 
 .toast.show{
   display:block;
-  animation:fadeIn .3s ease;
-}
-
-@keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translate(-50%,-10px);
-  }
-  to{
-    opacity:1;
-    transform:translate(-50%,0);
-  }
 }
 
 /* UNSAVED */
@@ -589,9 +521,18 @@ tr:hover td{
 }
 
 /* RESPONSIVE */
-@media(max-width:600px){
+@media(max-width:1100px){
+  .dept-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
 
+@media(max-width:600px){
   .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .dept-grid{
     grid-template-columns:1fr;
   }
 
@@ -605,10 +546,6 @@ tr:hover td{
 
   .container{
     padding:10px;
-  }
-
-  .requirement-grid{
-    grid-template-columns:1fr;
   }
 }
 </style>
@@ -652,10 +589,13 @@ tr:hover td{
 
 </div>
 
+
 <!-- HERO -->
 <div class="hero">
 
-  <div class="hero-arabic">﷽</div>
+  <div class="hero-arabic">
+    ﷽
+  </div>
 
   <div class="hero-company">
     INNOVATIVE KNITEX LTD
@@ -667,339 +607,418 @@ tr:hover td{
 
 </div>
 
+
 <div class="container">
 
-  <!-- ORDER FORM -->
-  <div class="card">
 
-    <h2>
-      ➕
-      <span id="formTitle">
-        New Order Entry
-      </span>
-    </h2>
+<!-- ========================================================= -->
+<!-- ORDER FORM -->
+<!-- ========================================================= -->
 
-    <!-- EDIT BANNER -->
-    <div class="edit-banner" id="editBanner">
+<div class="card">
 
-      ✏️ Edit Mode — Editing existing order
+  <h2>
+    ➕
+    <span id="formTitle">
+      New Order Entry
+    </span>
+  </h2>
 
-      <button class="cancel-edit"
-              onclick="cancelEdit()">
-        ✕ Cancel
-      </button>
 
-    </div>
+  <!-- EDIT BANNER -->
 
-    <!-- BASIC INFORMATION -->
-    <div class="form-grid">
+  <div class="edit-banner" id="editBanner">
 
-      <div class="form-group">
-        <label>Buyer *</label>
-        <input class="form-input"
-               type="text"
-               id="buyer"
-               placeholder="e.g. AEON / KAWAGUCHI SAN">
-      </div>
+    ✏️ Edit Mode — Editing existing order
 
-      <div class="form-group">
-        <label>IKL No *</label>
-        <input class="form-input"
-               type="text"
-               id="ikl"
-               placeholder="e.g. MHJ-145/2025">
-      </div>
-
-      <div class="form-group">
-        <label>Style No *</label>
-        <input class="form-input"
-               type="text"
-               id="style"
-               placeholder="e.g. 260082014">
-      </div>
-
-      <div class="form-group">
-        <label>Item</label>
-        <input class="form-input"
-               type="text"
-               id="item"
-               placeholder="e.g. GIRLS LEGGINGS">
-      </div>
-
-      <div class="form-group">
-        <label>Merchandiser *</label>
-        <input class="form-input"
-               type="text"
-               id="merchandiser"
-               placeholder="e.g. MR.MARUF">
-      </div>
-
-      <div class="form-group">
-        <label>Fabrication</label>
-        <input class="form-input"
-               type="text"
-               id="fabrication"
-               placeholder="e.g. 95% CTN 5% LYCRA S/J 180 GSM">
-      </div>
-
-      <div class="form-group">
-        <label>Order Date *</label>
-        <input class="form-input"
-               type="date"
-               id="orderDate">
-      </div>
-
-      <div class="form-group">
-        <label>Shipment Date *</label>
-        <input class="form-input"
-               type="date"
-               id="shipdate">
-      </div>
-
-      <div class="form-group">
-        <label>Lead Time (auto)</label>
-        <input class="form-input"
-               type="number"
-               id="leadtime"
-               readonly
-               placeholder="Auto calculated">
-      </div>
-
-      <div class="form-group">
-        <label>Total Qty (auto)</label>
-        <input class="form-input"
-               type="number"
-               id="orderQty"
-               readonly
-               placeholder="Auto from colors">
-      </div>
-
-    </div>
-
-    <!-- PRODUCTION REQUIREMENT -->
-    <div class="requirement-box">
-
-      <div class="requirement-title">
-        ⚙️ Production / Special Requirement
-      </div>
-
-      <div class="requirement-grid">
-
-        <!-- REGULAR -->
-        <div class="req-option">
-
-          <input type="checkbox"
-                 id="reqRegular"
-                 value="Regular">
-
-          <label class="req-label"
-                 for="reqRegular">
-
-            <span class="req-check">✓</span>
-
-            🧶 Regular / Local Fabric
-
-          </label>
-
-        </div>
-
-        <!-- PRINT -->
-        <div class="req-option">
-
-          <input type="checkbox"
-                 id="reqPrint"
-                 value="Print">
-
-          <label class="req-label"
-                 for="reqPrint">
-
-            <span class="req-check">✓</span>
-
-            🖨️ Print
-
-          </label>
-
-        </div>
-
-        <!-- EMBROIDERY -->
-        <div class="req-option">
-
-          <input type="checkbox"
-                 id="reqEmbroidery"
-                 value="Embroidery">
-
-          <label class="req-label"
-                 for="reqEmbroidery">
-
-            <span class="req-check">✓</span>
-
-            🧵 Embroidery
-
-          </label>
-
-        </div>
-
-        <!-- IMPORTED FABRIC -->
-        <div class="req-option">
-
-          <input type="checkbox"
-                 id="reqImported"
-                 value="Imported Fabric">
-
-          <label class="req-label"
-                 for="reqImported">
-
-            <span class="req-check">✓</span>
-
-            🌍 Imported Fabric
-
-          </label>
-
-        </div>
-
-      </div>
-
-      <div class="routing-note">
-
-        <strong>Department Routing:</strong>
-
-        Regular / Local Fabric →
-        🧶 Knitting → 🎨 Dyeing
-
-        &nbsp; | &nbsp;
-
-        Print →
-        🖨️ Print Department
-
-        &nbsp; | &nbsp;
-
-        Embroidery →
-        🧵 Embroidery Department
-
-        &nbsp; | &nbsp;
-
-        Imported Fabric →
-        ❌ No Knitting / Dyeing
-
-      </div>
-
-    </div>
-
-    <br>
-
-    <!-- COLOR -->
-    <h2>
-      🎨 Color Breakdown
-    </h2>
-
-    <div id="colorContainer"></div>
-
-    <button class="btn btn-outline"
-            onclick="addColorRow()"
-            style="margin-top:8px;width:auto;padding:8px 20px;">
-
-      ➕ Add Color
-
-    </button>
-
-    <br><br>
-
-    <button class="btn btn-green"
-            onclick="saveOrder()"
-            id="saveBtn">
-
-      💾 Save Order to Firebase
-
+    <button class="cancel-edit"
+            onclick="cancelEdit()">
+      ✕ Cancel
     </button>
 
   </div>
 
 
-  <!-- SEARCH -->
-  <div class="card">
+  <!-- BASIC ORDER INFORMATION -->
 
-    <h2>
-      🔍 Search Orders
-    </h2>
+  <div class="form-grid">
 
-    <input class="search-box"
-           type="text"
-           id="searchInput"
-           placeholder="Search Buyer / IKL / Style / Item / Merchandiser..."
-           onkeyup="filterOrders()">
+    <div class="form-group">
+      <label>Buyer *</label>
+      <input class="form-input"
+             type="text"
+             id="buyer"
+             placeholder="e.g. AEON / KAWAGUCHI SAN">
+    </div>
+
+
+    <div class="form-group">
+      <label>IKL No *</label>
+      <input class="form-input"
+             type="text"
+             id="ikl"
+             placeholder="e.g. MHJ-145/2025">
+    </div>
+
+
+    <div class="form-group">
+      <label>Style No *</label>
+      <input class="form-input"
+             type="text"
+             id="style"
+             placeholder="e.g. 260082014">
+    </div>
+
+
+    <div class="form-group">
+      <label>Item</label>
+      <input class="form-input"
+             type="text"
+             id="item"
+             placeholder="e.g. GIRLS LEGGINGS">
+    </div>
+
+
+    <div class="form-group">
+      <label>Merchandiser *</label>
+      <input class="form-input"
+             type="text"
+             id="merchandiser"
+             placeholder="e.g. MR.MARUF">
+    </div>
+
+
+    <div class="form-group">
+      <label>Fabrication</label>
+      <input class="form-input"
+             type="text"
+             id="fabrication"
+             placeholder="e.g. 95% CTN 5% LYCRA S/J 180 GSM">
+    </div>
+
+
+    <div class="form-group">
+      <label>Order Date *</label>
+      <input class="form-input"
+             type="date"
+             id="orderDate">
+    </div>
+
+
+    <div class="form-group">
+      <label>Shipment Date *</label>
+      <input class="form-input"
+             type="date"
+             id="shipdate">
+    </div>
+
+
+    <div class="form-group">
+      <label>Lead Time (auto)</label>
+      <input class="form-input"
+             type="number"
+             id="leadtime"
+             readonly
+             placeholder="Auto calculated">
+    </div>
+
+
+    <div class="form-group">
+      <label>Total Qty (auto)</label>
+      <input class="form-input"
+             type="number"
+             id="orderQty"
+             readonly
+             placeholder="Auto from colors">
+    </div>
 
   </div>
 
 
-  <!-- ORDER LIST -->
-  <div class="card">
+  <br>
 
-    <h2>
 
-      📋 Order List
+  <!-- ========================================================= -->
+  <!-- DEPARTMENT REQUIREMENTS -->
+  <!-- ========================================================= -->
 
-      <span id="orderCount"
-            style="font-size:12px;color:var(--muted);font-weight:500;">
-      </span>
+  <h2>
+    🏭
+    Department / Process Requirements
+  </h2>
 
-    </h2>
 
-    <div class="tbl-wrap">
+  <div class="dept-grid">
 
-      <table id="orderTable">
 
-        <thead>
+    <!-- PRINT -->
 
-          <tr>
+    <div class="dept-box">
 
-            <th>#</th>
-            <th>Buyer</th>
-            <th>IKL No</th>
-            <th>Style</th>
-            <th>Item</th>
-            <th>Merchandiser</th>
-            <th>Fabrication</th>
-            <th>Order Date</th>
-            <th>Shipment Date</th>
-            <th>Lead Time</th>
-            <th>Total Qty</th>
-            <th>Requirement</th>
-            <th>Color Breakdown</th>
-            <th>Action</th>
+      <div class="dept-title">
+        <span class="dept-icon">🖨️</span>
+        PRINT
+      </div>
 
-          </tr>
+      <select class="dept-select"
+              id="printRequired">
 
-        </thead>
+        <option value="No">
+          No Print
+        </option>
 
-        <tbody id="orderBody">
+        <option value="Yes">
+          Yes — Print Required
+        </option>
 
-          <tr>
-
-            <td colspan="14"
-                style="padding:20px;color:var(--muted);">
-
-              Loading orders...
-
-            </td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
+      </select>
 
     </div>
+
+
+    <!-- EMBROIDERY -->
+
+    <div class="dept-box">
+
+      <div class="dept-title">
+        <span class="dept-icon">🧵</span>
+        EMBROIDERY
+      </div>
+
+      <select class="dept-select"
+              id="embroideryRequired">
+
+        <option value="No">
+          No Embroidery
+        </option>
+
+        <option value="Yes">
+          Yes — Embroidery Required
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- FABRIC SOURCE -->
+
+    <div class="dept-box">
+
+      <div class="dept-title">
+        <span class="dept-icon">🚢</span>
+        FABRIC SOURCE
+      </div>
+
+      <select class="dept-select"
+              id="fabricSource">
+
+        <option value="Local">
+          Local / Regular Fabric
+        </option>
+
+        <option value="Imported">
+          Imported Fabric
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- WASHING -->
+
+    <div class="dept-box">
+
+      <div class="dept-title">
+        <span class="dept-icon">🧺</span>
+        GARMENT WASH
+      </div>
+
+      <select class="dept-select"
+              id="garmentWashRequired">
+
+        <option value="No">
+          No Wash
+        </option>
+
+        <option value="Yes">
+          Yes — Garment Wash Required
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- ROUTING INFORMATION -->
+
+  <div class="route-info" id="routeInfo">
+
+    🔄 <b>Department Routing:</b>
+    Local Fabric → Knitting → Dyeing
+    | Print / Embroidery / Washing according to requirement.
+
+  </div>
+
+
+  <br>
+
+
+  <!-- ========================================================= -->
+  <!-- COLOR BREAKDOWN -->
+  <!-- ========================================================= -->
+
+  <h2>
+    🎨
+    Color Breakdown
+  </h2>
+
+
+  <div id="colorContainer"></div>
+
+
+  <button class="btn btn-outline"
+          onclick="addColorRow()"
+          style="margin-top:8px;width:auto;padding:8px 20px;">
+
+    ➕ Add Color
+
+  </button>
+
+
+  <br><br>
+
+
+  <button class="btn btn-green"
+          onclick="saveOrder()"
+          id="saveBtn">
+
+    💾 Save Order to Firebase
+
+  </button>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- SEARCH -->
+<!-- ========================================================= -->
+
+<div class="card">
+
+  <h2>
+    🔍 Search Orders
+  </h2>
+
+  <input class="search-box"
+         type="text"
+         id="searchInput"
+         placeholder="Search Buyer / IKL / Style / Item / Merchandiser..."
+         onkeyup="filterOrders()">
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- ORDER LIST -->
+<!-- ========================================================= -->
+
+<div class="card">
+
+  <h2>
+
+    📋 Order List
+
+    <span id="orderCount"
+          style="font-size:12px;color:var(--muted);font-weight:500;">
+    </span>
+
+  </h2>
+
+
+  <div class="tbl-wrap">
+
+    <table id="orderTable">
+
+      <thead>
+
+        <tr>
+
+          <th>#</th>
+
+          <th>Buyer</th>
+
+          <th>IKL No</th>
+
+          <th>Style</th>
+
+          <th>Item</th>
+
+          <th>Merchandiser</th>
+
+          <th>Fabrication</th>
+
+          <th>Order Date</th>
+
+          <th>Shipment Date</th>
+
+          <th>Lead Time</th>
+
+          <th>Total Qty</th>
+
+          <th>Color Breakdown</th>
+
+          <th>Print</th>
+
+          <th>Embroidery</th>
+
+          <th>Fabric Source</th>
+
+          <th>Garment Wash</th>
+
+          <th>Action</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody id="orderBody">
+
+        <tr>
+
+          <td colspan="17"
+              style="padding:20px;color:var(--muted);">
+
+            Loading orders...
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </div>
 
 </div>
 
+</div>
 
+
+<!-- ========================================================= -->
 <!-- FIREBASE -->
+<!-- ========================================================= -->
+
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
@@ -1009,33 +1028,39 @@ import {
   deleteDoc,
   doc,
   updateDoc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
   getAuth,
   onAuthStateChanged,
   browserLocalPersistence,
   setPersistence
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-/* FIREBASE CONFIG */
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
 
 const cfg = {
 
-  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+  apiKey:
+    "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
 
-  authDomain:"smart-tna-bd.firebaseapp.com",
+  authDomain:
+    "smart-tna-bd.firebaseapp.com",
 
-  projectId:"smart-tna-bd",
+  projectId:
+    "smart-tna-bd",
 
-  storageBucket:"smart-tna-bd.firebasestorage.app",
+  storageBucket:
+    "smart-tna-bd.firebasestorage.app",
 
-  messagingSenderId:"372049573207",
+  messagingSenderId:
+    "372049573207",
 
-  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+  appId:
+    "1:372049573207:web:571beae951f9aa4b47fa12"
 
 };
 
@@ -1049,17 +1074,20 @@ const auth = getAuth(fbApp);
 let editId = null;
 
 
-/* TOAST */
+/* =========================================================
+   TOAST
+========================================================= */
 
 function toast(msg,color="#00ff99"){
 
-  const t=document.getElementById("toast");
+  const t =
+    document.getElementById("toast");
 
-  t.textContent=msg;
+  t.textContent = msg;
 
-  t.style.color=color;
+  t.style.color = color;
 
-  t.style.borderColor=color;
+  t.style.borderColor = color;
 
   t.classList.add("show");
 
@@ -1070,15 +1098,117 @@ function toast(msg,color="#00ff99"){
 }
 
 
-/* ADD COLOR */
+/* =========================================================
+   DEPARTMENT ROUTING DISPLAY
+========================================================= */
 
-window.addColorRow=function(){
+function updateRouteInfo(){
 
-  const div=document.createElement("div");
+  const print =
+    document.getElementById("printRequired").value;
 
-  div.className="color-row";
+  const embroidery =
+    document.getElementById("embroideryRequired").value;
 
-  div.innerHTML=`
+  const fabric =
+    document.getElementById("fabricSource").value;
+
+  const wash =
+    document.getElementById("garmentWashRequired").value;
+
+
+  let routes = [];
+
+
+  /* FABRIC ROUTE */
+
+  if(fabric === "Imported"){
+
+    routes.push(
+      "🚢 Imported Fabric → Skip Knitting & Dyeing"
+    );
+
+  }else{
+
+    routes.push(
+      "🧶 Local Fabric → Knitting → Dyeing"
+    );
+
+  }
+
+
+  /* PRINT */
+
+  if(print === "Yes"){
+
+    routes.push(
+      "🖨️ Print"
+    );
+
+  }
+
+
+  /* EMBROIDERY */
+
+  if(embroidery === "Yes"){
+
+    routes.push(
+      "🧵 Embroidery"
+    );
+
+  }
+
+
+  /* WASHING */
+
+  if(wash === "Yes"){
+
+    routes.push(
+      "🧺 Washing"
+    );
+
+  }
+
+
+  document.getElementById("routeInfo").innerHTML =
+    "🔄 <b>Department Routing:</b> " +
+    routes.join(" &nbsp; | &nbsp; ");
+
+}
+
+
+[
+  "printRequired",
+  "embroideryRequired",
+  "fabricSource",
+  "garmentWashRequired"
+].forEach(id=>{
+
+  document
+    .getElementById(id)
+    .addEventListener("change",()=>{
+      updateRouteInfo();
+      window._hasChanges = true;
+      updateUnsavedDot();
+    });
+
+});
+
+
+/* =========================================================
+   ADD COLOR
+========================================================= */
+
+window.addColorRow = function(){
+
+  const div =
+    document.createElement("div");
+
+  div.className =
+    "color-row";
+
+
+  div.innerHTML = `
 
     <input
       class="form-input color"
@@ -1089,211 +1219,138 @@ window.addColorRow=function(){
     <input
       class="form-input qty"
       type="number"
+      min="0"
       placeholder="Quantity (PCS)"
       oninput="calcQty()"
     >
 
     <button
       class="remove-btn"
-      onclick="this.parentElement.remove();calcQty();"
+      onclick="
+        this.parentElement.remove();
+        calcQty();
+      "
     >
       ❌ Remove
     </button>
 
   `;
 
-  document.getElementById("colorContainer")
+
+  document
+    .getElementById("colorContainer")
     .appendChild(div);
 
-  window._hasChanges=true;
+
+  window._hasChanges = true;
 
   updateUnsavedDot();
 
 };
 
 
-/* TOTAL QTY */
+/* =========================================================
+   TOTAL QTY
+========================================================= */
 
-window.calcQty=function(){
+window.calcQty = function(){
 
-  let total=0;
+  let total = 0;
 
-  document.querySelectorAll(".qty")
-    .forEach(i=>{
-      total += Number(i.value)||0;
+
+  document
+    .querySelectorAll(".qty")
+    .forEach(input=>{
+
+      total +=
+        Number(input.value) || 0;
+
     });
 
-  document.getElementById("orderQty").value=total;
+
+  document
+    .getElementById("orderQty")
+    .value = total;
 
 };
 
 
-/* LEAD TIME */
+/* =========================================================
+   LEAD TIME
+========================================================= */
 
 function calcLead(){
 
-  const od=
+  const od =
     document.getElementById("orderDate").value;
 
-  const sd=
+  const sd =
     document.getElementById("shipdate").value;
+
 
   if(od && sd){
 
-    const days=Math.ceil(
-      (new Date(sd)-new Date(od))
-      /(1000*60*60*24)
-    );
+    const days =
+      Math.ceil(
+        (
+          new Date(sd) -
+          new Date(od)
+        )
+        /
+        (1000*60*60*24)
+      );
 
-    document.getElementById("leadtime").value=
-      days>0 ? days : 0;
+
+    document
+      .getElementById("leadtime")
+      .value =
+      days > 0 ? days : 0;
+
+  }else{
+
+    document
+      .getElementById("leadtime")
+      .value = "";
 
   }
 
 }
 
 
-document.getElementById("orderDate")
+document
+  .getElementById("orderDate")
   .addEventListener("change",calcLead);
 
-document.getElementById("shipdate")
+document
+  .getElementById("shipdate")
   .addEventListener("change",calcLead);
 
 
-/* GET REQUIREMENTS */
+/* =========================================================
+   SAVE ORDER
+========================================================= */
 
-function getProductionOptions(){
+window.saveOrder = async function(){
 
-  const options=[];
+  const buyer =
+    document.getElementById("buyer").value.trim();
 
-  if(document.getElementById("reqRegular").checked)
-    options.push("Regular");
+  const ikl =
+    document.getElementById("ikl").value.trim();
 
-  if(document.getElementById("reqPrint").checked)
-    options.push("Print");
+  const style =
+    document.getElementById("style").value.trim();
 
-  if(document.getElementById("reqEmbroidery").checked)
-    options.push("Embroidery");
-
-  if(document.getElementById("reqImported").checked)
-    options.push("Imported Fabric");
-
-  /*
-    যদি কিছু select না করা হয়,
-    তাহলে Regular automatically ধরে নেবে।
-  */
-
-  if(options.length===0){
-    options.push("Regular");
-  }
-
-  return options;
-
-}
+  const merchandiser =
+    document.getElementById("merchandiser").value.trim();
 
 
-/* SET REQUIREMENTS */
-
-function setProductionOptions(options){
-
-  options=Array.isArray(options)
-    ? options
-    : [];
-
-  document.getElementById("reqRegular").checked=
-    options.includes("Regular");
-
-  document.getElementById("reqPrint").checked=
-    options.includes("Print");
-
-  document.getElementById("reqEmbroidery").checked=
-    options.includes("Embroidery");
-
-  document.getElementById("reqImported").checked=
-    options.includes("Imported Fabric");
-
-}
-
-
-/* REQUIREMENT BADGES */
-
-function requirementBadges(options){
-
-  if(!Array.isArray(options) || !options.length){
-
-    return `
-      <span class="req-badge req-regular">
-        🧶 Regular
-      </span>
-    `;
-
-  }
-
-  return options.map(option=>{
-
-    if(option==="Print"){
-
-      return `
-        <span class="req-badge req-print">
-          🖨️ Print
-        </span>
-      `;
-
-    }
-
-    if(option==="Embroidery"){
-
-      return `
-        <span class="req-badge req-embroidery">
-          🧵 Embroidery
-        </span>
-      `;
-
-    }
-
-    if(option==="Imported Fabric"){
-
-      return `
-        <span class="req-badge req-imported">
-          🌍 Imported Fabric
-        </span>
-      `;
-
-    }
-
-    return `
-      <span class="req-badge req-regular">
-        🧶 Regular
-      </span>
-    `;
-
-  }).join("");
-
-}
-
-
-/* SAVE ORDER */
-
-window.saveOrder=async function(){
-
-  const buyer=
-    document.getElementById("buyer")
-      .value.trim();
-
-  const ikl=
-    document.getElementById("ikl")
-      .value.trim();
-
-  const style=
-    document.getElementById("style")
-      .value.trim();
-
-  const merchandiser=
-    document.getElementById("merchandiser")
-      .value.trim();
-
-
-  if(!buyer || !ikl || !style || !merchandiser){
+  if(
+    !buyer ||
+    !ikl ||
+    !style ||
+    !merchandiser
+  ){
 
     toast(
       "⚠️ Buyer, IKL, Style & Merchandiser required!",
@@ -1307,25 +1364,36 @@ window.saveOrder=async function(){
 
   /* COLORS */
 
-  const colors=[];
+  const colors = [];
 
-  document.querySelectorAll(".color-row")
+
+  document
+    .querySelectorAll(".color-row")
     .forEach(row=>{
 
-      const c=
-        row.querySelector(".color")
-          .value.trim();
+      const c =
+        row
+        .querySelector(".color")
+        .value
+        .trim();
 
-      const q=
+
+      const q =
         Number(
-          row.querySelector(".qty").value
+          row
+          .querySelector(".qty")
+          .value
         );
+
 
       if(c && q){
 
         colors.push({
+
           color:c,
+
           qty:q
+
         });
 
       }
@@ -1333,54 +1401,35 @@ window.saveOrder=async function(){
     });
 
 
-  /* REQUIREMENTS */
+  /* DEPARTMENT OPTIONS */
 
-  const productionOptions=
-    getProductionOptions();
-
-
-  /* ROUTING FLAGS */
-
-  const hasPrint=
-    productionOptions.includes("Print");
-
-  const hasEmbroidery=
-    productionOptions.includes("Embroidery");
-
-  const hasImportedFabric=
-    productionOptions.includes("Imported Fabric");
-
-  const isRegular=
-    productionOptions.includes("Regular");
+  const printRequired =
+    document
+      .getElementById("printRequired")
+      .value;
 
 
-  /*
-    Department routing information.
-
-    এই fields future department pages
-    filter করার জন্য ব্যবহার করতে পারবে।
-  */
-
-  const departmentRouting={
-
-    knitting:
-      isRegular && !hasImportedFabric,
-
-    dyeing:
-      isRegular && !hasImportedFabric,
-
-    print:
-      hasPrint,
-
-    embroidery:
-      hasEmbroidery
-
-  };
+  const embroideryRequired =
+    document
+      .getElementById("embroideryRequired")
+      .value;
 
 
-  /* FINAL DATA */
+  const fabricSource =
+    document
+      .getElementById("fabricSource")
+      .value;
 
-  const data={
+
+  const garmentWashRequired =
+    document
+      .getElementById("garmentWashRequired")
+      .value;
+
+
+  /* ROOT DATA */
+
+  const data = {
 
     buyer,
 
@@ -1389,60 +1438,80 @@ window.saveOrder=async function(){
     style,
 
     item:
-      document.getElementById("item")
-        .value.trim(),
+      document
+      .getElementById("item")
+      .value
+      .trim(),
 
     merchandiser,
 
     fabrication:
-      document.getElementById("fabrication")
-        .value.trim(),
+      document
+      .getElementById("fabrication")
+      .value
+      .trim(),
 
     orderDate:
-      document.getElementById("orderDate")
-        .value,
+      document
+      .getElementById("orderDate")
+      .value,
 
     shipdate:
-      document.getElementById("shipdate")
-        .value,
+      document
+      .getElementById("shipdate")
+      .value,
 
     leadtime:
-      document.getElementById("leadtime")
-        .value,
+      document
+      .getElementById("leadtime")
+      .value,
 
     totalQty:
       Number(
-        document.getElementById("orderQty")
-          .value
+        document
+        .getElementById("orderQty")
+        .value
       ) || 0,
 
     orderQty:
       Number(
-        document.getElementById("orderQty")
-          .value
+        document
+        .getElementById("orderQty")
+        .value
       ) || 0,
 
     colors,
 
-    /*
-      NEW
-    */
+    /* =====================================================
+       NEW DEPARTMENT FIELDS
+    ===================================================== */
 
-    productionOptions,
+    printRequired,
 
-    departmentRouting,
+    embroideryRequired,
 
-    /*
-      Easy filter fields
-    */
+    fabricSource,
 
-    hasPrint,
+    garmentWashRequired,
 
-    hasEmbroidery,
+    /* =====================================================
+       ROUTING FLAGS
+    ===================================================== */
 
-    hasImportedFabric,
+    knittingRequired:
+      fabricSource !== "Imported",
 
-    isRegular,
+    dyeingRequired:
+      fabricSource !== "Imported",
+
+    printDepartment:
+      printRequired === "Yes",
+
+    embroideryDepartment:
+      embroideryRequired === "Yes",
+
+    washingDepartment:
+      garmentWashRequired === "Yes",
 
     updatedAt:
       new Date().toISOString()
@@ -1450,15 +1519,19 @@ window.saveOrder=async function(){
   };
 
 
-  const btn=
+  const btn =
     document.getElementById("saveBtn");
 
-  btn.textContent="⏳ Saving...";
 
-  btn.disabled=true;
+  btn.textContent =
+    "⏳ Saving...";
+
+  btn.disabled = true;
 
 
   try{
+
+    /* UPDATE */
 
     if(editId){
 
@@ -1467,56 +1540,80 @@ window.saveOrder=async function(){
         data
       );
 
+
       toast(
         "✅ Order Updated Successfully!",
         "#00ff99"
       );
 
-      cancelEdit();
 
-    }else{
+      editId = null;
+
+
+      document
+        .getElementById("formTitle")
+        .textContent =
+        "New Order Entry";
+
+
+      document
+        .getElementById("editBanner")
+        .classList.remove("show");
+
+
+    }
+
+    /* NEW ORDER */
+
+    else{
 
       await addDoc(
         collection(db,"orders"),
         data
       );
 
+
       toast(
         "✅ Order Saved to Firebase!",
         "#00ff99"
       );
 
-      clearForm();
-
     }
 
-    window._hasChanges=false;
+
+    clearForm();
+
+    window._hasChanges = false;
 
     updateUnsavedDot();
 
-    loadOrders();
+    await loadOrders();
+
 
   }catch(err){
 
     console.error(err);
 
     toast(
-      "❌ Save Failed: "+err.message,
+      "❌ Save Failed: " +
+      err.message,
       "#f87171"
     );
 
   }
 
 
-  btn.textContent=
+  btn.textContent =
     "💾 Save Order to Firebase";
 
-  btn.disabled=false;
+  btn.disabled = false;
 
 };
 
 
-/* CLEAR */
+/* =========================================================
+   CLEAR FORM
+========================================================= */
 
 function clearForm(){
 
@@ -1533,83 +1630,167 @@ function clearForm(){
     "orderQty"
   ].forEach(id=>{
 
-    document.getElementById(id).value="";
+    document
+      .getElementById(id)
+      .value = "";
 
   });
 
 
-  /* RESET REQUIREMENTS */
+  /* DEFAULT OPTIONS */
 
-  document.getElementById("reqRegular").checked=false;
-
-  document.getElementById("reqPrint").checked=false;
-
-  document.getElementById("reqEmbroidery").checked=false;
-
-  document.getElementById("reqImported").checked=false;
+  document
+    .getElementById("printRequired")
+    .value = "No";
 
 
-  document.getElementById("colorContainer")
-    .innerHTML="";
+  document
+    .getElementById("embroideryRequired")
+    .value = "No";
+
+
+  document
+    .getElementById("fabricSource")
+    .value = "Local";
+
+
+  document
+    .getElementById("garmentWashRequired")
+    .value = "No";
+
+
+  document
+    .getElementById("colorContainer")
+    .innerHTML = "";
+
 
   addColorRow();
 
-  window._hasChanges=false;
+  updateRouteInfo();
+
+  window._hasChanges = false;
 
   updateUnsavedDot();
 
 }
 
 
-/* CANCEL EDIT */
+/* =========================================================
+   CANCEL EDIT
+========================================================= */
 
-window.cancelEdit=function(){
+window.cancelEdit = function(){
 
-  editId=null;
+  editId = null;
 
-  document.getElementById("formTitle")
-    .textContent="New Order Entry";
 
-  document.getElementById("saveBtn")
-    .textContent="💾 Save Order to Firebase";
+  document
+    .getElementById("formTitle")
+    .textContent =
+    "New Order Entry";
 
-  document.getElementById("editBanner")
+
+  document
+    .getElementById("saveBtn")
+    .textContent =
+    "💾 Save Order to Firebase";
+
+
+  document
+    .getElementById("editBanner")
     .classList.remove("show");
+
 
   clearForm();
 
 };
 
 
-/* LOAD ORDERS */
+/* =========================================================
+   BADGES
+========================================================= */
+
+function yesBadge(){
+
+  return `
+    <span class="badge badge-yes">
+      YES
+    </span>
+  `;
+
+}
+
+
+function noBadge(){
+
+  return `
+    <span class="badge badge-no">
+      NO
+    </span>
+  `;
+
+}
+
+
+function fabricBadge(value){
+
+  if(value === "Imported"){
+
+    return `
+      <span class="badge badge-imported">
+        🚢 IMPORTED
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="badge badge-local">
+      LOCAL
+    </span>
+  `;
+
+}
+
+
+/* =========================================================
+   LOAD ORDERS
+========================================================= */
 
 async function loadOrders(){
 
   try{
 
-    const snap=
+    const snap =
       await getDocs(
         collection(db,"orders")
       );
 
-    const body=
+
+    const body =
       document.getElementById("orderBody");
 
-    body.innerHTML="";
 
-    let sl=0;
+    body.innerHTML = "";
+
+
+    let sl = 0;
 
 
     if(snap.empty){
 
-      body.innerHTML=`
+      body.innerHTML = `
 
         <tr>
 
-          <td colspan="14"
-              style="padding:20px;color:var(--muted);">
+          <td
+            colspan="17"
+            style="padding:20px;color:var(--muted);"
+          >
 
-            No orders yet. Add your first order above.
+            No orders yet.
+            Add your first order above.
 
           </td>
 
@@ -1617,8 +1798,10 @@ async function loadOrders(){
 
       `;
 
-      document.getElementById("orderCount")
-        .textContent="";
+
+      document
+        .getElementById("orderCount")
+        .textContent = "";
 
       return;
 
@@ -1627,136 +1810,225 @@ async function loadOrders(){
 
     snap.forEach(d=>{
 
-      const o=d.data();
+      const o = d.data();
 
       sl++;
 
 
-      const colors=
-        (o.colors||[])
+      /* OLD ORDERS DEFAULT */
+
+      const print =
+        o.printRequired || "No";
+
+
+      const embroidery =
+        o.embroideryRequired || "No";
+
+
+      const fabric =
+        o.fabricSource || "Local";
+
+
+      const wash =
+        o.garmentWashRequired || "No";
+
+
+      /* COLORS */
+
+      const colors =
+        (o.colors || [])
         .map(c=>`
 
           <span style="font-size:11px;">
-
-            ${escapeHTML(c.color)}
+            ${escapeHtml(c.color || "")}
             —
-            ${Number(c.qty||0).toLocaleString()}
+            ${Number(c.qty || 0).toLocaleString()}
             PCS
-
           </span>
 
         `)
         .join("<br>");
 
 
-      const qty=
+      const qty =
         o.totalQty ||
         o.orderQty ||
         0;
 
 
-      /*
-        Old orders:
-        productionOptions না থাকলে Regular
-      */
+      /* SEARCH */
 
-      const productionOptions=
-        Array.isArray(o.productionOptions)
-          ? o.productionOptions
-          : ["Regular"];
+      const searchText = `
+
+        ${o.buyer || ""}
+
+        ${o.ikl || ""}
+
+        ${o.style || ""}
+
+        ${o.item || ""}
+
+        ${o.merchandiser || ""}
+
+        ${o.fabrication || ""}
+
+        ${print}
+
+        ${embroidery}
+
+        ${fabric}
+
+        ${wash}
+
+      `;
 
 
-      body.innerHTML+=`
+      body.innerHTML += `
 
         <tr
-
-          data-search="
-            ${escapeHTML(o.buyer||"")}
-            ${escapeHTML(o.ikl||"")}
-            ${escapeHTML(o.style||"")}
-            ${escapeHTML(o.item||"")}
-            ${escapeHTML(o.merchandiser||"")}
-            ${productionOptions.join(" ")}
-          "
-
+          data-search="${escapeAttr(searchText)}"
         >
 
-          <td style="color:var(--green);font-weight:700;">
+          <td
+            style="color:var(--green);font-weight:700;"
+          >
             ${sl}
           </td>
 
-          <td>
-            <b>${escapeHTML(o.buyer||"")}</b>
-          </td>
 
           <td>
-            ${escapeHTML(o.ikl||"")}
+            <b>
+              ${escapeHtml(o.buyer || "")}
+            </b>
           </td>
+
 
           <td>
-            ${escapeHTML(o.style||"")}
+            ${escapeHtml(o.ikl || "")}
           </td>
+
 
           <td>
-            ${escapeHTML(o.item||"")}
+            ${escapeHtml(o.style || "")}
           </td>
+
 
           <td>
-            <b>${escapeHTML(o.merchandiser||"")}</b>
+            ${escapeHtml(o.item || "")}
           </td>
 
-          <td style="
-            font-size:11px;
-            max-width:160px;
-            white-space:normal;
-          ">
-
-            ${escapeHTML(o.fabrication||"")}
-
-          </td>
 
           <td>
-            ${escapeHTML(o.orderDate||"")}
+            <b>
+              ${escapeHtml(o.merchandiser || "")}
+            </b>
           </td>
+
+
+          <td
+            style="
+              font-size:11px;
+              max-width:160px;
+              white-space:normal;
+            "
+          >
+            ${escapeHtml(o.fabrication || "")}
+          </td>
+
 
           <td>
-            ${escapeHTML(o.shipdate||"")}
+            ${escapeHtml(o.orderDate || "")}
           </td>
+
 
           <td>
-            ${escapeHTML(o.leadtime||"")} Days
+            ${escapeHtml(o.shipdate || "")}
           </td>
 
-          <td style="
-            color:var(--green);
-            font-weight:700;
-          ">
+
+          <td>
+            ${escapeHtml(o.leadtime || "")}
+            Days
+          </td>
+
+
+          <td
+            style="
+              color:var(--green);
+              font-weight:700;
+            "
+          >
 
             ${
-              qty>0
-              ? Number(qty).toLocaleString()+" PCS"
-              : "—"
+              qty > 0
+              ?
+              Number(qty).toLocaleString()+" PCS"
+              :
+              "—"
             }
 
           </td>
 
-          <td style="
-            white-space:normal;
-            min-width:190px;
-          ">
 
-            ${requirementBadges(productionOptions)}
+          <td
+            style="
+              text-align:left;
+              min-width:180px;
+            "
+          >
 
-          </td>
-
-          <td style="
-            text-align:left;
-            min-width:180px;
-          ">
-
-            ${colors||"—"}
+            ${colors || "—"}
 
           </td>
+
+
+          <!-- PRINT -->
+
+          <td>
+            ${
+              print === "Yes"
+              ?
+              yesBadge()
+              :
+              noBadge()
+            }
+          </td>
+
+
+          <!-- EMBROIDERY -->
+
+          <td>
+            ${
+              embroidery === "Yes"
+              ?
+              yesBadge()
+              :
+              noBadge()
+            }
+          </td>
+
+
+          <!-- FABRIC -->
+
+          <td>
+            ${fabricBadge(fabric)}
+          </td>
+
+
+          <!-- WASH -->
+
+          <td>
+            ${
+              wash === "Yes"
+              ?
+              yesBadge()
+              :
+              noBadge()
+            }
+          </td>
+
+
+          <!-- ACTION -->
 
           <td>
 
@@ -1767,12 +2039,19 @@ async function loadOrders(){
               ✏️ Edit
             </button>
 
+
             <button
               class="act-btn del-btn"
-              onclick="deleteOrder(
-                '${d.id}',
-                '${escapeJS((o.buyer||"")+" "+(o.ikl||""))}'
-              )"
+              onclick="
+                deleteOrder(
+                  '${d.id}',
+                  '${escapeAttr(
+                    (o.buyer || "") +
+                    " " +
+                    (o.ikl || "")
+                  )}'
+                )
+              "
             >
               🗑️ Delete
             </button>
@@ -1786,24 +2065,29 @@ async function loadOrders(){
     });
 
 
-    document.getElementById("orderCount")
-      .textContent="("+sl+" orders)";
+    document
+      .getElementById("orderCount")
+      .textContent =
+      "(" + sl + " orders)";
 
 
   }catch(err){
 
     console.error(err);
 
-    document.getElementById("orderBody")
-      .innerHTML=`
+    document
+      .getElementById("orderBody")
+      .innerHTML = `
 
         <tr>
 
-          <td colspan="14"
-              style="padding:20px;color:#f87171;">
+          <td
+            colspan="17"
+            style="padding:20px;color:#f87171;"
+          >
 
             ❌ Failed to load orders:
-            ${escapeHTML(err.message)}
+            ${escapeHtml(err.message)}
 
           </td>
 
@@ -1816,39 +2100,52 @@ async function loadOrders(){
 }
 
 
-/* SEARCH */
+/* =========================================================
+   SEARCH
+========================================================= */
 
-window.filterOrders=function(){
+window.filterOrders = function(){
 
-  const q=
-    document.getElementById("searchInput")
+  const q =
+    document
+      .getElementById("searchInput")
       .value
       .toLowerCase();
 
 
-  document.querySelectorAll("#orderBody tr")
+  document
+    .querySelectorAll("#orderBody tr")
     .forEach(row=>{
 
-      row.style.display=
-        (row.dataset.search||"")
-          .toLowerCase()
-          .includes(q)
-          ? ""
-          : "none";
+      row.style.display =
+        (
+          row.dataset.search || ""
+        )
+        .toLowerCase()
+        .includes(q)
+        ?
+        ""
+        :
+        "none";
 
     });
 
 };
 
 
-/* DELETE */
+/* =========================================================
+   DELETE
+========================================================= */
 
-window.deleteOrder=async function(id,name){
+window.deleteOrder = async function(id,name){
 
-  if(!confirm(
-    "Delete order: "+name+
-    "?\n\nThis cannot be undone!"
-  )){
+  if(
+    !confirm(
+      "Delete order: " +
+      name +
+      "?\n\nThis cannot be undone!"
+    )
+  ){
 
     return;
 
@@ -1861,17 +2158,21 @@ window.deleteOrder=async function(id,name){
       doc(db,"orders",id)
     );
 
+
     toast(
       "🗑️ Order Deleted",
       "#f87171"
     );
 
+
     loadOrders();
+
 
   }catch(err){
 
     toast(
-      "❌ Delete Failed: "+err.message,
+      "❌ Delete Failed: " +
+      err.message,
       "#f87171"
     );
 
@@ -1880,13 +2181,15 @@ window.deleteOrder=async function(id,name){
 };
 
 
-/* EDIT */
+/* =========================================================
+   EDIT ORDER
+========================================================= */
 
-window.editOrder=async function(id){
+window.editOrder = async function(id){
 
   try{
 
-    const snap=
+    const snap =
       await getDocs(
         collection(db,"orders")
       );
@@ -1894,123 +2197,204 @@ window.editOrder=async function(id){
 
     snap.forEach(d=>{
 
-      if(d.id!==id) return;
+      if(d.id !== id){
+
+        return;
+
+      }
 
 
-      editId=id;
-
-      const o=d.data();
+      editId = id;
 
 
-      document.getElementById("buyer")
-        .value=o.buyer||"";
-
-      document.getElementById("ikl")
-        .value=o.ikl||"";
-
-      document.getElementById("style")
-        .value=o.style||"";
-
-      document.getElementById("item")
-        .value=o.item||"";
-
-      document.getElementById("merchandiser")
-        .value=o.merchandiser||"";
-
-      document.getElementById("fabrication")
-        .value=o.fabrication||"";
-
-      document.getElementById("orderDate")
-        .value=o.orderDate||"";
-
-      document.getElementById("shipdate")
-        .value=o.shipdate||"";
-
-      document.getElementById("leadtime")
-        .value=o.leadtime||"";
-
-      document.getElementById("orderQty")
-        .value=o.totalQty||o.orderQty||"";
+      const o = d.data();
 
 
-      /* REQUIREMENTS */
+      /* BASIC */
 
-      setProductionOptions(
-        Array.isArray(o.productionOptions)
-          ? o.productionOptions
-          : ["Regular"]
-      );
+      document
+        .getElementById("buyer")
+        .value =
+        o.buyer || "";
+
+
+      document
+        .getElementById("ikl")
+        .value =
+        o.ikl || "";
+
+
+      document
+        .getElementById("style")
+        .value =
+        o.style || "";
+
+
+      document
+        .getElementById("item")
+        .value =
+        o.item || "";
+
+
+      document
+        .getElementById("merchandiser")
+        .value =
+        o.merchandiser || "";
+
+
+      document
+        .getElementById("fabrication")
+        .value =
+        o.fabrication || "";
+
+
+      document
+        .getElementById("orderDate")
+        .value =
+        o.orderDate || "";
+
+
+      document
+        .getElementById("shipdate")
+        .value =
+        o.shipdate || "";
+
+
+      document
+        .getElementById("leadtime")
+        .value =
+        o.leadtime || "";
+
+
+      document
+        .getElementById("orderQty")
+        .value =
+        o.totalQty ||
+        o.orderQty ||
+        "";
+
+
+      /* =====================================================
+         NEW DEPARTMENT OPTIONS
+      ===================================================== */
+
+      document
+        .getElementById("printRequired")
+        .value =
+        o.printRequired || "No";
+
+
+      document
+        .getElementById("embroideryRequired")
+        .value =
+        o.embroideryRequired || "No";
+
+
+      document
+        .getElementById("fabricSource")
+        .value =
+        o.fabricSource || "Local";
+
+
+      document
+        .getElementById("garmentWashRequired")
+        .value =
+        o.garmentWashRequired || "No";
+
+
+      updateRouteInfo();
 
 
       /* COLORS */
 
-      document.getElementById("colorContainer")
-        .innerHTML="";
+      document
+        .getElementById("colorContainer")
+        .innerHTML = "";
 
 
-      (o.colors||[]).forEach(c=>{
+      if(
+        o.colors &&
+        o.colors.length
+      ){
 
-        const div=
-          document.createElement("div");
+        o.colors.forEach(c=>{
 
-        div.className="color-row";
-
-
-        div.innerHTML=`
-
-          <input
-            class="form-input color"
-            type="text"
-            value="${escapeHTML(c.color||"")}"
-          >
-
-          <input
-            class="form-input qty"
-            type="number"
-            value="${Number(c.qty||0)}"
-            oninput="calcQty()"
-          >
-
-          <button
-            class="remove-btn"
-            onclick="
-              this.parentElement.remove();
-              calcQty();
-            "
-          >
-            ❌ Remove
-          </button>
-
-        `;
+          const div =
+            document.createElement("div");
 
 
-        document.getElementById("colorContainer")
-          .appendChild(div);
-
-      });
+          div.className =
+            "color-row";
 
 
-      if(!(o.colors||[]).length){
+          div.innerHTML = `
+
+            <input
+              class="form-input color"
+              type="text"
+              value="${escapeAttr(c.color || "")}"
+            >
+
+
+            <input
+              class="form-input qty"
+              type="number"
+              min="0"
+              value="${Number(c.qty || 0)}"
+              oninput="calcQty()"
+            >
+
+
+            <button
+              class="remove-btn"
+              onclick="
+                this.parentElement.remove();
+                calcQty();
+              "
+            >
+              ❌ Remove
+            </button>
+
+          `;
+
+
+          document
+            .getElementById("colorContainer")
+            .appendChild(div);
+
+        });
+
+      }else{
 
         addColorRow();
 
       }
 
 
-      document.getElementById("formTitle")
-        .textContent=
-        "Edit Order — "+(o.buyer||"");
+      calcQty();
 
 
-      document.getElementById("saveBtn")
-        .textContent="✏️ Update Order";
+      /* EDIT UI */
+
+      document
+        .getElementById("formTitle")
+        .textContent =
+        "Edit Order — " +
+        (o.buyer || "");
 
 
-      document.getElementById("editBanner")
+      document
+        .getElementById("saveBtn")
+        .textContent =
+        "✏️ Update Order";
+
+
+      document
+        .getElementById("editBanner")
         .classList.add("show");
 
 
-      window._hasChanges=false;
+      window._hasChanges = false;
 
       updateUnsavedDot();
 
@@ -2020,13 +2404,14 @@ window.editOrder=async function(id){
         behavior:"smooth"
       });
 
-
     });
+
 
   }catch(err){
 
     toast(
-      "❌ Edit Failed: "+err.message,
+      "❌ Edit Failed: " +
+      err.message,
       "#f87171"
     );
 
@@ -2035,11 +2420,13 @@ window.editOrder=async function(id){
 };
 
 
-/* ESCAPE HTML */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-function escapeHTML(value){
+function escapeHtml(value){
 
-  return String(value??"")
+  return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -2049,21 +2436,16 @@ function escapeHTML(value){
 }
 
 
-/* ESCAPE JS */
+function escapeAttr(value){
 
-function escapeJS(value){
-
-  return String(value??"")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,'\\"')
-    .replace(/\n/g,"\\n")
-    .replace(/\r/g,"\\r");
+  return escapeHtml(value);
 
 }
 
 
-/* AUTH */
+/* =========================================================
+   AUTH CHECK
+========================================================= */
 
 setPersistence(
   auth,
@@ -2077,26 +2459,41 @@ setPersistence(
 
       if(!user){
 
-        window.location.href="login.html";
+        window.location.href =
+          "login.html";
 
         return;
 
       }
 
 
-      document.getElementById("userBadge")
-        .textContent=
-        "👤 "+
+      document
+        .getElementById("userBadge")
+        .textContent =
+        "👤 " +
         (
           user.email
-          ? user.email.split("@")[0]
-          : "User"
+          ?
+          user.email.split("@")[0]
+          :
+          "User"
         );
 
 
       loadOrders();
 
-      addColorRow();
+
+      /* First color row */
+
+      if(
+        document
+        .getElementById("colorContainer")
+        .children.length === 0
+      ){
+
+        addColorRow();
+
+      }
 
     }
 
@@ -2111,7 +2508,8 @@ setPersistence(
 
       if(!user){
 
-        window.location.href="login.html";
+        window.location.href =
+          "login.html";
 
         return;
 
@@ -2120,7 +2518,16 @@ setPersistence(
 
       loadOrders();
 
-      addColorRow();
+
+      if(
+        document
+        .getElementById("colorContainer")
+        .children.length === 0
+      ){
+
+        addColorRow();
+
+      }
 
     }
 
@@ -2131,18 +2538,24 @@ setPersistence(
 </script>
 
 
+<!-- ========================================================= -->
 <!-- UTILS -->
+<!-- ========================================================= -->
+
 <script>
 
 /* UNSAVED */
 
-window._hasChanges=false;
+window._hasChanges = false;
 
 
 function updateUnsavedDot(){
 
-  const dot=
-    document.getElementById("unsavedDot");
+  const dot =
+    document.getElementById(
+      "unsavedDot"
+    );
+
 
   if(dot){
 
@@ -2160,32 +2573,9 @@ document.addEventListener(
   "input",
   function(){
 
-    window._hasChanges=true;
+    window._hasChanges = true;
 
     updateUnsavedDot();
-
-  }
-);
-
-
-/* CHECKBOX CHANGE */
-
-document.addEventListener(
-  "change",
-  function(e){
-
-    if(
-      e.target &&
-      e.target.matches(
-        '#reqRegular,#reqPrint,#reqEmbroidery,#reqImported'
-      )
-    ){
-
-      window._hasChanges=true;
-
-      updateUnsavedDot();
-
-    }
 
   }
 );
@@ -2199,25 +2589,29 @@ function confirmBack(e){
 
     e.preventDefault();
 
-    const go=confirm(
-      "⚠️ Unsaved data আছে!\n\n"+
-      "Dashboard-এ গেলে data হারিয়ে যাবে।\n\n"+
-      "তবুও কি যাবেন?"
-    );
+
+    const go =
+      confirm(
+        "⚠️ Unsaved data আছে!\n\n" +
+        "Dashboard-এ গেলে data হারিয়ে যাবে।\n\n" +
+        "তবুও কি যাবেন?"
+      );
 
 
     if(go){
 
-      window._hasChanges=false;
+      window._hasChanges = false;
 
-      window.location.href=
+      window.location.href =
         "dashboard.html";
 
     }
 
+
     return false;
 
   }
+
 
   return true;
 
@@ -2226,9 +2620,11 @@ function confirmBack(e){
 
 /* DATE */
 
-document.getElementById("dateEl")
-  .textContent=
-  new Date().toLocaleDateString(
+document
+  .getElementById("dateEl")
+  .textContent =
+  new Date()
+  .toLocaleDateString(
     "en-BD",
     {
       weekday:"short",
