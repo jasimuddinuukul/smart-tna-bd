@@ -3,18 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SMART TNA BD ERP - KNITTING DEPARTMENT</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
+
 <script src="pwa-install.js" defer></script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
-body { background:#0f172a; color:white; }
 
-/* TOPBAR */
-.topbar {
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#0f172a;
+  color:white;
+}
+
+
+/* ================================
+   TOPBAR
+================================ */
+
+.topbar{
   background:#111827;
   padding:12px 20px;
   border-bottom:2px solid #1e293b;
@@ -25,10 +41,20 @@ body { background:#0f172a; color:white; }
   top:0;
   z-index:900;
 }
-.topbar-left  { display:flex; align-items:center; gap:12px; }
-.topbar-right { display:flex; align-items:center; gap:10px; }
 
-.back-btn {
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn{
   display:flex;
   align-items:center;
   gap:6px;
@@ -41,22 +67,22 @@ body { background:#0f172a; color:white; }
   font-weight:700;
   cursor:pointer;
   text-decoration:none;
-  font-family:Arial,sans-serif;
   transition:all .2s;
 }
-.back-btn:hover {
+
+.back-btn:hover{
   background:#00ff9920;
   color:#00ff99;
   border-color:#00ff99;
 }
 
-.page-title {
+.page-title{
   font-size:16px;
   font-weight:bold;
   color:#fff;
 }
 
-#installBtn {
+#installBtn{
   display:none;
   align-items:center;
   gap:6px;
@@ -68,591 +94,3725 @@ body { background:#0f172a; color:white; }
   font-size:12px;
   font-weight:700;
   cursor:pointer;
-  font-family:Arial,sans-serif;
 }
-#installBtn:hover { background:#00ff9940; }
 
-.tb-date {
+.tb-date{
   font-size:11px;
   color:#64748b;
   font-family:monospace;
 }
 
-/* HEADER */
-header { background:#111827; padding:20px; text-align:center; border-bottom:2px solid #1e293b; }
-.company { font-size:28px; font-weight:bold; color:#00ff99; }
-.system  { font-size:18px; margin-top:8px; color:#cbd5e1; }
 
-/* KPI */
-.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; padding:20px; }
-.kpi-card { background:#1e293b; padding:20px; border-radius:15px; text-align:center; }
-.kpi-card h2 { color:#00ff99; font-size:30px; margin-bottom:10px; }
-.kpi-card p  { color:#cbd5e1; }
+/* ================================
+   HEADER
+================================ */
 
-/* SEARCH */
-.search-section { padding:20px; }
-.search-box { width:100%; padding:14px; border:none; border-radius:10px; background:#1e293b; color:white; font-size:16px; }
+header{
+  background:#111827;
+  padding:20px;
+  text-align:center;
+  border-bottom:2px solid #1e293b;
+}
 
-/* TABLE */
-.table-wrapper { padding:20px; overflow:auto; }
-table { width:100%; border-collapse:collapse; min-width:4500px; background:#1e293b; }
-th { background:#111827; color:#60a5fa; padding:12px; border:1px solid #334155; white-space:nowrap; }
-td { padding:10px; border:1px solid #334155; text-align:center; vertical-align:middle; white-space:nowrap; }
+.company{
+  font-size:28px;
+  font-weight:bold;
+  color:#00ff99;
+}
 
-.st-pending  { color:#f97316; font-weight:bold; }
-.st-running  { color:#3b82f6; font-weight:bold; }
-.st-delay    { color:#ef4444; font-weight:bold; }
-.st-complete { color:#00ff99; font-weight:bold; }
+.system{
+  font-size:18px;
+  margin-top:8px;
+  color:#cbd5e1;
+}
 
-.edit-btn { background:#1d4ed8; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:bold; }
-.edit-btn:hover { background:#1e40af; }
 
-/* MODAL */
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,.75); z-index:999; justify-content:center;
-  align-items:flex-start; overflow-y:auto; }
-.modal-content { background:#1e293b; width:95%; max-width:820px;
-  margin:30px auto; padding:25px; border-radius:15px; }
-.modal-content h2 { color:#60a5fa; margin-bottom:20px; font-size:20px;
-  border-bottom:1px solid #334155; padding-bottom:12px; }
+/* ================================
+   KPI
+================================ */
 
-.modal-info-box { background:#111827; padding:15px; border-radius:10px;
-  margin-bottom:20px; border-left:4px solid #60a5fa;
-  display:grid; grid-template-columns:1fr 1fr; gap:6px; }
-.modal-info-box p    { color:#cbd5e1; font-size:14px; }
-.modal-info-box span { color:white; font-weight:bold; }
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  padding:20px;
+}
 
-.section-title { background:#0f172a; color:#60a5fa; padding:8px 12px;
-  border-radius:8px; font-size:13px; font-weight:bold;
-  text-transform:uppercase; letter-spacing:1px;
-  margin:18px 0 12px 0; border-left:3px solid #60a5fa; }
+.kpi-card{
+  background:#1e293b;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
 
-.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
-.form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; }
+.kpi-card h2{
+  color:#00ff99;
+  font-size:30px;
+  margin-bottom:10px;
+}
 
-.form-row label { display:block; margin-bottom:6px; color:#94a3b8;
-  font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; }
+.kpi-card p{
+  color:#cbd5e1;
+}
 
-input[type="date"], input[type="number"], select, textarea {
-  width:100%; padding:10px; border:1px solid #334155; border-radius:8px;
-  background:#0f172a; color:white; font-size:14px; }
-input[type="date"]:focus, select:focus, textarea:focus, input[type="number"]:focus {
-  outline:none; border-color:#60a5fa; }
 
-.status-group { display:flex; gap:8px; }
-.status-btn {
-  flex:1; padding:11px 6px; border:2px solid #334155; border-radius:8px;
-  background:#0f172a; color:#64748b; font-weight:bold; font-size:13px;
-  cursor:pointer; transition:all 0.2s; text-align:center; }
-.status-btn.active-pending  { border-color:#f97316; background:#431407; color:#f97316; }
-.status-btn.active-running  { border-color:#3b82f6; background:#1e3a5f; color:#3b82f6; }
-.status-btn.active-delay    { border-color:#ef4444; background:#450a0a; color:#ef4444; }
-.status-btn.active-complete { border-color:#00ff99; background:#052e16; color:#00ff99; }
+/* ================================
+   SEARCH
+================================ */
 
-.btn-group { display:flex; gap:10px; margin-top:25px; }
-.save-btn  { background:#1d4ed8; padding:13px 25px; border:none; border-radius:10px;
-  color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
-.save-btn:hover  { background:#1e40af; }
-.close-btn { background:#dc2626; padding:13px 25px; border:none; border-radius:10px;
-  color:white; font-weight:bold; cursor:pointer; font-size:15px; flex:1; }
-.close-btn:hover { background:#b91c1c; }
+.search-section{
+  padding:20px;
+}
+
+.search-box{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#1e293b;
+  color:white;
+  font-size:16px;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.table-wrapper{
+  padding:20px;
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:5000px;
+  background:#1e293b;
+}
+
+th{
+  background:#111827;
+  color:#60a5fa;
+  padding:12px;
+  border:1px solid #334155;
+  white-space:nowrap;
+}
+
+td{
+  padding:10px;
+  border:1px solid #334155;
+  text-align:center;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+
+
+/* New KG columns */
+
+.th-booking{
+  background:#17130a !important;
+  color:#fbbf24 !important;
+}
+
+.th-knitting-qty{
+  background:#0a1720 !important;
+  color:#38bdf8 !important;
+}
+
+.th-variance{
+  background:#17100a !important;
+  color:#fb923c !important;
+}
+
+.td-booking{
+  background:#17130a;
+  color:#fbbf24;
+  font-weight:bold;
+}
+
+.td-knitting-qty{
+  background:#0a1720;
+  color:#38bdf8;
+  font-weight:bold;
+}
+
+.td-variance{
+  background:#17100a;
+  font-weight:bold;
+}
+
+
+/* Status */
+
+.st-pending{
+  color:#f97316;
+  font-weight:bold;
+}
+
+.st-running{
+  color:#3b82f6;
+  font-weight:bold;
+}
+
+.st-delay{
+  color:#ef4444;
+  font-weight:bold;
+}
+
+.st-complete{
+  color:#00ff99;
+  font-weight:bold;
+}
+
+
+/* Percentage */
+
+.percent-positive{
+  color:#00ff99;
+  font-weight:bold;
+}
+
+.percent-negative{
+  color:#ef4444;
+  font-weight:bold;
+}
+
+.percent-zero{
+  color:#cbd5e1;
+  font-weight:bold;
+}
+
+.percent-na{
+  color:#64748b;
+  font-weight:bold;
+}
+
+
+/* Edit */
+
+.edit-btn{
+  background:#1d4ed8;
+  color:white;
+  border:none;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.edit-btn:hover{
+  background:#1e40af;
+}
+
+
+/* ================================
+   MODAL
+================================ */
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.75);
+  z-index:999;
+  justify-content:center;
+  align-items:flex-start;
+  overflow-y:auto;
+}
+
+.modal-content{
+  background:#1e293b;
+  width:95%;
+  max-width:900px;
+  margin:30px auto;
+  padding:25px;
+  border-radius:15px;
+}
+
+.modal-content h2{
+  color:#60a5fa;
+  margin-bottom:20px;
+  font-size:20px;
+  border-bottom:1px solid #334155;
+  padding-bottom:12px;
+}
+
+.modal-info-box{
+  background:#111827;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px;
+  border-left:4px solid #60a5fa;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.modal-info-box p{
+  color:#cbd5e1;
+  font-size:14px;
+}
+
+.modal-info-box span{
+  color:white;
+  font-weight:bold;
+}
+
+
+/* ================================
+   KG SUMMARY BOX
+================================ */
+
+.kg-summary{
+  background:#0f172a;
+  border:1px solid #334155;
+  border-radius:10px;
+  padding:15px;
+  margin-top:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  text-align:center;
+}
+
+.kg-summary-box{
+  background:#111827;
+  border-radius:8px;
+  padding:12px;
+}
+
+.kg-summary-box small{
+  display:block;
+  color:#94a3b8;
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.kg-summary-box strong{
+  font-size:20px;
+}
+
+
+/* ================================
+   SECTIONS
+================================ */
+
+.section-title{
+  background:#0f172a;
+  color:#60a5fa;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin:18px 0 12px 0;
+  border-left:3px solid #60a5fa;
+}
+
+.form-grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.form-grid-3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:15px;
+}
+
+.form-row label{
+  display:block;
+  margin-bottom:6px;
+  color:#94a3b8;
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+input[type="date"],
+input[type="number"],
+select,
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #334155;
+  border-radius:8px;
+  background:#0f172a;
+  color:white;
+  font-size:14px;
+}
+
+input[type="date"]:focus,
+select:focus,
+textarea:focus,
+input[type="number"]:focus{
+  outline:none;
+  border-color:#60a5fa;
+}
+
+
+/* ================================
+   LIVE PERCENT BOX
+================================ */
+
+.live-percent{
+  margin-top:12px;
+  padding:14px;
+  border-radius:10px;
+  background:#0f172a;
+  border:1px solid #334155;
+  text-align:center;
+}
+
+.live-percent-title{
+  color:#94a3b8;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+#livePercent{
+  font-size:26px;
+  font-weight:bold;
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+.status-group{
+  display:flex;
+  gap:8px;
+}
+
+.status-btn{
+  flex:1;
+  padding:11px 6px;
+  border:2px solid #334155;
+  border-radius:8px;
+  background:#0f172a;
+  color:#64748b;
+  font-weight:bold;
+  font-size:13px;
+  cursor:pointer;
+  transition:all .2s;
+  text-align:center;
+}
+
+.status-btn.active-pending{
+  border-color:#f97316;
+  background:#431407;
+  color:#f97316;
+}
+
+.status-btn.active-running{
+  border-color:#3b82f6;
+  background:#1e3a5f;
+  color:#3b82f6;
+}
+
+.status-btn.active-delay{
+  border-color:#ef4444;
+  background:#450a0a;
+  color:#ef4444;
+}
+
+.status-btn.active-complete{
+  border-color:#00ff99;
+  background:#052e16;
+  color:#00ff99;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.btn-group{
+  display:flex;
+  gap:10px;
+  margin-top:25px;
+}
+
+.save-btn{
+  background:#1d4ed8;
+  padding:13px 25px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+  flex:1;
+}
+
+.save-btn:hover{
+  background:#1e40af;
+}
+
+.close-btn{
+  background:#dc2626;
+  padding:13px 25px;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:15px;
+  flex:1;
+}
+
+.close-btn:hover{
+  background:#b91c1c;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px){
+
+  .topbar{
+    padding:10px;
+  }
+
+  .page-title{
+    font-size:13px;
+  }
+
+  .company{
+    font-size:22px;
+  }
+
+  .system{
+    font-size:14px;
+  }
+
+  .modal-info-box{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid-2,
+  .form-grid-3{
+    grid-template-columns:1fr;
+  }
+
+  .kg-summary{
+    grid-template-columns:1fr;
+  }
+
+  .status-group{
+    flex-direction:column;
+  }
+
+}
+
 </style>
 </head>
+
+
 <body>
 
-<!-- TOPBAR -->
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
 <div class="topbar">
+
   <div class="topbar-left">
-    <a class="back-btn" href="dashboard.html" onclick="return confirmBack(event)">
+
+    <a
+      class="back-btn"
+      href="dashboard.html"
+      onclick="return confirmBack(event)"
+    >
       🏠 Dashboard
     </a>
-    <span class="page-title">🧶 Knitting Department</span>
+
+    <span class="page-title">
+      🧶 Knitting Department
+    </span>
+
   </div>
+
+
   <div class="topbar-right">
-    <button id="installBtn" onclick="installPWA()">📲 Install App</button>
-    <span class="tb-date" id="dateEl"></span>
+
+    <button
+      id="installBtn"
+      onclick="installPWA()"
+    >
+      📲 Install App
+    </button>
+
+    <span
+      class="tb-date"
+      id="dateEl"
+    ></span>
+
   </div>
+
 </div>
 
-<!-- HEADER -->
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header>
-  <div style="font-size:24px;margin-bottom:10px;">﷽</div>
-  <div class="company">INNOVATIVE KNITEX LTD</div>
-  <div class="system">SMART TNA BD ERP - KNITTING DEPARTMENT</div>
+
+  <div style="font-size:24px;margin-bottom:10px;">
+    ﷽
+  </div>
+
+  <div class="company">
+    INNOVATIVE KNITEX LTD
+  </div>
+
+  <div class="system">
+    SMART TNA BD ERP - KNITTING DEPARTMENT
+  </div>
+
 </header>
 
-<!-- KPI -->
+
+<!-- =====================================================
+     KPI
+===================================================== -->
+
 <div class="kpi-grid">
-  <div class="kpi-card"><h2 id="kTotal">0</h2><p>Total Orders</p></div>
-  <div class="kpi-card"><h2 id="kQty">0</h2><p>Total Qty (PCS)</p></div>
-  <div class="kpi-card"><h2 id="kYarnPend">0</h2><p>Yarn Pending</p></div>
-  <div class="kpi-card"><h2 id="kYarnDone">0</h2><p>Yarn Received</p></div>
-  <div class="kpi-card"><h2 id="kKnitRun">0</h2><p>Knitting Running</p></div>
-  <div class="kpi-card"><h2 id="kKnitDone">0</h2><p>Knitting Done</p></div>
-  <div class="kpi-card"><h2 id="kDelayed">0</h2><p>Delayed</p></div>
-  <div class="kpi-card"><h2 id="kAvg">0%</h2><p>Avg Progress</p></div>
-</div>
 
-<!-- SEARCH -->
-<div class="search-section">
-  <input type="text" id="searchInput" class="search-box"
-    placeholder="Search Buyer / IKL / Style / Merchandiser" oninput="filterOrders()">
-</div>
-
-<!-- TABLE -->
-<div class="table-wrapper">
-  <table>
-    <thead>
-      <tr>
-        <th>SL</th>
-        <th>Buyer</th>
-        <th>IKL No</th>
-        <th>Style No</th>
-        <th>Total Qty</th>
-        <th>Fabrication</th>
-        <th>Color</th>
-        <th>Color Qty</th>
-        <th>Merchandiser</th>
-        <th>Order Date</th>
-        <th>Ship Date</th>
-        <!-- YARN -->
-        <th style="background:#0a1a0a;color:#4ade80;">Yarn Target</th>
-        <th style="background:#0a1a0a;color:#4ade80;">Yarn Actual</th>
-        <th style="background:#0a1a0a;color:#4ade80;">Yarn Status</th>
-        <!-- KNITTING START -->
-        <th style="background:#0a1020;color:#60a5fa;">Knit Start Target</th>
-        <th style="background:#0a1020;color:#60a5fa;">Knit Start Actual</th>
-        <th style="background:#0a1020;color:#60a5fa;">Knit Start Status</th>
-        <!-- KNITTING COMPLETE -->
-        <th style="background:#06080e;color:#a78bfa;">Knit Complete Target</th>
-        <th style="background:#06080e;color:#a78bfa;">Knit Complete Actual</th>
-        <th style="background:#06080e;color:#a78bfa;">Knit Complete Status</th>
-        <th>Progress</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="orderTableBody"></tbody>
-  </table>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="editModal">
-  <div class="modal-content">
-    <h2>🧶 Knitting Department Update</h2>
-    <div id="modalFormArea"></div>
-    <div class="btn-group">
-      <button class="save-btn"  id="saveBtn">💾 Save</button>
-      <button class="close-btn" id="closeBtn">✖ Close</button>
-    </div>
+  <div class="kpi-card">
+    <h2 id="kTotal">0</h2>
+    <p>Total Orders</p>
   </div>
+
+  <div class="kpi-card">
+    <h2 id="kQty">0</h2>
+    <p>Total Qty (PCS)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kFabricBooking">0</h2>
+    <p>Fabric Booking (KG)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kKnittingQty">0</h2>
+    <p>Knitting Qty (KG)</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kYarnPend">0</h2>
+    <p>Yarn Pending</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kYarnDone">0</h2>
+    <p>Yarn Received</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kKnitRun">0</h2>
+    <p>Knitting Running</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kKnitDone">0</h2>
+    <p>Knitting Done</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kDelayed">0</h2>
+    <p>Delayed</p>
+  </div>
+
+  <div class="kpi-card">
+    <h2 id="kAvg">0%</h2>
+    <p>Avg Progress</p>
+  </div>
+
 </div>
 
-<!-- CONFIRM BACK + DATE -->
-<script>
-var hasUnsavedData = false;
-document.addEventListener("change", function(){ hasUnsavedData = true; });
-document.addEventListener("input",  function(){ hasUnsavedData = true; });
-function markSaved(){ hasUnsavedData = false; }
 
-window.addEventListener("beforeunload", function(e){
-  if(hasUnsavedData){
-    e.preventDefault();
-    e.returnValue = "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
-    return e.returnValue;
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<div class="search-section">
+
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser"
+    oninput="filterOrders()"
+  >
+
+</div>
+
+
+<!-- =====================================================
+     TABLE
+===================================================== -->
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+  <th>SL</th>
+
+  <th>Buyer</th>
+
+  <th>IKL No</th>
+
+  <th>Style No</th>
+
+  <th>Total Qty</th>
+
+  <!-- NEW -->
+  <th class="th-booking">
+    Fabric Booking<br>(KG)
+  </th>
+
+  <!-- NEW -->
+  <th class="th-knitting-qty">
+    Knitting Qty<br>(KG)
+  </th>
+
+  <!-- NEW -->
+  <th class="th-variance">
+    Knitting ± %
+  </th>
+
+  <th>Fabrication</th>
+
+  <th>Color</th>
+
+  <th>Color Qty</th>
+
+  <th>Merchandiser</th>
+
+  <th>Order Date</th>
+
+  <th>Ship Date</th>
+
+
+  <!-- YARN -->
+
+  <th style="background:#0a1a0a;color:#4ade80;">
+    Yarn Target
+  </th>
+
+  <th style="background:#0a1a0a;color:#4ade80;">
+    Yarn Actual
+  </th>
+
+  <th style="background:#0a1a0a;color:#4ade80;">
+    Yarn Status
+  </th>
+
+
+  <!-- KNITTING START -->
+
+  <th style="background:#0a1020;color:#60a5fa;">
+    Knit Start Target
+  </th>
+
+  <th style="background:#0a1020;color:#60a5fa;">
+    Knit Start Actual
+  </th>
+
+  <th style="background:#0a1020;color:#60a5fa;">
+    Knit Start Status
+  </th>
+
+
+  <!-- KNITTING COMPLETE -->
+
+  <th style="background:#06080e;color:#a78bfa;">
+    Knit Complete Target
+  </th>
+
+  <th style="background:#06080e;color:#a78bfa;">
+    Knit Complete Actual
+  </th>
+
+  <th style="background:#06080e;color:#a78bfa;">
+    Knit Complete Status
+  </th>
+
+
+  <th>Progress</th>
+
+  <th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="orderTableBody"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- =====================================================
+     EDIT MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="editModal"
+>
+
+<div class="modal-content">
+
+  <h2>
+    🧶 Knitting Department Update
+  </h2>
+
+  <div id="modalFormArea"></div>
+
+  <div class="btn-group">
+
+    <button
+      class="save-btn"
+      id="saveBtn"
+    >
+      💾 Save
+    </button>
+
+    <button
+      class="close-btn"
+      id="closeBtn"
+    >
+      ✖ Close
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CONFIRM BACK + DATE
+===================================================== -->
+
+<script>
+
+var hasUnsavedData = false;
+
+
+/*
+ * Do not mark search typing as unsaved.
+ * Only actual form changes should count.
+ */
+
+document.addEventListener("change", function(e){
+
+  if(
+    e.target.matches(
+      "#modalFormArea input, #modalFormArea textarea, #modalFormArea select"
+    )
+  ){
+
+    hasUnsavedData = true;
+
   }
+
 });
 
+
+document.addEventListener("input", function(e){
+
+  if(
+    e.target.matches(
+      "#modalFormArea input, #modalFormArea textarea, #modalFormArea select"
+    )
+  ){
+
+    hasUnsavedData = true;
+
+  }
+
+});
+
+
+function markSaved(){
+
+  hasUnsavedData = false;
+
+}
+
+
+window.addEventListener(
+  "beforeunload",
+  function(e){
+
+    if(hasUnsavedData){
+
+      e.preventDefault();
+
+      e.returnValue =
+        "Unsaved data আছে। পেজ ছেড়ে যাবেন?";
+
+      return e.returnValue;
+
+    }
+
+  }
+);
+
+
 function confirmBack(e){
+
   if(hasUnsavedData){
+
     e.preventDefault();
+
     var go = confirm(
+
       "⚠️ Unsaved data আছে!\n\n" +
       "Dashboard এ ফিরে গেলে data হারিয়ে যাবে।\n\n" +
       "তবুও কি Dashboard এ যাবেন?"
+
     );
-    if(go){ hasUnsavedData = false; window.location.href = "dashboard.html"; }
+
+    if(go){
+
+      hasUnsavedData = false;
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
     return false;
+
   }
+
   return true;
+
 }
+
 
 document.getElementById("dateEl").textContent =
-  new Date().toLocaleDateString("en-BD",{
-    weekday:"short", year:"numeric", month:"short", day:"numeric"
-  });
+  new Date().toLocaleDateString(
+    "en-BD",
+    {
+      weekday:"short",
+      year:"numeric",
+      month:"short",
+      day:"numeric"
+    }
+  );
+
 </script>
 
-<!-- FIREBASE -->
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
 <script type="module">
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, updateDoc }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
-  authDomain: "smart-tna-bd.firebaseapp.com",
-  projectId: "smart-tna-bd",
-  storageBucket: "smart-tna-bd.firebasestorage.app",
-  messagingSenderId: "372049573207",
-  appId: "1:372049573207:web:571beae951f9aa4b47fa12"
+
+  apiKey:
+    "AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+  authDomain:
+    "smart-tna-bd.firebaseapp.com",
+
+  projectId:
+    "smart-tna-bd",
+
+  storageBucket:
+    "smart-tna-bd.firebasestorage.app",
+
+  messagingSenderId:
+    "372049573207",
+
+  appId:
+    "1:372049573207:web:571beae951f9aa4b47fa12"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
 
-let allOrders          = [];
-let selectedDocId      = null;
+const app =
+  initializeApp(firebaseConfig);
+
+
+const db =
+  getFirestore(app);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let allOrders = [];
+
+let selectedDocId = null;
+
 let selectedColorIndex = null;
 
+
+/* =====================================================
+   STATUS OPTIONS
+===================================================== */
+
 const STATUS_OPTIONS = [
-  { val:"Pending",  label:"🟠 Pending",  cls:"active-pending"  },
-  { val:"Running",  label:"🔵 Running",  cls:"active-running"  },
-  { val:"Delay",    label:"🔴 Delay",    cls:"active-delay"    },
-  { val:"Complete", label:"🟢 Complete", cls:"active-complete" },
+
+  {
+    val:"Pending",
+    label:"🟠 Pending",
+    cls:"active-pending"
+  },
+
+  {
+    val:"Running",
+    label:"🔵 Running",
+    cls:"active-running"
+  },
+
+  {
+    val:"Delay",
+    label:"🔴 Delay",
+    cls:"active-delay"
+  },
+
+  {
+    val:"Complete",
+    label:"🟢 Complete",
+    cls:"active-complete"
+  }
+
 ];
 
-/* ── Helpers ── */
-function getQty(d){
-  const f=[d.totalQty,d.qty,d.quantity,d.Qty,d.TotalQty,d.pcs,d.pieces];
-  for(const v of f){
-    if(v!==undefined&&v!==null&&v!==""){
-      const n=parseFloat(String(v).replace(/,/g,""));
-      if(!isNaN(n)&&n>0) return n;
-    }
+
+/* =====================================================
+   NUMBER HELPER
+===================================================== */
+
+function numberValue(value){
+
+  if(
+    value === undefined ||
+    value === null ||
+    value === ""
+  ){
+
+    return 0;
+
   }
+
+  const n =
+    parseFloat(
+      String(value).replace(/,/g,"")
+    );
+
+  return isNaN(n) ? 0 : n;
+
+}
+
+
+/* =====================================================
+   TOTAL PCS
+   Root Qty first.
+   If missing/zero → Color Qty sum.
+===================================================== */
+
+function getQty(d){
+
+  const f = [
+
+    d.totalQty,
+    d.qty,
+    d.quantity,
+    d.Qty,
+    d.TotalQty,
+    d.pcs,
+    d.pieces
+
+  ];
+
+
+  for(const v of f){
+
+    const n =
+      numberValue(v);
+
+    if(n > 0){
+
+      return n;
+
+    }
+
+  }
+
+
+  /* Color Breakdown */
+
+  if(
+    Array.isArray(d.colors) &&
+    d.colors.length > 0
+  ){
+
+    let colorTotal = 0;
+
+
+    d.colors.forEach(c => {
+
+      const q =
+        c.qty ??
+        c.colorQty ??
+        c.quantity ??
+        c.Qty ??
+        c.pcs ??
+        c.pieces ??
+        0;
+
+
+      colorTotal +=
+        numberValue(q);
+
+    });
+
+
+    if(colorTotal > 0){
+
+      return colorTotal;
+
+    }
+
+  }
+
+
   return 0;
+
 }
+
+
+/* =====================================================
+   FABRIC BOOKING KG
+===================================================== */
+
+function getFabricBooking(c, order){
+
+  if(!c){
+
+    return numberValue(
+      order.fabricBookingKg ??
+      order.fabricBookingKG ??
+      order.fabricBooking ??
+      order.bookingKg ??
+      0
+    );
+
+  }
+
+
+  return numberValue(
+
+    c.fabricBookingKg ??
+    c.fabricBookingKG ??
+    c.fabricBooking ??
+    c.bookingKg ??
+    0
+
+  );
+
+}
+
+
+/* =====================================================
+   KNITTING QTY KG
+===================================================== */
+
+function getKnittingQty(c, order){
+
+  if(!c){
+
+    return numberValue(
+
+      order.knittingQtyKg ??
+      order.knittingQtyKG ??
+      order.knittingQty ??
+      order.knitQtyKg ??
+      order.knitQty ??
+      0
+
+    );
+
+  }
+
+
+  return numberValue(
+
+    c.knittingQtyKg ??
+    c.knittingQtyKG ??
+    c.knittingQty ??
+    c.knitQtyKg ??
+    c.knitQty ??
+    0
+
+  );
+
+}
+
+
+/* =====================================================
+   AUTOMATIC ± %
+===================================================== */
+
+function calculateVariancePercent(
+  fabricBooking,
+  knittingQty
+){
+
+  const booking =
+    numberValue(fabricBooking);
+
+  const knitting =
+    numberValue(knittingQty);
+
+
+  if(booking <= 0){
+
+    return null;
+
+  }
+
+
+  return (
+    (knitting - booking) /
+    booking
+  ) * 100;
+
+}
+
+
+/* =====================================================
+   FORMAT ± %
+===================================================== */
+
+function formatVariancePercent(
+  fabricBooking,
+  knittingQty
+){
+
+  const pct =
+    calculateVariancePercent(
+      fabricBooking,
+      knittingQty
+    );
+
+
+  if(pct === null){
+
+    return `
+      <span class="percent-na">
+        N/A
+      </span>
+    `;
+
+  }
+
+
+  const rounded =
+    Math.round(
+      pct * 100
+    ) / 100;
+
+
+  if(rounded > 0){
+
+    return `
+      <span class="percent-positive">
+        +${rounded.toFixed(2)}%
+      </span>
+    `;
+
+  }
+
+
+  if(rounded < 0){
+
+    return `
+      <span class="percent-negative">
+        ${rounded.toFixed(2)}%
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="percent-zero">
+      0.00%
+    </span>
+  `;
+
+}
+
+
+/* =====================================================
+   SHIP DATE
+===================================================== */
+
 function getShip(d){
-  return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||d.shipDate||"";
+
+  return (
+    d.shipdate ||
+    d.shipmentDate ||
+    d.shipmentdate ||
+    d.ShipmentDate ||
+    d.shipDate ||
+    ""
+  );
+
 }
-function autoTarget(orderDate, offsetDays){
-  if(!orderDate) return "";
-  const d=new Date(orderDate);
-  if(isNaN(d)) return "";
-  d.setDate(d.getDate()+offsetDays);
-  return d.toISOString().split("T")[0];
+
+
+/* =====================================================
+   AUTO TARGET
+===================================================== */
+
+function autoTarget(
+  orderDate,
+  offsetDays
+){
+
+  if(!orderDate){
+
+    return "";
+
+  }
+
+
+  const d =
+    new Date(orderDate);
+
+
+  if(isNaN(d)){
+
+    return "";
+
+  }
+
+
+  d.setDate(
+    d.getDate() + offsetDays
+  );
+
+
+  return d
+    .toISOString()
+    .split("T")[0];
+
 }
+
+
+/* =====================================================
+   STATUS BADGE
+===================================================== */
 
 function statusBadge(val){
-  if(!val||val==="-"||val==="Pending") return `<span class="st-pending">● Pending</span>`;
-  if(val==="Running")  return `<span class="st-running">● Running</span>`;
-  if(val==="Delay")    return `<span class="st-delay">● Delay</span>`;
-  if(val==="Complete") return `<span class="st-complete">● Complete</span>`;
-  return `<span class="st-pending">● ${val}</span>`;
+
+  if(
+    !val ||
+    val === "-" ||
+    val === "Pending"
+  ){
+
+    return `
+      <span class="st-pending">
+        ● Pending
+      </span>
+    `;
+
+  }
+
+
+  if(val === "Running"){
+
+    return `
+      <span class="st-running">
+        ● Running
+      </span>
+    `;
+
+  }
+
+
+  if(
+    val === "Delay" ||
+    val === "Delayed"
+  ){
+
+    return `
+      <span class="st-delay">
+        ● Delayed
+      </span>
+    `;
+
+  }
+
+
+  if(
+    val === "Complete" ||
+    val === "Completed"
+  ){
+
+    return `
+      <span class="st-complete">
+        ● Complete
+      </span>
+    `;
+
+  }
+
+
+  return `
+    <span class="st-pending">
+      ● ${val}
+    </span>
+  `;
+
 }
 
-function statusBtns(field, current){
-  return STATUS_OPTIONS.map(opt => {
-    const active = (current===opt.val) ? opt.cls : "";
-    return `<button type="button" class="status-btn ${active}"
-      onclick="selectStatus('${field}','${opt.val}','${opt.cls}',this)">
-      ${opt.label}</button>`;
-  }).join("");
+
+/* =====================================================
+   STATUS BUTTONS
+===================================================== */
+
+function statusBtns(
+  field,
+  current
+){
+
+  return STATUS_OPTIONS
+    .map(opt => {
+
+      const active =
+        current === opt.val
+          ? opt.cls
+          : "";
+
+
+      return `
+
+        <button
+          type="button"
+          class="status-btn ${active}"
+          onclick="
+            selectStatus(
+              '${field}',
+              '${opt.val}',
+              '${opt.cls}',
+              this
+            )
+          "
+        >
+
+          ${opt.label}
+
+        </button>
+
+      `;
+
+    })
+    .join("");
+
 }
 
-window.selectStatus = function(field, value, activeCls, btn){
-  document.getElementById("f_"+field).value = value;
-  btn.parentElement.querySelectorAll(".status-btn").forEach(b=>{ b.className="status-btn"; });
-  btn.classList.add(activeCls);
+
+/* =====================================================
+   SELECT STATUS
+===================================================== */
+
+window.selectStatus = function(
+  field,
+  value,
+  activeCls,
+  btn
+){
+
+  document.getElementById(
+    "f_" + field
+  ).value = value;
+
+
+  btn
+    .parentElement
+    .querySelectorAll(".status-btn")
+    .forEach(b => {
+
+      b.className =
+        "status-btn";
+
+    });
+
+
+  btn.classList.add(
+    activeCls
+  );
+
+
+  hasUnsavedData = true;
+
 };
+
+
+/* =====================================================
+   PROGRESS BAR
+===================================================== */
 
 function progressBar(pct){
-  const c=pct>=100?"#00ff99":pct>=60?"#fbbf24":pct>=30?"#f97316":"#f87171";
-  return `<div style="display:flex;align-items:center;gap:6px;min-width:120px;">
-    <div style="flex:1;height:8px;background:#1e3048;border-radius:4px;overflow:hidden;">
-      <div style="width:${pct}%;height:100%;background:${c};border-radius:4px;"></div>
+
+  const c =
+    pct >= 100
+      ? "#00ff99"
+      : pct >= 60
+        ? "#fbbf24"
+        : pct >= 30
+          ? "#f97316"
+          : "#f87171";
+
+
+  return `
+
+    <div
+      style="
+        display:flex;
+        align-items:center;
+        gap:6px;
+        min-width:120px;
+      "
+    >
+
+      <div
+        style="
+          flex:1;
+          height:8px;
+          background:#1e3048;
+          border-radius:4px;
+          overflow:hidden;
+        "
+      >
+
+        <div
+          style="
+            width:${pct}%;
+            height:100%;
+            background:${c};
+            border-radius:4px;
+          "
+        ></div>
+
+      </div>
+
+      <span
+        style="
+          font-size:11px;
+          font-weight:700;
+          color:${c};
+          min-width:34px;
+        "
+      >
+        ${pct}%
+      </span>
+
     </div>
-    <span style="font-size:11px;font-weight:700;color:${c};min-width:34px;">${pct}%</span>
-  </div>`;
+
+  `;
+
 }
 
-/* ── Load ── */
+
+/* =====================================================
+   LOAD ORDERS
+===================================================== */
+
 async function loadOrders(){
-  const snap = await getDocs(collection(db,"orders"));
-  allOrders  = [];
-  snap.forEach(d => allOrders.push({ id:d.id, ...d.data() }));
-  renderKPI();
-  renderOrderList(allOrders);
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(
+          db,
+          "orders"
+        )
+      );
+
+
+    allOrders = [];
+
+
+    snap.forEach(d => {
+
+      allOrders.push({
+
+        id:d.id,
+
+        ...d.data()
+
+      });
+
+    });
+
+
+    renderKPI();
+
+    renderOrderList(
+      allOrders
+    );
+
+  }
+  catch(err){
+
+    console.error(err);
+
+    alert(
+      "❌ Orders Load Failed!\n\n" +
+      err.message
+    );
+
+  }
+
 }
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
 
 window.filterOrders = function(){
-  const kw = document.getElementById("searchInput").value.toLowerCase();
-  if(!kw){ renderOrderList(allOrders); return; }
-  renderOrderList(allOrders.filter(o =>
-    (o.buyer||"").toLowerCase().includes(kw)       ||
-    (o.ikl||o.iklNo||"").toLowerCase().includes(kw)||
-    (o.style||o.styleNo||"").toLowerCase().includes(kw)||
-    (o.merchandiser||"").toLowerCase().includes(kw)
-  ));
-};
 
-/* ── Open Modal ── */
-window.openOrder = function(docId, colorIndex){
-  selectedDocId      = docId;
-  selectedColorIndex = colorIndex;
-  const order = allOrders.find(o=>o.id===docId);
-  if(!order) return;
+  const kw =
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .toLowerCase()
+      .trim();
 
-  const c         = order.colors ? order.colors[colorIndex] : null;
-  const orderDate = order.orderDate||"";
-  const shipDate  = getShip(order);
 
-  // Auto targets: Yarn = orderDate+7, KnitStart = orderDate+16, KnitComplete = orderDate+26
-  const yarnT  = (c&&c.yarnRcvTarget)  || autoTarget(orderDate,7);
-  const yarnA  = (c&&c.yarnRcvActual)  || "";
-  const yarnS  = (c&&c.yarnRcvStatus)  || "Pending";
-  const knitST = (c&&c.knitStartTarget)|| autoTarget(orderDate,16);
-  const knitSA = (c&&c.knitStartActual)|| "";
-  const knitSS = (c&&c.knitStartStatus)|| "Pending";
-  const knitCT = (c&&c.knitCompleteTarget)|| autoTarget(orderDate,26);
-  const knitCA = (c&&c.knitCompleteActual)|| "";
-  const knitCS = (c&&c.knitCompleteStatus)|| "Pending";
-  const remark = (c&&c.knitRemark)||"";
+  if(!kw){
 
-  document.getElementById("modalFormArea").innerHTML = `
-    <div class="modal-info-box">
-      <p><span>Style     :</span> ${order.style||order.styleNo||"-"}</p>
-      <p><span>Color     :</span> ${c?c.color||"-":"-"}</p>
-      <p><span>Buyer     :</span> ${order.buyer||"-"}</p>
-      <p><span>Ship Date :</span> ${shipDate||"-"}</p>
-    </div>
+    renderOrderList(
+      allOrders
+    );
 
-    <div class="section-title">🧵 Yarn Receive</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Yarn Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_yarnRcvTarget" value="${yarnT}">
-      </div>
-      <div class="form-row">
-        <label>Yarn Actual</label>
-        <input type="date" id="f_yarnRcvActual" value="${yarnA}">
-      </div>
-      <div class="form-row">
-        <label>Yarn Status</label>
-        <div class="status-group">${statusBtns("yarnRcvStatus",yarnS)}</div>
-        <input type="hidden" id="f_yarnRcvStatus" value="${yarnS}">
-      </div>
-    </div>
+    return;
 
-    <div class="section-title">🧶 Knitting Start</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Knit Start Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_knitStartTarget" value="${knitST}">
-      </div>
-      <div class="form-row">
-        <label>Knit Start Actual</label>
-        <input type="date" id="f_knitStartActual" value="${knitSA}">
-      </div>
-      <div class="form-row">
-        <label>Knit Start Status</label>
-        <div class="status-group">${statusBtns("knitStartStatus",knitSS)}</div>
-        <input type="hidden" id="f_knitStartStatus" value="${knitSS}">
-      </div>
-    </div>
-
-    <div class="section-title">✅ Knitting Complete</div>
-    <div class="form-grid-3">
-      <div class="form-row">
-        <label>Knit Complete Target <small style="color:#64748b;">(auto·editable)</small></label>
-        <input type="date" id="f_knitCompleteTarget" value="${knitCT}">
-      </div>
-      <div class="form-row">
-        <label>Knit Complete Actual</label>
-        <input type="date" id="f_knitCompleteActual" value="${knitCA}">
-      </div>
-      <div class="form-row">
-        <label>Knit Complete Status</label>
-        <div class="status-group">${statusBtns("knitCompleteStatus",knitCS)}</div>
-        <input type="hidden" id="f_knitCompleteStatus" value="${knitCS}">
-      </div>
-    </div>
-
-    <div class="section-title">📝 Remark</div>
-    <div class="form-row">
-      <textarea id="f_knitRemark" rows="3">${remark}</textarea>
-    </div>`;
-
-  document.getElementById("editModal").style.display = "flex";
-};
-
-/* ── Close ── */
-document.getElementById("closeBtn").onclick = function(){
-  document.getElementById("editModal").style.display = "none";
-};
-
-/* ── Save ── */
-document.getElementById("saveBtn").onclick = async function(){
-  if(selectedDocId===null) return;
-  const order = allOrders.find(o=>o.id===selectedDocId);
-  if(!order) return;
-
-  // Save per-color OR on root doc if no colors array
-  if(order.colors && order.colors.length){
-    const updatedColors = order.colors.map((c,idx)=>{
-      if(idx!==selectedColorIndex) return c;
-      return {
-        ...c,
-        yarnRcvTarget:      document.getElementById("f_yarnRcvTarget").value,
-        yarnRcvActual:      document.getElementById("f_yarnRcvActual").value,
-        yarnRcvStatus:      document.getElementById("f_yarnRcvStatus").value,
-        knitStartTarget:    document.getElementById("f_knitStartTarget").value,
-        knitStartActual:    document.getElementById("f_knitStartActual").value,
-        knitStartStatus:    document.getElementById("f_knitStartStatus").value,
-        knitCompleteTarget: document.getElementById("f_knitCompleteTarget").value,
-        knitCompleteActual: document.getElementById("f_knitCompleteActual").value,
-        knitCompleteStatus: document.getElementById("f_knitCompleteStatus").value,
-        knitRemark:         document.getElementById("f_knitRemark").value,
-      };
-    });
-    try{
-      await updateDoc(doc(db,"orders",selectedDocId),{ colors:updatedColors });
-      markSaved();
-      alert("✅ Saved Successfully!");
-      document.getElementById("editModal").style.display="none";
-      loadOrders();
-    }catch(err){ alert("❌ Save Failed! "+err.message); }
-  } else {
-    // No colors array — save on root
-    try{
-      await updateDoc(doc(db,"orders",selectedDocId),{
-        yarnRcvTarget:      document.getElementById("f_yarnRcvTarget").value,
-        yarnRcvActual:      document.getElementById("f_yarnRcvActual").value,
-        yarnRcvStatus:      document.getElementById("f_yarnRcvStatus").value,
-        knitStartTarget:    document.getElementById("f_knitStartTarget").value,
-        knitStartActual:    document.getElementById("f_knitStartActual").value,
-        knitStartStatus:    document.getElementById("f_knitStartStatus").value,
-        knitCompleteTarget: document.getElementById("f_knitCompleteTarget").value,
-        knitCompleteActual: document.getElementById("f_knitCompleteActual").value,
-        knitCompleteStatus: document.getElementById("f_knitCompleteStatus").value,
-        knitRemark:         document.getElementById("f_knitRemark").value,
-      });
-      markSaved();
-      alert("✅ Saved Successfully!");
-      document.getElementById("editModal").style.display="none";
-      loadOrders();
-    }catch(err){ alert("❌ Save Failed! "+err.message); }
   }
+
+
+  renderOrderList(
+
+    allOrders.filter(o =>
+
+      (o.buyer || "")
+        .toLowerCase()
+        .includes(kw)
+
+      ||
+
+      String(
+        o.ikl ||
+        o.iklNo ||
+        ""
+      )
+      .toLowerCase()
+      .includes(kw)
+
+      ||
+
+      String(
+        o.style ||
+        o.styleNo ||
+        ""
+      )
+      .toLowerCase()
+      .includes(kw)
+
+      ||
+
+      (o.merchandiser || "")
+        .toLowerCase()
+        .includes(kw)
+
+    )
+
+  );
+
 };
 
-/* ── KPI ── */
+
+/* =====================================================
+   OPEN ORDER
+===================================================== */
+
+window.openOrder = function(
+  docId,
+  colorIndex
+){
+
+  selectedDocId =
+    docId;
+
+  selectedColorIndex =
+    colorIndex;
+
+
+  const order =
+    allOrders.find(
+      o => o.id === docId
+    );
+
+
+  if(!order){
+
+    return;
+
+  }
+
+
+  const c =
+    Array.isArray(order.colors)
+      ? order.colors[colorIndex]
+      : null;
+
+
+  const orderDate =
+    order.orderDate || "";
+
+
+  const shipDate =
+    getShip(order);
+
+
+  /* ==========================
+     KG DATA
+  ========================== */
+
+  const fabricBooking =
+    getFabricBooking(
+      c,
+      order
+    );
+
+
+  const knittingQty =
+    getKnittingQty(
+      c,
+      order
+    );
+
+
+  const variance =
+    calculateVariancePercent(
+      fabricBooking,
+      knittingQty
+    );
+
+
+  let varianceText =
+    "N/A";
+
+
+  if(variance !== null){
+
+    varianceText =
+      (
+        variance >= 0
+          ? "+"
+          : ""
+      ) +
+      variance.toFixed(2) +
+      "%";
+
+  }
+
+
+  /* ==========================
+     EXISTING TARGET DATA
+  ========================== */
+
+  const yarnT =
+    (c && c.yarnRcvTarget)
+    ||
+    autoTarget(
+      orderDate,
+      7
+    );
+
+
+  const yarnA =
+    (c && c.yarnRcvActual)
+    ||
+    "";
+
+
+  const yarnS =
+    (c && c.yarnRcvStatus)
+    ||
+    "Pending";
+
+
+  const knitST =
+    (c && c.knitStartTarget)
+    ||
+    autoTarget(
+      orderDate,
+      16
+    );
+
+
+  const knitSA =
+    (c && c.knitStartActual)
+    ||
+    "";
+
+
+  const knitSS =
+    (c && c.knitStartStatus)
+    ||
+    "Pending";
+
+
+  const knitCT =
+    (c && c.knitCompleteTarget)
+    ||
+    autoTarget(
+      orderDate,
+      26
+    );
+
+
+  const knitCA =
+    (c && c.knitCompleteActual)
+    ||
+    "";
+
+
+  const knitCS =
+    (c && c.knitCompleteStatus)
+    ||
+    "Pending";
+
+
+  const remark =
+    (c && c.knitRemark)
+    ||
+    "";
+
+
+  /* ==========================
+     MODAL
+  ========================== */
+
+  document.getElementById(
+    "modalFormArea"
+  ).innerHTML = `
+
+
+    <!-- ORDER INFO -->
+
+    <div class="modal-info-box">
+
+      <p>
+        <span>Style:</span>
+        ${order.style || order.styleNo || "-"}
+      </p>
+
+      <p>
+        <span>Color:</span>
+        ${c ? c.color || c.colorName || "-" : "-"}
+      </p>
+
+      <p>
+        <span>Buyer:</span>
+        ${order.buyer || "-"}
+      </p>
+
+      <p>
+        <span>Ship Date:</span>
+        ${shipDate || "-"}
+      </p>
+
+      <p>
+        <span>Total Qty:</span>
+        ${getQty(order).toLocaleString()} PCS
+      </p>
+
+      <p>
+        <span>Color Qty:</span>
+        ${
+          c
+            ? numberValue(
+                c.qty ??
+                c.colorQty ??
+                0
+              ).toLocaleString()
+            : "-"
+        } PCS
+      </p>
+
+    </div>
+
+
+    <!-- =================================
+         FABRIC / KNITTING KG
+    ================================== -->
+
+    <div class="section-title">
+      📦 Fabric & Knitting Quantity
+    </div>
+
+
+    <div class="form-grid-2">
+
+
+      <div class="form-row">
+
+        <label>
+          Fabric Booking (KG)
+        </label>
+
+        <input
+          type="number"
+          id="f_fabricBookingKg"
+          value="${fabricBooking || ""}"
+          min="0"
+          step="0.01"
+          placeholder="Enter fabric booking KG"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Knitting Qty (KG)
+        </label>
+
+        <input
+          type="number"
+          id="f_knittingQtyKg"
+          value="${knittingQty || ""}"
+          min="0"
+          step="0.01"
+          placeholder="Enter knitting quantity KG"
+        >
+
+      </div>
+
+
+    </div>
+
+
+    <!-- LIVE PERCENT -->
+
+    <div class="live-percent">
+
+      <div class="live-percent-title">
+        Knitting vs Fabric Booking
+      </div>
+
+      <div id="livePercent">
+        ${varianceText}
+      </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="kg-summary">
+
+      <div class="kg-summary-box">
+
+        <small>
+          FABRIC BOOKING
+        </small>
+
+        <strong
+          id="summaryBooking"
+          style="color:#fbbf24;"
+        >
+          ${fabricBooking.toFixed(2)} KG
+        </strong>
+
+      </div>
+
+
+      <div class="kg-summary-box">
+
+        <small>
+          KNITTING QTY
+        </small>
+
+        <strong
+          id="summaryKnitting"
+          style="color:#38bdf8;"
+        >
+          ${knittingQty.toFixed(2)} KG
+        </strong>
+
+      </div>
+
+
+      <div class="kg-summary-box">
+
+        <small>
+          VARIANCE
+        </small>
+
+        <strong
+          id="summaryVariance"
+        >
+          ${varianceText}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================
+         YARN
+    ================================== -->
+
+    <div class="section-title">
+      🧵 Yarn Receive
+    </div>
+
+
+    <div class="form-grid-3">
+
+
+      <div class="form-row">
+
+        <label>
+          Yarn Target
+          <small style="color:#64748b;">
+            (auto·editable)
+          </small>
+        </label>
+
+        <input
+          type="date"
+          id="f_yarnRcvTarget"
+          value="${yarnT}"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Yarn Actual
+        </label>
+
+        <input
+          type="date"
+          id="f_yarnRcvActual"
+          value="${yarnA}"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Yarn Status
+        </label>
+
+        <div class="status-group">
+
+          ${statusBtns(
+            "yarnRcvStatus",
+            yarnS
+          )}
+
+        </div>
+
+        <input
+          type="hidden"
+          id="f_yarnRcvStatus"
+          value="${yarnS}"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================
+         KNITTING START
+    ================================== -->
+
+    <div class="section-title">
+      🧶 Knitting Start
+    </div>
+
+
+    <div class="form-grid-3">
+
+
+      <div class="form-row">
+
+        <label>
+          Knit Start Target
+          <small style="color:#64748b;">
+            (auto·editable)
+          </small>
+        </label>
+
+        <input
+          type="date"
+          id="f_knitStartTarget"
+          value="${knitST}"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Knit Start Actual
+        </label>
+
+        <input
+          type="date"
+          id="f_knitStartActual"
+          value="${knitSA}"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Knit Start Status
+        </label>
+
+        <div class="status-group">
+
+          ${statusBtns(
+            "knitStartStatus",
+            knitSS
+          )}
+
+        </div>
+
+        <input
+          type="hidden"
+          id="f_knitStartStatus"
+          value="${knitSS}"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================
+         KNITTING COMPLETE
+    ================================== -->
+
+    <div class="section-title">
+      ✅ Knitting Complete
+    </div>
+
+
+    <div class="form-grid-3">
+
+
+      <div class="form-row">
+
+        <label>
+          Knit Complete Target
+          <small style="color:#64748b;">
+            (auto·editable)
+          </small>
+        </label>
+
+        <input
+          type="date"
+          id="f_knitCompleteTarget"
+          value="${knitCT}"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Knit Complete Actual
+        </label>
+
+        <input
+          type="date"
+          id="f_knitCompleteActual"
+          value="${knitCA}"
+        >
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label>
+          Knit Complete Status
+        </label>
+
+        <div class="status-group">
+
+          ${statusBtns(
+            "knitCompleteStatus",
+            knitCS
+          )}
+
+        </div>
+
+        <input
+          type="hidden"
+          id="f_knitCompleteStatus"
+          value="${knitCS}"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================
+         REMARK
+    ================================== -->
+
+    <div class="section-title">
+      📝 Remark
+    </div>
+
+
+    <div class="form-row">
+
+      <textarea
+        id="f_knitRemark"
+        rows="3"
+      >${remark}</textarea>
+
+    </div>
+
+  `;
+
+
+  /* =================================
+     LIVE KG CALCULATION
+  ================================== */
+
+  const bookingInput =
+    document.getElementById(
+      "f_fabricBookingKg"
+    );
+
+
+  const knittingInput =
+    document.getElementById(
+      "f_knittingQtyKg"
+    );
+
+
+  function updateLivePercentage(){
+
+    const booking =
+      numberValue(
+        bookingInput.value
+      );
+
+
+    const knitting =
+      numberValue(
+        knittingInput.value
+      );
+
+
+    const pct =
+      calculateVariancePercent(
+        booking,
+        knitting
+      );
+
+
+    let text =
+      "N/A";
+
+
+    if(pct !== null){
+
+      text =
+        (
+          pct >= 0
+            ? "+"
+            : ""
+        ) +
+        pct.toFixed(2) +
+        "%";
+
+    }
+
+
+    const live =
+      document.getElementById(
+        "livePercent"
+      );
+
+
+    const summary =
+      document.getElementById(
+        "summaryVariance"
+      );
+
+
+    const summaryBooking =
+      document.getElementById(
+        "summaryBooking"
+      );
+
+
+    const summaryKnitting =
+      document.getElementById(
+        "summaryKnitting"
+      );
+
+
+    summaryBooking.textContent =
+      booking.toFixed(2) +
+      " KG";
+
+
+    summaryKnitting.textContent =
+      knitting.toFixed(2) +
+      " KG";
+
+
+    live.textContent =
+      text;
+
+
+    summary.textContent =
+      text;
+
+
+    if(pct === null){
+
+      live.style.color =
+        "#64748b";
+
+      summary.style.color =
+        "#64748b";
+
+    }
+    else if(pct > 0){
+
+      live.style.color =
+        "#00ff99";
+
+      summary.style.color =
+        "#00ff99";
+
+    }
+    else if(pct < 0){
+
+      live.style.color =
+        "#ef4444";
+
+      summary.style.color =
+        "#ef4444";
+
+    }
+    else{
+
+      live.style.color =
+        "#cbd5e1";
+
+      summary.style.color =
+        "#cbd5e1";
+
+    }
+
+  }
+
+
+  bookingInput.addEventListener(
+    "input",
+    updateLivePercentage
+  );
+
+
+  knittingInput.addEventListener(
+    "input",
+    updateLivePercentage
+  );
+
+
+  document.getElementById(
+    "editModal"
+  ).style.display =
+    "flex";
+
+};
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+document.getElementById(
+  "closeBtn"
+).onclick = function(){
+
+  document.getElementById(
+    "editModal"
+  ).style.display =
+    "none";
+
+};
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+document.getElementById(
+  "saveBtn"
+).onclick = async function(){
+
+  if(selectedDocId === null){
+
+    return;
+
+  }
+
+
+  const order =
+    allOrders.find(
+      o => o.id === selectedDocId
+    );
+
+
+  if(!order){
+
+    return;
+
+  }
+
+
+  /* =================================
+     READ KG DATA
+  ================================= */
+
+  const fabricBookingKg =
+    numberValue(
+      document.getElementById(
+        "f_fabricBookingKg"
+      ).value
+    );
+
+
+  const knittingQtyKg =
+    numberValue(
+      document.getElementById(
+        "f_knittingQtyKg"
+      ).value
+    );
+
+
+  /* =================================
+     CALCULATE %
+  ================================= */
+
+  const variancePercent =
+    calculateVariancePercent(
+      fabricBookingKg,
+      knittingQtyKg
+    );
+
+
+  /* =================================
+     COMMON DATA
+  ================================= */
+
+  const updateData = {
+
+    fabricBookingKg:
+      fabricBookingKg,
+
+    knittingQtyKg:
+      knittingQtyKg,
+
+    knittingVariancePercent:
+      variancePercent === null
+        ? null
+        : Number(
+            variancePercent.toFixed(2)
+          ),
+
+    yarnRcvTarget:
+      document.getElementById(
+        "f_yarnRcvTarget"
+      ).value,
+
+    yarnRcvActual:
+      document.getElementById(
+        "f_yarnRcvActual"
+      ).value,
+
+    yarnRcvStatus:
+      document.getElementById(
+        "f_yarnRcvStatus"
+      ).value,
+
+    knitStartTarget:
+      document.getElementById(
+        "f_knitStartTarget"
+      ).value,
+
+    knitStartActual:
+      document.getElementById(
+        "f_knitStartActual"
+      ).value,
+
+    knitStartStatus:
+      document.getElementById(
+        "f_knitStartStatus"
+      ).value,
+
+    knitCompleteTarget:
+      document.getElementById(
+        "f_knitCompleteTarget"
+      ).value,
+
+    knitCompleteActual:
+      document.getElementById(
+        "f_knitCompleteActual"
+      ).value,
+
+    knitCompleteStatus:
+      document.getElementById(
+        "f_knitCompleteStatus"
+      ).value,
+
+    knitRemark:
+      document.getElementById(
+        "f_knitRemark"
+      ).value
+
+  };
+
+
+  /* =================================
+     HAS COLORS
+  ================================= */
+
+  if(
+    Array.isArray(order.colors) &&
+    order.colors.length
+  ){
+
+    const updatedColors =
+      order.colors.map(
+        (c, idx) => {
+
+          if(
+            idx !== selectedColorIndex
+          ){
+
+            return c;
+
+          }
+
+
+          return {
+
+            ...c,
+
+            /* KG */
+
+            fabricBookingKg:
+              updateData.fabricBookingKg,
+
+            knittingQtyKg:
+              updateData.knittingQtyKg,
+
+            knittingVariancePercent:
+              updateData.knittingVariancePercent,
+
+
+            /* YARN */
+
+            yarnRcvTarget:
+              updateData.yarnRcvTarget,
+
+            yarnRcvActual:
+              updateData.yarnRcvActual,
+
+            yarnRcvStatus:
+              updateData.yarnRcvStatus,
+
+
+            /* KNITTING START */
+
+            knitStartTarget:
+              updateData.knitStartTarget,
+
+            knitStartActual:
+              updateData.knitStartActual,
+
+            knitStartStatus:
+              updateData.knitStartStatus,
+
+
+            /* KNITTING COMPLETE */
+
+            knitCompleteTarget:
+              updateData.knitCompleteTarget,
+
+            knitCompleteActual:
+              updateData.knitCompleteActual,
+
+            knitCompleteStatus:
+              updateData.knitCompleteStatus,
+
+
+            /* REMARK */
+
+            knitRemark:
+              updateData.knitRemark
+
+          };
+
+        }
+      );
+
+
+    try{
+
+      await updateDoc(
+
+        doc(
+          db,
+          "orders",
+          selectedDocId
+        ),
+
+        {
+          colors:
+            updatedColors
+        }
+
+      );
+
+
+      markSaved();
+
+
+      alert(
+        "✅ Saved Successfully!"
+      );
+
+
+      document.getElementById(
+        "editModal"
+      ).style.display =
+        "none";
+
+
+      await loadOrders();
+
+    }
+    catch(err){
+
+      console.error(err);
+
+      alert(
+        "❌ Save Failed!\n\n" +
+        err.message
+      );
+
+    }
+
+
+    return;
+
+  }
+
+
+  /* =================================
+     NO COLORS
+     SAVE TO ROOT
+  ================================= */
+
+  try{
+
+    await updateDoc(
+
+      doc(
+        db,
+        "orders",
+        selectedDocId
+      ),
+
+      updateData
+
+    );
+
+
+    markSaved();
+
+
+    alert(
+      "✅ Saved Successfully!"
+    );
+
+
+    document.getElementById(
+      "editModal"
+    ).style.display =
+      "none";
+
+
+    await loadOrders();
+
+  }
+  catch(err){
+
+    console.error(err);
+
+    alert(
+      "❌ Save Failed!\n\n" +
+      err.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   KPI
+===================================================== */
+
 function renderKPI(){
-  let tot=0,totalQty=0,yarnPend=0,yarnDone=0,knitRun=0,knitDone=0,delayed=0,pctSum=0;
-  const today=new Date();
-  allOrders.forEach(order=>{
-    tot++;
-    const qty=getQty(order);
-    totalQty+=qty;
-    const orderDate=order.orderDate||"";
 
-    const getStatus=(saved,target,fallback)=>{
-      const s=saved||fallback;
-      if(s==="Complete"||s==="Completed") return s;
-      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
-      return s||"Pending";
-    };
+  let tot = 0;
 
-    // Try per-color first, fallback to root
-    const c0=(order.colors&&order.colors[0])||{};
-    const yarnT  = c0.yarnRcvTarget      || autoTarget(orderDate,7);
-    const yarnS  = getStatus(c0.yarnRcvStatus,     yarnT,  "Pending");
-    const knitST = c0.knitStartTarget    || autoTarget(orderDate,16);
-    const knitSS = getStatus(c0.knitStartStatus,   knitST, "Pending");
-    const knitCT = c0.knitCompleteTarget || autoTarget(orderDate,26);
-    const knitCS = getStatus(c0.knitCompleteStatus,knitCT, "Pending");
+  let totalQty = 0;
 
-    if(yarnS==="Complete"||yarnS==="Completed") yarnDone++; else yarnPend++;
-    if(knitSS==="Running") knitRun++;
-    if(knitCS==="Complete"||knitCS==="Completed") knitDone++;
-    if(yarnS==="Delayed"||knitSS==="Delayed"||knitCS==="Delayed") delayed++;
+  let totalFabricBooking = 0;
 
-    const steps=[yarnS,knitSS,knitCS];
-    const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
-    pctSum+=Math.round((done/3)*100);
-  });
+  let totalKnittingQty = 0;
 
-  document.getElementById("kTotal").innerText   = tot;
-  document.getElementById("kQty").innerText     = totalQty.toLocaleString();
-  document.getElementById("kYarnPend").innerText= yarnPend;
-  document.getElementById("kYarnDone").innerText= yarnDone;
-  document.getElementById("kKnitRun").innerText = knitRun;
-  document.getElementById("kKnitDone").innerText= knitDone;
-  document.getElementById("kDelayed").innerText = delayed;
-  document.getElementById("kAvg").innerText     = Math.round(pctSum/(tot||1))+"%";
+  let yarnPend = 0;
+
+  let yarnDone = 0;
+
+  let knitRun = 0;
+
+  let knitDone = 0;
+
+  let delayed = 0;
+
+  let pctSum = 0;
+
+
+  const today =
+    new Date();
+
+
+  allOrders.forEach(
+    order => {
+
+      tot++;
+
+
+      /* TOTAL PCS */
+
+      const qty =
+        getQty(order);
+
+
+      totalQty += qty;
+
+
+      /* TOTAL KG */
+
+      if(
+        Array.isArray(
+          order.colors
+        ) &&
+        order.colors.length
+      ){
+
+        order.colors.forEach(
+          c => {
+
+            totalFabricBooking +=
+              getFabricBooking(
+                c,
+                order
+              );
+
+
+            totalKnittingQty +=
+              getKnittingQty(
+                c,
+                order
+              );
+
+          }
+        );
+
+      }
+      else{
+
+        totalFabricBooking +=
+          getFabricBooking(
+            null,
+            order
+          );
+
+
+        totalKnittingQty +=
+          getKnittingQty(
+            null,
+            order
+          );
+
+      }
+
+
+      const orderDate =
+        order.orderDate || "";
+
+
+      const getStatus =
+        (
+          saved,
+          target,
+          fallback
+        ) => {
+
+          const s =
+            saved || fallback;
+
+
+          if(
+            s === "Complete" ||
+            s === "Completed"
+          ){
+
+            return s;
+
+          }
+
+
+          if(
+            target &&
+            new Date(target) < today &&
+            (
+              !s ||
+              s === "Pending"
+            )
+          ){
+
+            return "Delayed";
+
+          }
+
+
+          return s || "Pending";
+
+        };
+
+
+      /* =================================
+         STATUS
+      ================================= */
+
+      const c0 =
+        (
+          order.colors &&
+          order.colors[0]
+        ) || {};
+
+
+      const yarnT =
+        c0.yarnRcvTarget ||
+        autoTarget(
+          orderDate,
+          7
+        );
+
+
+      const yarnS =
+        getStatus(
+          c0.yarnRcvStatus,
+          yarnT,
+          "Pending"
+        );
+
+
+      const knitST =
+        c0.knitStartTarget ||
+        autoTarget(
+          orderDate,
+          16
+        );
+
+
+      const knitSS =
+        getStatus(
+          c0.knitStartStatus,
+          knitST,
+          "Pending"
+        );
+
+
+      const knitCT =
+        c0.knitCompleteTarget ||
+        autoTarget(
+          orderDate,
+          26
+        );
+
+
+      const knitCS =
+        getStatus(
+          c0.knitCompleteStatus,
+          knitCT,
+          "Pending"
+        );
+
+
+      if(
+        yarnS === "Complete" ||
+        yarnS === "Completed"
+      ){
+
+        yarnDone++;
+
+      }
+      else{
+
+        yarnPend++;
+
+      }
+
+
+      if(
+        knitSS === "Running"
+      ){
+
+        knitRun++;
+
+      }
+
+
+      if(
+        knitCS === "Complete" ||
+        knitCS === "Completed"
+      ){
+
+        knitDone++;
+
+      }
+
+
+      if(
+        yarnS === "Delayed" ||
+        knitSS === "Delayed" ||
+        knitCS === "Delayed"
+      ){
+
+        delayed++;
+
+      }
+
+
+      const steps = [
+        yarnS,
+        knitSS,
+        knitCS
+      ];
+
+
+      const done =
+        steps.filter(
+          s =>
+            s === "Complete" ||
+            s === "Completed"
+        ).length;
+
+
+      pctSum +=
+        Math.round(
+          (done / 3) * 100
+        );
+
+    }
+  );
+
+
+  document.getElementById(
+    "kTotal"
+  ).innerText =
+    tot;
+
+
+  document.getElementById(
+    "kQty"
+  ).innerText =
+    totalQty.toLocaleString();
+
+
+  document.getElementById(
+    "kFabricBooking"
+  ).innerText =
+    totalFabricBooking.toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+
+  document.getElementById(
+    "kKnittingQty"
+  ).innerText =
+    totalKnittingQty.toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+
+  document.getElementById(
+    "kYarnPend"
+  ).innerText =
+    yarnPend;
+
+
+  document.getElementById(
+    "kYarnDone"
+  ).innerText =
+    yarnDone;
+
+
+  document.getElementById(
+    "kKnitRun"
+  ).innerText =
+    knitRun;
+
+
+  document.getElementById(
+    "kKnitDone"
+  ).innerText =
+    knitDone;
+
+
+  document.getElementById(
+    "kDelayed"
+  ).innerText =
+    delayed;
+
+
+  document.getElementById(
+    "kAvg"
+  ).innerText =
+    Math.round(
+      pctSum /
+      (tot || 1)
+    ) +
+    "%";
+
 }
 
-/* ── Render Table ── */
-function renderOrderList(orders){
-  const body=document.getElementById("orderTableBody");
-  body.innerHTML="";
-  let serial=1;
-  const today=new Date();
 
-  orders.forEach(order=>{
-    const orderDate = order.orderDate||"";
-    const shipDate  = getShip(order)||"-";
-    const totalQty  = getQty(order);
+/* =====================================================
+   RENDER TABLE
+===================================================== */
 
-    const getStatus=(saved,target,fallback)=>{
-      const s=saved||fallback;
-      if(s==="Complete"||s==="Completed") return "Complete";
-      if(target&&new Date(target)<today&&(!s||s==="Pending")) return "Delayed";
-      return s||"Pending";
-    };
+function renderOrderList(
+  orders
+){
 
-    const colors = order.colors&&order.colors.length
-      ? order.colors
-      : [{ fabrication:order.fabrication||"-", color:order.color||"-", qty:totalQty }];
+  const body =
+    document.getElementById(
+      "orderTableBody"
+    );
 
-    colors.forEach((c,index)=>{
-      const yarnT  = c.yarnRcvTarget      || autoTarget(orderDate,7);
-      const yarnA  = c.yarnRcvActual      || "-";
-      const yarnS  = getStatus(c.yarnRcvStatus,     yarnT,  "Pending");
-      const knitST = c.knitStartTarget    || autoTarget(orderDate,16);
-      const knitSA = c.knitStartActual    || "-";
-      const knitSS = getStatus(c.knitStartStatus,   knitST, "Pending");
-      const knitCT = c.knitCompleteTarget || autoTarget(orderDate,26);
-      const knitCA = c.knitCompleteActual || "-";
-      const knitCS = getStatus(c.knitCompleteStatus,knitCT, "Pending");
 
-      const steps=[yarnS,knitSS,knitCS];
-      const done=steps.filter(s=>s==="Complete"||s==="Completed").length;
-      const pct=Math.round((done/3)*100);
+  body.innerHTML = "";
 
-      body.innerHTML+=`<tr>
-        <td>${index===0?serial:""}</td>
-        <td>${index===0?(order.buyer||"-"):""}</td>
-        <td>${index===0?(order.ikl||order.iklNo||"-"):""}</td>
-        <td>${index===0?(order.style||order.styleNo||"-"):""}</td>
-        <td>${index===0?totalQty.toLocaleString():""}</td>
-        <td style="text-align:left;">${c.fabrication||order.fabrication||"-"}</td>
-        <td>${c.color||c.colorName||"-"}</td>
-        <td>${Number(c.qty||c.colorQty||0).toLocaleString()}</td>
-        <td>${index===0?(order.merchandiser||"-"):""}</td>
-        <td>${index===0?(orderDate||"-"):""}</td>
-        <td>${index===0?shipDate:""}</td>
-        <!-- YARN -->
-        <td style="background:#0a1a0a;">${yarnT}</td>
-        <td style="background:#0a1a0a;">${yarnA}</td>
-        <td style="background:#0a1a0a;">${statusBadge(yarnS)}</td>
-        <!-- KNIT START -->
-        <td style="background:#0a1020;">${knitST}</td>
-        <td style="background:#0a1020;">${knitSA}</td>
-        <td style="background:#0a1020;">${statusBadge(knitSS)}</td>
-        <!-- KNIT COMPLETE -->
-        <td style="background:#06080e;">${knitCT}</td>
-        <td style="background:#06080e;">${knitCA}</td>
-        <td style="background:#06080e;">${statusBadge(knitCS)}</td>
-        <td>${progressBar(pct)}</td>
-        <td><button class="edit-btn" onclick="openOrder('${order.id}',${index})">✏️ Edit</button></td>
-      </tr>`;
-    });
-    serial++;
-  });
+
+  let serial = 1;
+
+
+  const today =
+    new Date();
+
+
+  orders.forEach(
+    order => {
+
+      const orderDate =
+        order.orderDate || "";
+
+
+      const shipDate =
+        getShip(order) ||
+        "-";
+
+
+      const totalQty =
+        getQty(order);
+
+
+      const getStatus =
+        (
+          saved,
+          target,
+          fallback
+        ) => {
+
+          const s =
+            saved || fallback;
+
+
+          if(
+            s === "Complete" ||
+            s === "Completed"
+          ){
+
+            return "Complete";
+
+          }
+
+
+          if(
+            target &&
+            new Date(target) < today &&
+            (
+              !s ||
+              s === "Pending"
+            )
+          ){
+
+            return "Delayed";
+
+          }
+
+
+          return s || "Pending";
+
+        };
+
+
+      /* =================================
+         COLORS
+      ================================= */
+
+      const colors =
+        order.colors &&
+        order.colors.length
+
+          ? order.colors
+
+          : [
+
+              {
+                fabrication:
+                  order.fabrication ||
+                  "-",
+
+                color:
+                  order.color ||
+                  "-",
+
+                qty:
+                  totalQty,
+
+                fabricBookingKg:
+                  getFabricBooking(
+                    null,
+                    order
+                  ),
+
+                knittingQtyKg:
+                  getKnittingQty(
+                    null,
+                    order
+                  )
+
+              }
+
+            ];
+
+
+      colors.forEach(
+        (c,index) => {
+
+
+          /* ==============================
+             KG
+          ============================== */
+
+          const fabricBooking =
+            getFabricBooking(
+              c,
+              order
+            );
+
+
+          const knittingQty =
+            getKnittingQty(
+              c,
+              order
+            );
+
+
+          const variance =
+            formatVariancePercent(
+              fabricBooking,
+              knittingQty
+            );
+
+
+          /* ==============================
+             STATUS
+          ============================== */
+
+          const yarnT =
+            c.yarnRcvTarget ||
+            autoTarget(
+              orderDate,
+              7
+            );
+
+
+          const yarnA =
+            c.yarnRcvActual ||
+            "-";
+
+
+          const yarnS =
+            getStatus(
+              c.yarnRcvStatus,
+              yarnT,
+              "Pending"
+            );
+
+
+          const knitST =
+            c.knitStartTarget ||
+            autoTarget(
+              orderDate,
+              16
+            );
+
+
+          const knitSA =
+            c.knitStartActual ||
+            "-";
+
+
+          const knitSS =
+            getStatus(
+              c.knitStartStatus,
+              knitST,
+              "Pending"
+            );
+
+
+          const knitCT =
+            c.knitCompleteTarget ||
+            autoTarget(
+              orderDate,
+              26
+            );
+
+
+          const knitCA =
+            c.knitCompleteActual ||
+            "-";
+
+
+          const knitCS =
+            getStatus(
+              c.knitCompleteStatus,
+              knitCT,
+              "Pending"
+            );
+
+
+          /* ==============================
+             PROGRESS
+          ============================== */
+
+          const steps = [
+
+            yarnS,
+
+            knitSS,
+
+            knitCS
+
+          ];
+
+
+          const done =
+            steps.filter(
+              s =>
+                s === "Complete" ||
+                s === "Completed"
+            ).length;
+
+
+          const pct =
+            Math.round(
+              (done / 3) * 100
+            );
+
+
+          /* ==============================
+             TABLE ROW
+          ============================== */
+
+          body.innerHTML += `
+
+            <tr>
+
+
+              <!-- SL -->
+
+              <td>
+                ${
+                  index === 0
+                    ? serial
+                    : ""
+                }
+              </td>
+
+
+              <!-- BUYER -->
+
+              <td>
+                ${
+                  index === 0
+                    ? (
+                        order.buyer ||
+                        "-"
+                      )
+                    : ""
+                }
+              </td>
+
+
+              <!-- IKL -->
+
+              <td>
+                ${
+                  index === 0
+                    ? (
+                        order.ikl ||
+                        order.iklNo ||
+                        "-"
+                      )
+                    : ""
+                }
+              </td>
+
+
+              <!-- STYLE -->
+
+              <td>
+                ${
+                  index === 0
+                    ? (
+                        order.style ||
+                        order.styleNo ||
+                        "-"
+                      )
+                    : ""
+                }
+              </td>
+
+
+              <!-- TOTAL PCS -->
+
+              <td>
+                ${
+                  index === 0
+                    ? totalQty.toLocaleString()
+                    : ""
+                }
+              </td>
+
+
+              <!-- FABRIC BOOKING -->
+
+              <td class="td-booking">
+
+                ${
+                  fabricBooking > 0
+                    ? fabricBooking.toLocaleString(
+                        undefined,
+                        {
+                          minimumFractionDigits:2,
+                          maximumFractionDigits:2
+                        }
+                      )
+                    : "-"
+                }
+
+              </td>
+
+
+              <!-- KNITTING QTY -->
+
+              <td class="td-knitting-qty">
+
+                ${
+                  knittingQty > 0
+                    ? knittingQty.toLocaleString(
+                        undefined,
+                        {
+                          minimumFractionDigits:2,
+                          maximumFractionDigits:2
+                        }
+                      )
+                    : "-"
+                }
+
+              </td>
+
+
+              <!-- VARIANCE -->
+
+              <td class="td-variance">
+
+                ${variance}
+
+              </td>
+
+
+              <!-- FABRICATION -->
+
+              <td style="text-align:left;">
+
+                ${
+                  c.fabrication ||
+                  order.fabrication ||
+                  "-"
+                }
+
+              </td>
+
+
+              <!-- COLOR -->
+
+              <td>
+
+                ${
+                  c.color ||
+                  c.colorName ||
+                  "-"
+                }
+
+              </td>
+
+
+              <!-- COLOR QTY -->
+
+              <td>
+
+                ${
+                  numberValue(
+                    c.qty ??
+                    c.colorQty ??
+                    0
+                  ).toLocaleString()
+                }
+
+              </td>
+
+
+              <!-- MERCHANDISER -->
+
+              <td>
+
+                ${
+                  index === 0
+                    ? (
+                        order.merchandiser ||
+                        "-"
+                      )
+                    : ""
+                }
+
+              </td>
+
+
+              <!-- ORDER DATE -->
+
+              <td>
+
+                ${
+                  index === 0
+                    ? (
+                        orderDate ||
+                        "-"
+                      )
+                    : ""
+                }
+
+              </td>
+
+
+              <!-- SHIP DATE -->
+
+              <td>
+
+                ${
+                  index === 0
+                    ? shipDate
+                    : ""
+                }
+
+              </td>
+
+
+              <!-- YARN -->
+
+              <td
+                style="
+                  background:#0a1a0a;
+                "
+              >
+
+                ${yarnT}
+
+              </td>
+
+
+              <td
+                style="
+                  background:#0a1a0a;
+                "
+              >
+
+                ${yarnA}
+
+              </td>
+
+
+              <td
+                style="
+                  background:#0a1a0a;
+                "
+              >
+
+                ${statusBadge(
+                  yarnS
+                )}
+
+              </td>
+
+
+              <!-- KNIT START -->
+
+              <td
+                style="
+                  background:#0a1020;
+                "
+              >
+
+                ${knitST}
+
+              </td>
+
+
+              <td
+                style="
+                  background:#0a1020;
+                "
+              >
+
+                ${knitSA}
+
+              </td>
+
+
+              <td
+                style="
+                  background:#0a1020;
+                "
+              >
+
+                ${statusBadge(
+                  knitSS
+                )}
+
+              </td>
+
+
+              <!-- KNIT COMPLETE -->
+
+              <td
+                style="
+                  background:#06080e;
+                "
+              >
+
+                ${knitCT}
+
+              </td>
+
+
+              <td
+                style="
+                  background:#06080e;
+                "
+              >
+
+                ${knitCA}
+
+              </td>
+
+
+              <td
+                style="
+                  background:#06080e;
+                "
+              >
+
+                ${statusBadge(
+                  knitCS
+                )}
+
+              </td>
+
+
+              <!-- PROGRESS -->
+
+              <td>
+
+                ${progressBar(
+                  pct
+                )}
+
+              </td>
+
+
+              <!-- ACTION -->
+
+              <td>
+
+                <button
+                  class="edit-btn"
+                  onclick="
+                    openOrder(
+                      '${order.id}',
+                      ${index}
+                    )
+                  "
+                >
+                  ✏️ Edit
+                </button>
+
+              </td>
+
+
+            </tr>
+
+          `;
+
+        }
+      );
+
+
+      serial++;
+
+    }
+  );
+
 }
+
+
+/* =====================================================
+   START
+===================================================== */
 
 loadOrders();
+
 </script>
+
+
 </body>
 </html>
