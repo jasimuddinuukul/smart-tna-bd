@@ -4,428 +4,2241 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Entry — SMART TNA BD</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#00ff99">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{--green:#00ff99;--bg:#0d1117;--card:#161b22;--border:#21262d;--muted:#8b949e;--text:#e6edf3;}
-body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:600;min-height:100vh;}
 
-/* ══ TOPBAR ══ */
-.topbar{background:#161b22;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;}
-.tb-left{display:flex;align-items:center;gap:10px;}
-.back-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#006a4e,#00553e);border:2px solid var(--green);border-radius:8px;color:#fff;padding:7px 14px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Rajdhani',sans-serif;transition:all .2s;box-shadow:0 0 10px #00ff9930;}
-.back-btn:hover{background:linear-gradient(135deg,#00ff99,#00cc77);color:#000;}
-.tb-title{font-size:15px;font-weight:700;color:#fff;}
-.tb-right{display:flex;align-items:center;gap:10px;}
-.tb-date{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);}
-.tb-user{background:var(--green);color:#000;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;}
+:root{
+  --green:#00ff99;
+  --bg:#0d1117;
+  --card:#161b22;
+  --border:#21262d;
+  --muted:#8b949e;
+  --text:#e6edf3;
+}
 
-/* ══ HERO ══ */
-.hero{background:linear-gradient(135deg,#0a1828,#091522,#0a1828);border-bottom:1px solid var(--border);padding:18px 24px 14px;text-align:center;}
-.hero-arabic{font-family:'Amiri',serif;font-size:32px;color:var(--green);direction:rtl;margin-bottom:6px;text-shadow:0 0 20px #00ff9960;}
-.hero-company{font-size:22px;font-weight:700;color:#fff;letter-spacing:2px;margin-bottom:3px;}
-.hero-dept{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--green);letter-spacing:3px;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  min-height:100vh;
+}
 
-/* ══ CONTENT ══ */
-.container{padding:18px;max-width:1900px;margin:auto;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px;}
-.card h2{color:var(--green);font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+/* TOPBAR */
+.topbar{
+  background:#161b22;
+  border-bottom:1px solid var(--border);
+  padding:0 20px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:900;
+}
 
-/* ══ FORM ══ */
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
-.form-group{display:flex;flex-direction:column;gap:5px;}
-.form-group label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
-.form-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#0d1117;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;box-sizing:border-box;}
-.form-input:focus{border-color:var(--green);}
-.form-input::placeholder{color:var(--muted);}
-.form-input[readonly]{color:var(--muted);cursor:not-allowed;}
+.tb-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-/* ══ COLOR ROWS ══ */
-.color-row{display:grid;grid-template-columns:2fr 2fr auto;gap:10px;margin-bottom:8px;align-items:center;}
-.color-row .remove-btn{background:#dc2626;border:1px solid #f87171;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;white-space:nowrap;transition:background .15s;}
-.color-row .remove-btn:hover{background:#b91c1c;}
+.back-btn{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:linear-gradient(135deg,#006a4e,#00553e);
+  border:2px solid var(--green);
+  border-radius:8px;
+  color:#fff;
+  padding:7px 14px;
+  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
+  font-family:'Rajdhani',sans-serif;
+  transition:all .2s;
+  box-shadow:0 0 10px #00ff9930;
+}
 
-/* ══ BUTTONS ══ */
-.btn{width:100%;padding:11px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;font-family:'Rajdhani',sans-serif;transition:all .15s;margin-top:8px;}
-.btn-green{background:#16a34a;color:#fff;border:1px solid var(--green);}
-.btn-green:hover{background:#15803d;}
-.btn-blue{background:#1d4ed8;color:#fff;border:1px solid #3b82f6;}
-.btn-blue:hover{background:#1e40af;}
-.btn-outline{background:transparent;color:var(--green);border:1px solid var(--green);}
-.btn-outline:hover{background:#00ff9915;}
+.back-btn:hover{
+  background:linear-gradient(135deg,#00ff99,#00cc77);
+  color:#000;
+}
 
-/* ══ SEARCH ══ */
-.search-box{width:100%;padding:10px 14px;background:#0d1117;border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:600;outline:none;transition:border-color .2s;}
-.search-box:focus{border-color:var(--green);}
-.search-box::placeholder{color:var(--muted);}
+.tb-title{
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+}
 
-/* ══ TABLE ══ */
-.tbl-wrap{overflow-x:auto;border-radius:8px;}
-.tbl-wrap::-webkit-scrollbar{height:6px;}
-.tbl-wrap::-webkit-scrollbar-track{background:#0d1117;}
-.tbl-wrap::-webkit-scrollbar-thumb{background:#2a4060;border-radius:3px;}
-.tbl-wrap::-webkit-scrollbar-thumb:hover{background:var(--green);}
-table{width:100%;border-collapse:collapse;min-width:1100px;}
-th,td{border:1px solid var(--border);padding:9px 11px;text-align:center;font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:600;color:var(--text);white-space:nowrap;}
-th{background:#0d1117;color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:.7px;}
-tr:hover td{background:#ffffff05;}
+.tb-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-/* ══ ACTION BTNS ══ */
-.act-btn{padding:5px 12px;margin:2px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Rajdhani',sans-serif;border:none;transition:background .15s;}
-.edit-btn{background:#1d4ed8;color:#fff;} .edit-btn:hover{background:#1e40af;}
-.del-btn{background:#dc2626;color:#fff;}  .del-btn:hover{background:#b91c1c;}
+.tb-date{
+  font-family:'Share Tech Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
 
-/* ══ EDIT MODE BANNER ══ */
-.edit-banner{background:#b4530922;border:1px solid #f59e0b;border-radius:10px;padding:10px 16px;margin-bottom:14px;color:#fbbf24;font-size:13px;font-weight:700;display:none;align-items:center;gap:10px;}
-.edit-banner.show{display:flex;}
-.cancel-edit{background:transparent;border:1px solid #fbbf24;color:#fbbf24;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;margin-left:auto;font-family:'Rajdhani',sans-serif;}
+.tb-user{
+  background:var(--green);
+  color:#000;
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+}
 
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#161b22;border:1px solid var(--green);border-radius:10px;padding:12px 24px;font-size:14px;font-weight:700;z-index:99999;display:none;font-family:'Rajdhani',sans-serif;color:var(--green);}
-.toast.show{display:block;animation:fadeIn .3s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-10px);}to{opacity:1;transform:translate(-50%,0);}}
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#0a1828,#091522,#0a1828);
+  border-bottom:1px solid var(--border);
+  padding:18px 24px 14px;
+  text-align:center;
+}
 
-/* ══ UNSAVED WARNING ══ */
-.unsaved-dot{width:8px;height:8px;background:#f87171;border-radius:50%;display:none;margin-left:6px;}
-.unsaved-dot.show{display:inline-block;}
+.hero-arabic{
+  font-family:'Amiri',serif;
+  font-size:32px;
+  color:var(--green);
+  direction:rtl;
+  margin-bottom:6px;
+  text-shadow:0 0 20px #00ff9960;
+}
 
-/* ══ RESPONSIVE ══ */
-@media(max-width:600px){.form-grid{grid-template-columns:1fr;}.color-row{grid-template-columns:1fr 1fr;}.tb-date{display:none;}.container{padding:10px;}}
+.hero-company{
+  font-size:22px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:2px;
+  margin-bottom:3px;
+}
+
+.hero-dept{
+  font-family:'Share Tech Mono',monospace;
+  font-size:12px;
+  color:var(--green);
+  letter-spacing:3px;
+}
+
+/* CONTENT */
+.container{
+  padding:18px;
+  max-width:1900px;
+  margin:auto;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card h2{
+  color:var(--green);
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* FORM */
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.form-group label{
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  font-weight:700;
+}
+
+.form-input{
+  width:100%;
+  padding:10px 14px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#0d1117;
+  color:#fff;
+  font-size:14px;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  outline:none;
+  transition:border-color .2s;
+}
+
+.form-input:focus{
+  border-color:var(--green);
+}
+
+.form-input::placeholder{
+  color:var(--muted);
+}
+
+.form-input[readonly]{
+  color:var(--muted);
+  cursor:not-allowed;
+}
+
+/* PRODUCTION OPTIONS */
+.requirement-box{
+  margin-top:18px;
+  padding:16px;
+  background:#0d1117;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.requirement-title{
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:12px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.requirement-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:10px;
+}
+
+.req-option{
+  position:relative;
+}
+
+.req-option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.req-label{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:12px 14px;
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:9px;
+  color:#c9d1d9;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  transition:all .2s;
+}
+
+.req-label:hover{
+  border-color:#00ff99;
+  background:#00ff9910;
+}
+
+.req-check{
+  width:18px;
+  height:18px;
+  border:2px solid #64748b;
+  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  flex-shrink:0;
+}
+
+.req-option input:checked + .req-label{
+  border-color:var(--green);
+  background:#00ff9915;
+  color:var(--green);
+  box-shadow:0 0 10px #00ff9915;
+}
+
+.req-option input:checked + .req-label .req-check{
+  background:var(--green);
+  border-color:var(--green);
+  color:#000;
+}
+
+.routing-note{
+  margin-top:12px;
+  padding:10px 12px;
+  border-left:3px solid #60a5fa;
+  background:#60a5fa0d;
+  color:#94a3b8;
+  font-size:12px;
+  line-height:1.5;
+  border-radius:5px;
+}
+
+.routing-note strong{
+  color:#60a5fa;
+}
+
+/* COLOR */
+.color-row{
+  display:grid;
+  grid-template-columns:2fr 2fr auto;
+  gap:10px;
+  margin-bottom:8px;
+  align-items:center;
+}
+
+.color-row .remove-btn{
+  background:#dc2626;
+  border:1px solid #f87171;
+  color:#fff;
+  padding:9px 16px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:'Rajdhani',sans-serif;
+  white-space:nowrap;
+  transition:background .15s;
+}
+
+.color-row .remove-btn:hover{
+  background:#b91c1c;
+}
+
+/* BUTTONS */
+.btn{
+  width:100%;
+  padding:11px;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:14px;
+  font-family:'Rajdhani',sans-serif;
+  transition:all .15s;
+  margin-top:8px;
+}
+
+.btn-green{
+  background:#16a34a;
+  color:#fff;
+  border:1px solid var(--green);
+}
+
+.btn-green:hover{
+  background:#15803d;
+}
+
+.btn-blue{
+  background:#1d4ed8;
+  color:#fff;
+  border:1px solid #3b82f6;
+}
+
+.btn-blue:hover{
+  background:#1e40af;
+}
+
+.btn-outline{
+  background:transparent;
+  color:var(--green);
+  border:1px solid var(--green);
+}
+
+.btn-outline:hover{
+  background:#00ff9915;
+}
+
+/* SEARCH */
+.search-box{
+  width:100%;
+  padding:10px 14px;
+  background:#0d1117;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:#fff;
+  font-size:14px;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  outline:none;
+  transition:border-color .2s;
+}
+
+.search-box:focus{
+  border-color:var(--green);
+}
+
+.search-box::placeholder{
+  color:var(--muted);
+}
+
+/* TABLE */
+.tbl-wrap{
+  overflow-x:auto;
+  border-radius:8px;
+}
+
+.tbl-wrap::-webkit-scrollbar{
+  height:6px;
+}
+
+.tbl-wrap::-webkit-scrollbar-track{
+  background:#0d1117;
+}
+
+.tbl-wrap::-webkit-scrollbar-thumb{
+  background:#2a4060;
+  border-radius:3px;
+}
+
+.tbl-wrap::-webkit-scrollbar-thumb:hover{
+  background:var(--green);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1450px;
+}
+
+th,td{
+  border:1px solid var(--border);
+  padding:9px 11px;
+  text-align:center;
+  font-size:13px;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+}
+
+th{
+  background:#0d1117;
+  color:var(--green);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+}
+
+tr:hover td{
+  background:#ffffff05;
+}
+
+/* REQUIREMENT BADGES */
+.req-badge{
+  display:inline-block;
+  padding:4px 8px;
+  margin:2px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.req-regular{
+  color:#94a3b8;
+  border:1px solid #475569;
+  background:#47556915;
+}
+
+.req-print{
+  color:#f59e0b;
+  border:1px solid #f59e0b;
+  background:#f59e0b12;
+}
+
+.req-embroidery{
+  color:#c084fc;
+  border:1px solid #c084fc;
+  background:#c084fc12;
+}
+
+.req-imported{
+  color:#38bdf8;
+  border:1px solid #38bdf8;
+  background:#38bdf812;
+}
+
+/* ACTION */
+.act-btn{
+  padding:5px 12px;
+  margin:2px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:'Rajdhani',sans-serif;
+  border:none;
+  transition:background .15s;
+}
+
+.edit-btn{
+  background:#1d4ed8;
+  color:#fff;
+}
+
+.edit-btn:hover{
+  background:#1e40af;
+}
+
+.del-btn{
+  background:#dc2626;
+  color:#fff;
+}
+
+.del-btn:hover{
+  background:#b91c1c;
+}
+
+/* EDIT */
+.edit-banner{
+  background:#b4530922;
+  border:1px solid #f59e0b;
+  border-radius:10px;
+  padding:10px 16px;
+  margin-bottom:14px;
+  color:#fbbf24;
+  font-size:13px;
+  font-weight:700;
+  display:none;
+  align-items:center;
+  gap:10px;
+}
+
+.edit-banner.show{
+  display:flex;
+}
+
+.cancel-edit{
+  background:transparent;
+  border:1px solid #fbbf24;
+  color:#fbbf24;
+  padding:4px 12px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  margin-left:auto;
+  font-family:'Rajdhani',sans-serif;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#161b22;
+  border:1px solid var(--green);
+  border-radius:10px;
+  padding:12px 24px;
+  font-size:14px;
+  font-weight:700;
+  z-index:99999;
+  display:none;
+  font-family:'Rajdhani',sans-serif;
+  color:var(--green);
+}
+
+.toast.show{
+  display:block;
+  animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translate(-50%,-10px);
+  }
+  to{
+    opacity:1;
+    transform:translate(-50%,0);
+  }
+}
+
+/* UNSAVED */
+.unsaved-dot{
+  width:8px;
+  height:8px;
+  background:#f87171;
+  border-radius:50%;
+  display:none;
+  margin-left:6px;
+}
+
+.unsaved-dot.show{
+  display:inline-block;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .color-row{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .tb-date{
+    display:none;
+  }
+
+  .container{
+    padding:10px;
+  }
+
+  .requirement-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="toast" id="toast"></div>
 
-<!-- ══ TOPBAR ══ -->
+<!-- TOPBAR -->
 <div class="topbar">
+
   <div class="tb-left">
-    <!-- ✅ DASHBOARD BACK BUTTON — Green style, same as all dept pages -->
-    <a class="back-btn" href="dashboard.html" id="backBtn" onclick="return confirmBack(event)">
+
+    <a class="back-btn"
+       href="dashboard.html"
+       id="backBtn"
+       onclick="return confirmBack(event)">
       🏠 Dashboard
     </a>
-    <span class="unsaved-dot" id="unsavedDot" title="Unsaved changes"></span>
-    <span class="tb-title">📦 Order Entry System</span>
+
+    <span class="unsaved-dot"
+          id="unsavedDot"
+          title="Unsaved changes"></span>
+
+    <span class="tb-title">
+      📦 Order Entry System
+    </span>
+
   </div>
+
   <div class="tb-right">
+
     <span class="tb-date" id="dateEl"></span>
-    <span class="tb-user" id="userBadge">👤 Admin</span>
+
+    <span class="tb-user" id="userBadge">
+      👤 Admin
+    </span>
+
   </div>
+
 </div>
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <div class="hero">
+
   <div class="hero-arabic">﷽</div>
-  <div class="hero-company">INNOVATIVE KNITEX LTD</div>
-  <div class="hero-dept">📦 SMART TNA BD ERP — ORDER ENTRY SYSTEM</div>
+
+  <div class="hero-company">
+    INNOVATIVE KNITEX LTD
+  </div>
+
+  <div class="hero-dept">
+    📦 SMART TNA BD ERP — ORDER ENTRY SYSTEM
+  </div>
+
 </div>
 
 <div class="container">
 
-  <!-- FORM -->
+  <!-- ORDER FORM -->
   <div class="card">
-    <h2>➕ <span id="formTitle">New Order Entry</span></h2>
 
-    <!-- Edit mode banner -->
+    <h2>
+      ➕
+      <span id="formTitle">
+        New Order Entry
+      </span>
+    </h2>
+
+    <!-- EDIT BANNER -->
     <div class="edit-banner" id="editBanner">
+
       ✏️ Edit Mode — Editing existing order
-      <button class="cancel-edit" onclick="cancelEdit()">✕ Cancel</button>
+
+      <button class="cancel-edit"
+              onclick="cancelEdit()">
+        ✕ Cancel
+      </button>
+
     </div>
 
+    <!-- BASIC INFORMATION -->
     <div class="form-grid">
-      <div class="form-group"><label>Buyer *</label><input class="form-input" type="text" id="buyer" placeholder="e.g. AEON / KAWAGUCHI SAN"></div>
-      <div class="form-group"><label>IKL No *</label><input class="form-input" type="text" id="ikl" placeholder="e.g. MHJ-145/2025"></div>
-      <div class="form-group"><label>Style No *</label><input class="form-input" type="text" id="style" placeholder="e.g. 260082014"></div>
-      <div class="form-group"><label>Item</label><input class="form-input" type="text" id="item" placeholder="e.g. GIRLS LEGGINGS"></div>
-      <div class="form-group"><label>Merchandiser *</label><input class="form-input" type="text" id="merchandiser" placeholder="e.g. MR.MARUF"></div>
-      <div class="form-group"><label>Fabrication</label><input class="form-input" type="text" id="fabrication" placeholder="e.g. 95% CTN 5% LYCRA S/J 180 GSM"></div>
-      <div class="form-group"><label>Order Date *</label><input class="form-input" type="date" id="orderDate"></div>
-      <div class="form-group"><label>Shipment Date *</label><input class="form-input" type="date" id="shipdate"></div>
-      <div class="form-group"><label>Lead Time (auto)</label><input class="form-input" type="number" id="leadtime" readonly placeholder="Auto calculated"></div>
-      <div class="form-group"><label>Total Qty (auto)</label><input class="form-input" type="number" id="orderQty" readonly placeholder="Auto from colors"></div>
+
+      <div class="form-group">
+        <label>Buyer *</label>
+        <input class="form-input"
+               type="text"
+               id="buyer"
+               placeholder="e.g. AEON / KAWAGUCHI SAN">
+      </div>
+
+      <div class="form-group">
+        <label>IKL No *</label>
+        <input class="form-input"
+               type="text"
+               id="ikl"
+               placeholder="e.g. MHJ-145/2025">
+      </div>
+
+      <div class="form-group">
+        <label>Style No *</label>
+        <input class="form-input"
+               type="text"
+               id="style"
+               placeholder="e.g. 260082014">
+      </div>
+
+      <div class="form-group">
+        <label>Item</label>
+        <input class="form-input"
+               type="text"
+               id="item"
+               placeholder="e.g. GIRLS LEGGINGS">
+      </div>
+
+      <div class="form-group">
+        <label>Merchandiser *</label>
+        <input class="form-input"
+               type="text"
+               id="merchandiser"
+               placeholder="e.g. MR.MARUF">
+      </div>
+
+      <div class="form-group">
+        <label>Fabrication</label>
+        <input class="form-input"
+               type="text"
+               id="fabrication"
+               placeholder="e.g. 95% CTN 5% LYCRA S/J 180 GSM">
+      </div>
+
+      <div class="form-group">
+        <label>Order Date *</label>
+        <input class="form-input"
+               type="date"
+               id="orderDate">
+      </div>
+
+      <div class="form-group">
+        <label>Shipment Date *</label>
+        <input class="form-input"
+               type="date"
+               id="shipdate">
+      </div>
+
+      <div class="form-group">
+        <label>Lead Time (auto)</label>
+        <input class="form-input"
+               type="number"
+               id="leadtime"
+               readonly
+               placeholder="Auto calculated">
+      </div>
+
+      <div class="form-group">
+        <label>Total Qty (auto)</label>
+        <input class="form-input"
+               type="number"
+               id="orderQty"
+               readonly
+               placeholder="Auto from colors">
+      </div>
+
+    </div>
+
+    <!-- PRODUCTION REQUIREMENT -->
+    <div class="requirement-box">
+
+      <div class="requirement-title">
+        ⚙️ Production / Special Requirement
+      </div>
+
+      <div class="requirement-grid">
+
+        <!-- REGULAR -->
+        <div class="req-option">
+
+          <input type="checkbox"
+                 id="reqRegular"
+                 value="Regular">
+
+          <label class="req-label"
+                 for="reqRegular">
+
+            <span class="req-check">✓</span>
+
+            🧶 Regular / Local Fabric
+
+          </label>
+
+        </div>
+
+        <!-- PRINT -->
+        <div class="req-option">
+
+          <input type="checkbox"
+                 id="reqPrint"
+                 value="Print">
+
+          <label class="req-label"
+                 for="reqPrint">
+
+            <span class="req-check">✓</span>
+
+            🖨️ Print
+
+          </label>
+
+        </div>
+
+        <!-- EMBROIDERY -->
+        <div class="req-option">
+
+          <input type="checkbox"
+                 id="reqEmbroidery"
+                 value="Embroidery">
+
+          <label class="req-label"
+                 for="reqEmbroidery">
+
+            <span class="req-check">✓</span>
+
+            🧵 Embroidery
+
+          </label>
+
+        </div>
+
+        <!-- IMPORTED FABRIC -->
+        <div class="req-option">
+
+          <input type="checkbox"
+                 id="reqImported"
+                 value="Imported Fabric">
+
+          <label class="req-label"
+                 for="reqImported">
+
+            <span class="req-check">✓</span>
+
+            🌍 Imported Fabric
+
+          </label>
+
+        </div>
+
+      </div>
+
+      <div class="routing-note">
+
+        <strong>Department Routing:</strong>
+
+        Regular / Local Fabric →
+        🧶 Knitting → 🎨 Dyeing
+
+        &nbsp; | &nbsp;
+
+        Print →
+        🖨️ Print Department
+
+        &nbsp; | &nbsp;
+
+        Embroidery →
+        🧵 Embroidery Department
+
+        &nbsp; | &nbsp;
+
+        Imported Fabric →
+        ❌ No Knitting / Dyeing
+
+      </div>
+
     </div>
 
     <br>
-    <h2>🎨 Color Breakdown</h2>
+
+    <!-- COLOR -->
+    <h2>
+      🎨 Color Breakdown
+    </h2>
+
     <div id="colorContainer"></div>
-    <button class="btn btn-outline" onclick="addColorRow()" style="margin-top:8px;width:auto;padding:8px 20px;">➕ Add Color</button>
+
+    <button class="btn btn-outline"
+            onclick="addColorRow()"
+            style="margin-top:8px;width:auto;padding:8px 20px;">
+
+      ➕ Add Color
+
+    </button>
+
     <br><br>
-    <button class="btn btn-green" onclick="saveOrder()" id="saveBtn">💾 Save Order to Firebase</button>
+
+    <button class="btn btn-green"
+            onclick="saveOrder()"
+            id="saveBtn">
+
+      💾 Save Order to Firebase
+
+    </button>
+
   </div>
+
 
   <!-- SEARCH -->
   <div class="card">
-    <h2>🔍 Search Orders</h2>
-    <input class="search-box" type="text" id="searchInput" placeholder="Search Buyer / IKL / Style / Item / Merchandiser..." onkeyup="filterOrders()">
+
+    <h2>
+      🔍 Search Orders
+    </h2>
+
+    <input class="search-box"
+           type="text"
+           id="searchInput"
+           placeholder="Search Buyer / IKL / Style / Item / Merchandiser..."
+           onkeyup="filterOrders()">
+
   </div>
+
 
   <!-- ORDER LIST -->
   <div class="card">
-    <h2>📋 Order List <span id="orderCount" style="font-size:12px;color:var(--muted);font-weight:500;"></span></h2>
+
+    <h2>
+
+      📋 Order List
+
+      <span id="orderCount"
+            style="font-size:12px;color:var(--muted);font-weight:500;">
+      </span>
+
+    </h2>
+
     <div class="tbl-wrap">
+
       <table id="orderTable">
+
         <thead>
+
           <tr>
-            <th>#</th><th>Buyer</th><th>IKL No</th><th>Style</th><th>Item</th>
-            <th>Merchandiser</th><th>Fabrication</th><th>Order Date</th>
-            <th>Shipment Date</th><th>Lead Time</th><th>Total Qty</th>
-            <th>Color Breakdown</th><th>Action</th>
+
+            <th>#</th>
+            <th>Buyer</th>
+            <th>IKL No</th>
+            <th>Style</th>
+            <th>Item</th>
+            <th>Merchandiser</th>
+            <th>Fabrication</th>
+            <th>Order Date</th>
+            <th>Shipment Date</th>
+            <th>Lead Time</th>
+            <th>Total Qty</th>
+            <th>Requirement</th>
+            <th>Color Breakdown</th>
+            <th>Action</th>
+
           </tr>
+
         </thead>
+
         <tbody id="orderBody">
-          <tr><td colspan="13" style="padding:20px;color:var(--muted);">Loading orders...</td></tr>
+
+          <tr>
+
+            <td colspan="14"
+                style="padding:20px;color:var(--muted);">
+
+              Loading orders...
+
+            </td>
+
+          </tr>
+
         </tbody>
+
       </table>
+
     </div>
+
   </div>
 
 </div>
 
-<!-- ══ FIREBASE ══ -->
+
+<!-- FIREBASE -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const cfg={apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",authDomain:"smart-tna-bd.firebaseapp.com",projectId:"smart-tna-bd",storageBucket:"smart-tna-bd.firebasestorage.app",messagingSenderId:"372049573207",appId:"1:372049573207:web:571beae951f9aa4b47fa12"};
-const fbApp=initializeApp(cfg);
-const db=getFirestore(fbApp);
-const auth=getAuth(fbApp);
-let editId=null;
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-/* Toast */
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  browserLocalPersistence,
+  setPersistence
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+/* FIREBASE CONFIG */
+
+const cfg = {
+
+  apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
+  authDomain:"smart-tna-bd.firebaseapp.com",
+
+  projectId:"smart-tna-bd",
+
+  storageBucket:"smart-tna-bd.firebasestorage.app",
+
+  messagingSenderId:"372049573207",
+
+  appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+
+};
+
+
+const fbApp = initializeApp(cfg);
+
+const db = getFirestore(fbApp);
+
+const auth = getAuth(fbApp);
+
+let editId = null;
+
+
+/* TOAST */
+
 function toast(msg,color="#00ff99"){
+
   const t=document.getElementById("toast");
-  t.textContent=msg;t.style.color=color;t.style.borderColor=color;
-  t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000);
+
+  t.textContent=msg;
+
+  t.style.color=color;
+
+  t.style.borderColor=color;
+
+  t.classList.add("show");
+
+  setTimeout(()=>{
+    t.classList.remove("show");
+  },3000);
+
 }
 
-/* Add Color Row */
+
+/* ADD COLOR */
+
 window.addColorRow=function(){
+
   const div=document.createElement("div");
+
   div.className="color-row";
+
   div.innerHTML=`
-    <input class="form-input color" type="text" placeholder="Color Name (e.g. BK-1 BLACK)">
-    <input class="form-input qty" type="number" placeholder="Quantity (PCS)" oninput="calcQty()">
-    <button class="remove-btn" onclick="this.parentElement.remove();calcQty();">❌ Remove</button>`;
-  document.getElementById("colorContainer").appendChild(div);
+
+    <input
+      class="form-input color"
+      type="text"
+      placeholder="Color Name (e.g. BK-1 BLACK)"
+    >
+
+    <input
+      class="form-input qty"
+      type="number"
+      placeholder="Quantity (PCS)"
+      oninput="calcQty()"
+    >
+
+    <button
+      class="remove-btn"
+      onclick="this.parentElement.remove();calcQty();"
+    >
+      ❌ Remove
+    </button>
+
+  `;
+
+  document.getElementById("colorContainer")
+    .appendChild(div);
+
   window._hasChanges=true;
+
   updateUnsavedDot();
+
 };
+
+
+/* TOTAL QTY */
 
 window.calcQty=function(){
+
   let total=0;
-  document.querySelectorAll(".qty").forEach(i=>total+=Number(i.value)||0);
+
+  document.querySelectorAll(".qty")
+    .forEach(i=>{
+      total += Number(i.value)||0;
+    });
+
   document.getElementById("orderQty").value=total;
+
 };
 
-/* Lead time auto */
+
+/* LEAD TIME */
+
 function calcLead(){
-  const od=document.getElementById("orderDate").value;
-  const sd=document.getElementById("shipdate").value;
-  if(od&&sd){
-    const days=Math.ceil((new Date(sd)-new Date(od))/(1000*60*60*24));
-    document.getElementById("leadtime").value=days>0?days:0;
-  }
-}
-document.getElementById("orderDate").addEventListener("change",calcLead);
-document.getElementById("shipdate").addEventListener("change",calcLead);
 
-/* Save */
-window.saveOrder=async function(){
-  const buyer=document.getElementById("buyer").value.trim();
-  const ikl=document.getElementById("ikl").value.trim();
-  const style=document.getElementById("style").value.trim();
-  const merchandiser=document.getElementById("merchandiser").value.trim();
-  if(!buyer||!ikl||!style||!merchandiser){
-    toast("⚠️ Buyer, IKL, Style & Merchandiser required!","#f87171"); return;
+  const od=
+    document.getElementById("orderDate").value;
+
+  const sd=
+    document.getElementById("shipdate").value;
+
+  if(od && sd){
+
+    const days=Math.ceil(
+      (new Date(sd)-new Date(od))
+      /(1000*60*60*24)
+    );
+
+    document.getElementById("leadtime").value=
+      days>0 ? days : 0;
+
   }
-  const colors=[];
-  document.querySelectorAll(".color-row").forEach(row=>{
-    const c=row.querySelector(".color").value.trim();
-    const q=Number(row.querySelector(".qty").value);
-    if(c&&q) colors.push({color:c,qty:q});
-  });
-  const data={
-    buyer,ikl,style,
-    item:document.getElementById("item").value.trim(),
-    merchandiser,
-    fabrication:document.getElementById("fabrication").value.trim(),
-    orderDate:document.getElementById("orderDate").value,
-    shipdate:document.getElementById("shipdate").value,
-    leadtime:document.getElementById("leadtime").value,
-    totalQty:Number(document.getElementById("orderQty").value)||0,
-    orderQty:Number(document.getElementById("orderQty").value)||0,
-    colors,
-    updatedAt:new Date().toISOString()
-  };
-  const btn=document.getElementById("saveBtn");
-  btn.textContent="⏳ Saving...";btn.disabled=true;
-  try{
-    if(editId){
-      await updateDoc(doc(db,"orders",editId),data);
-      toast("✅ Order Updated Successfully!","#00ff99");
-      cancelEdit();
-    }else{
-      await addDoc(collection(db,"orders"),data);
-      toast("✅ Order Saved to Firebase!","#00ff99");
-      clearForm();
+
+}
+
+
+document.getElementById("orderDate")
+  .addEventListener("change",calcLead);
+
+document.getElementById("shipdate")
+  .addEventListener("change",calcLead);
+
+
+/* GET REQUIREMENTS */
+
+function getProductionOptions(){
+
+  const options=[];
+
+  if(document.getElementById("reqRegular").checked)
+    options.push("Regular");
+
+  if(document.getElementById("reqPrint").checked)
+    options.push("Print");
+
+  if(document.getElementById("reqEmbroidery").checked)
+    options.push("Embroidery");
+
+  if(document.getElementById("reqImported").checked)
+    options.push("Imported Fabric");
+
+  /*
+    যদি কিছু select না করা হয়,
+    তাহলে Regular automatically ধরে নেবে।
+  */
+
+  if(options.length===0){
+    options.push("Regular");
+  }
+
+  return options;
+
+}
+
+
+/* SET REQUIREMENTS */
+
+function setProductionOptions(options){
+
+  options=Array.isArray(options)
+    ? options
+    : [];
+
+  document.getElementById("reqRegular").checked=
+    options.includes("Regular");
+
+  document.getElementById("reqPrint").checked=
+    options.includes("Print");
+
+  document.getElementById("reqEmbroidery").checked=
+    options.includes("Embroidery");
+
+  document.getElementById("reqImported").checked=
+    options.includes("Imported Fabric");
+
+}
+
+
+/* REQUIREMENT BADGES */
+
+function requirementBadges(options){
+
+  if(!Array.isArray(options) || !options.length){
+
+    return `
+      <span class="req-badge req-regular">
+        🧶 Regular
+      </span>
+    `;
+
+  }
+
+  return options.map(option=>{
+
+    if(option==="Print"){
+
+      return `
+        <span class="req-badge req-print">
+          🖨️ Print
+        </span>
+      `;
+
     }
-    window._hasChanges=false;
-    updateUnsavedDot();
-    loadOrders();
-  }catch(err){
-    toast("❌ Save Failed: "+err.message,"#f87171");
+
+    if(option==="Embroidery"){
+
+      return `
+        <span class="req-badge req-embroidery">
+          🧵 Embroidery
+        </span>
+      `;
+
+    }
+
+    if(option==="Imported Fabric"){
+
+      return `
+        <span class="req-badge req-imported">
+          🌍 Imported Fabric
+        </span>
+      `;
+
+    }
+
+    return `
+      <span class="req-badge req-regular">
+        🧶 Regular
+      </span>
+    `;
+
+  }).join("");
+
+}
+
+
+/* SAVE ORDER */
+
+window.saveOrder=async function(){
+
+  const buyer=
+    document.getElementById("buyer")
+      .value.trim();
+
+  const ikl=
+    document.getElementById("ikl")
+      .value.trim();
+
+  const style=
+    document.getElementById("style")
+      .value.trim();
+
+  const merchandiser=
+    document.getElementById("merchandiser")
+      .value.trim();
+
+
+  if(!buyer || !ikl || !style || !merchandiser){
+
+    toast(
+      "⚠️ Buyer, IKL, Style & Merchandiser required!",
+      "#f87171"
+    );
+
+    return;
+
   }
-  btn.textContent="💾 Save Order to Firebase";btn.disabled=false;
+
+
+  /* COLORS */
+
+  const colors=[];
+
+  document.querySelectorAll(".color-row")
+    .forEach(row=>{
+
+      const c=
+        row.querySelector(".color")
+          .value.trim();
+
+      const q=
+        Number(
+          row.querySelector(".qty").value
+        );
+
+      if(c && q){
+
+        colors.push({
+          color:c,
+          qty:q
+        });
+
+      }
+
+    });
+
+
+  /* REQUIREMENTS */
+
+  const productionOptions=
+    getProductionOptions();
+
+
+  /* ROUTING FLAGS */
+
+  const hasPrint=
+    productionOptions.includes("Print");
+
+  const hasEmbroidery=
+    productionOptions.includes("Embroidery");
+
+  const hasImportedFabric=
+    productionOptions.includes("Imported Fabric");
+
+  const isRegular=
+    productionOptions.includes("Regular");
+
+
+  /*
+    Department routing information.
+
+    এই fields future department pages
+    filter করার জন্য ব্যবহার করতে পারবে।
+  */
+
+  const departmentRouting={
+
+    knitting:
+      isRegular && !hasImportedFabric,
+
+    dyeing:
+      isRegular && !hasImportedFabric,
+
+    print:
+      hasPrint,
+
+    embroidery:
+      hasEmbroidery
+
+  };
+
+
+  /* FINAL DATA */
+
+  const data={
+
+    buyer,
+
+    ikl,
+
+    style,
+
+    item:
+      document.getElementById("item")
+        .value.trim(),
+
+    merchandiser,
+
+    fabrication:
+      document.getElementById("fabrication")
+        .value.trim(),
+
+    orderDate:
+      document.getElementById("orderDate")
+        .value,
+
+    shipdate:
+      document.getElementById("shipdate")
+        .value,
+
+    leadtime:
+      document.getElementById("leadtime")
+        .value,
+
+    totalQty:
+      Number(
+        document.getElementById("orderQty")
+          .value
+      ) || 0,
+
+    orderQty:
+      Number(
+        document.getElementById("orderQty")
+          .value
+      ) || 0,
+
+    colors,
+
+    /*
+      NEW
+    */
+
+    productionOptions,
+
+    departmentRouting,
+
+    /*
+      Easy filter fields
+    */
+
+    hasPrint,
+
+    hasEmbroidery,
+
+    hasImportedFabric,
+
+    isRegular,
+
+    updatedAt:
+      new Date().toISOString()
+
+  };
+
+
+  const btn=
+    document.getElementById("saveBtn");
+
+  btn.textContent="⏳ Saving...";
+
+  btn.disabled=true;
+
+
+  try{
+
+    if(editId){
+
+      await updateDoc(
+        doc(db,"orders",editId),
+        data
+      );
+
+      toast(
+        "✅ Order Updated Successfully!",
+        "#00ff99"
+      );
+
+      cancelEdit();
+
+    }else{
+
+      await addDoc(
+        collection(db,"orders"),
+        data
+      );
+
+      toast(
+        "✅ Order Saved to Firebase!",
+        "#00ff99"
+      );
+
+      clearForm();
+
+    }
+
+    window._hasChanges=false;
+
+    updateUnsavedDot();
+
+    loadOrders();
+
+  }catch(err){
+
+    console.error(err);
+
+    toast(
+      "❌ Save Failed: "+err.message,
+      "#f87171"
+    );
+
+  }
+
+
+  btn.textContent=
+    "💾 Save Order to Firebase";
+
+  btn.disabled=false;
+
 };
+
+
+/* CLEAR */
 
 function clearForm(){
-  ["buyer","ikl","style","item","merchandiser","fabrication","orderDate","shipdate","leadtime","orderQty"].forEach(id=>{
+
+  [
+    "buyer",
+    "ikl",
+    "style",
+    "item",
+    "merchandiser",
+    "fabrication",
+    "orderDate",
+    "shipdate",
+    "leadtime",
+    "orderQty"
+  ].forEach(id=>{
+
     document.getElementById(id).value="";
+
   });
-  document.getElementById("colorContainer").innerHTML="";
+
+
+  /* RESET REQUIREMENTS */
+
+  document.getElementById("reqRegular").checked=false;
+
+  document.getElementById("reqPrint").checked=false;
+
+  document.getElementById("reqEmbroidery").checked=false;
+
+  document.getElementById("reqImported").checked=false;
+
+
+  document.getElementById("colorContainer")
+    .innerHTML="";
+
   addColorRow();
+
   window._hasChanges=false;
+
   updateUnsavedDot();
+
 }
+
+
+/* CANCEL EDIT */
 
 window.cancelEdit=function(){
+
   editId=null;
-  document.getElementById("formTitle").textContent="New Order Entry";
-  document.getElementById("saveBtn").textContent="💾 Save Order to Firebase";
-  document.getElementById("editBanner").classList.remove("show");
+
+  document.getElementById("formTitle")
+    .textContent="New Order Entry";
+
+  document.getElementById("saveBtn")
+    .textContent="💾 Save Order to Firebase";
+
+  document.getElementById("editBanner")
+    .classList.remove("show");
+
   clearForm();
+
 };
 
-/* Load orders */
+
+/* LOAD ORDERS */
+
 async function loadOrders(){
-  const snap=await getDocs(collection(db,"orders"));
-  const body=document.getElementById("orderBody");
-  body.innerHTML="";
-  let sl=0;
-  if(snap.empty){
-    body.innerHTML=`<tr><td colspan="13" style="padding:20px;color:var(--muted);">No orders yet. Add your first order above.</td></tr>`;
-    document.getElementById("orderCount").textContent="";
-    return;
+
+  try{
+
+    const snap=
+      await getDocs(
+        collection(db,"orders")
+      );
+
+    const body=
+      document.getElementById("orderBody");
+
+    body.innerHTML="";
+
+    let sl=0;
+
+
+    if(snap.empty){
+
+      body.innerHTML=`
+
+        <tr>
+
+          <td colspan="14"
+              style="padding:20px;color:var(--muted);">
+
+            No orders yet. Add your first order above.
+
+          </td>
+
+        </tr>
+
+      `;
+
+      document.getElementById("orderCount")
+        .textContent="";
+
+      return;
+
+    }
+
+
+    snap.forEach(d=>{
+
+      const o=d.data();
+
+      sl++;
+
+
+      const colors=
+        (o.colors||[])
+        .map(c=>`
+
+          <span style="font-size:11px;">
+
+            ${escapeHTML(c.color)}
+            —
+            ${Number(c.qty||0).toLocaleString()}
+            PCS
+
+          </span>
+
+        `)
+        .join("<br>");
+
+
+      const qty=
+        o.totalQty ||
+        o.orderQty ||
+        0;
+
+
+      /*
+        Old orders:
+        productionOptions না থাকলে Regular
+      */
+
+      const productionOptions=
+        Array.isArray(o.productionOptions)
+          ? o.productionOptions
+          : ["Regular"];
+
+
+      body.innerHTML+=`
+
+        <tr
+
+          data-search="
+            ${escapeHTML(o.buyer||"")}
+            ${escapeHTML(o.ikl||"")}
+            ${escapeHTML(o.style||"")}
+            ${escapeHTML(o.item||"")}
+            ${escapeHTML(o.merchandiser||"")}
+            ${productionOptions.join(" ")}
+          "
+
+        >
+
+          <td style="color:var(--green);font-weight:700;">
+            ${sl}
+          </td>
+
+          <td>
+            <b>${escapeHTML(o.buyer||"")}</b>
+          </td>
+
+          <td>
+            ${escapeHTML(o.ikl||"")}
+          </td>
+
+          <td>
+            ${escapeHTML(o.style||"")}
+          </td>
+
+          <td>
+            ${escapeHTML(o.item||"")}
+          </td>
+
+          <td>
+            <b>${escapeHTML(o.merchandiser||"")}</b>
+          </td>
+
+          <td style="
+            font-size:11px;
+            max-width:160px;
+            white-space:normal;
+          ">
+
+            ${escapeHTML(o.fabrication||"")}
+
+          </td>
+
+          <td>
+            ${escapeHTML(o.orderDate||"")}
+          </td>
+
+          <td>
+            ${escapeHTML(o.shipdate||"")}
+          </td>
+
+          <td>
+            ${escapeHTML(o.leadtime||"")} Days
+          </td>
+
+          <td style="
+            color:var(--green);
+            font-weight:700;
+          ">
+
+            ${
+              qty>0
+              ? Number(qty).toLocaleString()+" PCS"
+              : "—"
+            }
+
+          </td>
+
+          <td style="
+            white-space:normal;
+            min-width:190px;
+          ">
+
+            ${requirementBadges(productionOptions)}
+
+          </td>
+
+          <td style="
+            text-align:left;
+            min-width:180px;
+          ">
+
+            ${colors||"—"}
+
+          </td>
+
+          <td>
+
+            <button
+              class="act-btn edit-btn"
+              onclick="editOrder('${d.id}')"
+            >
+              ✏️ Edit
+            </button>
+
+            <button
+              class="act-btn del-btn"
+              onclick="deleteOrder(
+                '${d.id}',
+                '${escapeJS((o.buyer||"")+" "+(o.ikl||""))}'
+              )"
+            >
+              🗑️ Delete
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+
+    document.getElementById("orderCount")
+      .textContent="("+sl+" orders)";
+
+
+  }catch(err){
+
+    console.error(err);
+
+    document.getElementById("orderBody")
+      .innerHTML=`
+
+        <tr>
+
+          <td colspan="14"
+              style="padding:20px;color:#f87171;">
+
+            ❌ Failed to load orders:
+            ${escapeHTML(err.message)}
+
+          </td>
+
+        </tr>
+
+      `;
+
   }
-  snap.forEach(d=>{
-    const o=d.data();sl++;
-    const colors=(o.colors||[]).map(c=>`<span style="font-size:11px;">${c.color} — ${c.qty} PCS</span>`).join("<br>");
-    const qty=o.totalQty||o.orderQty||0;
-    body.innerHTML+=`<tr
-      data-search="${o.buyer||""} ${o.ikl||""} ${o.style||""} ${o.item||""} ${o.merchandiser||""}">
-      <td style="color:var(--green);font-weight:700;">${sl}</td>
-      <td><b>${o.buyer||""}</b></td>
-      <td>${o.ikl||""}</td>
-      <td>${o.style||""}</td>
-      <td>${o.item||""}</td>
-      <td><b>${o.merchandiser||""}</b></td>
-      <td style="font-size:11px;max-width:160px;white-space:normal;">${o.fabrication||""}</td>
-      <td>${o.orderDate||""}</td>
-      <td>${o.shipdate||""}</td>
-      <td>${o.leadtime||""} Days</td>
-      <td style="color:var(--green);font-weight:700;">${qty>0?Number(qty).toLocaleString()+" PCS":"—"}</td>
-      <td style="text-align:left;min-width:180px;">${colors||"—"}</td>
-      <td>
-        <button class="act-btn edit-btn" onclick="editOrder('${d.id}')">✏️ Edit</button>
-        <button class="act-btn del-btn" onclick="deleteOrder('${d.id}','${o.buyer||""} ${o.ikl||""}')">🗑️ Delete</button>
-      </td>
-    </tr>`;
-  });
-  document.getElementById("orderCount").textContent="("+sl+" orders)";
+
 }
+
+
+/* SEARCH */
 
 window.filterOrders=function(){
-  const q=document.getElementById("searchInput").value.toLowerCase();
-  document.querySelectorAll("#orderBody tr").forEach(row=>{
-    row.style.display=(row.dataset.search||"").toLowerCase().includes(q)?"":"none";
-  });
+
+  const q=
+    document.getElementById("searchInput")
+      .value
+      .toLowerCase();
+
+
+  document.querySelectorAll("#orderBody tr")
+    .forEach(row=>{
+
+      row.style.display=
+        (row.dataset.search||"")
+          .toLowerCase()
+          .includes(q)
+          ? ""
+          : "none";
+
+    });
+
 };
+
+
+/* DELETE */
 
 window.deleteOrder=async function(id,name){
-  if(!confirm("Delete order: "+name+"?\n\nThis cannot be undone!"))return;
-  await deleteDoc(doc(db,"orders",id));
-  toast("🗑️ Order Deleted","#f87171");
-  loadOrders();
+
+  if(!confirm(
+    "Delete order: "+name+
+    "?\n\nThis cannot be undone!"
+  )){
+
+    return;
+
+  }
+
+
+  try{
+
+    await deleteDoc(
+      doc(db,"orders",id)
+    );
+
+    toast(
+      "🗑️ Order Deleted",
+      "#f87171"
+    );
+
+    loadOrders();
+
+  }catch(err){
+
+    toast(
+      "❌ Delete Failed: "+err.message,
+      "#f87171"
+    );
+
+  }
+
 };
+
+
+/* EDIT */
 
 window.editOrder=async function(id){
-  const snap=await getDocs(collection(db,"orders"));
-  snap.forEach(d=>{
-    if(d.id!==id)return;
-    editId=id;
-    const o=d.data();
-    document.getElementById("buyer").value=o.buyer||"";
-    document.getElementById("ikl").value=o.ikl||"";
-    document.getElementById("style").value=o.style||"";
-    document.getElementById("item").value=o.item||"";
-    document.getElementById("merchandiser").value=o.merchandiser||"";
-    document.getElementById("fabrication").value=o.fabrication||"";
-    document.getElementById("orderDate").value=o.orderDate||"";
-    document.getElementById("shipdate").value=o.shipdate||"";
-    document.getElementById("leadtime").value=o.leadtime||"";
-    document.getElementById("orderQty").value=o.totalQty||o.orderQty||"";
-    document.getElementById("colorContainer").innerHTML="";
-    (o.colors||[]).forEach(c=>{
-      const div=document.createElement("div");
-      div.className="color-row";
-      div.innerHTML=`
-        <input class="form-input color" type="text" value="${c.color}">
-        <input class="form-input qty" type="number" value="${c.qty}" oninput="calcQty()">
-        <button class="remove-btn" onclick="this.parentElement.remove();calcQty();">❌ Remove</button>`;
-      document.getElementById("colorContainer").appendChild(div);
+
+  try{
+
+    const snap=
+      await getDocs(
+        collection(db,"orders")
+      );
+
+
+    snap.forEach(d=>{
+
+      if(d.id!==id) return;
+
+
+      editId=id;
+
+      const o=d.data();
+
+
+      document.getElementById("buyer")
+        .value=o.buyer||"";
+
+      document.getElementById("ikl")
+        .value=o.ikl||"";
+
+      document.getElementById("style")
+        .value=o.style||"";
+
+      document.getElementById("item")
+        .value=o.item||"";
+
+      document.getElementById("merchandiser")
+        .value=o.merchandiser||"";
+
+      document.getElementById("fabrication")
+        .value=o.fabrication||"";
+
+      document.getElementById("orderDate")
+        .value=o.orderDate||"";
+
+      document.getElementById("shipdate")
+        .value=o.shipdate||"";
+
+      document.getElementById("leadtime")
+        .value=o.leadtime||"";
+
+      document.getElementById("orderQty")
+        .value=o.totalQty||o.orderQty||"";
+
+
+      /* REQUIREMENTS */
+
+      setProductionOptions(
+        Array.isArray(o.productionOptions)
+          ? o.productionOptions
+          : ["Regular"]
+      );
+
+
+      /* COLORS */
+
+      document.getElementById("colorContainer")
+        .innerHTML="";
+
+
+      (o.colors||[]).forEach(c=>{
+
+        const div=
+          document.createElement("div");
+
+        div.className="color-row";
+
+
+        div.innerHTML=`
+
+          <input
+            class="form-input color"
+            type="text"
+            value="${escapeHTML(c.color||"")}"
+          >
+
+          <input
+            class="form-input qty"
+            type="number"
+            value="${Number(c.qty||0)}"
+            oninput="calcQty()"
+          >
+
+          <button
+            class="remove-btn"
+            onclick="
+              this.parentElement.remove();
+              calcQty();
+            "
+          >
+            ❌ Remove
+          </button>
+
+        `;
+
+
+        document.getElementById("colorContainer")
+          .appendChild(div);
+
+      });
+
+
+      if(!(o.colors||[]).length){
+
+        addColorRow();
+
+      }
+
+
+      document.getElementById("formTitle")
+        .textContent=
+        "Edit Order — "+(o.buyer||"");
+
+
+      document.getElementById("saveBtn")
+        .textContent="✏️ Update Order";
+
+
+      document.getElementById("editBanner")
+        .classList.add("show");
+
+
+      window._hasChanges=false;
+
+      updateUnsavedDot();
+
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+
     });
-    document.getElementById("formTitle").textContent="Edit Order — "+o.buyer;
-    document.getElementById("saveBtn").textContent="✏️ Update Order";
-    document.getElementById("editBanner").classList.add("show");
-    window.scrollTo({top:0,behavior:"smooth"});
-  });
+
+  }catch(err){
+
+    toast(
+      "❌ Edit Failed: "+err.message,
+      "#f87171"
+    );
+
+  }
+
 };
 
-/* Auth check */
-setPersistence(auth,browserLocalPersistence).then(()=>{
-  onAuthStateChanged(auth,(user)=>{
-    if(!user){window.location.href="login.html";return;}
-    document.getElementById("userBadge").textContent="👤 "+(user.email?user.email.split("@")[0]:"User");
-    loadOrders();
-    addColorRow();
-  });
-}).catch(()=>{
-  onAuthStateChanged(auth,(user)=>{
-    if(!user){window.location.href="login.html";return;}
-    loadOrders();
-    addColorRow();
-  });
+
+/* ESCAPE HTML */
+
+function escapeHTML(value){
+
+  return String(value??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ESCAPE JS */
+
+function escapeJS(value){
+
+  return String(value??"")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/"/g,'\\"')
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+
+}
+
+
+/* AUTH */
+
+setPersistence(
+  auth,
+  browserLocalPersistence
+)
+.then(()=>{
+
+  onAuthStateChanged(
+    auth,
+    user=>{
+
+      if(!user){
+
+        window.location.href="login.html";
+
+        return;
+
+      }
+
+
+      document.getElementById("userBadge")
+        .textContent=
+        "👤 "+
+        (
+          user.email
+          ? user.email.split("@")[0]
+          : "User"
+        );
+
+
+      loadOrders();
+
+      addColorRow();
+
+    }
+
+  );
+
+})
+.catch(()=>{
+
+  onAuthStateChanged(
+    auth,
+    user=>{
+
+      if(!user){
+
+        window.location.href="login.html";
+
+        return;
+
+      }
+
+
+      loadOrders();
+
+      addColorRow();
+
+    }
+
+  );
+
 });
+
 </script>
 
-<!-- ══ UTILS ══ -->
+
+<!-- UTILS -->
 <script>
-/* Unsaved changes tracking */
+
+/* UNSAVED */
+
 window._hasChanges=false;
+
+
 function updateUnsavedDot(){
-  const dot=document.getElementById("unsavedDot");
-  if(dot) dot.classList.toggle("show",window._hasChanges);
-}
-document.addEventListener("input",function(){window._hasChanges=true;updateUnsavedDot();});
 
-/* Back button — warn if unsaved */
-function confirmBack(e){
-  if(window._hasChanges){
-    e.preventDefault();
-    const go=confirm("⚠️ Unsaved data আছে!\n\nDashboard-এ গেলে data হারিয়ে যাবে।\n\nতবুও কি যাবেন?");
-    if(go){window._hasChanges=false;window.location.href="dashboard.html";}
-    return false;
+  const dot=
+    document.getElementById("unsavedDot");
+
+  if(dot){
+
+    dot.classList.toggle(
+      "show",
+      window._hasChanges
+    );
+
   }
-  return true;
+
 }
 
-/* Date */
-document.getElementById("dateEl").textContent=
-  new Date().toLocaleDateString("en-BD",{weekday:"short",year:"numeric",month:"short",day:"numeric"});
+
+document.addEventListener(
+  "input",
+  function(){
+
+    window._hasChanges=true;
+
+    updateUnsavedDot();
+
+  }
+);
+
+
+/* CHECKBOX CHANGE */
+
+document.addEventListener(
+  "change",
+  function(e){
+
+    if(
+      e.target &&
+      e.target.matches(
+        '#reqRegular,#reqPrint,#reqEmbroidery,#reqImported'
+      )
+    ){
+
+      window._hasChanges=true;
+
+      updateUnsavedDot();
+
+    }
+
+  }
+);
+
+
+/* BACK BUTTON */
+
+function confirmBack(e){
+
+  if(window._hasChanges){
+
+    e.preventDefault();
+
+    const go=confirm(
+      "⚠️ Unsaved data আছে!\n\n"+
+      "Dashboard-এ গেলে data হারিয়ে যাবে।\n\n"+
+      "তবুও কি যাবেন?"
+    );
+
+
+    if(go){
+
+      window._hasChanges=false;
+
+      window.location.href=
+        "dashboard.html";
+
+    }
+
+    return false;
+
+  }
+
+  return true;
+
+}
+
+
+/* DATE */
+
+document.getElementById("dateEl")
+  .textContent=
+  new Date().toLocaleDateString(
+    "en-BD",
+    {
+      weekday:"short",
+      year:"numeric",
+      month:"short",
+      day:"numeric"
+    }
+  );
+
 </script>
+
 </body>
 </html>
