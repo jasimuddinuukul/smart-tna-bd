@@ -3,232 +3,2104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Merchandising — SMART TNA BD</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>SMART TNA BD ERP - MERCHANDISING</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ff99">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--green:#00ff99;--bg:#080e1a;--sidebar:#060c17;--card:#0e1829;--card2:#111e30;--border:#1e3048;--muted:#4a6080;--text:#c8d8e8;--sidebar-w:270px;}
-body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-weight:500;display:flex;min-height:100vh;}
-.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--sidebar);height:100vh;position:fixed;top:0;left:0;z-index:1100;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow-y:auto;}
-.sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--border);text-align:center;}
-.sb-logo{width:62px;height:62px;border-radius:50%;border:2px solid var(--green);background:#0e1829;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:10px;font-weight:700;color:var(--green);}
-.sb-company{font-size:12px;font-weight:700;color:#fff;}
-.sb-erp{font-size:10px;color:var(--green);letter-spacing:1.5px;margin-top:3px;font-family:'Share Tech Mono',monospace;}
-.sb-nav{padding:8px 8px 16px;flex:1;}
-.sb-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px;font-family:'Share Tech Mono',monospace;}
-.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#7a9abf;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:2px;transition:all .18s;border:1px solid transparent;cursor:pointer;}
-.sb-link:hover{background:#142030;color:#fff;border-color:var(--border);}
-.sb-link.active{background:linear-gradient(135deg,#00ff991a,#00ff9908);color:var(--green);border-color:#00ff9930;}
-.sb-icon{font-size:16px;width:20px;text-align:center;}
-.sb-badge{margin-left:auto;font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;color:#fff;}
-.sb-badge.g{background:#16a34a;}.sb-badge.bl{background:#2563eb;}
-.sb-foot{padding:10px 8px;border-top:1px solid var(--border);}
-.main-wrap{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-height:100vh;}
-.topbar{background:#090f1c;border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;}
-.tb-title{font-size:15px;font-weight:700;color:#fff;}
-.tb-user{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;}
-.content{padding:20px;flex:1;}
-.page-title{font-size:26px;font-weight:700;color:var(--green);margin-bottom:6px;}
-.page-sub{font-size:14px;color:var(--muted);margin-bottom:22px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;overflow-x:auto;}
-.card h2{color:var(--green);font-size:14px;font-weight:700;margin-bottom:14px;}
-table{width:100%;border-collapse:collapse;}
-th,td{border:1px solid var(--border);padding:9px 11px;text-align:center;font-size:13px;}
-th{background:#090f1c;color:var(--green);font-size:11px;text-transform:uppercase;font-weight:700;}
-tr:hover td{background:#ffffff04;}
-.b{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;}
-.b-done{background:#16a34a22;color:#4ade80;border:1px solid #16a34a55;}
-.b-run{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b55;}
-.b-pend{background:#64748b22;color:#94a3b8;border:1px solid #64748b55;}
-.merch-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px;}
-.mkpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
-.mkpi h3{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;}
-.mkpi h1{font-size:24px;color:var(--green);font-family:'Share Tech Mono',monospace;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --green:#00ff99;
+  --bg:#0d1117;
+  --card:#161b22;
+  --border:#21262d;
+  --muted:#8b949e;
+  --text:#e6edf3;
+  --blue:#3b82f6;
+  --orange:#f97316;
+  --red:#ef4444;
+  --purple:#a78bfa;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  min-height:100vh;
+}
+
+/* TOPBAR */
+.topbar{
+  background:#161b22;
+  border-bottom:1px solid var(--border);
+  height:52px;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:900;
+}
+
+.tb-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.back-btn{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:linear-gradient(135deg,#006a4e,#00553e);
+  border:2px solid var(--green);
+  border-radius:8px;
+  color:#fff;
+  padding:7px 14px;
+  font-size:13px;
+  font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.back-btn:hover{
+  background:linear-gradient(135deg,#00ff99,#00cc77);
+  color:#000;
+}
+
+.tb-title{
+  font-size:15px;
+  color:#fff;
+}
+
+.tb-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.tb-date{
+  font-family:'Share Tech Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.tb-user{
+  background:var(--green);
+  color:#000;
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,#0a1828,#091522,#0a1828);
+  border-bottom:1px solid var(--border);
+  padding:18px 24px 14px;
+  text-align:center;
+}
+
+.hero-arabic{
+  font-family:'Amiri',serif;
+  font-size:32px;
+  color:var(--green);
+  direction:rtl;
+  margin-bottom:6px;
+}
+
+.hero-company{
+  font-size:22px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:2px;
+}
+
+.hero-dept{
+  font-family:'Share Tech Mono',monospace;
+  font-size:12px;
+  color:var(--green);
+  letter-spacing:3px;
+  margin-top:5px;
+}
+
+/* CONTAINER */
+.container{
+  padding:18px;
+  max-width:1900px;
+  margin:auto;
+}
+
+/* KPI */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.kpi{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  text-align:center;
+}
+
+.kpi h3{
+  color:var(--green);
+  font-size:27px;
+}
+
+.kpi p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card h2{
+  color:var(--green);
+  font-size:15px;
+  margin-bottom:16px;
+}
+
+/* SEARCH */
+.search-box{
+  width:100%;
+  padding:11px 14px;
+  background:#0d1117;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:#fff;
+  font-size:14px;
+  outline:none;
+}
+
+.search-box:focus{
+  border-color:var(--green);
+}
+
+/* TABLE */
+.tbl-wrap{
+  overflow:auto;
+  border-radius:8px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:5200px;
+}
+
+th,td{
+  border:1px solid var(--border);
+  padding:9px 10px;
+  text-align:center;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+th{
+  background:#0d1117;
+  color:var(--green);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+tr:hover td{
+  background:#ffffff05;
+}
+
+/* WORKFLOW HEADER */
+.workflow-head{
+  background:#10251d !important;
+  color:#00ff99 !important;
+}
+
+.target-head{
+  background:#102033 !important;
+  color:#60a5fa !important;
+}
+
+.actual-head{
+  background:#241d0c !important;
+  color:#fbbf24 !important;
+}
+
+.status-head{
+  background:#251414 !important;
+  color:#f87171 !important;
+}
+
+/* STATUS */
+.st-pending{
+  color:#f97316;
+  font-weight:bold;
+}
+
+.st-running{
+  color:#3b82f6;
+  font-weight:bold;
+}
+
+.st-delay{
+  color:#ef4444;
+  font-weight:bold;
+}
+
+.st-complete{
+  color:#00ff99;
+  font-weight:bold;
+}
+
+/* PROGRESS */
+.progress-box{
+  width:130px;
+  margin:auto;
+}
+
+.progress-track{
+  width:100%;
+  height:8px;
+  background:#243244;
+  border-radius:5px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  border-radius:5px;
+}
+
+.progress-text{
+  font-size:11px;
+  margin-top:3px;
+  font-weight:bold;
+}
+
+/* BUTTON */
+.edit-btn{
+  background:#1d4ed8;
+  color:white;
+  border:none;
+  padding:7px 13px;
+  border-radius:7px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.edit-btn:hover{
+  background:#1e40af;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.78);
+  z-index:9999;
+  overflow-y:auto;
+}
+
+.modal-content{
+  background:#161b22;
+  width:96%;
+  max-width:1100px;
+  margin:25px auto;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:22px;
+}
+
+.modal-title{
+  color:var(--green);
+  font-size:20px;
+  margin-bottom:18px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:12px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  background:#0d1117;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:18px;
+}
+
+.info-item{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.info-item span{
+  display:block;
+  color:#fff;
+  font-size:14px;
+  margin-top:3px;
+}
+
+.workflow-section{
+  margin-bottom:18px;
+}
+
+.workflow-title{
+  background:#0d1117;
+  color:var(--green);
+  border-left:4px solid var(--green);
+  padding:9px 12px;
+  border-radius:7px;
+  margin-bottom:10px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.workflow-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.form-group label{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+}
+
+.form-input{
+  width:100%;
+  padding:10px;
+  background:#0d1117;
+  color:#fff;
+  border:1px solid var(--border);
+  border-radius:8px;
+  outline:none;
+}
+
+.form-input:focus{
+  border-color:var(--green);
+}
+
+/* STATUS BUTTONS */
+.status-group{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+}
+
+.status-btn{
+  padding:9px 4px;
+  background:#0d1117;
+  border:1px solid #334155;
+  color:#64748b;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.status-btn.active-pending{
+  border-color:#f97316;
+  color:#f97316;
+  background:#431407;
+}
+
+.status-btn.active-running{
+  border-color:#3b82f6;
+  color:#3b82f6;
+  background:#172554;
+}
+
+.status-btn.active-delay{
+  border-color:#ef4444;
+  color:#ef4444;
+  background:#450a0a;
+}
+
+.status-btn.active-complete{
+  border-color:#00ff99;
+  color:#00ff99;
+  background:#052e16;
+}
+
+/* MODAL BUTTONS */
+.modal-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+
+.save-btn,
+.close-btn{
+  flex:1;
+  padding:13px;
+  border:none;
+  border-radius:9px;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.save-btn{
+  background:#16a34a;
+}
+
+.close-btn{
+  background:#dc2626;
+}
+
+.save-btn:hover{
+  background:#15803d;
+}
+
+.close-btn:hover{
+  background:#b91c1c;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#161b22;
+  border:1px solid var(--green);
+  color:var(--green);
+  padding:12px 25px;
+  border-radius:10px;
+  display:none;
+  z-index:99999;
+  font-weight:bold;
+}
+
+.toast.show{
+  display:block;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+  .tb-date{
+    display:none;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .workflow-grid{
+    grid-template-columns:1fr;
+  }
+
+  .container{
+    padding:10px;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<div class="sidebar">
-  <div class="sb-head">
-    <div class="sb-logo">LOGO</div>
-    <div class="sb-company">INNOVATIVE KNITEX LTD</div>
-    <div class="sb-erp">SMART TNA BD ERP</div>
+<!-- TOPBAR -->
+<div class="topbar">
+
+  <div class="tb-left">
+
+    <a href="dashboard.html"
+       class="back-btn"
+       onclick="return confirmBack(event)">
+      🏠 Dashboard
+    </a>
+
+    <span class="tb-title">
+      🧑‍💼 Merchandising Department
+    </span>
+
   </div>
-  <nav class="sb-nav">
-    <div class="sb-label">— Main —</div>
-    <a class="sb-link" href="dashboard.html"><span class="sb-icon">🏠</span> Dashboard</a>
-    <a class="sb-link" href="orders.html"><span class="sb-icon">📦</span> Order Entry<span class="sb-badge g">NEW</span></a>
-    <a class="sb-link" href="tna-management.html"><span class="sb-icon">📋</span> TNA Management</a>
-    <div class="sb-label">— Admin —</div>
-    <a class="sb-link" href="admin.html"><span class="sb-icon">👑</span> Admin Panel<span class="sb-badge bl">ADMIN</span></a>
-    <a class="sb-link active" href="merchandising.html"><span class="sb-icon">👔</span> Merchandising</a>
-    <div class="sb-label">— Production —</div>
-    <a class="sb-link" href="sample.html"><span class="sb-icon">🧵</span> Sample</a>
-    <a class="sb-link" href="knitting.html"><span class="sb-icon">🧶</span> Knitting</a>
-    <a class="sb-link" href="dyeing.html"><span class="sb-icon">🎨</span> Dyeing</a>
-    <a class="sb-link" href="cutting.html"><span class="sb-icon">✂️</span> Cutting</a>
-    <a class="sb-link" href="print-emb.html"><span class="sb-icon">🖨️</span> Print & Embroidery</a>
-    <a class="sb-link" href="sewing.html"><span class="sb-icon">🪡</span> Sewing</a>
-    <a class="sb-link" href="washing.html"><span class="sb-icon">💧</span> Washing</a>
-    <a class="sb-link" href="finishing.html"><span class="sb-icon">📦</span> Finishing</a>
-    <a class="sb-link" href="shipment.html"><span class="sb-icon">🚢</span> Shipment</a>
-    <div class="sb-label">— Management —</div>
-    <a class="sb-link" href="reports.html"><span class="sb-icon">📊</span> Reports</a>
-    <a class="sb-link" href="settings.html"><span class="sb-icon">⚙️</span> Settings</a>
-  </nav>
-  <div class="sb-foot">
-    <a class="sb-link" href="login.html" style="color:#f87171;"><span class="sb-icon">🚪</span> Logout</a>
+
+  <div class="tb-right">
+    <span class="tb-date" id="dateEl"></span>
+    <span class="tb-user" id="userBadge">👤 Admin</span>
   </div>
+
 </div>
 
-<div class="main-wrap">
-  <div class="topbar">
-    <div class="tb-title">👔 Merchandising Department</div>
-    <span class="tb-user">👤 Admin</span>
+
+<!-- HERO -->
+<div class="hero">
+
+  <div class="hero-arabic">﷽</div>
+
+  <div class="hero-company">
+    INNOVATIVE KNITEX LTD
   </div>
 
-  <div class="content">
-    <div class="page-title">👔 Merchandising</div>
-    <div class="page-sub">Order-wise TNA tracking per merchandiser</div>
-
-    <div class="merch-kpi">
-      <div class="mkpi"><h3>Total Merchandisers</h3><h1 id="mTotal">—</h1></div>
-      <div class="mkpi"><h3>Total Orders</h3><h1 id="mOrders">—</h1></div>
-      <div class="mkpi"><h3>Total Qty (PCS)</h3><h1 id="mQty">—</h1></div>
-      <div class="mkpi"><h3>Running Orders</h3><h1 id="mRunning">—</h1></div>
-    </div>
-
-    <div class="card">
-      <h2>👔 Merchandiser Performance Summary</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Merchandiser</th><th>Total Orders</th><th>Total Qty</th>
-            <th>Running</th><th>Completed</th><th>Delayed</th><th>Completion %</th>
-          </tr>
-        </thead>
-        <tbody id="mSummary"></tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <h2>📦 Order Details by Merchandiser</h2>
-      <table style="min-width:1200px;">
-        <thead>
-          <tr>
-            <th>Merchandiser</th><th>Buyer</th><th>IKL No</th>
-            <th>Style No</th><th>Total Qty</th>
-            <th>Order Date</th><th>Shipment Date</th><th>Lead Time</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="mDetails"></tbody>
-      </table>
-    </div>
-
+  <div class="hero-dept">
+    🧑‍💼 SMART TNA BD ERP — MERCHANDISING DEPARTMENT
   </div>
+
 </div>
 
+
+<div class="container">
+
+<!-- KPI -->
+<div class="kpi-grid">
+
+  <div class="kpi">
+    <h3 id="kTotal">0</h3>
+    <p>Total Orders</p>
+  </div>
+
+  <div class="kpi">
+    <h3 id="kQty">0</h3>
+    <p>Total Qty (PCS)</p>
+  </div>
+
+  <div class="kpi">
+    <h3 id="kPending">0</h3>
+    <p>Pending Activities</p>
+  </div>
+
+  <div class="kpi">
+    <h3 id="kRunning">0</h3>
+    <p>Running</p>
+  </div>
+
+  <div class="kpi">
+    <h3 id="kDelay">0</h3>
+    <p>Delayed</p>
+  </div>
+
+  <div class="kpi">
+    <h3 id="kComplete">0</h3>
+    <p>Completed</p>
+  </div>
+
+  <div class="kpi">
+    <h3 id="kAvg">0%</h3>
+    <p>Average Progress</p>
+  </div>
+
+</div>
+
+
+<!-- SEARCH -->
+<div class="card">
+
+  <h2>🔍 Search Orders</h2>
+
+  <input
+    type="text"
+    id="searchInput"
+    class="search-box"
+    placeholder="Search Buyer / IKL / Style / Merchandiser..."
+    oninput="filterOrders()">
+
+</div>
+
+
+<!-- TABLE -->
+<div class="card">
+
+  <h2>
+    📋 Merchandising TNA Control
+    <span id="orderCount"
+          style="color:var(--muted);font-size:12px;">
+    </span>
+  </h2>
+
+  <div class="tbl-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th rowspan="2">SL</th>
+          <th rowspan="2">Buyer</th>
+          <th rowspan="2">IKL No</th>
+          <th rowspan="2">Style</th>
+          <th rowspan="2">Total Qty</th>
+          <th rowspan="2">Fabrication</th>
+          <th rowspan="2">Color</th>
+          <th rowspan="2">Color Qty</th>
+          <th rowspan="2">Merchandiser</th>
+          <th rowspan="2">Order Date</th>
+          <th rowspan="2">Ship Date</th>
+
+          <!-- 15 WORKFLOWS -->
+
+          <th colspan="3" class="workflow-head">
+            Fabric Booking
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Color Swatch
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Lab Dip Submit
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Lab Dip Approval
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            G2 Receive
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Strike Off Send
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Strike Off Approval
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            PP Sample Submit
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Sewing Trims
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            PP Approval
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Size Set
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            PP Meeting
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Packing Trims
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Final Inspection
+          </th>
+
+          <th colspan="3" class="workflow-head">
+            Shipment Approval
+          </th>
+
+          <th rowspan="2">
+            Progress
+          </th>
+
+          <th rowspan="2">
+            Action
+          </th>
+
+        </tr>
+
+        <tr>
+
+          <!-- repeat Target Actual Status -->
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+          <th class="target-head">Target</th>
+          <th class="actual-head">Actual</th>
+          <th class="status-head">Status</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="orderBody">
+
+        <tr>
+          <td colspan="60"
+              style="padding:25px;color:var(--muted);">
+            Loading orders...
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="editModal">
+
+  <div class="modal-content">
+
+    <div class="modal-title">
+      🧑‍💼 Merchandising TNA Update
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        Buyer
+        <span id="mBuyer">-</span>
+      </div>
+
+      <div class="info-item">
+        IKL No
+        <span id="mIKL">-</span>
+      </div>
+
+      <div class="info-item">
+        Style
+        <span id="mStyle">-</span>
+      </div>
+
+      <div class="info-item">
+        Total Qty
+        <span id="mQty">-</span>
+      </div>
+
+      <div class="info-item">
+        Fabrication
+        <span id="mFabrication">-</span>
+      </div>
+
+      <div class="info-item">
+        Color
+        <span id="mColor">-</span>
+      </div>
+
+      <div class="info-item">
+        Color Qty
+        <span id="mColorQty">-</span>
+      </div>
+
+      <div class="info-item">
+        Ship Date
+        <span id="mShip">-</span>
+      </div>
+
+    </div>
+
+
+    <div id="workflowForm"></div>
+
+
+    <div class="modal-buttons">
+
+      <button class="save-btn" id="saveBtn">
+        💾 Save TNA
+      </button>
+
+      <button class="close-btn" id="closeBtn">
+        ✖ Close
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<!-- FIREBASE -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const cfg = {
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  browserLocalPersistence,
+  setPersistence
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
   apiKey:"AIzaSyBL7l-SkL6ha9FQsnnsQmGpqHg72szd8tQ",
+
   authDomain:"smart-tna-bd.firebaseapp.com",
+
   projectId:"smart-tna-bd",
+
   storageBucket:"smart-tna-bd.firebasestorage.app",
+
   messagingSenderId:"372049573207",
+
   appId:"1:372049573207:web:571beae951f9aa4b47fa12"
+
 };
-const fbApp = initializeApp(cfg);
-const db = getFirestore(fbApp);
-const auth = getAuth(fbApp);
 
-function getQty(d) {
-  const raw = d.totalQty ?? d.qty ?? d.quantity ?? d.Qty ?? 0;
-  const n = parseFloat(String(raw).replace(/,/g,""));
-  return isNaN(n) ? 0 : n;
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const auth = getAuth(app);
+
+
+/* SELECTED */
+
+let selectedDocId = null;
+
+let selectedColorIndex = 0;
+
+
+/* WORKFLOW MASTER */
+
+const workflows = [
+
+  {
+    key:"fabricBooking",
+    label:"Fabric Booking"
+  },
+
+  {
+    key:"colorSwatch",
+    label:"Color Swatch"
+  },
+
+  {
+    key:"labDipSubmit",
+    label:"Lab Dip Submit"
+  },
+
+  {
+    key:"labDipApproval",
+    label:"Lab Dip Approval"
+  },
+
+  {
+    key:"g2Receive",
+    label:"G2 Receive"
+  },
+
+  {
+    key:"strikeOffSend",
+    label:"Strike Off Send"
+  },
+
+  {
+    key:"strikeOffApproval",
+    label:"Strike Off Approval"
+  },
+
+  {
+    key:"ppSampleSubmit",
+    label:"PP Sample Submit"
+  },
+
+  {
+    key:"sewingTrims",
+    label:"Sewing Trims"
+  },
+
+  {
+    key:"ppApproval",
+    label:"PP Approval"
+  },
+
+  {
+    key:"sizeSet",
+    label:"Size Set"
+  },
+
+  {
+    key:"ppMeeting",
+    label:"PP Meeting"
+  },
+
+  {
+    key:"packingTrims",
+    label:"Packing Trims"
+  },
+
+  {
+    key:"finalInspection",
+    label:"Final Inspection"
+  },
+
+  {
+    key:"shipmentApproval",
+    label:"Shipment Approval"
+  }
+
+];
+
+
+/* DATA */
+
+let allOrders = [];
+
+
+/* TOAST */
+
+function toast(message,color="#00ff99"){
+
+  const t=document.getElementById("toast");
+
+  t.textContent=message;
+
+  t.style.color=color;
+
+  t.style.borderColor=color;
+
+  t.classList.add("show");
+
+  setTimeout(()=>{
+    t.classList.remove("show");
+  },3000);
+
 }
-function getShipTxt(d) {
-  return d.shipdate||d.shipmentDate||d.shipmentdate||d.ShipmentDate||"";
+
+
+/* GET QTY */
+
+function getQty(order){
+
+  return Number(
+    order.totalQty ||
+    order.orderQty ||
+    order.qty ||
+    0
+  );
+
 }
-function badge(s) {
-  if (!s||s==="Pending") return `<span class="b b-pend">Pending</span>`;
-  if (s==="Completed")   return `<span class="b b-done">Completed</span>`;
-  if (s==="Running")     return `<span class="b b-run">Running</span>`;
-  return `<span class="b b-pend">${s}</span>`;
+
+
+/* GET SHIP DATE */
+
+function getShip(order){
+
+  return (
+    order.shipdate ||
+    order.shipmentDate ||
+    order.shipDate ||
+    ""
+  );
+
 }
 
-async function load() {
-  const snap = await getDocs(collection(db,"orders"));
-  if (snap.empty) return;
 
-  const now = new Date();
-  const merch = {};
-  let totalOrders=0, totalQty=0, totalRunning=0;
-  const detailBody = document.getElementById("mDetails");
+/* STATUS */
 
-  snap.forEach(doc => {
-    const d = doc.data();
-    const mn = d.merchandiser || "Unknown";
-    const qty = getQty(d);
-    const sdTxt = getShipTxt(d);
-    let days=0;
-    if (d.orderDate && sdTxt) {
-      const a=new Date(d.orderDate), b=new Date(sdTxt);
-      if (!isNaN(a)&&!isNaN(b)) days=Math.ceil((b-a)/864e5);
+function getStatus(order,key){
+
+  const status =
+    order[key+"Status"] ||
+    "Pending";
+
+  const target =
+    order[key+"Target"] ||
+    "";
+
+  if(
+    status !== "Complete" &&
+    status !== "Completed" &&
+    target
+  ){
+
+    const today =
+      new Date();
+
+    today.setHours(0,0,0,0);
+
+    const targetDate =
+      new Date(target);
+
+    targetDate.setHours(0,0,0,0);
+
+    if(targetDate < today){
+
+      return "Delay";
+
     }
-    const isDone = d.shipmentStatus==="Completed";
-    const sd = sdTxt ? new Date(sdTxt) : null;
-    const isLate = sd && !isNaN(sd) && sd < now && !isDone;
 
-    if (!merch[mn]) merch[mn]={o:0,q:0,r:0,done:0,late:0};
-    merch[mn].o++; merch[mn].q+=qty;
-    if (isDone) merch[mn].done++; else merch[mn].r++;
-    if (isLate) merch[mn].late++;
+  }
 
-    totalOrders++; totalQty+=qty;
-    if (!isDone) totalRunning++;
+  if(status==="Completed"){
 
-    detailBody.innerHTML += `
-    <tr>
-      <td><b>${mn}</b></td>
-      <td>${d.buyer||""}</td><td>${d.ikl||d.iklNo||""}</td>
-      <td>${d.style||d.styleNo||""}</td>
-      <td><b>${qty>0?qty.toLocaleString():"—"}</b></td>
-      <td>${d.orderDate||""}</td><td>${sdTxt||"No Date"}</td>
-      <td>${days} Days</td>
-      <td>${badge(d.shipmentStatus)}</td>
-    </tr>`;
+    return "Complete";
+
+  }
+
+  return status;
+
+}
+
+
+/* STATUS BADGE */
+
+function statusBadge(status){
+
+  if(status==="Complete"){
+
+    return `<span class="st-complete">● Complete</span>`;
+
+  }
+
+  if(status==="Running"){
+
+    return `<span class="st-running">● Running</span>`;
+
+  }
+
+  if(status==="Delay"){
+
+    return `<span class="st-delay">● Delay</span>`;
+
+  }
+
+  return `<span class="st-pending">● Pending</span>`;
+
+}
+
+
+/* PROGRESS */
+
+function calculateProgress(order){
+
+  let done=0;
+
+  workflows.forEach(w=>{
+
+    const s=getStatus(order,w.key);
+
+    if(s==="Complete"){
+
+      done++;
+
+    }
+
   });
 
-  const $ = id => document.getElementById(id);
-  $("mTotal").textContent   = Object.keys(merch).length;
-  $("mOrders").textContent  = totalOrders;
-  $("mQty").textContent     = totalQty.toLocaleString();
-  $("mRunning").textContent = totalRunning;
+  return Math.round(
+    (done/workflows.length)*100
+  );
 
-  const sb = document.getElementById("mSummary");
-  for (const [name,v] of Object.entries(merch)) {
-    const c = Math.round((v.done/v.o)*100);
-    sb.innerHTML += `
-    <tr>
-      <td><b>${name}</b></td><td>${v.o}</td>
-      <td>${v.q.toLocaleString()}</td><td>${v.r}</td>
-      <td>${v.done}</td>
-      <td style="color:${v.late>0?'#f87171':'#4ade80'}">${v.late}</td>
-      <td><span class="b ${c>=70?'b-done':c>=40?'b-run':'b-pend'}">${c}%</span></td>
-    </tr>`;
-  }
 }
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
+
+
+/* PROGRESS BAR */
+
+function progressBar(percent){
+
+  let color="#f87171";
+
+  if(percent>=100){
+
+    color="#00ff99";
+
+  }else if(percent>=60){
+
+    color="#fbbf24";
+
+  }else if(percent>=30){
+
+    color="#f97316";
+
   }
-  load();
+
+  return `
+
+    <div class="progress-box">
+
+      <div class="progress-track">
+
+        <div
+          class="progress-fill"
+          style="
+            width:${percent}%;
+            background:${color};
+          ">
+        </div>
+
+      </div>
+
+      <div
+        class="progress-text"
+        style="color:${color};">
+        ${percent}%
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* LOAD ORDERS */
+
+async function loadOrders(){
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(db,"orders")
+      );
+
+    allOrders=[];
+
+    snap.forEach(d=>{
+
+      allOrders.push({
+
+        id:d.id,
+
+        ...d.data()
+
+      });
+
+    });
+
+    renderTable();
+
+    renderKPI();
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "❌ Cannot load orders: "+
+      error.message,
+      "#f87171"
+    );
+
+  }
+
+}
+
+
+/* RENDER KPI */
+
+function renderKPI(){
+
+  let total=allOrders.length;
+
+  let qty=0;
+
+  let pending=0;
+
+  let running=0;
+
+  let delay=0;
+
+  let complete=0;
+
+  let totalProgress=0;
+
+
+  allOrders.forEach(order=>{
+
+    qty += getQty(order);
+
+    const progress =
+      calculateProgress(order);
+
+    totalProgress += progress;
+
+
+    workflows.forEach(w=>{
+
+      const s =
+        getStatus(order,w.key);
+
+      if(s==="Pending"){
+
+        pending++;
+
+      }
+
+      if(s==="Running"){
+
+        running++;
+
+      }
+
+      if(s==="Delay"){
+
+        delay++;
+
+      }
+
+      if(s==="Complete"){
+
+        complete++;
+
+      }
+
+    });
+
+  });
+
+
+  document.getElementById("kTotal")
+    .textContent=total;
+
+  document.getElementById("kQty")
+    .textContent=qty.toLocaleString();
+
+  document.getElementById("kPending")
+    .textContent=pending;
+
+  document.getElementById("kRunning")
+    .textContent=running;
+
+  document.getElementById("kDelay")
+    .textContent=delay;
+
+  document.getElementById("kComplete")
+    .textContent=complete;
+
+  document.getElementById("kAvg")
+    .textContent=
+      total
+      ? Math.round(totalProgress/total)+"%"
+      : "0%";
+
+}
+
+
+/* RENDER TABLE */
+
+function renderTable(){
+
+  const body =
+    document.getElementById("orderBody");
+
+  body.innerHTML="";
+
+  if(!allOrders.length){
+
+    body.innerHTML=`
+
+      <tr>
+
+        <td colspan="60"
+          style="
+            padding:25px;
+            color:var(--muted);
+          ">
+
+          No orders found.
+
+        </td>
+
+      </tr>
+
+    `;
+
+    document.getElementById("orderCount")
+      .textContent="(0 orders)";
+
+    return;
+
+  }
+
+
+  let sl=0;
+
+
+  allOrders.forEach(order=>{
+
+    sl++;
+
+    const colors =
+      order.colors &&
+      order.colors.length
+      ? order.colors
+      : [
+
+          {
+            color:"-",
+            qty:getQty(order)
+          }
+
+        ];
+
+
+    colors.forEach((color,index)=>{
+
+      const progress =
+        calculateProgress(order);
+
+
+      let cells="";
+
+
+      workflows.forEach(w=>{
+
+        const target =
+          order[w.key+"Target"] ||
+          "";
+
+        const actual =
+          order[w.key+"Actual"] ||
+          "-";
+
+        const status =
+          getStatus(order,w.key);
+
+
+        cells += `
+
+          <td>
+            ${target || "-"}
+          </td>
+
+          <td>
+            ${actual}
+          </td>
+
+          <td>
+            ${statusBadge(status)}
+          </td>
+
+        `;
+
+      });
+
+
+      body.innerHTML += `
+
+        <tr
+          data-search="
+            ${(order.buyer||"")}
+            ${(order.ikl||"")}
+            ${(order.style||"")}
+            ${(order.merchandiser||"")}
+          ">
+
+          <td>
+            ${index===0 ? sl : ""}
+          </td>
+
+          <td>
+            ${index===0 ? (order.buyer||"-") : ""}
+          </td>
+
+          <td>
+            ${index===0 ? (order.ikl||order.iklNo||"-") : ""}
+          </td>
+
+          <td>
+            ${index===0 ? (order.style||order.styleNo||"-") : ""}
+          </td>
+
+          <td>
+            ${index===0
+              ? getQty(order).toLocaleString()
+              : ""}
+          </td>
+
+          <td>
+            ${index===0
+              ? (order.fabrication||"-")
+              : ""}
+          </td>
+
+          <td>
+            ${color.color||"-"}
+          </td>
+
+          <td>
+            ${Number(color.qty||0).toLocaleString()}
+          </td>
+
+          <td>
+            ${index===0
+              ? (order.merchandiser||"-")
+              : ""}
+          </td>
+
+          <td>
+            ${index===0
+              ? (order.orderDate||"-")
+              : ""}
+          </td>
+
+          <td>
+            ${index===0
+              ? (getShip(order)||"-")
+              : ""}
+          </td>
+
+          ${cells}
+
+          <td>
+            ${index===0
+              ? progressBar(progress)
+              : ""}
+          </td>
+
+          <td>
+
+            <button
+              class="edit-btn"
+              onclick="
+                openEdit(
+                  '${order.id}',
+                  ${index}
+                )
+              ">
+
+              ✏️ Edit
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+  });
+
+
+  document.getElementById("orderCount")
+    .textContent=
+      "("+allOrders.length+" orders)";
+
+}
+
+
+/* SEARCH */
+
+window.filterOrders=function(){
+
+  const q =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  document
+    .querySelectorAll("#orderBody tr")
+    .forEach(row=>{
+
+      const text =
+        row.dataset.search ||
+        "";
+
+      row.style.display =
+        text.toLowerCase()
+        .includes(q)
+        ? ""
+        : "none";
+
+    });
+
+};
+
+
+/* OPEN EDIT */
+
+window.openEdit=function(
+  docId,
+  colorIndex
+){
+
+  const order =
+    allOrders.find(
+      o=>o.id===docId
+    );
+
+  if(!order)return;
+
+
+  selectedDocId=docId;
+
+  selectedColorIndex=colorIndex;
+
+
+  const color =
+    order.colors &&
+    order.colors[colorIndex]
+    ? order.colors[colorIndex]
+    : {
+        color:"-",
+        qty:getQty(order)
+      };
+
+
+  document.getElementById("mBuyer")
+    .textContent=order.buyer||"-";
+
+  document.getElementById("mIKL")
+    .textContent=
+      order.ikl||
+      order.iklNo||
+      "-";
+
+  document.getElementById("mStyle")
+    .textContent=
+      order.style||
+      order.styleNo||
+      "-";
+
+  document.getElementById("mQty")
+    .textContent=
+      getQty(order)
+      .toLocaleString()+" PCS";
+
+  document.getElementById("mFabrication")
+    .textContent=
+      order.fabrication||"-";
+
+  document.getElementById("mColor")
+    .textContent=
+      color.color||"-";
+
+  document.getElementById("mColorQty")
+    .textContent=
+      Number(color.qty||0)
+      .toLocaleString()+" PCS";
+
+  document.getElementById("mShip")
+    .textContent=
+      getShip(order)||"-";
+
+
+  let html="";
+
+
+  workflows.forEach((w,index)=>{
+
+    const target =
+      order[w.key+"Target"] ||
+      "";
+
+    const actual =
+      order[w.key+"Actual"] ||
+      "";
+
+    const status =
+      getStatus(order,w.key);
+
+
+    html += `
+
+      <div class="workflow-section">
+
+        <div class="workflow-title">
+
+          ${index+1}.
+          ${w.label}
+
+        </div>
+
+        <div class="workflow-grid">
+
+          <div class="form-group">
+
+            <label>
+              ${w.label} Target
+            </label>
+
+            <input
+              type="date"
+              class="form-input"
+              id="f_${w.key}Target"
+              value="${target}">
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              ${w.label} Actual
+            </label>
+
+            <input
+              type="date"
+              class="form-input"
+              id="f_${w.key}Actual"
+              value="${actual}">
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              ${w.label} Status
+            </label>
+
+            <div
+              class="status-group"
+              id="sg_${w.key}">
+
+              ${statusButtons(
+                w.key,
+                status
+              )}
+
+            </div>
+
+            <input
+              type="hidden"
+              id="f_${w.key}Status"
+              value="${status}">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document.getElementById("workflowForm")
+    .innerHTML=html;
+
+
+  document.getElementById("editModal")
+    .style.display="block";
+
+};
+
+
+/* STATUS BUTTONS */
+
+function statusButtons(
+  key,
+  current
+){
+
+  const options=[
+
+    {
+      value:"Pending",
+      label:"🟠 Pending",
+      cls:"active-pending"
+    },
+
+    {
+      value:"Running",
+      label:"🔵 Running",
+      cls:"active-running"
+    },
+
+    {
+      value:"Delay",
+      label:"🔴 Delay",
+      cls:"active-delay"
+    },
+
+    {
+      value:"Complete",
+      label:"🟢 Complete",
+      cls:"active-complete"
+    }
+
+  ];
+
+
+  return options.map(o=>`
+
+    <button
+      type="button"
+      class="status-btn ${
+        current===o.value
+        ? o.cls
+        : ""
+      }"
+      onclick="
+        selectStatus(
+          '${key}',
+          '${o.value}',
+          '${o.cls}',
+          this
+        )
+      ">
+
+      ${o.label}
+
+    </button>
+
+  `).join("");
+
+}
+
+
+/* SELECT STATUS */
+
+window.selectStatus=function(
+  key,
+  value,
+  cls,
+  button
+){
+
+  document.getElementById(
+    "f_"+key+"Status"
+  ).value=value;
+
+
+  button.parentElement
+    .querySelectorAll(".status-btn")
+    .forEach(btn=>{
+
+      btn.className="status-btn";
+
+    });
+
+
+  button.classList.add(cls);
+
+};
+
+
+/* SAVE */
+
+document.getElementById("saveBtn")
+.onclick=async function(){
+
+  if(!selectedDocId){
+
+    return;
+
+  }
+
+
+  const updateData={};
+
+
+  workflows.forEach(w=>{
+
+    updateData[w.key+"Target"] =
+      document.getElementById(
+        "f_"+w.key+"Target"
+      ).value;
+
+    updateData[w.key+"Actual"] =
+      document.getElementById(
+        "f_"+w.key+"Actual"
+      ).value;
+
+    updateData[w.key+"Status"] =
+      document.getElementById(
+        "f_"+w.key+"Status"
+      ).value;
+
+  });
+
+
+  updateData.merchandisingUpdatedAt =
+    new Date().toISOString();
+
+
+  const btn =
+    document.getElementById("saveBtn");
+
+
+  btn.disabled=true;
+
+  btn.textContent=
+    "⏳ Saving...";
+
+
+  try{
+
+    await updateDoc(
+
+      doc(
+        db,
+        "orders",
+        selectedDocId
+      ),
+
+      updateData
+
+    );
+
+
+    toast(
+      "✅ Merchandising TNA Saved Successfully!"
+    );
+
+
+    document.getElementById("editModal")
+      .style.display="none";
+
+
+    await loadOrders();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "❌ Save Failed: "+
+      error.message,
+      "#f87171"
+    );
+
+  }
+
+
+  btn.disabled=false;
+
+  btn.textContent=
+    "💾 Save TNA";
+
+};
+
+
+/* CLOSE */
+
+document.getElementById("closeBtn")
+.onclick=function(){
+
+  document.getElementById("editModal")
+    .style.display="none";
+
+};
+
+
+/* CLICK OUTSIDE MODAL */
+
+document.getElementById("editModal")
+.addEventListener(
+  "click",
+  function(e){
+
+    if(e.target===this){
+
+      this.style.display="none";
+
+    }
+
+  }
+);
+
+
+/* AUTH */
+
+setPersistence(
+  auth,
+  browserLocalPersistence
+)
+.then(()=>{
+
+  onAuthStateChanged(
+    auth,
+    user=>{
+
+      if(!user){
+
+        window.location.href=
+          "login.html";
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "userBadge"
+      ).textContent=
+        "👤 "+
+        (
+          user.email
+          ? user.email.split("@")[0]
+          : "User"
+        );
+
+
+      loadOrders();
+
+    }
+  );
+
+})
+.catch(()=>{
+
+  onAuthStateChanged(
+    auth,
+    user=>{
+
+      if(!user){
+
+        window.location.href=
+          "login.html";
+
+        return;
+
+      }
+
+      loadOrders();
+
+    }
+  );
+
 });
+
 </script>
+
+
+<!-- UTILITIES -->
+<script>
+
+/* DATE */
+
+document.getElementById("dateEl")
+.textContent=
+  new Date().toLocaleDateString(
+    "en-BD",
+    {
+      weekday:"short",
+      year:"numeric",
+      month:"short",
+      day:"numeric"
+    }
+  );
+
+
+/* BACK */
+
+function confirmBack(e){
+
+  return true;
+
+}
+
+
+/* AUTO REFRESH */
+
+setInterval(()=>{
+
+  if(
+    typeof loadOrders === "function"
+  ){
+
+    loadOrders();
+
+  }
+
+},60000);
+
+</script>
+
 </body>
 </html>
